@@ -33,14 +33,20 @@
     <RootNamespace>LumbApp</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Kinect, Version=1.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".vs\LumbApp\v16\.suo" />
@@ -49,6 +55,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Conectores\ConectorSI\conector.cs" />
+    <Compile Include="Expertos\ExpertoZE\test\ColorExtensions.cs" />
+    <Compile Include="Expertos\ExpertoZE\test\Constants.cs" />
+    <Compile Include="Expertos\ExpertoZE\test\MainWindow.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Conectores\ConectorSI\conector.exe" />
@@ -57,6 +66,13 @@
     <Content Include="FinalFeedbacker\init.txt" />
     <Content Include="GUI\init.txt" />
     <Content Include="Orquestador\init.txt" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Page Include="Expertos\ExpertoZE\test\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>
