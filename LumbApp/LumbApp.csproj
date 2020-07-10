@@ -57,6 +57,7 @@
     <None Include=".vs\VSWorkspaceState.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Conectores\ConectorKinect\ConectorKinect.cs" />
     <Compile Include="Conectores\ConectorSI\conector.cs" />
     <Compile Include="Expertos\ExpertoZE\test\ColorExtensions.cs" />
     <Compile Include="Expertos\ExpertoZE\test\Constants.cs" />

@@ -1,4 +1,5 @@
-﻿using Microsoft.Kinect;
+﻿using LumbApp.Conectores.ConectorKinect;
+using Microsoft.Kinect;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,9 +24,6 @@ namespace KinectCoordinateMapping
     {
         CameraMode _mode = CameraMode.Color;
 
-        KinectSensor _sensor;
-        Skeleton[] _bodies = new Skeleton[6];
-
         private readonly Brush trackedJointBrush = Brushes.Blue;
         private readonly Brush inferredJointBrush = Brushes.Yellow;
         private readonly Brush notTrackedJointBrush = Brushes.Red;
@@ -37,6 +35,8 @@ namespace KinectCoordinateMapping
         private const float zeZ = 1;
         private const float delta = 0.1f;
 
+        private ConectorKinect conn;
+
         
         public MainWindow()
         {
@@ -45,19 +45,8 @@ namespace KinectCoordinateMapping
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            _sensor = KinectSensor.KinectSensors.Where(s => s.Status == KinectStatus.Connected).FirstOrDefault();
-
-            if (_sensor != null)
-            {
-                _sensor.ColorStream.Enable();
-                _sensor.DepthStream.Enable();
-                _sensor.SkeletonStream.Enable();
-                _sensor.SkeletonStream.TrackingMode = SkeletonTrackingMode.Seated;
-
-                _sensor.AllFramesReady += Sensor_AllFramesReady;
-
-                _sensor.Start();
-            }
+            conn = new ConectorKinect();
+            conn.Conectar(Sensor_AllFramesReady);
         }
 
         void Sensor_AllFramesReady(object sender, AllFramesReadyEventArgs e)
@@ -81,9 +70,9 @@ namespace KinectCoordinateMapping
                 {
                     canvas.Children.Clear();
 
-                    frame.CopySkeletonDataTo(_bodies);
+                    frame.CopySkeletonDataTo(conn._bodies);
 
-                    foreach (var body in _bodies)
+                    foreach (var body in conn._bodies)
                     {
                         if (body.TrackingState == SkeletonTrackingState.Tracked)
                         {
@@ -148,15 +137,12 @@ namespace KinectCoordinateMapping
         {
 
             // Skeleton-to-Color mapping
-            return _sensor.CoordinateMapper.MapSkeletonPointToColorPoint(skeletonPoint, ColorImageFormat.RgbResolution640x480Fps30);
+            return conn._sensor.CoordinateMapper.MapSkeletonPointToColorPoint(skeletonPoint, ColorImageFormat.RgbResolution640x480Fps30);
         }
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)
         {
-            if (_sensor != null)
-            {
-                _sensor.Stop();
-            }
+            conn.Desconectar();
         }
 
         private void drawZE()
