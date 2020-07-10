@@ -31,11 +31,13 @@ namespace KinectCoordinateMapping
         private readonly Brush notTrackedJointBrush = Brushes.Red;
 
         private readonly Brush zeBrush = Brushes.Aqua;
+        private readonly Brush inZeBrush = Brushes.Orange;
         private const float zeX = 0;
         private const float zeY = 0;
         private const float zeZ = 1;
         private const float delta = 0.1f;
 
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -107,7 +109,7 @@ namespace KinectCoordinateMapping
             if (joint.TrackingState == JointTrackingState.Tracked)
             {
                 if (isInZE(joint.Position))
-                    b = zeBrush;
+                    b = inZeBrush;
                 else b = trackedJointBrush;
             }
             else if (joint.TrackingState == JointTrackingState.Inferred)
@@ -199,6 +201,14 @@ namespace KinectCoordinateMapping
             return pos.X < zeX + delta && pos.X > zeX - delta
                 && pos.Y < zeY + delta && pos.Y > zeY - delta
                 && pos.Z < zeZ + delta && pos.Z > zeZ - delta;
+        }
+
+        [STAThread]
+        public static void Main()
+        {
+            MainWindow window = new MainWindow();
+            Application app = new Application();
+            app.Run(window);
         }
     }
 
