@@ -5,6 +5,7 @@ using System.Text;
 class PortDataReceived
 {
    // RegistroEstado registroEstado;
+   //boke
 
     public static void Main()
     {
