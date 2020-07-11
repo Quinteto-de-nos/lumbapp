@@ -54,6 +54,29 @@ namespace LumbApp.Expertos.ExpertoZE
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void allFramesReady(object sender, AllFramesReadyEventArgs e) { }
+        private void allFramesReady(object sender, AllFramesReadyEventArgs e) {
+            using (var frame = e.OpenSkeletonFrame())
+            {
+                if(frame != null)
+                {
+                    Skeleton[] allSkeletons = new Skeleton[6];
+                    frame.CopySkeletonDataTo(allSkeletons);
+                    foreach(Skeleton skeleton in allSkeletons)
+                    {
+                        if(skeleton.TrackingState == SkeletonTrackingState.Tracked)
+                        {
+                            processSkeleton(skeleton);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void processSkeleton(Skeleton skeleton)
+        {
+            Console.WriteLine(skeleton.ClippedEdges);
+            //TODO: procesar manos
+        }
     }
 }
