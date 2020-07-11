@@ -8,15 +8,13 @@ namespace LumbApp.Conectores.ConectorKinect
 {
     class ConectorKinect
     {
-        public KinectSensor _sensor;
-        public Skeleton[] _bodies = new Skeleton[6];
+        internal KinectSensor _sensor;
 
         public ConectorKinect() { }
 
         /// <summary>
         /// Inicializa la conexion con la Kinect. Si no encuentra una kinect, tira una excepcion
         /// </summary>
-        /// Severity	Code	Description	Project	File	Line	Suppression State
         public void Conectar()
         {
             _sensor = KinectSensor.KinectSensors.Where(s => s.Status == KinectStatus.Connected).FirstOrDefault();

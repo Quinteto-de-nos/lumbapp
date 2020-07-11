@@ -35,6 +35,8 @@ namespace KinectCoordinateMapping
         private const float zeZ = 1;
         private const float delta = 0.1f;
 
+        internal Skeleton[] _bodies = new Skeleton[6];
+
         private ConectorKinect conn;
         private ExpertoZE expert;
 
@@ -70,17 +72,15 @@ namespace KinectCoordinateMapping
                 {
                     canvas.Children.Clear();
 
-                    frame.CopySkeletonDataTo(conn._bodies);
+                    frame.CopySkeletonDataTo(_bodies);
 
-                    foreach (var body in conn._bodies)
+                    foreach (var body in _bodies)
                     {
                         if (body.TrackingState == SkeletonTrackingState.Tracked)
                         {
-                            // COORDINATE MAPPING
-                            foreach (Joint joint in body.Joints)
-                            {
-                                drawJoint(joint);
-                            }
+                           // Console.WriteLine(body.ClippedEdges);
+                            drawJoint(body.Joints[JointType.HandRight]);
+                            drawJoint(body.Joints[JointType.HandLeft]);
                         }
                     }
                 }
