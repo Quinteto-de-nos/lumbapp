@@ -41,6 +41,10 @@ namespace LumbApp.Conectores.ConectorKinect
                 _sensor.Stop();
         }
 
+        /// <summary>
+        /// Subscribe un event handler al evento AllFramesReady de la Kinect.
+        /// </summary>
+        /// <param name="subscriber"></param>
         public void SubscribeFramesReady(EventHandler<AllFramesReadyEventArgs> subscriber)
         {
             if (_sensor == null)
