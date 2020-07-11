@@ -1,4 +1,5 @@
 ﻿using LumbApp.Conectores.ConectorKinect;
+using LumbApp.Expertos.ExpertoZE;
 using Microsoft.Kinect;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,7 @@ namespace KinectCoordinateMapping
         private const float delta = 0.1f;
 
         private ConectorKinect conn;
+        private ExpertoZE expert;
 
         
         public MainWindow()
@@ -45,7 +47,8 @@ namespace KinectCoordinateMapping
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             conn = new ConectorKinect();
-            conn.Conectar();
+            expert = new ExpertoZE(conn);
+            expert.Inicializar();
             conn.SubscribeFramesReady(Sensor_AllFramesReady);
         }
 
@@ -139,7 +142,7 @@ namespace KinectCoordinateMapping
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)
         {
-            conn.Desconectar();
+            expert.Finalizar();
         }
 
         private void drawZE()
