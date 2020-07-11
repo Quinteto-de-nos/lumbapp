@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Conectores\ConectorKinect\ConectorKinect.cs" />
     <Compile Include="Conectores\ConectorSI\conector.cs" />
+    <Compile Include="Expertos\ExpertoZE\ExpertoZE.cs" />
     <Compile Include="Expertos\ExpertoZE\test\ColorExtensions.cs" />
     <Compile Include="Expertos\ExpertoZE\test\Constants.cs" />
     <Compile Include="Expertos\ExpertoZE\test\MainWindow.xaml.cs" />
@@ -66,7 +67,6 @@
   <ItemGroup>
     <Content Include="Conectores\ConectorSI\conector.exe" />
     <Content Include="Expertos\ExpertoSI\init.txt" />
-    <Content Include="Expertos\ExpertoZE\init.txt" />
     <Content Include="FinalFeedbacker\init.txt" />
     <Content Include="GUI\init.txt" />
     <Content Include="Orquestador\init.txt" />

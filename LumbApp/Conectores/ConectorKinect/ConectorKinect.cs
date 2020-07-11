@@ -10,7 +10,6 @@ namespace LumbApp.Conectores.ConectorKinect
     {
         public KinectSensor _sensor;
         public Skeleton[] _bodies = new Skeleton[6];
-        private AllFramesReadyEventArgs framesReadyEvent;
 
         public ConectorKinect() { }
 
