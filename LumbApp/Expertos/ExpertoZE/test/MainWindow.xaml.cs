@@ -22,7 +22,6 @@ namespace KinectCoordinateMapping
     /// </summary>
     public partial class MainWindow : Window
     {
-        CameraMode _mode = CameraMode.Color;
 
         private readonly Brush trackedJointBrush = Brushes.Blue;
         private readonly Brush inferredJointBrush = Brushes.Yellow;
@@ -57,10 +56,7 @@ namespace KinectCoordinateMapping
             {
                 if (frame != null)
                 {
-                    if (_mode == CameraMode.Color)
-                    {
-                        camera.Source = frame.ToBitmap();
-                    }
+                    camera.Source = frame.ToBitmap();
                 }
             }
 
@@ -199,9 +195,4 @@ namespace KinectCoordinateMapping
         }
     }
 
-    enum CameraMode
-    {
-        Color,
-        Depth
-    }
 }
