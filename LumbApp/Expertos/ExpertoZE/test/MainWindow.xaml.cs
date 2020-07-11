@@ -46,7 +46,8 @@ namespace KinectCoordinateMapping
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             conn = new ConectorKinect();
-            conn.Conectar(Sensor_AllFramesReady);
+            conn.Conectar();
+            conn.SubscribeFramesReady(Sensor_AllFramesReady);
         }
 
         void Sensor_AllFramesReady(object sender, AllFramesReadyEventArgs e)

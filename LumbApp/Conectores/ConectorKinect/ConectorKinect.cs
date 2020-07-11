@@ -18,7 +18,7 @@ namespace LumbApp.Conectores.ConectorKinect
         /// Inicializa la conexion con la Kinect. Si no encuentra una kinect, tira una excepcion
         /// </summary>
         /// Severity	Code	Description	Project	File	Line	Suppression State
-        public void Conectar(EventHandler<AllFramesReadyEventArgs> sub)
+        public void Conectar()
         {
             _sensor = KinectSensor.KinectSensors.Where(s => s.Status == KinectStatus.Connected).FirstOrDefault();
             if (_sensor == null)
@@ -27,10 +27,6 @@ namespace LumbApp.Conectores.ConectorKinect
             _sensor.ColorStream.Enable();
             _sensor.SkeletonStream.Enable();
             _sensor.SkeletonStream.TrackingMode = SkeletonTrackingMode.Seated;
-
-            _sensor.AllFramesReady += Sensor_AllFramesReady;
-            if (sub != null)
-                _sensor.AllFramesReady += sub;
 
             _sensor.Start();
 
@@ -45,15 +41,20 @@ namespace LumbApp.Conectores.ConectorKinect
                 _sensor.Stop();
         }
 
-        void Sensor_AllFramesReady(object sender, AllFramesReadyEventArgs e) {
-            this.framesReadyEvent = e;
+        public void SubscribeFramesReady(EventHandler<AllFramesReadyEventArgs> subscriber)
+        {
+            if (_sensor == null)
+                throw new KinectNotConnectedException();
+            _sensor.AllFramesReady += subscriber;
         }
-
-
     }
 
     class KinectNotFoundException: Exception
     {
         public KinectNotFoundException(): base("No encontre ninguna Kinect conectada") { }
+    }
+    class KinectNotConnectedException : Exception
+    {
+        public KinectNotConnectedException() : base("No hay ninguna Kinect conectada. Proba Conectar() primero.") { }
     }
 }
