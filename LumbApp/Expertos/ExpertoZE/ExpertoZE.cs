@@ -15,6 +15,8 @@ namespace LumbApp.Expertos.ExpertoZE
         private Mano manoDerecha;
         private Mano manoIzquierda;
 
+        private bool simulando;
+
         /// <summary>
         /// Constructor de Expero en Zona Esteril.
         /// Este experto necesita una kinect para trabajar, que lo recibe por parametro. Tira una excepcion si recibe null.
@@ -52,20 +54,28 @@ namespace LumbApp.Expertos.ExpertoZE
             manoDerecha = new Mano();
             manoIzquierda = new Mano();
             zonaEsteril.Resetear();
+            simulando = true;
             return true;  
         }
-        public void TerminarSimulacion() { }
+        public void TerminarSimulacion() {
+            simulando = false;
+        }
         public void GetInforme() { }
         public void Finalizar() {
             kinect.Desconectar();
+            simulando = false;
         }
 
         /// <summary>
         /// Esta funcion se llama cada vez que la kinect termina de calcular todas las frames.
+        /// Solo procesa durante una simulacion.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void allFramesReady(object sender, AllFramesReadyEventArgs e) {
+            if (!simulando)
+                return;
+
             using (var frame = e.OpenSkeletonFrame())
             {
                 if(frame != null)
@@ -86,14 +96,19 @@ namespace LumbApp.Expertos.ExpertoZE
 
         private void processSkeleton(Skeleton skeleton)
         {
-            SkeletonPoint mano = skeleton.Joints[JointType.HandRight].Position;
-            if (zonaEsteril.EstaDentro(mano.X, mano.Y, mano.Z))
-            { 
-                bool cambio = manoDerecha.Entrar();
-                if (cambio && manoDerecha.Estado == Mano.Estados.Contaminando)
+            processHand(skeleton.Joints[JointType.HandRight].Position, manoDerecha);
+            processHand(skeleton.Joints[JointType.HandLeft].Position, manoIzquierda);
+        }
+
+        private void processHand(SkeletonPoint pos, Mano mano)
+        {
+            if (zonaEsteril.EstaDentro(pos.X, pos.Y, pos.Z))
+            {
+                bool cambio = mano.Entrar();
+                if (cambio && mano.Estado == Mano.Estados.Contaminando)
                     zonaEsteril.Contaminar();
             }
-            else manoDerecha.Salir();
+            else mano.Salir();
         }
     }
 }
