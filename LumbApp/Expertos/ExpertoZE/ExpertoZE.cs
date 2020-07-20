@@ -12,9 +12,8 @@ namespace LumbApp.Expertos.ExpertoZE
         private IConectorKinect kinect;
         private ZonaEsteril zonaEsteril;
 
-        private enum Posicion { Dentro, Fuera};
-        private Posicion manoDerecha;
-        private Posicion manoIzquierda;
+        private Mano manoDerecha;
+        private Mano manoIzquierda;
 
         /// <summary>
         /// Constructor de Expero en Zona Esteril.
@@ -35,8 +34,8 @@ namespace LumbApp.Expertos.ExpertoZE
         public bool Inicializar() 
         {
             zonaEsteril = new ZonaEsteril();
-            manoDerecha = Posicion.Fuera;
-            manoIzquierda = Posicion.Fuera;
+            manoDerecha = new Mano();
+            manoIzquierda = new Mano();
 
             try
             {
@@ -51,7 +50,11 @@ namespace LumbApp.Expertos.ExpertoZE
             return true;
         }
 
-        public bool IniciarSimulacion() { return false;  }
+        public bool IniciarSimulacion() {
+            manoDerecha = new Mano();
+            manoIzquierda = new Mano();
+            return true;  
+        }
         public void TerminarSimulacion() { }
         public void GetInforme() { }
         public void Finalizar() {
@@ -87,11 +90,9 @@ namespace LumbApp.Expertos.ExpertoZE
             Console.WriteLine(skeleton.ClippedEdges);
 
             SkeletonPoint mano = skeleton.Joints[JointType.HandRight].Position;
-            bool dentro = zonaEsteril.EstaDentro(mano.X, mano.Y, mano.Z);
-            if (manoDerecha == Posicion.Fuera && dentro)
-                Console.WriteLine("Entro mano derecha");
-            else if (manoDerecha == Posicion.Dentro && !dentro)
-                Console.WriteLine("Salio mano derecha");
+            if (zonaEsteril.EstaDentro(mano.X, mano.Y, mano.Z))
+                manoDerecha.Entrar();
+            else manoDerecha.Salir();
         }
     }
 }

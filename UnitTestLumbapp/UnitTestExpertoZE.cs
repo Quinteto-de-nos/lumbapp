@@ -55,8 +55,14 @@ namespace UnitTestLumbapp
             Assert.AreEqual(Mano.Estados.Inicial, mano.Estado);
             mano.Entrar();
             Assert.AreEqual(Mano.Estados.Trabajando, mano.Estado);
+            mano.Entrar();
+            Assert.AreEqual(Mano.Estados.Trabajando, mano.Estado);
             mano.Salir();
             Assert.AreEqual(Mano.Estados.Fuera, mano.Estado);
+            mano.Salir();
+            Assert.AreEqual(Mano.Estados.Fuera, mano.Estado);
+            mano.Entrar();
+            Assert.AreEqual(Mano.Estados.Contaminando, mano.Estado);
             mano.Entrar();
             Assert.AreEqual(Mano.Estados.Contaminando, mano.Estado);
             mano.Salir();
