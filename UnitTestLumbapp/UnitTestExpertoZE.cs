@@ -46,5 +46,34 @@ namespace UnitTestLumbapp
             Assert.AreEqual(false, init);
         }
 
+        [TestMethod]
+        public void TestEstadoMano()
+        {
+            Mano mano = new Mano();
+            Assert.AreEqual(Mano.Estados.Inicial, mano.Estado);
+            mano.Salir();
+            Assert.AreEqual(Mano.Estados.Inicial, mano.Estado);
+            mano.Entrar();
+            Assert.AreEqual(Mano.Estados.Trabajando, mano.Estado);
+            mano.Salir();
+            Assert.AreEqual(Mano.Estados.Fuera, mano.Estado);
+            mano.Entrar();
+            Assert.AreEqual(Mano.Estados.Contaminando, mano.Estado);
+            mano.Salir();
+            Assert.AreEqual(Mano.Estados.Fuera, mano.Estado);
+            mano.Entrar();
+            Assert.AreEqual(Mano.Estados.Contaminando, mano.Estado);
+        }
+
+        [TestMethod]
+        public void TestTrackingMano()
+        {
+            Mano mano = new Mano();
+            Assert.AreEqual(Mano.Tracking.Perdido, mano.Track);
+            mano.Track = Mano.Tracking.Trackeado;
+            Assert.AreEqual(Mano.Tracking.Trackeado, mano.Track);
+            mano.Track = Mano.Tracking.Perdido;
+            Assert.AreEqual(Mano.Tracking.Perdido, mano.Track);
+        }
     }
 }

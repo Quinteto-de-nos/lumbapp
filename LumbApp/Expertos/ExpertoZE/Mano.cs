@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LumbApp.Expertos.ExpertoZE
 {
-    class Mano
+    public class Mano
     {
         public enum Tracking { Trackeado, Perdido };
         public Tracking Track;
@@ -36,13 +36,13 @@ namespace LumbApp.Expertos.ExpertoZE
             Contaminando
         };
         private Estados estado;
-        internal Estados Estado { get => estado; private set => estado = value; }
+        public Estados Estado { get => estado; private set => estado = value; }
 
 
         public Mano()
         {
             Track = Tracking.Perdido;
-            Estado = Estados.Inicial;
+            estado = Estados.Inicial;
         }
 
         /// <summary>
