@@ -81,5 +81,18 @@ namespace UnitTestLumbapp
             mano.Track = Mano.Tracking.Perdido;
             Assert.AreEqual(Mano.Tracking.Perdido, mano.Track);
         }
+
+        [TestMethod]
+        public void TestContaminacionZE()
+        {
+            ZonaEsteril ze = new ZonaEsteril();
+            Assert.AreEqual(0, ze.Contaminacion);
+            ze.Contaminar();
+            Assert.AreEqual(1, ze.Contaminacion);
+            ze.Contaminar();
+            Assert.AreEqual(2, ze.Contaminacion);
+            ze.Resetear();
+            Assert.AreEqual(0, ze.Contaminacion);
+        }
     }
 }
