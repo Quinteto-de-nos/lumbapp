@@ -7,16 +7,21 @@ using System.Text;
 
 namespace LumbApp.Expertos.ExpertoZE
 {
-    class ExpertoZE
+    public class ExpertoZE
     {
-        private ConectorKinect kinect;
+        private IConectorKinect kinect;
+        private ZonaEsteril zonaEsteril;
+
+        private enum Posicion { Dentro, Fuera};
+        private Posicion manoDerecha;
+        private Posicion manoIzquierda;
 
         /// <summary>
         /// Constructor de Expero en Zona Esteril.
         /// Este experto necesita una kinect para trabajar, que lo recibe por parametro. Tira una excepcion si recibe null.
         /// </summary>
         /// <param name="kinect">Conector a la kinect</param>
-        public ExpertoZE(ConectorKinect kinect) 
+        public ExpertoZE(IConectorKinect kinect) 
         {
             if (kinect == null)
                 throw new Exception("Kinect no puede ser null. Necesito un conector a una kinect para crear un experto en zona esteril");
@@ -29,6 +34,10 @@ namespace LumbApp.Expertos.ExpertoZE
         /// <returns>True si se inicializo todo bien, false si algo fallo y no podra aceptar simulaciones</returns>
         public bool Inicializar() 
         {
+            zonaEsteril = new ZonaEsteril();
+            manoDerecha = Posicion.Fuera;
+            manoIzquierda = Posicion.Fuera;
+
             try
             {
                 kinect.Conectar();
@@ -76,7 +85,13 @@ namespace LumbApp.Expertos.ExpertoZE
         private void processSkeleton(Skeleton skeleton)
         {
             Console.WriteLine(skeleton.ClippedEdges);
-            //TODO: procesar manos
+
+            SkeletonPoint mano = skeleton.Joints[JointType.HandRight].Position;
+            bool dentro = zonaEsteril.EstaDentro(mano.X, mano.Y, mano.Z);
+            if (manoDerecha == Posicion.Fuera && dentro)
+                Console.WriteLine("Entro mano derecha");
+            else if (manoDerecha == Posicion.Dentro && !dentro)
+                Console.WriteLine("Salio mano derecha");
         }
     }
 }

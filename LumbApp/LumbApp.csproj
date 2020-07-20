@@ -61,6 +61,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Conectores\ConectorKinect\IConectorKinect.cs" />
     <Compile Include="Conectores\ConectorKinect\ConectorKinect.cs" />
     <Compile Include="Conectores\ConectorSI\conector.cs" />
     <Compile Include="Expertos\ExpertoZE\ExpertoZE.cs" />

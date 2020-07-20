@@ -6,7 +6,7 @@ using System.Text;
 
 namespace LumbApp.Conectores.ConectorKinect
 {
-    class ConectorKinect
+    public class ConectorKinect : IConectorKinect
     {
         internal KinectSensor _sensor;
 
@@ -50,11 +50,11 @@ namespace LumbApp.Conectores.ConectorKinect
         }
     }
 
-    class KinectNotFoundException: Exception
+    public class KinectNotFoundException: Exception
     {
         public KinectNotFoundException(): base("No encontre ninguna Kinect conectada") { }
     }
-    class KinectNotConnectedException : Exception
+    public class KinectNotConnectedException : Exception
     {
         public KinectNotConnectedException() : base("No hay ninguna Kinect conectada. Proba Conectar() primero.") { }
     }
