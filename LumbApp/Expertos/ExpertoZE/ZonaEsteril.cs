@@ -30,6 +30,7 @@ namespace LumbApp.Expertos.ExpertoZE
 
         public void Contaminar() {
             contaminacion++;
+            Console.WriteLine("MAMAA!! CONTAMINASTE TODA LA ZOOOOONE!!!\nYa te lo dije " + contaminacion + " veces.");
         }
 
         public void Resetear()

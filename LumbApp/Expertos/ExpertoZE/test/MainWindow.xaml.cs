@@ -51,6 +51,7 @@ namespace KinectCoordinateMapping
             conn = new ConectorKinect();
             expert = new ExpertoZE(conn);
             expert.Inicializar();
+            expert.IniciarSimulacion();
             conn.SubscribeFramesReady(Sensor_AllFramesReady);
         }
 

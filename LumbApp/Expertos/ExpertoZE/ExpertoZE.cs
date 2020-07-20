@@ -34,8 +34,6 @@ namespace LumbApp.Expertos.ExpertoZE
         public bool Inicializar() 
         {
             zonaEsteril = new ZonaEsteril();
-            manoDerecha = new Mano();
-            manoIzquierda = new Mano();
 
             try
             {
@@ -53,6 +51,7 @@ namespace LumbApp.Expertos.ExpertoZE
         public bool IniciarSimulacion() {
             manoDerecha = new Mano();
             manoIzquierda = new Mano();
+            zonaEsteril.Resetear();
             return true;  
         }
         public void TerminarSimulacion() { }
@@ -87,11 +86,13 @@ namespace LumbApp.Expertos.ExpertoZE
 
         private void processSkeleton(Skeleton skeleton)
         {
-            Console.WriteLine(skeleton.ClippedEdges);
-
             SkeletonPoint mano = skeleton.Joints[JointType.HandRight].Position;
             if (zonaEsteril.EstaDentro(mano.X, mano.Y, mano.Z))
-                manoDerecha.Entrar();
+            { 
+                bool cambio = manoDerecha.Entrar();
+                if (cambio && manoDerecha.Estado == Mano.Estados.Contaminando)
+                    zonaEsteril.Contaminar();
+            }
             else manoDerecha.Salir();
         }
     }
