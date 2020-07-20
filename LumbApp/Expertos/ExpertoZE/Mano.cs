@@ -51,7 +51,8 @@ namespace LumbApp.Expertos.ExpertoZE
         /// No hay problema si se llama varias veces cuando ya esta adentro.
         /// Asume que si saben que entro es porque esta trackeada.
         /// </summary>
-        public void Entrar()
+        /// <returns>Si hubo cambio de estado</returns>
+        public bool Entrar()
         {
             Track = Tracking.Trackeado;
 
@@ -59,12 +60,14 @@ namespace LumbApp.Expertos.ExpertoZE
             {
                 case Estados.Inicial:
                     estado = Estados.Trabajando;
-                    break;
+                    return true;
                 case Estados.Fuera:
                     estado = Estados.Contaminando;
-                    break;
+                    return true;
             }
+            return false;
         }
+
 
         /// <summary>
         /// Setea a la mano fuera de la zona esteril. Si estaba en Inicial, lo mantiene, sino
@@ -72,11 +75,14 @@ namespace LumbApp.Expertos.ExpertoZE
         /// No hay problema con llamarla cuando ya esta afuera.
         /// Asumen que si saben que salio es porque esta trackeada.
         /// </summary>
-        public void Salir()
+        /// <returns>Si hubo cambio de estado</returns>
+        public bool Salir()
         {
             Track = Tracking.Trackeado;
-            if(estado != Estados.Inicial)
-                estado = Estados.Fuera;
+            if (estado == Estados.Inicial || estado == Estados.Fuera)
+                return false;
+            estado = Estados.Fuera;
+            return true;
         }
     }
 }

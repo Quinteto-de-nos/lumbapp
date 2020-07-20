@@ -50,25 +50,45 @@ namespace UnitTestLumbapp
         public void TestEstadoMano()
         {
             Mano mano = new Mano();
+            bool cambio;
+
             Assert.AreEqual(Mano.Estados.Inicial, mano.Estado);
-            mano.Salir();
+
+            cambio = mano.Salir();
             Assert.AreEqual(Mano.Estados.Inicial, mano.Estado);
-            mano.Entrar();
+            Assert.AreEqual(false, cambio);
+
+            cambio = mano.Entrar();
             Assert.AreEqual(Mano.Estados.Trabajando, mano.Estado);
-            mano.Entrar();
+            Assert.AreEqual(true, cambio);
+
+            cambio = mano.Entrar();
             Assert.AreEqual(Mano.Estados.Trabajando, mano.Estado);
-            mano.Salir();
+            Assert.AreEqual(false, cambio);
+
+            cambio = mano.Salir();
             Assert.AreEqual(Mano.Estados.Fuera, mano.Estado);
-            mano.Salir();
+            Assert.AreEqual(true, cambio);
+
+            cambio = mano.Salir();
             Assert.AreEqual(Mano.Estados.Fuera, mano.Estado);
-            mano.Entrar();
+            Assert.AreEqual(false, cambio);
+
+            cambio = mano.Entrar();
             Assert.AreEqual(Mano.Estados.Contaminando, mano.Estado);
-            mano.Entrar();
+            Assert.AreEqual(true, cambio);
+
+            cambio = mano.Entrar();
             Assert.AreEqual(Mano.Estados.Contaminando, mano.Estado);
-            mano.Salir();
+            Assert.AreEqual(false, cambio);
+
+            cambio = mano.Salir();
             Assert.AreEqual(Mano.Estados.Fuera, mano.Estado);
-            mano.Entrar();
+            Assert.AreEqual(true, cambio);
+
+            cambio = mano.Entrar();
             Assert.AreEqual(Mano.Estados.Contaminando, mano.Estado);
+            Assert.AreEqual(true, cambio);
         }
 
         [TestMethod]
