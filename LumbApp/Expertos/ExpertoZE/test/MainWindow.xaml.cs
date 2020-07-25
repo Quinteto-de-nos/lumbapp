@@ -40,7 +40,7 @@ namespace KinectCoordinateMapping
         private ConectorKinect conn;
         private ExpertoZE expert;
 
-        
+
         public MainWindow()
         {
             InitializeComponent();
@@ -79,7 +79,7 @@ namespace KinectCoordinateMapping
                     {
                         if (body.TrackingState == SkeletonTrackingState.Tracked)
                         {
-                           // Console.WriteLine(body.ClippedEdges);
+                            // Console.WriteLine(body.ClippedEdges);
                             drawJoint(body.Joints[JointType.HandRight]);
                             drawJoint(body.Joints[JointType.HandLeft]);
                         }

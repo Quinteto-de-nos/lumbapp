@@ -35,7 +35,7 @@ namespace KinectCoordinateMapping
         /// The RGB pixel values.
         /// </summary>
         static byte[] _pixels = null;
-        
+
         #endregion
 
         #region Public methods

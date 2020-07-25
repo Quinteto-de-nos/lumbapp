@@ -1,9 +1,6 @@
 ﻿using LumbApp.Conectores.ConectorKinect;
 using Microsoft.Kinect;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace LumbApp.Expertos.ExpertoZE
 {
@@ -24,7 +21,7 @@ namespace LumbApp.Expertos.ExpertoZE
         /// Este experto necesita una kinect para trabajar, que lo recibe por parametro. Tira una excepcion si recibe null.
         /// </summary>
         /// <param name="kinect">Conector a la kinect</param>
-        public ExpertoZE(IConectorKinect kinect) 
+        public ExpertoZE(IConectorKinect kinect)
         {
             if (kinect == null)
                 throw new Exception("Kinect no puede ser null. Necesito un conector a una kinect para crear un experto en zona esteril");
@@ -35,7 +32,7 @@ namespace LumbApp.Expertos.ExpertoZE
         /// Inicializa todo lo necesario y queda listo para aceptar simulaciones.
         /// </summary>
         /// <returns>True si se inicializo todo bien, false si algo fallo y no podra aceptar simulaciones</returns>
-        public bool Inicializar() 
+        public bool Inicializar()
         {
             zonaEsteril = new ZonaEsteril();
 
@@ -52,18 +49,21 @@ namespace LumbApp.Expertos.ExpertoZE
             return true;
         }
 
-        public bool IniciarSimulacion() {
+        public bool IniciarSimulacion()
+        {
             manoDerecha = new Mano();
             manoIzquierda = new Mano();
             zonaEsteril.Resetear();
             simulando = true;
-            return true;  
+            return true;
         }
-        public void TerminarSimulacion() {
+        public void TerminarSimulacion()
+        {
             simulando = false;
         }
         public void GetInforme() { }
-        public void Finalizar() {
+        public void Finalizar()
+        {
             kinect.Desconectar();
             simulando = false;
         }
@@ -74,19 +74,20 @@ namespace LumbApp.Expertos.ExpertoZE
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void allFramesReady(object sender, AllFramesReadyEventArgs e) {
+        private void allFramesReady(object sender, AllFramesReadyEventArgs e)
+        {
             if (!simulando)
                 return;
 
             using (var frame = e.OpenSkeletonFrame())
             {
-                if(frame != null)
+                if (frame != null)
                 {
                     Skeleton[] allSkeletons = new Skeleton[6];
                     frame.CopySkeletonDataTo(allSkeletons);
-                    foreach(Skeleton skeleton in allSkeletons)
+                    foreach (Skeleton skeleton in allSkeletons)
                     {
-                        if(skeleton.TrackingState == SkeletonTrackingState.Tracked)
+                        if (skeleton.TrackingState == SkeletonTrackingState.Tracked)
                         {
                             processSkeleton(skeleton);
                             break; //Procesa solo el primer skeleton trackeado

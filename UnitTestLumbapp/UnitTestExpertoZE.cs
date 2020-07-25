@@ -2,7 +2,6 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using LumbApp.Expertos.ExpertoZE;
 using LumbApp.Conectores.ConectorKinect;
-using Microsoft.Kinect;
 using Moq;
 
 namespace UnitTestLumbapp
@@ -11,7 +10,7 @@ namespace UnitTestLumbapp
     public class UnitTestExpertoZE
     {
         [TestMethod]
-        [ExpectedException(typeof(Exception), 
+        [ExpectedException(typeof(Exception),
             "Kinect no puede ser null. Necesito un conector a una kinect para crear un experto en zona esteril")]
         public void TestConstructorNull()
         {

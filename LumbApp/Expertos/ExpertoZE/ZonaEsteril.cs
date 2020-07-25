@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace LumbApp.Expertos.ExpertoZE
+﻿namespace LumbApp.Expertos.ExpertoZE
 {
     public class ZonaEsteril
     {
@@ -16,7 +11,7 @@ namespace LumbApp.Expertos.ExpertoZE
 
         public int Contaminacion { get => contaminacion; }
 
-        public ZonaEsteril() 
+        public ZonaEsteril()
         {
             contaminacion = 0;
         }
@@ -28,7 +23,8 @@ namespace LumbApp.Expertos.ExpertoZE
                 && z < zeZ + delta && z > zeZ - delta;
         }
 
-        public void Contaminar() {
+        public void Contaminar()
+        {
             contaminacion++;
         }
 

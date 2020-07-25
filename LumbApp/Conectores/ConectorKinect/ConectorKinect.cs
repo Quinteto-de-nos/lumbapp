@@ -1,8 +1,6 @@
 ﻿using Microsoft.Kinect;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace LumbApp.Conectores.ConectorKinect
 {
@@ -50,9 +48,9 @@ namespace LumbApp.Conectores.ConectorKinect
         }
     }
 
-    public class KinectNotFoundException: Exception
+    public class KinectNotFoundException : Exception
     {
-        public KinectNotFoundException(): base("No encontre ninguna Kinect conectada") { }
+        public KinectNotFoundException() : base("No encontre ninguna Kinect conectada") { }
     }
     public class KinectNotConnectedException : Exception
     {
