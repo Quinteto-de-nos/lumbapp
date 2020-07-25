@@ -9,6 +9,8 @@ namespace LumbApp.Expertos.ExpertoZE
 {
     public class ExpertoZE
     {
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         private IConectorKinect kinect;
         private ZonaEsteril zonaEsteril;
 
@@ -42,9 +44,9 @@ namespace LumbApp.Expertos.ExpertoZE
                 kinect.Conectar();
                 kinect.SubscribeFramesReady(allFramesReady);
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log
+                logger.Error(ex, "No pude inicializar el Experto en Zona Esteril por error con la Kinect");
                 return false;
             }
             return true;
