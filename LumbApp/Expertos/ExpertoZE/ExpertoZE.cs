@@ -87,7 +87,7 @@ namespace LumbApp.Expertos.ExpertoZE
                         if(skeleton.TrackingState == SkeletonTrackingState.Tracked)
                         {
                             processSkeleton(skeleton);
-                            break;
+                            break; //Procesa solo el primer skeleton trackeado
                         }
                     }
                 }
