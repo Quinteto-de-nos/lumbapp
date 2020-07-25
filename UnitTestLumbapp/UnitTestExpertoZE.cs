@@ -121,5 +121,16 @@ namespace UnitTestLumbapp
             Assert.AreEqual(true, ze.EstaDentro(.09f, -.09f, 1.05f));
             Assert.AreEqual(false, ze.EstaDentro(2, 0, 0));
         }
+
+        [TestMethod]
+        public void TestContaminar()
+        {
+            bool contaminada = false;
+            Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
+            ExpertoZE exp = new ExpertoZE(conn.Object);
+            exp.ZEContaminada += delegate (object sender, EventArgs e) { contaminada = true; };
+
+            PrivateObject privExp = new PrivateObject(exp);
+        }
     }
 }

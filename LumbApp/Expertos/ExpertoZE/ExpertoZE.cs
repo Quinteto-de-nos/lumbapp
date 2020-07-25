@@ -6,6 +6,13 @@ namespace LumbApp.Expertos.ExpertoZE
 {
     public class ExpertoZE
     {
+        /// <summary>
+        /// ZEContaminada es el evento que se produce cada vez que una mano que estaba Fuera ingresa a la Zona Esteril y
+        /// pasa a Contaminando. Si el usuario retira e ingresa la mano varias veces, este evento se producirá varias veces.
+        /// Este evento no lleva argumentos.
+        /// </summary>
+        public event EventHandler ZEContaminada;
+
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         private IConectorKinect kinect;
@@ -109,9 +116,15 @@ namespace LumbApp.Expertos.ExpertoZE
             {
                 bool cambio = mano.Entrar();
                 if (cambio && mano.Estado == Mano.Estados.Contaminando)
-                    zonaEsteril.Contaminar();
+                    contaminar();
             }
             else mano.Salir();
+        }
+
+        private void contaminar()
+        {
+            zonaEsteril.Contaminar();
+            ZEContaminada.Invoke(this, EventArgs.Empty);
         }
     }
 }
