@@ -70,13 +70,16 @@
   <ItemGroup>
     <Compile Include="Conectores\ConectorKinect\IConectorKinect.cs" />
     <Compile Include="Conectores\ConectorKinect\ConectorKinect.cs" />
-    <Compile Include="Conectores\ConectorSI\conector.cs" />
+    <Compile Include="Conectores\ConectorSI\ConectorSI.cs" />
+    <Compile Include="Conectores\ConectorSI\IConectorSI.cs" />
+    <Compile Include="Expertos\ExpertoSI\ExpertoSI.cs" />
     <Compile Include="Expertos\ExpertoZE\ExpertoZE.cs" />
     <Compile Include="Expertos\ExpertoZE\Mano.cs" />
     <Compile Include="Expertos\ExpertoZE\test\ColorExtensions.cs" />
     <Compile Include="Expertos\ExpertoZE\test\Constants.cs" />
     <Compile Include="Expertos\ExpertoZE\test\MainWindow.xaml.cs" />
     <Compile Include="Expertos\ExpertoZE\ZonaEsteril.cs" />
+    <Compile Include="Orquestador\Orquestador.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Conectores\ConectorSI\conector.exe" />
