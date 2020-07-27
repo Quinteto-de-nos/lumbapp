@@ -33,7 +33,7 @@
     <RootNamespace>LumbApp</RootNamespace>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>KinectCoordinateMapping.MainWindow</StartupObject>
+    <StartupObject>LumbApp.StartUp</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -77,6 +77,15 @@
     <Compile Include="Expertos\ExpertoZE\test\Constants.cs" />
     <Compile Include="Expertos\ExpertoZE\test\MainWindow.xaml.cs" />
     <Compile Include="Expertos\ExpertoZE\ZonaEsteril.cs" />
+    <Compile Include="GUI\GUIController.cs" />
+    <Compile Include="GUI\MainWindow.xaml.cs" />
+    <Compile Include="GUI\SensorsCheck.xaml.cs" />
+    <Compile Include="GUI\StudentData.cs" />
+    <Compile Include="GUI\UserDataInput.xaml.cs" />
+    <Compile Include="GUI\UserDataValidations\DniRangeRule.cs" />
+    <Compile Include="Orquestador\IOrquestrator.cs" />
+    <Compile Include="Orquestador\Orquestrator.cs" />
+    <Compile Include="StartUp.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Conectores\ConectorSI\conector.exe" />
@@ -88,6 +97,18 @@
   <ItemGroup />
   <ItemGroup>
     <Page Include="Expertos\ExpertoZE\test\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\SensorsCheck.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\UserDataInput.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

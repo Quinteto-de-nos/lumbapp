@@ -1,0 +1,79 @@
+﻿<Page x:Class="GUI.UserDataInput"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:GUI" 
+      xmlns:valRule="clr-namespace:GUI.UserDataValidations" 
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="LumbApp">
+    <Page.Resources>
+        <local:StudentData x:Key="Ods"/>
+        
+        <ControlTemplate x:Key="ValidationTemplate">
+            <DockPanel>
+                <TextBlock Foreground="Red" FontSize="20">!</TextBlock>
+                <AdornedElementPlaceholder/>
+            </DockPanel>
+        </ControlTemplate>
+
+        <Style x:Key="TextBoxInError" TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip"
+              Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                              Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Border  Grid.Row="0" Height="35" Width="800" Padding="5" Background="#4E87D4" HorizontalAlignment="Center" VerticalAlignment="Top" >
+            <Label VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="White">Ingrese sus datos</Label>
+        </Border>
+        <Border Grid.Row="1" Height="30" Width="500" Background="#91c0ff" HorizontalAlignment="Center" VerticalAlignment="Top" >
+            <Label VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="White">Ingrese su nombre Completo</Label>
+        </Border>
+
+        <TextBox Grid.Row="2"  Height="35" Width="500"  HorizontalAlignment="Center" VerticalAlignment="Top" 
+           Name="fullName" />
+
+        <Border Grid.Row="3" Height="30" Width="500"  Background="#91c0ff" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <Label VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="White">Ingrese su DNI</Label>
+        </Border>
+        
+        <TextBox  Name="dni"  Height="35" Width="500"  FontSize="15"  HorizontalAlignment="Center" VerticalAlignment="Top" 
+         Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+         Style="{StaticResource TextBoxInError}"
+         Grid.Row="4">
+            <TextBox.Text>
+                <Binding Path="Dni" Source="{StaticResource Ods}"  UpdateSourceTrigger="PropertyChanged" >
+                    <Binding.ValidationRules>
+                        <valRule:DniRangeRule Min="1000000" Max="999999999"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <Button Grid.Row="7" Grid.Column="0" Height="35" Width="200" Padding="5" HorizontalAlignment="Center"
+          Name="submit">
+            Iniciar Simulación
+        </Button>
+
+    </Grid>
+</Page>
