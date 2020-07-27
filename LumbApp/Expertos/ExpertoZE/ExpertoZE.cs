@@ -7,11 +7,10 @@ namespace LumbApp.Expertos.ExpertoZE
     public class ExpertoZE
     {
         /// <summary>
-        /// ZEContaminada es el evento que se produce cada vez que una mano que estaba Fuera ingresa a la Zona Esteril y
-        /// pasa a Contaminando. Si el usuario retira e ingresa la mano varias veces, este evento se producirá varias veces.
-        /// Este evento no lleva argumentos.
+        /// CambioZE es un evento que se produce durante la simulacion cada vez que se da un cambio en el estado de alguna
+        /// mano.
         /// </summary>
-        public event EventHandler ZEContaminada;
+        public event EventHandler<CambioZEEventArgs> CambioZE;
 
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
@@ -56,6 +55,11 @@ namespace LumbApp.Expertos.ExpertoZE
             return true;
         }
 
+        /// <summary>
+        /// Inicia una simulacion. A partir de este momento, registrara todos los datos relevantes y generara eventos
+        /// para el orchestrator.
+        /// </summary>
+        /// <returns>True si se inicializo todo bien y efectivamente comenzo a sensar</returns>
         public bool IniciarSimulacion()
         {
             manoDerecha = new Mano();
@@ -104,27 +108,44 @@ namespace LumbApp.Expertos.ExpertoZE
             }
         }
 
+        /// <summary>
+        /// Procesa el esqueleto en un frame. Si ocurre algun cambio, invoca al evento CambioZE
+        /// </summary>
+        /// <param name="skeleton">Esqueleto a procesar</param>
         private void processSkeleton(Skeleton skeleton)
         {
-            processHand(skeleton.Joints[JointType.HandRight].Position, manoDerecha);
-            processHand(skeleton.Joints[JointType.HandLeft].Position, manoIzquierda);
+            CambioZEEventArgs args = new CambioZEEventArgs(manoDerecha, manoIzquierda);
+
+            bool cambio = processHand(skeleton.Joints[JointType.HandRight].Position, manoDerecha, args);
+            cambio = processHand(skeleton.Joints[JointType.HandLeft].Position, manoIzquierda, args) || cambio;
+
+            if (cambio)
+            {
+                args.VecesContaminado = zonaEsteril.Contaminacion;
+                CambioZE.Invoke(this, args);
+            }
         }
 
-        private void processHand(SkeletonPoint pos, Mano mano)
+        /// <summary>
+        /// Procesa una mano.
+        /// </summary>
+        /// <param name="pos">SkeletonPoint con la posicion de la mano</param>
+        /// <param name="mano">Objeto Mano</param>
+        /// <param name="eventArgs">Argumentos por si hay que generar un evento</param>
+        /// <returns>True si hubo algun cambio</returns>
+        private bool processHand(SkeletonPoint pos, Mano mano, CambioZEEventArgs eventArgs)
         {
             if (zonaEsteril.EstaDentro(pos.X, pos.Y, pos.Z))
             {
                 bool cambio = mano.Entrar();
                 if (cambio && mano.Estado == Mano.Estados.Contaminando)
-                    contaminar();
+                {
+                    eventArgs.ContaminadoAhora = true;
+                    zonaEsteril.Contaminar();
+                }
+                return cambio;
             }
-            else mano.Salir();
-        }
-
-        private void contaminar()
-        {
-            zonaEsteril.Contaminar();
-            ZEContaminada.Invoke(this, EventArgs.Empty);
+            else return mano.Salir();
         }
     }
 }
