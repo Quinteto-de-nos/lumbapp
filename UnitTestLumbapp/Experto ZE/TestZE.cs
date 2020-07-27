@@ -3,7 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTestLumbapp.Experto_ZE
 {
-    class TestZE
+    [TestClass]
+    public class TestZE
     {
         [TestMethod]
         public void TestContaminacionZE()

@@ -3,7 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTestLumbapp.Experto_ZE
 {
-    class TestMano
+    [TestClass]
+    public class TestMano
     {
         [TestMethod]
         public void TestEstadoMano()

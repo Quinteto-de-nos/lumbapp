@@ -4,7 +4,7 @@ using LumbApp.Expertos.ExpertoZE;
 using LumbApp.Conectores.ConectorKinect;
 using Moq;
 
-namespace UnitTestLumbapp
+namespace UnitTestLumbapp.Experto_ZE
 {
     [TestClass]
     public class TestExpertoZE
