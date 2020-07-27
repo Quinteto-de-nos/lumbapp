@@ -40,8 +40,6 @@ namespace LumbApp.Expertos.ExpertoZE
         /// <returns>True si se inicializo todo bien, false si algo fallo y no podra aceptar simulaciones</returns>
         public bool Inicializar()
         {
-            zonaEsteril = new ZonaEsteril();
-
             try
             {
                 kinect.Conectar();
@@ -52,6 +50,8 @@ namespace LumbApp.Expertos.ExpertoZE
                 logger.Error(ex, "No pude inicializar el Experto en Zona Esteril por error con la Kinect");
                 return false;
             }
+
+            zonaEsteril = new ZonaEsteril();
             return true;
         }
 
@@ -59,9 +59,13 @@ namespace LumbApp.Expertos.ExpertoZE
         /// Inicia una simulacion. A partir de este momento, registrara todos los datos relevantes y generara eventos
         /// para el orchestrator.
         /// </summary>
-        /// <returns>True si se inicializo todo bien y efectivamente comenzo a sensar</returns>
+        /// <returns>True si se inicializo todo bien y efectivamente comenzo a sensar.
+        /// False si esta funcion se llama antes de Inicializar</returns>
         public bool IniciarSimulacion()
         {
+            if (zonaEsteril == null)
+                return false;
+
             manoDerecha = new Mano();
             manoIzquierda = new Mano();
             zonaEsteril.Resetear();
@@ -72,10 +76,14 @@ namespace LumbApp.Expertos.ExpertoZE
         /// <summary>
         /// Termina la simulacion y devuelve un resumen de los datos recopilados.
         /// No registrara datos nuevos ni generara eventos de CambioZE hasta que se inicie una nueva simulacion.
+        /// Si no se estaba simulando, devuelve un informe vacio.
         /// </summary>
         /// <returns>Informe con un resumen de los datos recopilados</returns>
         public InformeZE TerminarSimulacion()
         {
+            if (!simulando)
+                return new InformeZE(0,0,0);
+
             simulando = false;
             return new InformeZE(zonaEsteril.Contaminacion, manoDerecha.VecesContamino, manoIzquierda.VecesContamino);
         }

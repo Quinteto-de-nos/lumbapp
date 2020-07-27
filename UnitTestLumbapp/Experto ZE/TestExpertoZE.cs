@@ -46,11 +46,24 @@ namespace UnitTestLumbapp.Experto_ZE
         }
 
         [TestMethod]
-        public void TestDentroZEFija()
+        public void IniciarTooSoon()
         {
-            ZonaEsteril ze = new ZonaEsteril();
-            Assert.AreEqual(true, ze.EstaDentro(.09f, -.09f, 1.05f));
-            Assert.AreEqual(false, ze.EstaDentro(2, 0, 0));
+            Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
+            ExpertoZE exp = new ExpertoZE(conn.Object);
+
+            bool init = exp.IniciarSimulacion();
+            Assert.AreEqual(false, init);
+        }
+
+        [TestMethod]
+        public void IniciarOK()
+        {
+            Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
+            ExpertoZE exp = new ExpertoZE(conn.Object);
+            exp.Inicializar();
+
+            bool init = exp.IniciarSimulacion();
+            Assert.AreEqual(true, init);
         }
     }
 }

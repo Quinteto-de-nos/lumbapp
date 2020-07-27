@@ -20,14 +20,11 @@ namespace UnitTestLumbapp.Experto_ZE
         }
 
         [TestMethod]
-        public void TestTrackingMano()
+        public void TestDentroZEFija()
         {
-            Mano mano = new Mano();
-            Assert.AreEqual(Mano.Tracking.Perdido, mano.Track);
-            mano.Track = Mano.Tracking.Trackeado;
-            Assert.AreEqual(Mano.Tracking.Trackeado, mano.Track);
-            mano.Track = Mano.Tracking.Perdido;
-            Assert.AreEqual(Mano.Tracking.Perdido, mano.Track);
+            ZonaEsteril ze = new ZonaEsteril();
+            Assert.AreEqual(true, ze.EstaDentro(.09f, -.09f, 1.05f));
+            Assert.AreEqual(false, ze.EstaDentro(2, 0, 0));
         }
     }
 }

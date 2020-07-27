@@ -50,5 +50,16 @@ namespace UnitTestLumbapp.Experto_ZE
             Assert.AreEqual(Mano.Estados.Contaminando, mano.Estado);
             Assert.AreEqual(true, cambio);
         }
+
+        [TestMethod]
+        public void TestTrackingMano()
+        {
+            Mano mano = new Mano();
+            Assert.AreEqual(Mano.Tracking.Perdido, mano.Track);
+            mano.Track = Mano.Tracking.Trackeado;
+            Assert.AreEqual(Mano.Tracking.Trackeado, mano.Track);
+            mano.Track = Mano.Tracking.Perdido;
+            Assert.AreEqual(Mano.Tracking.Perdido, mano.Track);
+        }
     }
 }
