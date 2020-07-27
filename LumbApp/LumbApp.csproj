@@ -71,6 +71,7 @@
     <Compile Include="Conectores\ConectorKinect\IConectorKinect.cs" />
     <Compile Include="Conectores\ConectorKinect\ConectorKinect.cs" />
     <Compile Include="Conectores\ConectorSI\conector.cs" />
+    <Compile Include="Expertos\ExpertoZE\CambioZEEventArgs.cs" />
     <Compile Include="Expertos\ExpertoZE\ExpertoZE.cs" />
     <Compile Include="Expertos\ExpertoZE\Mano.cs" />
     <Compile Include="Expertos\ExpertoZE\test\ColorExtensions.cs" />
