@@ -68,11 +68,21 @@ namespace LumbApp.Expertos.ExpertoZE
             simulando = true;
             return true;
         }
-        public void TerminarSimulacion()
+
+        /// <summary>
+        /// Termina la simulacion y devuelve un resumen de los datos recopilados.
+        /// No registrara datos nuevos ni generara eventos de CambioZE hasta que se inicie una nueva simulacion.
+        /// </summary>
+        /// <returns>Informe con un resumen de los datos recopilados</returns>
+        public InformeZE TerminarSimulacion()
         {
             simulando = false;
+            return new InformeZE(zonaEsteril.Contaminacion, manoDerecha.VecesContamino, manoIzquierda.VecesContamino);
         }
-        public void GetInforme() { }
+
+        /// <summary>
+        /// Desconecta todo lo necesario para cerrar la aplicacion.
+        /// </summary>
         public void Finalizar()
         {
             kinect.Desconectar();
