@@ -31,6 +31,11 @@ namespace LumbApp
             _mainWindow.NavigationService.Navigate(userDataInputPage);
         }
 
+        public void ConectarSensores()
+        {
+            _orquestrator.Inicializar();
+        }
+
 
     }
 }

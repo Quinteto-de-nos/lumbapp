@@ -30,7 +30,7 @@ namespace GUI
         public SensorsCheck()
         {
             InitializeComponent();
-            //retryButton.Visibility = Visibility.Hidden;
+            retryButton.Visibility = Visibility.Hidden;
         }
         public SensorsCheck(GUIController _gui)
         {
@@ -51,7 +51,7 @@ namespace GUI
 
         private void retryButton_Click(object sender, RoutedEventArgs e)
         {
-            controller.GetUserData();
+            controller.ReintentarConectarSensores();
         }
 
         //public void CheckSensors()

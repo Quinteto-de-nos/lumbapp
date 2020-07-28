@@ -12,7 +12,6 @@ namespace GUI
         {
 
         }
-
         public int Dni { get; set; }
         public string NombreCompleto { get; set; }
         public string FolderPath { get; set; }
