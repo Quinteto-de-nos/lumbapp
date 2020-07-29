@@ -36,9 +36,11 @@ namespace LumbApp.Orquestador {
 			//Pedir a la GUI mostrar msje "inicializando"
 
 			//Inicializar Experto ZE
-			//Si: Inicializar Experto ZE tuvo algún problema:
-			//**Pedir a la GUI mostrar error de inicialización de ZE
-			//**	  o avisar que hubo un error en la inicialización de la ZE
+			if (!expertoZE.Inicializar())
+				//Si: Inicializar Experto ZE tuvo algún problema:
+				//**Pedir a la GUI mostrar error de inicialización de ZE
+				//**	  o avisar que hubo un error en la inicialización de la ZE
+				return false;
 			//Si terminó bien, continuar...
 
 			if (!expertoSI.Inicializar())
