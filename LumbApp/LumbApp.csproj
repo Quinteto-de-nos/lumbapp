@@ -69,6 +69,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Conectores\ConectorKinect\CambioSIEventArgs.cs" />
+    <Compile Include="Expertos\ExpertoZE\CambioZEEventArgs.cs" />
+    <Compile Include="Expertos\ExpertoZE\EstadoMano.cs" />
     <Compile Include="Conectores\ConectorKinect\IConectorKinect.cs" />
     <Compile Include="Conectores\ConectorKinect\ConectorKinect.cs" />
     <Compile Include="Conectores\ConectorSI\ConectorSI.cs" />
@@ -81,6 +83,7 @@
     <Compile Include="Expertos\ExpertoZE\test\Constants.cs" />
     <Compile Include="Expertos\ExpertoZE\test\MainWindow.xaml.cs" />
     <Compile Include="Expertos\ExpertoZE\ZonaEsteril.cs" />
+    <Compile Include="Expertos\ExpertoZE\InformeZE.cs" />
     <Compile Include="Orquestador\IOrquestador.cs" />
     <Compile Include="Orquestador\Orquestador.cs" />
   </ItemGroup>

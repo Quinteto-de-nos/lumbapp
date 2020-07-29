@@ -55,7 +55,7 @@ namespace LumbApp.Orquestador {
 			return true;
 		}
 
-		private void ComenzarSimulacion () {/// acá hay que poner el nombre del evento que la GUI dispara al iniciar la simulacion
+		private void IniciarSimulacion () {/// acá hay que poner el nombre del evento que la GUI dispara al iniciar la simulacion
 			Iniciar();
 
 			bool run = true;
@@ -68,6 +68,7 @@ namespace LumbApp.Orquestador {
 
 		public void Iniciar () {
 
+			expertoZE.CambioZE += CambioZE;
 			expertoZE.IniciarSimulacion();
 
 			expertoSI.CambioSI += CambioSI;
@@ -75,7 +76,20 @@ namespace LumbApp.Orquestador {
 			//Avisar a la GUI que comenzó la simulación
 		}
 
-		private void CambioSI (object sender, CambioSIEventArgs e) {
+		public void TerminarSimulacion()//Funcion llamada por la GUI
+        {
+			InformeZE informeZE; //Llamado a funcion del experto
+			InformeSI informeSI; //Llamado a funcion del experto
+			//Informar a GUI con informe
+			//Guardar informe en archivo
+        }
+
+		private void CambioSI(object sender, CambioSIEventArgs e) {
+			//comunicar los cambios a la GUI
+		}
+
+		private void CambioZE(object sender, CambioZEEventArgs e)
+		{
 			//comunicar los cambios a la GUI
 		}
 
