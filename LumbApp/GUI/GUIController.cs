@@ -13,27 +13,44 @@ namespace LumbApp
     public class GUIController
     {
         public IOrquestrator _orquestrator { get; set; }
-        public MainWindow _mainWindow { get; set; }
+        public MainWindow MainWindow { get; set; }
+        public UserDataInput UserDataInputPage { get; set; }
+        public SensorsCheck SensorsCheckPage { get; set; }
+        public IngresoDatosPracticante IngresoDatosPracticantePage { get; set; }
 
         public GUIController(IOrquestrator orquestrator)
         {
             _orquestrator = orquestrator;
-            _mainWindow = new MainWindow();
-            SensorsCheck sensorCheckPage = new SensorsCheck(this);
-            _mainWindow.NavigationService.Navigate(sensorCheckPage);
+        }
+
+        public void Inicializar()
+        {
+            MainWindow = new MainWindow();
+            SensorsCheckPage = new SensorsCheck(this);
+            MainWindow.NavigationService.Navigate(SensorsCheckPage);
             Application app = new Application();
-            app.Run(_mainWindow);
+            app.Run(MainWindow);
         }
 
-        public void GetUserData()
+        public void CheckearSensores()
         {
-            UserDataInput userDataInputPage = new UserDataInput(this);
-            _mainWindow.NavigationService.Navigate(userDataInputPage);
+            //_orquestrator.Inicializar();
         }
 
-        public void ConectarSensores()
+        public void MostrarErrorDeConexion(string mensaje)
         {
-            _orquestrator.Inicializar();
+            SensorsCheckPage.MostrarErrorDeConexion(mensaje);
+        }
+
+        public void SolicitarDatosPracticante()
+        {
+            IngresoDatosPracticantePage = new IngresoDatosPracticante(this);
+            MainWindow.NavigationService.Navigate(IngresoDatosPracticantePage);
+        }
+
+        public void IniciarSimulacion(DatosPracticante datosPracticante)
+        {
+            //_orquestrator.IniciarSimulacion(datosPracticante);
         }
 
 

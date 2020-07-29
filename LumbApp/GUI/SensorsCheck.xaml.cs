@@ -25,66 +25,43 @@ namespace GUI
     /// </summary>
     public partial class SensorsCheck : Page
     {
-        public GUIController controller { get; set; }
+        public GUIController _controller { get; set; }
+        static readonly string MensajeCheckeandoSensores = "Chequeando Sensores";
 
-        public SensorsCheck()
+        public SensorsCheck(GUIController gui)
         {
             InitializeComponent();
-            retryButton.Visibility = Visibility.Hidden;
-        }
-        public SensorsCheck(GUIController _gui)
-        {
-            InitializeComponent();
-            controller = _gui;
-            //retryButton.Visibility = Visibility.Hidden;
+            _controller = gui;
+            SpinerIcon.Visibility = Visibility.Visible;
+            RetryButton.Visibility = Visibility.Hidden;
+            ErrorIcon.Visibility = Visibility.Hidden;
+            Mensaje.Content = MensajeCheckeandoSensores;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //CheckSensors();
         }
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)
         {
-
         }
 
-        private void retryButton_Click(object sender, RoutedEventArgs e)
+        private void RetryButton_Click(object sender, RoutedEventArgs e)
         {
-            controller.ReintentarConectarSensores();
+            SpinerIcon.Visibility = Visibility.Hidden;
+            RetryButton.Visibility = Visibility.Hidden;
+            ErrorIcon.Visibility = Visibility.Hidden;
+            Mensaje.Content = MensajeCheckeandoSensores;
+            _controller.CheckearSensores();
         }
 
-        //public void CheckSensors()
-        //{
-        //try { 
-        //ListBoxItem itm = new ListBoxItem();
-        //itm.Content = "Iniciando Kinect";
-        //checkedSensors.Items.Add(itm);
+        public void MostrarErrorDeConexion(string mensaje)
+        {
+            RetryButton.Visibility = Visibility.Visible;
+            ErrorIcon.Visibility = Visibility.Visible;
+            SpinerIcon.Visibility = Visibility.Hidden;
+            Mensaje.Content = mensaje;
+        }
 
-        //conn = new ConectorKinect();
-        //expert = new ExpertoZE(conn);
-        //expert.Inicializar();
-
-        //ListBoxItem itm2 = new ListBoxItem();
-        //itm2.Content = "Chequeando Capa1";
-        //checkedSensors.Items.Add(itm2);
-
-        ////await Task.Delay(2000);
-
-        //ListBoxItem itm3 = new ListBoxItem();
-        //itm3.Content = "Chequeando Capa2";
-        //checkedSensors.Items.Add(itm3);
-
-        ////await Task.Delay(2000);
-        //}
-        //catch(Exception ex) {
-
-        //    ListBoxItem error = new ListBoxItem();
-        //    error.Content = "Error: " + ex;
-        //    checkedSensors.Items.Add(error);
-
-        //    retryButton.Visibility = Visibility.Visible;
-        //}
-        //}
     }
 }

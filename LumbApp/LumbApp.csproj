@@ -36,6 +36,9 @@
     <StartupObject>LumbApp.StartUp</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FontAwesome.WPF, Version=4.7.0.37774, Culture=neutral, PublicKeyToken=0758b07a11a4f466, processorArchitecture=MSIL">
+      <HintPath>packages\FontAwesome.WPF.4.7.0.9\lib\net40\FontAwesome.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Kinect, Version=1.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Moq, Version=4.2.1510.2205, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
@@ -82,8 +85,8 @@
     <Compile Include="GUI\GUIController.cs" />
     <Compile Include="GUI\MainWindow.xaml.cs" />
     <Compile Include="GUI\SensorsCheck.xaml.cs" />
-    <Compile Include="GUI\StudentData.cs" />
-    <Compile Include="GUI\UserDataInput.xaml.cs" />
+    <Compile Include="GUI\DatosPracticante.cs" />
+    <Compile Include="GUI\IngresoDatosPracticante.xaml.cs" />
     <Compile Include="GUI\UserDataValidations\DniRangeRule.cs" />
     <Compile Include="Orquestador\IOrquestrator.cs" />
     <Compile Include="Orquestador\Orquestrator.cs" />
@@ -110,7 +113,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GUI\UserDataInput.xaml">
+    <Page Include="GUI\IngresoDatosPracticante.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
