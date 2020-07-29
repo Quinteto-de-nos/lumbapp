@@ -8,7 +8,9 @@ using System.Linq;
 using System.Text;
 
 namespace LumbApp.Orquestador {
-    class Orquestador {
+    public class Orquestador : IOrquestador {
+		//public GUIController GUI { get; set; }
+
 		private ExpertoZE expertoZE;
 		private ExpertoSI expertoSI;
 
@@ -16,7 +18,6 @@ namespace LumbApp.Orquestador {
         /// Constructor del Orquestrador.
         /// Se encarga de construir los expertos y la GUI manejando para manejar la comunicación entre ellos.
         /// </summary>
-        /// <param name="kinect">Conector a la kinect</param>
 		public Orquestador () {
 			IConectorKinect conZE = new ConectorKinect();
 			expertoZE = new ExpertoZE(conZE);
@@ -24,16 +25,14 @@ namespace LumbApp.Orquestador {
 			IConectorSI conSI = new ConectorSI();
 			expertoSI = new ExpertoSI(conSI);
 
-			inicializar();
-			//Pedir a la GUI mostrar pantalla de ingreso de datos
-			//	   o avisar que terminó de inicializar
-
-			if (true /*GUI: hay evento de inicio*/) {
-				iniciar();
-			}
+			Inicializar();
 		}
 
-		public bool inicializar () {
+		public void Start() {
+			//GUI = new GUIController(this);
+		}
+
+		public bool Inicializar () {
 			//Pedir a la GUI mostrar msje "inicializando"
 
 			//Inicializar Experto ZE
@@ -42,23 +41,41 @@ namespace LumbApp.Orquestador {
 			//**	  o avisar que hubo un error en la inicialización de la ZE
 			//Si terminó bien, continuar...
 
-			//Inicializar Experto SI
-			//Si: Inicializar Experto SI tuvo algún problema:
-			//**Pedir a la GUI mostrar error de inicialización de SI
-			//**	  o avisar que hubo un error en la inicialización de los SI
-			//Si terminó bien, continuar...
+			if (!expertoSI.Inicializar())
+				return false;
+				//Si: Inicializar Experto SI tuvo algún problema:
+				//**Pedir a la GUI mostrar error de inicialización de SI
+				//**	  o avisar que hubo un error en la inicialización de los SI
+
+			//Pedir a la GUI mostrar pantalla de ingreso de datos
+			//	   o avisar que terminó de inicializar
 
 			return true;
 		}
 
-		public void iniciar () {
-			//¿Habría que limpiar la info del anterior o lo hace cada experto al iniciar?
+		private void ComenzarSimulacion () {/// acá hay que poner el nombre del evento que la GUI dispara al iniciar la simulacion
+			Iniciar();
 
-			//Iniciar Experto ZE
-			//Iniciar Experto SI
-			//Avisar a la GUI que comenzó la simulación
+			bool run = true;
 
-
+			while (run) { 
+				
+			}
+			
 		}
+
+		public void Iniciar () {
+
+			expertoZE.IniciarSimulacion();
+
+			expertoSI.CambioSI += CambioSI;
+			expertoSI.IniciarSimulacion();
+			//Avisar a la GUI que comenzó la simulación
+		}
+
+		private void CambioSI (object sender, CambioSIEventArgs e) {
+			//comunicar los cambios a la GUI
+		}
+
 	}
 }
