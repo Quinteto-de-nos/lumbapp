@@ -32,18 +32,11 @@ namespace GUI
         {
             InitializeComponent();
             _controller = gui;
-            SpinerIcon.Visibility = Visibility.Visible;
+            //SpinerIcon.Visibility = Visibility.Visible;
             RetryButton.Visibility = Visibility.Hidden;
             ErrorIcon.Visibility = Visibility.Hidden;
             Mensaje.Content = MensajeCheckeandoSensores;
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-        }
-
-        private void Window_Unloaded(object sender, RoutedEventArgs e)
-        {
+            Mensaje.Visibility = Visibility.Visible;
         }
 
         private void RetryButton_Click(object sender, RoutedEventArgs e)

@@ -14,7 +14,6 @@ namespace LumbApp
     {
         public IOrquestrator _orquestrator { get; set; }
         public MainWindow MainWindow { get; set; }
-        public UserDataInput UserDataInputPage { get; set; }
         public SensorsCheck SensorsCheckPage { get; set; }
         public IngresoDatosPracticante IngresoDatosPracticantePage { get; set; }
 
