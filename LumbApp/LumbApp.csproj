@@ -73,9 +73,11 @@
   <ItemGroup>
     <Compile Include="Conectores\ConectorKinect\IConectorKinect.cs" />
     <Compile Include="Conectores\ConectorKinect\ConectorKinect.cs" />
+    <Compile Include="Conectores\ConectorSI\CambioSIEventArgs.cs" />
     <Compile Include="Conectores\ConectorSI\ConectorSI.cs" />
     <Compile Include="Conectores\ConectorSI\IConectorSI.cs" />
     <Compile Include="Expertos\ExpertoSI\ExpertoSI.cs" />
+    <Compile Include="Expertos\ExpertoSI\InformeSI.cs" />
     <Compile Include="Expertos\ExpertoZE\ExpertoZE.cs" />
     <Compile Include="Expertos\ExpertoZE\Mano.cs" />
     <Compile Include="Expertos\ExpertoZE\test\ColorExtensions.cs" />
@@ -91,13 +93,16 @@
     <Compile Include="Orquestador\IOrquestrator.cs" />
     <Compile Include="Orquestador\Orquestrator.cs" />
     <Compile Include="StartUp.cs" />
+    <Compile Include="GUI\GUIController.cs" />
+    <Compile Include="Orquestador\DatosPracticante.cs" />
+    <Compile Include="Orquestador\IOrquestador.cs" />
+    <Compile Include="Orquestador\Orquestador.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Conectores\ConectorSI\conector.exe" />
     <Content Include="Expertos\ExpertoSI\init.txt" />
     <Content Include="FinalFeedbacker\init.txt" />
     <Content Include="GUI\init.txt" />
-    <Content Include="Orquestador\init.txt" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
