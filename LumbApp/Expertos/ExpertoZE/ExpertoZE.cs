@@ -134,8 +134,8 @@ namespace LumbApp.Expertos.ExpertoZE
         {
             CambioZEEventArgs args = new CambioZEEventArgs(manoDerecha, manoIzquierda);
 
-            bool cambio = processHand(skeleton.Joints[JointType.HandRight].Position, manoDerecha, args);
-            cambio = processHand(skeleton.Joints[JointType.HandLeft].Position, manoIzquierda, args) || cambio;
+            bool cambio = processHand(skeleton.Joints[JointType.HandRight], manoDerecha, args);
+            cambio = processHand(skeleton.Joints[JointType.HandLeft], manoIzquierda, args) || cambio;
 
             if (cambio)
             {
@@ -151,19 +151,29 @@ namespace LumbApp.Expertos.ExpertoZE
         /// <param name="mano">Objeto Mano</param>
         /// <param name="eventArgs">Argumentos por si hay que generar un evento</param>
         /// <returns>True si hubo algun cambio</returns>
-        private bool processHand(SkeletonPoint pos, Mano mano, CambioZEEventArgs eventArgs)
+        private bool processHand(Joint joint, Mano mano, CambioZEEventArgs eventArgs)
         {
+            //Tracking
+            bool cambioTrack = false;
+            cambioTrack = mano.ActualizarTrack(joint.TrackingState == JointTrackingState.Tracked);
+            if (mano.Track == Mano.Tracking.Perdido)
+                return cambioTrack;
+
+            //Zona esteril
+            bool cambioZE = false;
+            var pos = joint.Position;
             if (zonaEsteril.EstaDentro(pos.X, pos.Y, pos.Z))
             {
-                bool cambio = mano.Entrar();
-                if (cambio && mano.Estado == Mano.Estados.Contaminando)
+                cambioZE = mano.Entrar();
+                if (cambioZE && mano.Estado == Mano.Estados.Contaminando)
                 {
                     eventArgs.ContaminadoAhora = true;
                     zonaEsteril.Contaminar();
                 }
-                return cambio;
             }
-            else return mano.Salir();
+            else cambioZE = mano.Salir();
+
+            return cambioTrack || cambioZE;
         }
     }
 }

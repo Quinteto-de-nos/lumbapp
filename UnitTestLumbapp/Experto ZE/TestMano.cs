@@ -56,9 +56,9 @@ namespace UnitTestLumbapp.Experto_ZE
         {
             Mano mano = new Mano();
             Assert.AreEqual(Mano.Tracking.Perdido, mano.Track);
-            mano.Track = Mano.Tracking.Trackeado;
+            mano.ActualizarTrack(true);
             Assert.AreEqual(Mano.Tracking.Trackeado, mano.Track);
-            mano.Track = Mano.Tracking.Perdido;
+            mano.ActualizarTrack(false);
             Assert.AreEqual(Mano.Tracking.Perdido, mano.Track);
         }
     }

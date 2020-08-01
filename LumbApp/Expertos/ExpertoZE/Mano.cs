@@ -3,7 +3,7 @@
     public class Mano
     {
         public enum Tracking { Trackeado, Perdido };
-        public Tracking Track;
+        public Tracking Track { get; private set; }
 
         public enum Estados
         {
@@ -80,6 +80,20 @@
                 return false;
             Estado = Estados.Fuera;
             return true;
+        }
+
+        /// <summary>
+        /// Actualiza el track de la mano.
+        /// </summary>
+        /// <param name="trackeado">True si la mano esta trackeada en este momento</param>
+        /// <returns>True si esta funcion realizo un cambio en Track</returns>
+        public bool ActualizarTrack(bool trackeado)
+        {
+            var old = Track;
+            if (trackeado)
+                Track = Tracking.Trackeado;
+            else Track = Tracking.Perdido;
+            return old != Track;
         }
     }
 }

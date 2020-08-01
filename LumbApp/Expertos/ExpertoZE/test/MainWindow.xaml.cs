@@ -60,7 +60,7 @@ namespace KinectCoordinateMapping
         void CambioZE(object sender, CambioZEEventArgs e)
         {
             Console.WriteLine("Cambio en ZE:");
-            Console.WriteLine("-Contaminado ahora: " + e.ContaminadoAhora);
+            Console.WriteLine("-Contaminacion: " + e.ContaminadoAhora + " " + e.VecesContaminado);
             Console.WriteLine("-Derecha: " + e.ManoDerecha.Track + " " + e.ManoDerecha.Estado + " " + e.ManoDerecha.VecesContamino);
             Console.WriteLine("-Derecha: " + e.ManoIzquierda.Track + " " + e.ManoIzquierda.Estado + " " + e.ManoIzquierda.VecesContamino);
         }
