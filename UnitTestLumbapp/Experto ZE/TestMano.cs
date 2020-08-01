@@ -6,6 +6,10 @@ namespace UnitTestLumbapp.Experto_ZE
     [TestClass]
     public class TestMano
     {
+        /// <summary>
+        /// La Mano debe cambiar de estado con Salir() y Entrar().
+        /// Los estados son Inicial, Trabajando, Fuera y Contaminando.
+        /// </summary>
         [TestMethod]
         public void TestEstadoMano()
         {
@@ -51,6 +55,9 @@ namespace UnitTestLumbapp.Experto_ZE
             Assert.AreEqual(true, cambio);
         }
 
+        /// <summary>
+        /// La Mano debe cambiar de tracking con ActualizarTrack.
+        /// </summary>
         [TestMethod]
         public void TestTrackingMano()
         {

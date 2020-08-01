@@ -6,6 +6,10 @@ namespace UnitTestLumbapp.Experto_ZE
     [TestClass]
     public class TestZE
     {
+        /// <summary>
+        /// La Zona Esteril debe contar cuantas veces de contamino y resetear el contador
+        /// con Resetear.
+        /// </summary>
         [TestMethod]
         public void TestContaminacionZE()
         {
@@ -19,6 +23,10 @@ namespace UnitTestLumbapp.Experto_ZE
             Assert.AreEqual(0, ze.Contaminacion);
         }
 
+        /// <summary>
+        /// Version 1: Zona Esteril con limites fijos.
+        /// EstaDentro debe dar true si la posicion esta dentro de la zona delimitada.
+        /// </summary>
         [TestMethod]
         public void TestDentroZEFija()
         {
