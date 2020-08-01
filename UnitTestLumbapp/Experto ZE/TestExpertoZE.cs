@@ -94,5 +94,20 @@ namespace UnitTestLumbapp.Experto_ZE
             Assert.AreEqual(0, got.ManoDerecha);
             Assert.AreEqual(0, got.ManoIzquierda);
         }
+
+        [TestMethod]
+        public void TerminarNada()
+        {
+            Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
+            ExpertoZE exp = new ExpertoZE(conn.Object);
+            exp.Inicializar();
+            exp.IniciarSimulacion();
+
+            var got = exp.TerminarSimulacion();
+
+            Assert.AreEqual(0, got.Zona);
+            Assert.AreEqual(0, got.ManoDerecha);
+            Assert.AreEqual(0, got.ManoIzquierda);
+        }
     }
 }
