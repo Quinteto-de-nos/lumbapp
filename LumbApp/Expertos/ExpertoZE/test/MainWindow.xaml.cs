@@ -50,9 +50,19 @@ namespace KinectCoordinateMapping
         {
             conn = new ConectorKinect();
             expert = new ExpertoZE(conn);
+            expert.CambioZE += CambioZE;
             expert.Inicializar();
-            expert.IniciarSimulacion();
+
             conn.SubscribeFramesReady(Sensor_AllFramesReady);
+            expert.IniciarSimulacion();
+        }
+
+        void CambioZE(object sender, CambioZEEventArgs e)
+        {
+            Console.WriteLine("Cambio en ZE:");
+            Console.WriteLine("-Contaminado ahora: " + e.ContaminadoAhora);
+            Console.WriteLine("-Derecha: " + e.ManoDerecha.Track + " " + e.ManoDerecha.Estado + " " + e.ManoDerecha.VecesContamino);
+            Console.WriteLine("-Derecha: " + e.ManoIzquierda.Track + " " + e.ManoIzquierda.Estado + " " + e.ManoIzquierda.VecesContamino);
         }
 
         void Sensor_AllFramesReady(object sender, AllFramesReadyEventArgs e)
