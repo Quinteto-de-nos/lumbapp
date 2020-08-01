@@ -3,6 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using LumbApp.Expertos.ExpertoZE;
 using LumbApp.Conectores.ConectorKinect;
 using Moq;
+using System.Linq;
+using System.Reflection;
 
 namespace UnitTestLumbapp.Experto_ZE
 {
@@ -64,6 +66,33 @@ namespace UnitTestLumbapp.Experto_ZE
 
             bool init = exp.IniciarSimulacion();
             Assert.AreEqual(true, init);
+        }
+
+        [TestMethod]
+        public void TerminarTooSoon1()
+        {
+            Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
+            ExpertoZE exp = new ExpertoZE(conn.Object);
+
+            var got = exp.TerminarSimulacion();
+
+            Assert.AreEqual(0, got.Zona);
+            Assert.AreEqual(0, got.ManoDerecha);
+            Assert.AreEqual(0, got.ManoIzquierda);
+        }
+
+        [TestMethod]
+        public void TerminarTooSoon2()
+        {
+            Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
+            ExpertoZE exp = new ExpertoZE(conn.Object);
+            exp.Inicializar();
+
+            var got = exp.TerminarSimulacion();
+
+            Assert.AreEqual(0, got.Zona);
+            Assert.AreEqual(0, got.ManoDerecha);
+            Assert.AreEqual(0, got.ManoIzquierda);
         }
     }
 }
