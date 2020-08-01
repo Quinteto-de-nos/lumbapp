@@ -68,9 +68,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Conectores\ConectorKinect\CambioSIEventArgs.cs" />
     <Compile Include="Conectores\ConectorKinect\IConectorKinect.cs" />
     <Compile Include="Conectores\ConectorKinect\ConectorKinect.cs" />
+    <Compile Include="Conectores\ConectorSI\CambioSIEventArgs.cs" />
     <Compile Include="Conectores\ConectorSI\ConectorSI.cs" />
     <Compile Include="Conectores\ConectorSI\IConectorSI.cs" />
     <Compile Include="Expertos\ExpertoSI\ExpertoSI.cs" />
@@ -81,6 +81,8 @@
     <Compile Include="Expertos\ExpertoZE\test\Constants.cs" />
     <Compile Include="Expertos\ExpertoZE\test\MainWindow.xaml.cs" />
     <Compile Include="Expertos\ExpertoZE\ZonaEsteril.cs" />
+    <Compile Include="GUI\GUIController.cs" />
+    <Compile Include="Orquestador\DatosPracticante.cs" />
     <Compile Include="Orquestador\IOrquestador.cs" />
     <Compile Include="Orquestador\Orquestador.cs" />
   </ItemGroup>

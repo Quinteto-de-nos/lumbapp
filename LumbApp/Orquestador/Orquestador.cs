@@ -2,6 +2,7 @@
 using LumbApp.Conectores.ConectorSI;
 using LumbApp.Expertos.ExpertoSI;
 using LumbApp.Expertos.ExpertoZE;
+using LumbApp.GUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +10,17 @@ using System.Text;
 
 namespace LumbApp.Orquestador {
     public class Orquestador : IOrquestador {
-		//public GUIController GUI { get; set; }
+		public GUIController GUI { get; set; }
 
 		private ExpertoZE expertoZE;
 		private ExpertoSI expertoSI;
 
+		private DatosPracticante datosPracticante;
+
 		/// <summary>
-        /// Constructor del Orquestrador.
-        /// Se encarga de construir los expertos y la GUI manejando para manejar la comunicación entre ellos.
-        /// </summary>
+		/// Constructor del Orquestrador.
+		/// Se encarga de construir los expertos y la GUI manejando para manejar la comunicación entre ellos.
+		/// </summary>
 		public Orquestador () {
 			IConectorKinect conZE = new ConectorKinect();
 			expertoZE = new ExpertoZE(conZE);
@@ -28,8 +31,18 @@ namespace LumbApp.Orquestador {
 			Inicializar();
 		}
 
-		public void Start() {
-			//GUI = new GUIController(this);
+		public void Start () {
+			GUI = new GUIController(this);
+		}
+
+		public void IniciarSimulacion (DatosPracticante datosPracticante) {
+			this.datosPracticante = datosPracticante;
+
+			expertoZE.IniciarSimulacion();
+
+			expertoSI.CambioSI += CambioSI;
+			expertoSI.IniciarSimulacion();
+			//Avisar a la GUI que comenzó la simulación
 		}
 
 		public bool Inicializar () {
@@ -51,26 +64,6 @@ namespace LumbApp.Orquestador {
 			//	   o avisar que terminó de inicializar
 
 			return true;
-		}
-
-		private void ComenzarSimulacion () {/// acá hay que poner el nombre del evento que la GUI dispara al iniciar la simulacion
-			Iniciar();
-
-			bool run = true;
-
-			while (run) { 
-				
-			}
-			
-		}
-
-		public void Iniciar () {
-
-			expertoZE.IniciarSimulacion();
-
-			expertoSI.CambioSI += CambioSI;
-			expertoSI.IniciarSimulacion();
-			//Avisar a la GUI que comenzó la simulación
 		}
 
 		private void CambioSI (object sender, CambioSIEventArgs e) {
