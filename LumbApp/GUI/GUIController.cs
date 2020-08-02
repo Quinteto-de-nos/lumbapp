@@ -16,25 +16,28 @@ namespace LumbApp.GUI
         private SensorsCheck SensorsCheckPage { get; set; }
         private IngresoDatosPracticante IngresoDatosPracticantePage { get; set; }
 
-        public GUIController() { }
+        public GUIController(MainWindow mainWindow) {
 
-        public GUIController(Orquestador.Orquestador orquestador)
-        {
-            _orquestador = orquestador;
+            MainWindow = mainWindow;
+            //SensorsCheckPage = sensorCheckPage;
         }
+
+        //public GUIController(Orquestador.Orquestador orquestador)
+        //{
+        //    _orquestador = orquestador;
+        //}
 
         public void Inicializar()
         {
-            MainWindow = new MainWindow();
-            SensorsCheckPage = new SensorsCheck(this);
+            SensorsCheckPage = new SensorsCheck();
             MainWindow.NavigationService.Navigate(SensorsCheckPage);
-            Application app = new Application();
-            app.Run(MainWindow);
+            SensorsCheckPage.MostrarCheckeandoSensores();
+            _orquestador = new Orquestador.Orquestador(this);
         }
 
         public void CheckearSensores()
         {
-            //_orquestrator.Inicializar();
+            //_orquestrator.Inicializar();  //debe solo iniciar sensores y llamar a mostrar error o no
         }
 
         public void MostrarErrorDeConexion(string mensaje)
@@ -50,7 +53,8 @@ namespace LumbApp.GUI
 
         public void IniciarSimulacion(DatosPracticante datosPracticante)
         {
-            //_orquestrator.IniciarSimulacion(datosPracticante);
+            //_orquestrator.SetDatosPracticante(datosPracticante);
+
         }
 
 

@@ -8,65 +8,79 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="LumbApp">
-    <Page.Resources>
+    <!--<Page.Resources>
         <local:DatosPracticante x:Key="Ods"/>
-        
         <ControlTemplate x:Key="ValidationTemplate">
             <DockPanel>
-                <TextBlock Foreground="Red" FontSize="20">!</TextBlock>
+                <TextBlock Foreground="Red" FontSize="20" FontWeight="Bold" Margin="0,0,10,0">!</TextBlock>
                 <AdornedElementPlaceholder/>
             </DockPanel>
         </ControlTemplate>
-
         <Style x:Key="TextBoxInError" TargetType="{x:Type TextBox}">
             <Style.Triggers>
                 <Trigger Property="Validation.HasError" Value="true">
                     <Setter Property="ToolTip"
-              Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                         Value="{Binding RelativeSource={x:Static RelativeSource.Self},
                               Path=(Validation.Errors)[0].ErrorContent}"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
-    </Page.Resources>
+    </Page.Resources>-->
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="35*" />
+            <RowDefinition Height="35*" />
+            <RowDefinition Height="35*" />
+            <RowDefinition Height="35*" />
+            <RowDefinition Height="35*" />
+            <RowDefinition Height="35*" />
+            <RowDefinition Height="35*" />
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="45*"/>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="35*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Border  Grid.Row="0" Height="35" Width="800" Padding="5" Background="#4E87D4" HorizontalAlignment="Center" VerticalAlignment="Top" >
-            <Label VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="White">Ingrese sus datos</Label>
+        <Border  Grid.Row="0" Height="auto" Width="800" Padding="5" Background="#4E87D4" HorizontalAlignment="Center" VerticalAlignment="Top" >
+            <Label VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" HorizontalContentAlignment="Center" Foreground="White" Height="35" Margin="5.2,0" Width="780">Ingrese sus datos</Label>
         </Border>
 
         <!--Nombre-->
-        <Border Grid.Row="1" Height="30" Width="500" Background="#91c0ff" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
-            <Label VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" Foreground="White">Ingrese su Nombre</Label>
+        <Border Grid.Row="2" Height="26" Width="500" Background="#91c0ff" HorizontalAlignment="Center" VerticalAlignment="Top" >
+            <Label VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" Foreground="White">Ingrese su Nombre</Label>
         </Border>
 
-        <TextBox Grid.Row="2"  Height="35" Width="500" HorizontalAlignment="Center" VerticalAlignment="Bottom" Name="Nombre" />
-        
+        <TextBox Name="Nombre"  TextChanged="ValidarNombre"
+            Grid.Row="3"  Height="28" Width="500" FontSize="13" HorizontalAlignment="Center" VerticalAlignment="Bottom" Padding="20,0,0,0" VerticalContentAlignment="Center"/>
+        <Label Name="ErrorNombre" Grid.Row="4" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="12" Foreground="Red" Margin="160,0,0,0"></Label>
+
         <!--Apellido-->
-        <Border Grid.Row="3" Height="30" Width="500" Background="#91c0ff" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
-            <Label VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" Foreground="White">Ingrese su Apellido</Label>
+        <Border Grid.Row="5" Height="26" Width="500" Background="#91c0ff" HorizontalAlignment="Center" VerticalAlignment="Top" >
+            <Label VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" Foreground="White">Ingrese su Apellido</Label>
         </Border>
 
-        <TextBox Grid.Row="4"  Height="35" Width="500"  VerticalAlignment="Center" HorizontalAlignment="Center" Name="Apellido" />
+        <TextBox Name="Apellido" TextChanged="ValidarApellido"
+            Grid.Row="6"  Height="28" Width="500" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="20,0,0,0" VerticalContentAlignment="Center"/>
+        <Label Name="ErrorApellido" Grid.Row="7" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="12" Foreground="Red" Margin="160,0,0,0"></Label>
 
-        <Border Grid.Row="5" Height="30" Width="500"  Background="#91c0ff" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-            <Label VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" Foreground="White">Ingrese su DNI</Label>
+        <!--Dni-->
+        <Border Grid.Row="8" Height="26" Width="500" Background="#91c0ff" HorizontalAlignment="Center" VerticalAlignment="Top" >
+            <Label VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" Foreground="White">Ingrese su Dni</Label>
         </Border>
-        
-        <TextBox Grid.Row="6" Name="dni"  Height="35" Width="500"  FontSize="15"  VerticalAlignment="Center" 
-         Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+
+
+        <TextBox  Name="Dni"  TextChanged="ValidarDni"
+                 Grid.Row="9" Height="28" Width="500"  FontSize="13"  VerticalAlignment="Center" Padding="20,0,0,0" VerticalContentAlignment="Center"/>
+
+        <Label Name="ErrorDni" Grid.Row="10" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="12" Foreground="Red" Margin="160,0,0,0"></Label>
+
+        <!--Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
          Style="{StaticResource TextBoxInError}">
             <TextBox.Text>
                 <Binding Path="Dni" Source="{StaticResource Ods}"  UpdateSourceTrigger="PropertyChanged" >
@@ -75,13 +89,17 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
-        </TextBox>
+        </TextBox>-->
 
-        <Button Grid.Row="7" Grid.Column="0" Height="35" Width="200" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Bottom"
-                Background="#4E87D5" Foreground="White" FontSize="18" FontWeight="Bold"
+        <Button Grid.Row="11" Grid.Column="0" Height="34" Width="200" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"
+               HorizontalContentAlignment="Center" Background="#4E87D5" Foreground="White" FontSize="18" FontWeight="Bold"
           Name="IniciarSimulacion" Click="IniciarSimulacion_Click">
             Iniciar Simulación
         </Button>
-
+        <Button Grid.Row="13" Height="26" Grid.Column="0"  Margin="0,0,30,0" Padding="1" DockPanel.Dock="Right" Width="200" HorizontalAlignment="Right" Click="BrowseFolder"  VerticalAlignment="Center"
+                VerticalContentAlignment="Center" Background="#4E87D5" Foreground="White" FontSize="15" >Seleccionar</Button>
+        <Border Grid.Row="13" Height="35" Width="500" Margin="30,0,0,0" Background="#91c0ff" HorizontalAlignment="Left" VerticalAlignment="Center" >
+            <Label Name="FolderPath" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" Foreground="White">Los resultados de la práctica se guardarán en...</Label>
+        </Border>
     </Grid>
 </Page>

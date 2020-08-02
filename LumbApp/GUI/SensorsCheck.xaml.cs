@@ -28,24 +28,33 @@ namespace LumbApp.GUI
         public GUIController _controller { get; set; }
         static readonly string MensajeCheckeandoSensores = "Chequeando Sensores";
 
-        public SensorsCheck(GUIController gui)
+        public SensorsCheck()
         {
             InitializeComponent();
+            Mensaje.Content = "Arranco";
+        }
+
+        public void setGuiController(GUIController gui)
+        {
             _controller = gui;
-            //SpinerIcon.Visibility = Visibility.Visible;
-            RetryButton.Visibility = Visibility.Hidden;
-            ErrorIcon.Visibility = Visibility.Hidden;
-            Mensaje.Content = MensajeCheckeandoSensores;
-            Mensaje.Visibility = Visibility.Visible;
         }
 
         private void RetryButton_Click(object sender, RoutedEventArgs e)
         {
-            SpinerIcon.Visibility = Visibility.Hidden;
+            SpinerIcon.Visibility = Visibility.Visible;
             RetryButton.Visibility = Visibility.Hidden;
             ErrorIcon.Visibility = Visibility.Hidden;
             Mensaje.Content = MensajeCheckeandoSensores;
             _controller.CheckearSensores();
+        }
+
+        public void MostrarCheckeandoSensores()
+        {
+            SpinerIcon.Visibility = Visibility.Visible;
+            RetryButton.Visibility = Visibility.Hidden;
+            ErrorIcon.Visibility = Visibility.Hidden;
+            Mensaje.Content = "Chequeando Sensores";
+            //Mensaje.Visibility = Visibility.Visible;
         }
 
         public void MostrarErrorDeConexion(string mensaje)

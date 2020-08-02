@@ -9,11 +9,11 @@ namespace LumbApp
     class StartUp
     {
 
-        [STAThread]
-        public static void Main()
-        {
-            Orquestador.Orquestador Orquestrador = new Orquestador.Orquestador();
-            Orquestrador.Inicializar();
-        }
+        //[STAThread]
+        //public static void Main()
+        //{
+        //    Orquestador.Orquestador Orquestrador = new Orquestador.Orquestador();
+        //    Orquestrador.Inicializar();
+        //}
     }
 }

@@ -23,18 +23,17 @@ namespace LumbApp.Orquestador {
 		/// Constructor del Orquestrador.
 		/// Se encarga de construir los expertos y la GUI manejando para manejar la comunicación entre ellos.
 		/// </summary>
-		public Orquestador ()
+		public Orquestador (GUIController gui)
 		{
+			GUIController = gui;
+
 			IConectorKinect conZE = new ConectorKinect();
 			expertoZE = new ExpertoZE(conZE);
 
 			IConectorSI conSI = new ConectorSI();
 			expertoSI = new ExpertoSI(conSI);
 
-			GUIController = new GUIController(this);
-
 			Inicializar();
-			
 		}
 
 		public void IniciarSimulacion (DatosPracticante datosPracticante) {
@@ -48,24 +47,21 @@ namespace LumbApp.Orquestador {
 		}
 
 		public bool Inicializar () {
-			//Pedir a la GUI mostrar msje "inicializando"
-			GUIController.Inicializar();
 			//Inicializar Experto ZE
 			//Si: Inicializar Experto ZE tuvo algún problema:
 			//**Pedir a la GUI mostrar error de inicialización de ZE
 			//**	  o avisar que hubo un error en la inicialización de la ZE
 			GUIController.MostrarErrorDeConexion("Fallo Algo");
 			//Si terminó bien, continuar...
-
 			if (!expertoSI.Inicializar())
 				return false;
 			//Si: Inicializar Experto SI tuvo algún problema:
 			//**Pedir a la GUI mostrar error de inicialización de SI
 			//**	  o avisar que hubo un error en la inicialización de los SI
-
+			GUIController.MostrarErrorDeConexion("Fallo Algo Mas");
 			//Pedir a la GUI mostrar pantalla de ingreso de datos
 			//	   o avisar que terminó de inicializar
-			//GUI.SolicitarDatosPracticante();
+			GUIController.SolicitarDatosPracticante();
 
 			return true;
 		}
@@ -73,6 +69,7 @@ namespace LumbApp.Orquestador {
 		private void CambioSI (object sender, CambioSIEventArgs e) {
 			//comunicar los cambios a la GUI
 		}
+
 
 	}
 }

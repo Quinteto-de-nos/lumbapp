@@ -35,7 +35,7 @@
     <RootNamespace>LumbApp</RootNamespace>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>LumbApp.StartUp</StartupObject>
+    <StartupObject>LumbApp.GUI.MainWindow</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FontAwesome.WPF, Version=4.7.0.37774, Culture=neutral, PublicKeyToken=0758b07a11a4f466, processorArchitecture=MSIL">
