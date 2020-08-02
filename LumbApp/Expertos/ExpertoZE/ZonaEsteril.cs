@@ -7,13 +7,14 @@
         private const float zeZ = 1;
         private const float delta = 0.1f;
 
-        private int contaminacion;
-
-        public int Contaminacion { get => contaminacion; }
+        /// <summary>
+        /// Cantidad de veces que fue contaminada, no importa por que mano.
+        /// </summary>
+        public int Contaminacion { get; private set; }
 
         public ZonaEsteril()
         {
-            contaminacion = 0;
+            Contaminacion = 0;
         }
 
         public bool EstaDentro(float x, float y, float z)
@@ -25,12 +26,12 @@
 
         public void Contaminar()
         {
-            contaminacion++;
+            Contaminacion++;
         }
 
         public void Resetear()
         {
-            contaminacion = 0;
+            Contaminacion = 0;
         }
     }
 }
