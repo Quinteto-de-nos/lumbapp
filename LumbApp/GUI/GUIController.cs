@@ -1,4 +1,4 @@
-﻿using GUI;
+﻿
 using KinectCoordinateMapping;
 using LumbApp.Orquestador;
 using System;
@@ -6,20 +6,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
-using MainWindow = GUI.MainWindow;
 
-namespace LumbApp
+namespace LumbApp.GUI
 {
     public class GUIController
     {
-        public IOrquestrator _orquestrator { get; set; }
-        public MainWindow MainWindow { get; set; }
-        public SensorsCheck SensorsCheckPage { get; set; }
-        public IngresoDatosPracticante IngresoDatosPracticantePage { get; set; }
+        private Orquestador.Orquestador _orquestador { get; set; }
+        private MainWindow MainWindow { get; set; }
+        private SensorsCheck SensorsCheckPage { get; set; }
+        private IngresoDatosPracticante IngresoDatosPracticantePage { get; set; }
 
-        public GUIController(IOrquestrator orquestrator)
+        public GUIController() { }
+
+        public GUIController(Orquestador.Orquestador orquestador)
         {
-            _orquestrator = orquestrator;
+            _orquestador = orquestador;
         }
 
         public void Inicializar()
@@ -53,22 +54,5 @@ namespace LumbApp
         }
 
 
-    }
-}
-using LumbApp.Orquestador;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace LumbApp.GUI {
-    public class GUIController {
-        private IOrquestador _orquestrator { get; set; }
-        
-        public GUIController () { }
-
-        public GUIController (Orquestador.Orquestador orquestador) {
-            _orquestrator = orquestador;
-        }
     }
 }

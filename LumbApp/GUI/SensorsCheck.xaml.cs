@@ -18,7 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 
-namespace GUI
+namespace LumbApp.GUI
 {
     /// <summary>
     /// Interaction logic for SensorsCheck.xaml

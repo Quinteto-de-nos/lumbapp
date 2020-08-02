@@ -1,0 +1,36 @@
+﻿<Page x:Class="LumbApp.GUI.SimulacionModoGuiado"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:fa="http://schemas.fontawesome.io/icons/"
+      xmlns:local="clr-namespace:LumbApp.GUI"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="LumbApp">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Row="0"  Grid.Column="0" Height="35" Width="800" Padding="5" Background="#4E87D4" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,0">
+            <Label VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="White"></Label>
+        </Border>
+        <Border Grid.Row="0" Grid.Column="1" Height="35" Width="800" Padding="5" Background="#4E87D4" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,0">
+            <Label VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="White" FontSize="16" Height="53" Margin="317.2,-4.8,319.2,-22.6">Simulación en Curso</Label>
+        </Border>
+        <Border Grid.Row="0" Grid.Column="2" Height="35" Width="800" Padding="5" Background="#4E87D4" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,0">
+            <Label VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="White"></Label>
+        </Border>
+        <Image Grid.Row="1" Grid.Column="1" Name="ImageViewer1" Height="150" Width="100"  HorizontalAlignment="Right"/>
+        <!-- View report button --><!--
+        <Button Name="RetryButton" Grid.Column="0" Grid.Row="2" Margin="0,363,342.6,32" Width="125" Height="35" HorizontalAlignment="Center" VerticalAlignment="Center" Click="RetryButton_Click">Reintentar</Button>-->
+    </Grid>
+</Page>

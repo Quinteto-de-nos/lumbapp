@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace GUI.UserDataValidations
+namespace LumbApp.GUI.UserDataValidations
 {
     public class DniRangeRule : ValidationRule
     {

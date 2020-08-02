@@ -1,4 +1,8 @@
-﻿using System;
+﻿using LumbApp;
+using LumbApp.Conectores.ConectorKinect;
+using LumbApp.Expertos.ExpertoZE;
+using LumbApp.Orquestador;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,18 +17,22 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace LumbApp.GUI
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for SimulacionModoGuiado.xaml
     /// </summary>
-    public partial class MainWindow : NavigationWindow
+    public partial class SimulacionModoGuiado : Page
     {
-        public MainWindow()
+        public GUIController _controller { get; set; }
+
+        public SimulacionModoGuiado(GUIController gui)
         {
             InitializeComponent();
-            //var navWindow = Window.GetWindow(this) as NavigationWindow;
-            //if (navWindow != null) navWindow.ShowsNavigationUI = false;
+            ImageViewer1.Source = new BitmapImage(new Uri("Imagenes/zona actual.png", UriKind.Relative));
+            _controller = gui;
         }
+
     }
 }

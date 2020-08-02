@@ -5,6 +5,6 @@ using System.Text;
 
 namespace LumbApp.Orquestador {
     interface IOrquestador {
-        void Start ();
+
     }
 }

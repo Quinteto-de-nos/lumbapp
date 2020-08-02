@@ -12,8 +12,8 @@ namespace LumbApp
         [STAThread]
         public static void Main()
         {
-            Orquestrator Orquestrador = new Orquestrator();
-            Orquestrador.Start();
+            Orquestador.Orquestador Orquestrador = new Orquestador.Orquestador();
+            Orquestrador.Inicializar();
         }
     }
 }

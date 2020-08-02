@@ -1,4 +1,4 @@
-﻿<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -19,6 +19,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>pdbonly</DebugType>
@@ -28,6 +29,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <RootNamespace>LumbApp</RootNamespace>
@@ -68,6 +70,7 @@
     <None Include=".vs\LumbApp\v16\.suo" />
     <None Include=".vs\slnx.sqlite" />
     <None Include=".vs\VSWorkspaceState.json" />
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -84,14 +87,12 @@
     <Compile Include="Expertos\ExpertoZE\test\Constants.cs" />
     <Compile Include="Expertos\ExpertoZE\test\MainWindow.xaml.cs" />
     <Compile Include="Expertos\ExpertoZE\ZonaEsteril.cs" />
-    <Compile Include="GUI\GUIController.cs" />
     <Compile Include="GUI\MainWindow.xaml.cs" />
+    <Compile Include="GUI\SimulacionModoGuiado.cs" />
     <Compile Include="GUI\SensorsCheck.xaml.cs" />
     <Compile Include="GUI\DatosPracticante.cs" />
     <Compile Include="GUI\IngresoDatosPracticante.xaml.cs" />
     <Compile Include="GUI\UserDataValidations\DniRangeRule.cs" />
-    <Compile Include="Orquestador\IOrquestrator.cs" />
-    <Compile Include="Orquestador\Orquestrator.cs" />
     <Compile Include="StartUp.cs" />
     <Compile Include="GUI\GUIController.cs" />
     <Compile Include="Orquestador\DatosPracticante.cs" />
@@ -102,6 +103,7 @@
     <Content Include="Conectores\ConectorSI\conector.exe" />
     <Content Include="Expertos\ExpertoSI\init.txt" />
     <Content Include="FinalFeedbacker\init.txt" />
+    <Content Include="GUI\Imagenes\zona actual.png" />
     <Content Include="GUI\init.txt" />
   </ItemGroup>
   <ItemGroup />
@@ -111,6 +113,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GUI\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\SimulacionModoGuiado.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -7,10 +7,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Windows.Threading;
 
 namespace LumbApp.Orquestador {
     public class Orquestador : IOrquestador {
-		public GUIController GUI { get; set; }
+		public GUIController GUIController { get; set; }
 
 		private ExpertoZE expertoZE;
 		private ExpertoSI expertoSI;
@@ -21,18 +23,18 @@ namespace LumbApp.Orquestador {
 		/// Constructor del Orquestrador.
 		/// Se encarga de construir los expertos y la GUI manejando para manejar la comunicación entre ellos.
 		/// </summary>
-		public Orquestador () {
+		public Orquestador ()
+		{
 			IConectorKinect conZE = new ConectorKinect();
 			expertoZE = new ExpertoZE(conZE);
-			
+
 			IConectorSI conSI = new ConectorSI();
 			expertoSI = new ExpertoSI(conSI);
 
-			Inicializar();
-		}
+			GUIController = new GUIController(this);
 
-		public void Start () {
-			GUI = new GUIController(this);
+			Inicializar();
+			
 		}
 
 		public void IniciarSimulacion (DatosPracticante datosPracticante) {
@@ -47,21 +49,23 @@ namespace LumbApp.Orquestador {
 
 		public bool Inicializar () {
 			//Pedir a la GUI mostrar msje "inicializando"
-
+			GUIController.Inicializar();
 			//Inicializar Experto ZE
 			//Si: Inicializar Experto ZE tuvo algún problema:
 			//**Pedir a la GUI mostrar error de inicialización de ZE
 			//**	  o avisar que hubo un error en la inicialización de la ZE
+			GUIController.MostrarErrorDeConexion("Fallo Algo");
 			//Si terminó bien, continuar...
 
 			if (!expertoSI.Inicializar())
 				return false;
-				//Si: Inicializar Experto SI tuvo algún problema:
-				//**Pedir a la GUI mostrar error de inicialización de SI
-				//**	  o avisar que hubo un error en la inicialización de los SI
+			//Si: Inicializar Experto SI tuvo algún problema:
+			//**Pedir a la GUI mostrar error de inicialización de SI
+			//**	  o avisar que hubo un error en la inicialización de los SI
 
 			//Pedir a la GUI mostrar pantalla de ingreso de datos
 			//	   o avisar que terminó de inicializar
+			//GUI.SolicitarDatosPracticante();
 
 			return true;
 		}
