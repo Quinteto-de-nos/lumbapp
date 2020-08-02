@@ -40,24 +40,28 @@ namespace LumbApp.Orquestador {
 
 			expertoZE.IniciarSimulacion();
 
-			expertoSI.CambioSI += CambioSI;
 			expertoSI.IniciarSimulacion();
 			//Avisar a la GUI que comenzó la simulación
 		}
 
-		public bool Inicializar () {
+		public bool Inicializar() {
 			//Pedir a la GUI mostrar msje "inicializando"
 
 			//Inicializar Experto ZE
-			if (!expertoZE.Inicializar())
+			if (!expertoZE.Inicializar()) {
+				expertoZE.CambioZE += CambioZE;
 				//Si: Inicializar Experto ZE tuvo algún problema:
 				//**Pedir a la GUI mostrar error de inicialización de ZE
 				//**	  o avisar que hubo un error en la inicialización de la ZE
 				return false;
+			}	
 			//Si terminó bien, continuar...
 
 			if (!expertoSI.Inicializar())
+            {
+				expertoSI.CambioSI += CambioSI;
 				return false;
+			}
 				//Si: Inicializar Experto SI tuvo algún problema:
 				//**Pedir a la GUI mostrar error de inicialización de SI
 				//**	  o avisar que hubo un error en la inicialización de los SI
@@ -66,27 +70,6 @@ namespace LumbApp.Orquestador {
 			//	   o avisar que terminó de inicializar
 
 			return true;
-		}
-
-		private void IniciarSimulacion () {/// acá hay que poner el nombre del evento que la GUI dispara al iniciar la simulacion
-			Iniciar();
-
-			bool run = true;
-
-			while (run) { 
-				
-			}
-			
-		}
-
-		public void Iniciar () {
-
-			expertoZE.CambioZE += CambioZE;
-			expertoZE.IniciarSimulacion();
-
-			expertoSI.CambioSI += CambioSI;
-			expertoSI.IniciarSimulacion();
-			//Avisar a la GUI que comenzó la simulación
 		}
 
 		public void TerminarSimulacion()//Funcion llamada por la GUI
