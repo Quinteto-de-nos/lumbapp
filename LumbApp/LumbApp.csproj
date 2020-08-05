@@ -52,6 +52,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -79,6 +80,8 @@
     <Compile Include="Conectores\ConectorSI\CambioSIEventArgs.cs" />
     <Compile Include="Conectores\ConectorSI\ConectorSI.cs" />
     <Compile Include="Conectores\ConectorSI\IConectorSI.cs" />
+    <Compile Include="Enums\Manager\BaseEnumManager.cs" />
+    <Compile Include="Enums\ModoSimulacion.cs" />
     <Compile Include="Expertos\ExpertoSI\ExpertoSI.cs" />
     <Compile Include="Expertos\ExpertoSI\InformeSI.cs" />
     <Compile Include="Expertos\ExpertoZE\ExpertoZE.cs" />
@@ -88,6 +91,7 @@
     <Compile Include="Expertos\ExpertoZE\test\MainWindow.xaml.cs" />
     <Compile Include="Expertos\ExpertoZE\ZonaEsteril.cs" />
     <Compile Include="GUI\MainWindow.xaml.cs" />
+    <Compile Include="GUI\PasosPreparacion.xaml.cs" />
     <Compile Include="GUI\SimulacionModoGuiado.cs" />
     <Compile Include="GUI\SensorsCheck.xaml.cs" />
     <Compile Include="GUI\DatosPracticante.cs" />
@@ -113,6 +117,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GUI\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\PasosPreparacion.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

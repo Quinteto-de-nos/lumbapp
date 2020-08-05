@@ -60,7 +60,7 @@
 
 
         <TextBox Name="Nombre"  TextChanged="ValidarNombre"
-            Grid.Row="3"  Height="36" Width="500" FontSize="13" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="20,0,0,0" VerticalContentAlignment="Center"/>
+            Grid.Row="3"  Height="36" Width="500" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="20,0,0,0" VerticalContentAlignment="Center"/>
         <Label Name="ErrorNombre" Grid.Row="4" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="12" Foreground="Red" Margin="460,0,0,0"></Label>
 
         <!--Apellido-->
@@ -68,14 +68,14 @@
 
 
         <TextBox Name="Apellido" TextChanged="ValidarApellido"
-            Grid.Row="6"  Height="36" Width="500" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="20,0,0,0" VerticalContentAlignment="Center"/>
+            Grid.Row="6"  Height="36" Width="500" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="20,0,0,0" VerticalContentAlignment="Center"/>
         <Label Name="ErrorApellido" Grid.Row="7" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="12" Foreground="Red" Margin="460,0,0,0"></Label>
 
         <!--Dni-->
         <Label  Grid.Row="8" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="Black" Height="30" HorizontalContentAlignment="Center" Margin="208,0,204,0" Width="88">Dni</Label>
 
         <TextBox  Name="Dni"  TextChanged="ValidarDni"
-                 Grid.Row="9" Height="36" Width="500"  FontSize="13"  VerticalAlignment="Center" Padding="20,0,0,0" VerticalContentAlignment="Center" />
+                 Grid.Row="9" Height="36" Width="500"  FontSize="14"  VerticalAlignment="Center" Padding="20,0,0,0" VerticalContentAlignment="Center" />
 
         <Label Name="ErrorDni" Grid.Row="10" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="12" Foreground="Red" Margin="460,0,0,0"></Label>
 
@@ -84,18 +84,20 @@
 
 
         <TextBox  Name="Mail"  TextChanged="ValidarMail"
-                 Grid.Row="12" Height="36" Width="500"  FontSize="13"  VerticalAlignment="Center" Padding="20,0,0,0" VerticalContentAlignment="Center"/>
+                 Grid.Row="12" Height="36" Width="500"  FontSize="14"  VerticalAlignment="Center" Padding="20,0,0,0" VerticalContentAlignment="Center"/>
 
         <Label Name="ErrorMail" Grid.Row="13" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="12" Foreground="Red" Margin="460,0,0,0" ></Label>
 
-        <ComboBox Name="ComboModo" Grid.Row="14" Width="500" SelectedIndex="0" 
+        <ComboBox Name="ComboModo" Grid.Row="14" Width="500" SelectedIndex="0" FontSize="14"
                   VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
-            <ComboBoxItem VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+            <ComboBoxItem Name="ModoGuiado"
+                FontSize="14" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Foreground="Black">Modo Guiado</TextBlock>
                 </StackPanel>
             </ComboBoxItem>
-            <ComboBoxItem VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+            <ComboBoxItem Name="ModoEvaluacion"
+                FontSize="14" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Foreground="Black">Modo Evaluación</TextBlock>
                 </StackPanel>

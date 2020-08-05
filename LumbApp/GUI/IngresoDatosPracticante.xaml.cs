@@ -1,4 +1,5 @@
-﻿using LumbApp.GUI;
+﻿using LumbApp.Enums;
+using LumbApp.GUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,8 +53,14 @@ namespace LumbApp.GUI
 
         private void IniciarSimulacion_Click(object sender, RoutedEventArgs e)
         {
+            ModoSimulacion modoSeleccionado;
             DatosPracticante datosPracticante = ProcesarDatos();
-            _controller.IniciarSimulacion(datosPracticante, ComboModo.SelectedValue.ToString());
+            ComboBoxItem item = (ComboBoxItem)ComboModo.SelectedItem;
+            if (item.Name == "ModoGuiado")
+                modoSeleccionado = ModoSimulacion.ModoGuiado;
+            else
+                modoSeleccionado = ModoSimulacion.ModoEvaluacion;
+            _controller.FinIngresoDatos(datosPracticante, modoSeleccionado);
         }
 
         private void BrowseFolder(object sender, RoutedEventArgs e)
@@ -74,7 +81,7 @@ namespace LumbApp.GUI
             }
         }
 
-        #region Validaciones
+        #region Validaciones de Datos del Practicante
 
         private void ValidarDni(object sender, TextChangedEventArgs e)
         {
