@@ -51,9 +51,9 @@ namespace LumbApp.GUI
             MainWindow.NavigationService.Navigate(IngresoDatosPracticantePage);
         }
 
-        public void IniciarSimulacion(DatosPracticante datosPracticante)
+        public void IniciarSimulacion(DatosPracticante datosPracticante, string modoSeleccionado)
         {
-            //_orquestrator.SetDatosPracticante(datosPracticante);
+            //_orquestrator.SetDatosPracticante(datosPracticante, modoSeleccionado);
 
         }
 

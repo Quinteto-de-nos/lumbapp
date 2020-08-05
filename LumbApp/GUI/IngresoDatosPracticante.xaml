@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:LumbApp.GUI" 
       xmlns:valRule="clr-namespace:LumbApp.GUI.UserDataValidations" 
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="800" d:DesignWidth="1420"
       Title="LumbApp">
     <!--<Page.Resources>
         <local:DatosPracticante x:Key="Ods"/>
@@ -26,80 +26,92 @@
             </Style.Triggers>
         </Style>
     </Page.Resources>-->
-    <Grid>
+    <Grid Background="#e3efff">
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="35*" />
+            <RowDefinition Height="35*" />
+            <RowDefinition Height="35*" />
+            <RowDefinition Height="35*" />
+            <RowDefinition Height="35*" />
+            <RowDefinition Height="35*" />
+            <RowDefinition Height="35*" />
             <RowDefinition Height="35*"/>
-            <RowDefinition Height="35*" />
-            <RowDefinition Height="35*" />
-            <RowDefinition Height="35*" />
-            <RowDefinition Height="35*" />
-            <RowDefinition Height="35*" />
-            <RowDefinition Height="35*" />
-            <RowDefinition Height="35*" />
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="35*"/>
             <RowDefinition Height="35*"/>
             <RowDefinition Height="35*"/>
             <RowDefinition Height="45*"/>
             <RowDefinition Height="35*"/>
-            <RowDefinition Height="35*"/>
+            <RowDefinition Height="50*"/>
             <RowDefinition Height="35*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Border  Grid.Row="0" Height="auto" Width="800" Padding="5" Background="#4E87D4" HorizontalAlignment="Center" VerticalAlignment="Top" >
-            <Label VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" HorizontalContentAlignment="Center" Foreground="White" Height="35" Margin="5.2,0" Width="780">Ingrese sus datos</Label>
-        </Border>
+
+        <Label  VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="25" FontWeight="Bold" HorizontalContentAlignment="Center" Foreground="Black" Height="42" Margin="320,34,320,0" Width="780" Grid.RowSpan="2">Ingrese sus datos</Label>
 
         <!--Nombre-->
-        <Border Grid.Row="2" Height="26" Width="500" Background="#91c0ff" HorizontalAlignment="Center" VerticalAlignment="Top" >
-            <Label VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" Foreground="White">Ingrese su Nombre</Label>
-        </Border>
+        <Label Grid.Row="2" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="Black" Height="30" Width="200">Nombre</Label>
+
 
         <TextBox Name="Nombre"  TextChanged="ValidarNombre"
-            Grid.Row="3"  Height="28" Width="500" FontSize="13" HorizontalAlignment="Center" VerticalAlignment="Bottom" Padding="20,0,0,0" VerticalContentAlignment="Center"/>
-        <Label Name="ErrorNombre" Grid.Row="4" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="12" Foreground="Red" Margin="160,0,0,0"></Label>
+            Grid.Row="3"  Height="36" Width="500" FontSize="13" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="20,0,0,0" VerticalContentAlignment="Center"/>
+        <Label Name="ErrorNombre" Grid.Row="4" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="12" Foreground="Red" Margin="460,0,0,0"></Label>
 
         <!--Apellido-->
-        <Border Grid.Row="5" Height="26" Width="500" Background="#91c0ff" HorizontalAlignment="Center" VerticalAlignment="Top" >
-            <Label VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" Foreground="White">Ingrese su Apellido</Label>
-        </Border>
+        <Label Grid.Row="5"  VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold"  Foreground="Black" Height="30" Margin="194,0">Apellido</Label>
+
 
         <TextBox Name="Apellido" TextChanged="ValidarApellido"
-            Grid.Row="6"  Height="28" Width="500" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="20,0,0,0" VerticalContentAlignment="Center"/>
-        <Label Name="ErrorApellido" Grid.Row="7" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="12" Foreground="Red" Margin="160,0,0,0"></Label>
+            Grid.Row="6"  Height="36" Width="500" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="20,0,0,0" VerticalContentAlignment="Center"/>
+        <Label Name="ErrorApellido" Grid.Row="7" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="12" Foreground="Red" Margin="460,0,0,0"></Label>
 
         <!--Dni-->
-        <Border Grid.Row="8" Height="26" Width="500" Background="#91c0ff" HorizontalAlignment="Center" VerticalAlignment="Top" >
-            <Label VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" Foreground="White">Ingrese su Dni</Label>
-        </Border>
-
+        <Label  Grid.Row="8" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="Black" Height="30" HorizontalContentAlignment="Center" Margin="208,0,204,0" Width="88">Dni</Label>
 
         <TextBox  Name="Dni"  TextChanged="ValidarDni"
-                 Grid.Row="9" Height="28" Width="500"  FontSize="13"  VerticalAlignment="Center" Padding="20,0,0,0" VerticalContentAlignment="Center"/>
+                 Grid.Row="9" Height="36" Width="500"  FontSize="13"  VerticalAlignment="Center" Padding="20,0,0,0" VerticalContentAlignment="Center" />
 
-        <Label Name="ErrorDni" Grid.Row="10" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="12" Foreground="Red" Margin="160,0,0,0"></Label>
+        <Label Name="ErrorDni" Grid.Row="10" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="12" Foreground="Red" Margin="460,0,0,0"></Label>
 
-        <!--Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
-         Style="{StaticResource TextBoxInError}">
-            <TextBox.Text>
-                <Binding Path="Dni" Source="{StaticResource Ods}"  UpdateSourceTrigger="PropertyChanged" >
-                    <Binding.ValidationRules>
-                        <valRule:DniRangeRule Min="1000000" Max="999999999"/>
-                    </Binding.ValidationRules>
-                </Binding>
-            </TextBox.Text>
-        </TextBox>-->
+        <!--Mail-->
+        <Label  Grid.Row="11" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="Black" Height="30" HorizontalContentAlignment="Center" Margin="208,0,204,0" Width="88">Mail</Label>
 
-        <Button Grid.Row="11" Grid.Column="0" Height="34" Width="200" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"
-               HorizontalContentAlignment="Center" Background="#4E87D5" Foreground="White" FontSize="18" FontWeight="Bold"
+
+        <TextBox  Name="Mail"  TextChanged="ValidarMail"
+                 Grid.Row="12" Height="36" Width="500"  FontSize="13"  VerticalAlignment="Center" Padding="20,0,0,0" VerticalContentAlignment="Center"/>
+
+        <Label Name="ErrorMail" Grid.Row="13" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="12" Foreground="Red" Margin="460,0,0,0" ></Label>
+
+        <ComboBox Name="ComboModo" Grid.Row="14" Width="500" SelectedIndex="0" 
+                  VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+            <ComboBoxItem VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Foreground="Black">Modo Guiado</TextBlock>
+                </StackPanel>
+            </ComboBoxItem>
+            <ComboBoxItem VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Foreground="Black">Modo Evaluación</TextBlock>
+                </StackPanel>
+            </ComboBoxItem>
+        </ComboBox>
+        <Button Grid.Row="18" Height="50" Width="320" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"
+               HorizontalContentAlignment="Center" Background="#4E87D5" Foreground="White" FontSize="20" FontWeight="Bold"
           Name="IniciarSimulacion" Click="IniciarSimulacion_Click">
             Iniciar Simulación
         </Button>
-        <Button Grid.Row="13" Height="26" Grid.Column="0"  Margin="0,0,30,0" Padding="1" DockPanel.Dock="Right" Width="200" HorizontalAlignment="Right" Click="BrowseFolder"  VerticalAlignment="Center"
+        <Button Grid.Row="16" Height="49" Grid.Column="0"  Margin="0,0,216,0"  DockPanel.Dock="Right" Width="200" HorizontalAlignment="Right" Click="BrowseFolder"  VerticalAlignment="Center"
                 VerticalContentAlignment="Center" Background="#4E87D5" Foreground="White" FontSize="15" >Seleccionar</Button>
-        <Border Grid.Row="13" Height="35" Width="500" Margin="30,0,0,0" Background="#91c0ff" HorizontalAlignment="Left" VerticalAlignment="Center" >
-            <Label Name="FolderPath" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" Foreground="White">Los resultados de la práctica se guardarán en...</Label>
+        <Label Grid.Row="15" VerticalAlignment="Bottom" VerticalContentAlignment="Bottom" HorizontalAlignment="Center" FontSize="14" Foreground="Black" Width="490" Margin="460,0,470,0.2">Los resultados de la práctica se guardarán en...</Label>
+
+        <Border Grid.Row="16" Height="49" Width="500" Margin="460,0,0,0" Background="White" HorizontalAlignment="Left" VerticalAlignment="Center" >
+            <Label Name="FolderPath" VerticalAlignment="Bottom" VerticalContentAlignment="Center" HorizontalAlignment="Center" FontSize="14" Foreground="Black" Width="485" Height="49" Margin="10,0,5,-0.2">C:/</Label>
         </Border>
     </Grid>
 </Page>

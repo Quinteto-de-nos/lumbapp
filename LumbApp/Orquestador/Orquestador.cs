@@ -34,6 +34,7 @@ namespace LumbApp.Orquestador {
 			expertoSI = new ExpertoSI(conSI);
 
 			Inicializar();
+			
 		}
 
 		public void IniciarSimulacion (DatosPracticante datosPracticante) {
@@ -47,12 +48,15 @@ namespace LumbApp.Orquestador {
 		}
 
 		public bool Inicializar () {
+			//Pedir a la GUI mostrar msje "inicializando"
+			//GUIController.Inicializar();
 			//Inicializar Experto ZE
 			//Si: Inicializar Experto ZE tuvo algún problema:
 			//**Pedir a la GUI mostrar error de inicialización de ZE
 			//**	  o avisar que hubo un error en la inicialización de la ZE
 			GUIController.MostrarErrorDeConexion("Fallo Algo");
 			//Si terminó bien, continuar...
+
 			if (!expertoSI.Inicializar())
 				return false;
 			//Si: Inicializar Experto SI tuvo algún problema:
@@ -69,7 +73,6 @@ namespace LumbApp.Orquestador {
 		private void CambioSI (object sender, CambioSIEventArgs e) {
 			//comunicar los cambios a la GUI
 		}
-
 
 	}
 }

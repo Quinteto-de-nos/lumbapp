@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -52,7 +53,7 @@ namespace LumbApp.GUI
         private void IniciarSimulacion_Click(object sender, RoutedEventArgs e)
         {
             DatosPracticante datosPracticante = ProcesarDatos();
-            _controller.IniciarSimulacion(datosPracticante);
+            _controller.IniciarSimulacion(datosPracticante, ComboModo.SelectedValue.ToString());
         }
 
         private void BrowseFolder(object sender, RoutedEventArgs e)
@@ -92,12 +93,12 @@ namespace LumbApp.GUI
             }
             catch
             {
-                ErrorDni.Content = "Por favor ingrese un número válido entre 1000000 y 999999999";
+                ErrorDni.Content = "Ingrese un número válido entre 1000000 y 999999999";
             }
 
             if ((dni < 1000000) || (dni > 999999999))
             {
-                ErrorDni.Content = "Por favor ingrese un número válido entre 1000000 y 999999999";
+                ErrorDni.Content = "Ingrese un número válido entre 1000000 y 999999999";
             }
             else
             {
@@ -110,7 +111,7 @@ namespace LumbApp.GUI
             IniciarSimulacion.IsEnabled = (DatosPracticanteValidos() ? true : false);
 
             if (!regexApYN.IsMatch(Apellido.Text)) {
-                ErrorApellido.Content = "Por favor ingrese un Apellido válido";
+                ErrorApellido.Content = "Ingrese un Apellido válido";
             }
             else
             {
@@ -124,12 +125,29 @@ namespace LumbApp.GUI
 
             if (!regexApYN.IsMatch(Nombre.Text))
             {
-                ErrorApellido.Content = "Por favor ingrese un Nombre válido";
+                ErrorNombre.Content = "Ingrese un Nombre válido";
             }
             else
             {
                 ErrorNombre.Content = "";
             }
+        }
+
+        private void ValidarMail(object sender, TextChangedEventArgs e)
+        {
+            IniciarSimulacion.IsEnabled = (DatosPracticanteValidos() ? true : false);
+
+            try
+            {
+                MailAddress m = new MailAddress(Mail.Text);
+
+                ErrorMail.Content = "";
+            }
+            catch (FormatException)
+            {
+                ErrorMail.Content = "Ingrese un mail válido";
+            }
+
         }
 
         private bool DatosPracticanteValidos()
@@ -152,6 +170,8 @@ namespace LumbApp.GUI
             return false;
         }
 
+
         #endregion
+
     }
 }
