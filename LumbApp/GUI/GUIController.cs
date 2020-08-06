@@ -37,6 +37,7 @@ namespace LumbApp.GUI
             MainWindow.NavigationService.Navigate(SensorsCheckPage);
             SensorsCheckPage.MostrarCheckeandoSensores();
             _orquestador = new Orquestador.Orquestador(this);
+            _orquestador.Inicializar();
         }
 
         public void CheckearSensores()

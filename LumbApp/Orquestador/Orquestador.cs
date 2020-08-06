@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Threading;
 
 namespace LumbApp.Orquestador {
@@ -32,8 +33,6 @@ namespace LumbApp.Orquestador {
 
 			IConectorSI conSI = new ConectorSI();
 			expertoSI = new ExpertoSI(conSI);
-
-			Inicializar();
 			
 		}
 
@@ -47,27 +46,30 @@ namespace LumbApp.Orquestador {
 			//Avisar a la GUI que comenzó la simulación
 		}
 
-		public bool Inicializar () {
+        public async Task Inicializar()
+        {
 			//Pedir a la GUI mostrar msje "inicializando"
 			//GUIController.Inicializar();
 			//Inicializar Experto ZE
 			//Si: Inicializar Experto ZE tuvo algún problema:
 			//**Pedir a la GUI mostrar error de inicialización de ZE
 			//**	  o avisar que hubo un error en la inicialización de la ZE
-			GUIController.MostrarErrorDeConexion("Fallo Algo");
+			//GUIController.MostrarErrorDeConexion("Fallo Algo");
 			//Si terminó bien, continuar...
 
-			if (!expertoSI.Inicializar())
-				return false;
+			//if (!expertoSI.Inicializar())
+			//	return false;
 			//Si: Inicializar Experto SI tuvo algún problema:
 			//**Pedir a la GUI mostrar error de inicialización de SI
 			//**	  o avisar que hubo un error en la inicialización de los SI
-			GUIController.MostrarErrorDeConexion("Fallo Algo Mas");
+			//GUIController.MostrarErrorDeConexion("Fallo Algo Mas");
 			//Pedir a la GUI mostrar pantalla de ingreso de datos
 			//	   o avisar que terminó de inicializar
+			Console.WriteLine("Inicializando");
+			await Task.Delay(10000);
+			Console.WriteLine("Inicializado");
 			GUIController.SolicitarDatosPracticante();
-
-			return true;
+			return;
 		}
 
 		private void CambioSI (object sender, CambioSIEventArgs e) {
