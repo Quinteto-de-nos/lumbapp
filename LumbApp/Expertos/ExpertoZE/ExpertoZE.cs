@@ -28,6 +28,8 @@ namespace LumbApp.Expertos.ExpertoZE
             this.kinect = kinect;
         }
 
+        public event EventHandler<CambioZEEventArgs> CambioZE;
+
         /// <summary>
         /// Inicializa todo lo necesario y queda listo para aceptar simulaciones.
         /// </summary>

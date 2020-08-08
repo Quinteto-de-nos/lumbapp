@@ -10,6 +10,21 @@
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -85,6 +100,8 @@
     <Compile Include="Enums\ModoSimulacion.cs" />
     <Compile Include="Expertos\ExpertoSI\ExpertoSI.cs" />
     <Compile Include="Expertos\ExpertoSI\InformeSI.cs" />
+    <Compile Include="Expertos\ExpertoZE\CambioZEEventArgs.cs" />
+    <Compile Include="Expertos\ExpertoZE\EstadoMano.cs" />
     <Compile Include="Expertos\ExpertoZE\ExpertoZE.cs" />
     <Compile Include="Expertos\ExpertoZE\Mano.cs" />
     <Compile Include="Expertos\ExpertoZE\test\ColorExtensions.cs" />
@@ -99,6 +116,7 @@
     <Compile Include="GUI\IngresoDatosPracticante.xaml.cs" />
     <Compile Include="GUI\UserDataValidations\DniRangeRule.cs" />
     <Compile Include="StartUp.cs" />
+    <Compile Include="Expertos\ExpertoZE\InformeZE.cs" />
     <Compile Include="GUI\GUIController.cs" />
     <Compile Include="Orquestador\DatosPracticante.cs" />
     <Compile Include="Orquestador\IOrquestador.cs" />
@@ -111,7 +129,13 @@
     <Content Include="GUI\Imagenes\zona actual.png" />
     <Content Include="GUI\init.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Expertos\ExpertoZE\test\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

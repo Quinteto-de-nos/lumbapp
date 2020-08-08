@@ -7,13 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Threading;
 
 namespace LumbApp.Orquestador {
     public class Orquestador : IOrquestador {
-		public GUIController GUIController { get; set; }
+		public GUIController GUI { get; set; }
 
 		private ExpertoZE expertoZE;
 		private ExpertoSI expertoSI;
@@ -24,6 +22,12 @@ namespace LumbApp.Orquestador {
 		/// Constructor del Orquestrador.
 		/// Se encarga de construir los expertos y la GUI manejando para manejar la comunicación entre ellos.
 		/// </summary>
+		public Orquestador () {
+			expertoZE = new ExpertoZE(new ConectorKinect());
+			
+			expertoSI = new ExpertoSI(new ConectorSI());
+
+			//Inicializar();
 		public Orquestador (GUIController gui)
 		{
 			GUIController = gui;
@@ -36,44 +40,64 @@ namespace LumbApp.Orquestador {
 			
 		}
 
-		public void IniciarSimulacion (DatosPracticante datosPracticante) {
-			this.datosPracticante = datosPracticante;
-
-			expertoZE.IniciarSimulacion();
-
-			expertoSI.CambioSI += CambioSI;
-			expertoSI.IniciarSimulacion();
-			//Avisar a la GUI que comenzó la simulación
+		public void Start () {
+			GUI = new GUIController(this);
 		}
 
-        public async Task Inicializar()
-        {
+		public void IniciarSimulacion (DatosPracticante datosPracticante) {//Add Modo (Enum)
+			this.datosPracticante = datosPracticante;
+			//Set modo
+			expertoZE.IniciarSimulacion();
+
+			expertoSI.IniciarSimulacion();
+		}
+
+		public async Task<bool> Inicializar() {
 			//Pedir a la GUI mostrar msje "inicializando"
 			//GUIController.Inicializar();
 			//Inicializar Experto ZE
-			//Si: Inicializar Experto ZE tuvo algún problema:
-			//**Pedir a la GUI mostrar error de inicialización de ZE
-			//**	  o avisar que hubo un error en la inicialización de la ZE
-			//GUIController.MostrarErrorDeConexion("Fallo Algo");
+			if (!expertoZE.Inicializar()) {
+				expertoZE.CambioZE += CambioZE; //Ver si hay que desuscribir en caso de error
+				//Si: Inicializar Experto ZE tuvo algún problema:
+				//**Pedir a la GUI mostrar error de inicialización de ZE
+				//**	  o avisar que hubo un error en la inicialización de la ZE
+				return false;
+			}	
 			//Si terminó bien, continuar...
 
-			//if (!expertoSI.Inicializar())
-			//	return false;
-			//Si: Inicializar Experto SI tuvo algún problema:
-			//**Pedir a la GUI mostrar error de inicialización de SI
-			//**	  o avisar que hubo un error en la inicialización de los SI
-			//GUIController.MostrarErrorDeConexion("Fallo Algo Mas");
-			//Pedir a la GUI mostrar pantalla de ingreso de datos
-			//	   o avisar que terminó de inicializar
-			Console.WriteLine("Inicializando");
-			await Task.Delay(10000);
-			Console.WriteLine("Inicializado");
-			GUIController.SolicitarDatosPracticante();
-			return;
+			if (!expertoSI.Inicializar())
+            {
+				expertoSI.CambioSI += CambioSI;
+				return false;
+			}
+				//Si: Inicializar Experto SI tuvo algún problema:
+				//**Pedir a la GUI mostrar error de inicialización de SI
+				//**	  o avisar que hubo un error en la inicialización de los SI
+
+			//Pedir a la GUI mostrar pantalla de ingreso de datos a travez de un evento
+
+			return true;
 		}
 
-		private void CambioSI (object sender, CambioSIEventArgs e) {
-			//comunicar los cambios a la GUI
+		public void TerminarSimulacion()//Funcion llamada por la GUI, devuelve void, respuesta por evento
+        {
+			//ExpertoZE.terminarSimulacion()
+			//ExpertoSI.terminarSimulacion()
+			InformeZE informeZE; //Llamado a funcion del experto
+			InformeSI informeSI; //Llamado a funcion del experto
+								 //Guardar informe en archivo
+								 //Informar a GUI con informe con un evento, que pase si el informe se genero bien, y si se guardó  bien (bool, bool) 
+		}
+
+		private void CambioSI(object sender, CambioSIEventArgs e) {
+			//comunicar los cambios a la GUI levantando un evento
+			//Decidir que comunicamos dependiendo del modo
+		}
+
+		private void CambioZE(object sender, CambioZEEventArgs e)
+		{
+			//comunicar los cambios a la GUI levantando un evento
+			//Decidir que comunicamos dependiendo del modo
 		}
 
 	}

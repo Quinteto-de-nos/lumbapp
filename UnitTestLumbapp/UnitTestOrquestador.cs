@@ -11,6 +11,8 @@ namespace UnitTestLumbapp {
         public void TestInicializarOK () {
             Mock<Orquestador> orq = new Mock<Orquestador>();
 
+            orq.Setup(x => x.Inicializar()).Returns(false);
+
             bool init = orq.Object.Inicializar();
             Assert.AreEqual(true, init);
         }
