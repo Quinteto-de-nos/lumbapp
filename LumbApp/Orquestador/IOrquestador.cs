@@ -11,7 +11,6 @@ namespace LumbApp.Orquestador {
         //void Start ();
         void SetDatosDeSimulacion(Models.DatosPracticante datosPracticante, ModoSimulacion modo);
         void IniciarSimulacion();
-        Task<bool> Inicializar();
         Task Inicializar();
     }
 }
