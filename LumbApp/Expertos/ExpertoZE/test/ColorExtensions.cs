@@ -6,6 +6,8 @@ using System.Windows.Media.Imaging;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Drawing;
+using System.Windows.Interop;
 
 namespace KinectCoordinateMapping
 {
@@ -68,5 +70,54 @@ namespace KinectCoordinateMapping
         }
 
         #endregion
+
+        public static Bitmap GetBitmapFromBitmapSource(BitmapSource bSource)
+        {
+            Bitmap bmp;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                BitmapEncoder enc = new BmpBitmapEncoder();
+                enc.Frames.Add(BitmapFrame.Create(bSource));
+                enc.Save(ms);
+                bmp = new Bitmap(ms);
+            }
+            return bmp;
+        }
+
+        /*
+        //If you get 'dllimport unknown'-, then add 'using System.Runtime.InteropServices;'
+        [DllImport("gdi32.dll", EntryPoint = "DeleteObject")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool DeleteObject([In] IntPtr hObject);
+
+        public static ImageSource ImageSourceFromBitmap(Bitmap bmp)
+        {
+            var handle = bmp.GetHbitmap();
+            try
+            {
+                return Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            }
+            finally { DeleteObject(handle); }
+        }
+        */
+
+        /// <summary>
+        /// Takes a bitmap and converts it to an image that can be handled by WPF ImageBrush
+        /// </summary>
+        /// <param name="src">A bitmap image</param>
+        /// <returns>The image as a BitmapImage for WPF</returns>
+        public static BitmapImage Convert(Bitmap src)
+        {
+            MemoryStream ms = new MemoryStream();
+            ((System.Drawing.Bitmap)src).Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            ms.Seek(0, SeekOrigin.Begin);
+            image.StreamSource = ms;
+            image.EndInit();
+            return image;
+        }
     }
+
+
 }

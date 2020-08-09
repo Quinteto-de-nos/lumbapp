@@ -38,7 +38,7 @@
     <RootNamespace>LumbApp</RootNamespace>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>KinectCoordinateMapping.MainWindow</StartupObject>
+    <StartupObject>KinectCoordinateMapping.ArucoWindow</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <Prefer32Bit>false</Prefer32Bit>
@@ -112,6 +112,7 @@
     <Compile Include="Expertos\ExpertoZE\ExpertoZE.cs" />
     <Compile Include="Expertos\ExpertoZE\InformeZE.cs" />
     <Compile Include="Expertos\ExpertoZE\Mano.cs" />
+    <Compile Include="Expertos\ExpertoZE\testAruco\ArucoWindow.xaml.cs" />
     <Compile Include="Expertos\ExpertoZE\test\ColorExtensions.cs" />
     <Compile Include="Expertos\ExpertoZE\test\Constants.cs" />
     <Compile Include="Expertos\ExpertoZE\test\MainWindow.xaml.cs" />
@@ -127,6 +128,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Page Include="Expertos\ExpertoZE\testAruco\ArucoWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Expertos\ExpertoZE\test\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
