@@ -98,6 +98,7 @@
     <Compile Include="Conectores\ConectorSI\IConectorSI.cs" />
     <Compile Include="Enums\Manager\BaseEnumManager.cs" />
     <Compile Include="Enums\ModoSimulacion.cs" />
+    <Compile Include="Expertos\ExpertoSI\RegistroEstado.cs" />
     <Compile Include="Expertos\ExpertoSI\ExpertoSI.cs" />
     <Compile Include="Expertos\ExpertoSI\InformeSI.cs" />
     <Compile Include="Expertos\ExpertoZE\CambioZEEventArgs.cs" />
