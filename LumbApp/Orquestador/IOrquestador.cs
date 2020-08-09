@@ -10,7 +10,7 @@ namespace LumbApp.Orquestador {
     interface IOrquestador {
         //void Start ();
         void SetDatosDeSimulacion(Models.DatosPracticante datosPracticante, ModoSimulacion modo);
-        Task IniciarSimulacion();
+        void IniciarSimulacion();
         Task<bool> Inicializar();
     }
 }

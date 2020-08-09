@@ -33,12 +33,8 @@ namespace LumbApp.Orquestador {
 
 			expertoSI = new ExpertoSI(new ConectorSI());
 
-			//Inicializar();
 		}
 
-		//public void Start () {
-		//	GUI = new GUIController(this);
-		//}
 		public void SetDatosDeSimulacion(Models.DatosPracticante datosPracticante, ModoSimulacion modo)
 		{
 			this.datosPracticante = datosPracticante;
@@ -46,7 +42,7 @@ namespace LumbApp.Orquestador {
 			this.modoSeleccionado = modo;
 		}
 
-		public async Task IniciarSimulacion () {
+		public void IniciarSimulacion () {
 
 			expertoZE.IniciarSimulacion();
 
@@ -65,9 +61,8 @@ namespace LumbApp.Orquestador {
 				//Si: Inicializar Experto ZE tuvo algún problema:
 				//**Pedir a la GUI mostrar error de inicialización de ZE
 				//**	  o avisar que hubo un error en la inicialización de la ZE
-				// Task.Delay(10000);
-				GUI.SolicitarDatosPracticante();
-				//GUI.MostrarErrorDeConexion("Ocurrio un Error con la Kinect");
+				await Task.Delay(10000);
+				GUI.MostrarErrorDeConexion("Ocurrio un Error con la Kinect");
 				return false;
 			}	
 			//Si terminó bien, continuar...
