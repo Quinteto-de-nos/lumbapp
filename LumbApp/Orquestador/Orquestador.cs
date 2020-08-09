@@ -60,10 +60,7 @@ namespace LumbApp.Orquestador {
 				expertoZE.CambioZE += CambioZE; //suscripción al evento CambioZE
 				if (!expertoZE.Inicializar()) {
 					expertoZE.CambioZE -= CambioZE; //Ver si hay que desuscribir en caso de error
-					//Si: Inicializar Experto ZE tuvo algún problema:
-					//**Pedir a la GUI mostrar error de inicialización de ZE
-					//**	  o avisar que hubo un error en la inicialización de la ZE
-					return;
+					throw new Exception("No se pudo detectar correctamente la kinect.");
 				}
 
 				//INICIALIZAR EXPERTO SI
