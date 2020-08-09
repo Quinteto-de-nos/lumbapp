@@ -1,5 +1,6 @@
 ﻿using LumbApp.Enums;
 using LumbApp.GUI;
+using LumbApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

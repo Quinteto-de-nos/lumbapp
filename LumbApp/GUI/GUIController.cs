@@ -2,11 +2,13 @@
 using KinectCoordinateMapping;
 using LumbApp.Enums;
 using LumbApp.Orquestador;
+using LumbApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+
 
 namespace LumbApp.GUI
 {
@@ -20,13 +22,7 @@ namespace LumbApp.GUI
         public GUIController(MainWindow mainWindow) {
 
             MainWindow = mainWindow;
-            //SensorsCheckPage = sensorCheckPage;
         }
-
-        //public GUIController(Orquestador.Orquestador orquestador)
-        //{
-        //    _orquestador = orquestador;
-        //}
 
         /// <summary>
         /// Lo llama el main window para instanciar el orquestador
@@ -42,7 +38,7 @@ namespace LumbApp.GUI
 
         public void CheckearSensores()
         {
-            //_orquestrator.Inicializar();  //debe solo iniciar sensores y llamar a mostrar error o no
+            _orquestador.Inicializar();  //si fallo la primera vez reintento
         }
 
         /// <summary>
@@ -68,9 +64,9 @@ namespace LumbApp.GUI
         /// </summary>
         /// <param name="datosPracticante"></param>
         /// <param name="modoSeleccionado"></param>
-        public void FinIngresoDatos(DatosPracticante datosPracticante, ModoSimulacion modoSeleccionado)
+        public void FinIngresoDatos(Models.DatosPracticante datosPracticante, ModoSimulacion modoSeleccionado)
         {
-            //_orquestador.SetDatosPracticante(datosPracticante, modoSeleccionado);
+            _orquestador.SetDatosDeSimulacion(datosPracticante, modoSeleccionado);
             MostrarPasosPreparacion();
             //orquestador.IniciarSimulacion();????
         }
@@ -88,22 +84,23 @@ namespace LumbApp.GUI
         /// </summary>
         public void FinPreparacion()
         {
-            //orquestador.IniciarSimulacion();
+            _orquestador.IniciarSimulacion();
         }
 
         /// <summary>
-        /// Muestra la pantalla de la simulacion cuando se selecciona
+        /// Muestra la pantalla de la simulacion 
         /// </summary>
-        public void IniciarSimulacion(ModoSimulacion modo)
+        public void IniciarSimulacionModoGuiado()
         {
-            if(modo == ModoSimulacion.ModoGuiado)
-            {
 
-            }
-            else
-            {
+        }
 
-            }
+        /// <summary>
+        /// Muestra la pantalla de la simulacion 
+        /// </summary>
+        public void IniciarSimulacionModoEvaluacion()
+        {
+
         }
 
 

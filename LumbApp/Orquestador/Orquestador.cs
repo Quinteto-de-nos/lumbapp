@@ -1,8 +1,10 @@
 ﻿using LumbApp.Conectores.ConectorKinect;
 using LumbApp.Conectores.ConectorSI;
+using LumbApp.Enums;
 using LumbApp.Expertos.ExpertoSI;
 using LumbApp.Expertos.ExpertoZE;
 using LumbApp.GUI;
+using LumbApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,55 +14,56 @@ using System.Threading.Tasks;
 namespace LumbApp.Orquestador {
     public class Orquestador : IOrquestador {
 		public GUIController GUI { get; set; }
-
+		
 		private ExpertoZE expertoZE;
 		private ExpertoSI expertoSI;
 
-		private DatosPracticante datosPracticante;
+		private Models.DatosPracticante datosPracticante;
+		private ModoSimulacion modoSeleccionado;
 
 		/// <summary>
 		/// Constructor del Orquestrador.
 		/// Se encarga de construir los expertos y la GUI manejando para manejar la comunicación entre ellos.
 		/// </summary>
-		public Orquestador () {
+		public Orquestador(GUIController gui)
+		{
+			GUI = gui;
+
 			expertoZE = new ExpertoZE(new ConectorKinect());
-			
+
 			expertoSI = new ExpertoSI(new ConectorSI());
 
 			//Inicializar();
-		public Orquestador (GUIController gui)
+		}
+
+		//public void Start () {
+		//	GUI = new GUIController(this);
+		//}
+		public void SetDatosDeSimulacion(Models.DatosPracticante datosPracticante, ModoSimulacion modo)
 		{
-			GUIController = gui;
-
-			IConectorKinect conZE = new ConectorKinect();
-			expertoZE = new ExpertoZE(conZE);
-
-			IConectorSI conSI = new ConectorSI();
-			expertoSI = new ExpertoSI(conSI);
-			
-		}
-
-		public void Start () {
-			GUI = new GUIController(this);
-		}
-
-		public void IniciarSimulacion (DatosPracticante datosPracticante) {//Add Modo (Enum)
 			this.datosPracticante = datosPracticante;
-			//Set modo
+		
+			this.modoSeleccionado = modo;
+		}
+
+		public void IniciarSimulacion () {
+
 			expertoZE.IniciarSimulacion();
 
 			expertoSI.IniciarSimulacion();
 		}
 
 		public async Task<bool> Inicializar() {
-			//Pedir a la GUI mostrar msje "inicializando"
-			//GUIController.Inicializar();
+			//La GUI ya esta mostrando msje "inicializando"
+
 			//Inicializar Experto ZE
 			if (!expertoZE.Inicializar()) {
-				expertoZE.CambioZE += CambioZE; //Ver si hay que desuscribir en caso de error
+				expertoZE.CambioZE += CambioZE; 
+				//Ver si hay que desuscribir en caso de error
 				//Si: Inicializar Experto ZE tuvo algún problema:
 				//**Pedir a la GUI mostrar error de inicialización de ZE
 				//**	  o avisar que hubo un error en la inicialización de la ZE
+				GUI.MostrarErrorDeConexion("Ocurrio un Error con la Kinect");
 				return false;
 			}	
 			//Si terminó bien, continuar...
@@ -68,13 +71,15 @@ namespace LumbApp.Orquestador {
 			if (!expertoSI.Inicializar())
             {
 				expertoSI.CambioSI += CambioSI;
+				GUI.MostrarErrorDeConexion("Ocurrio un Error con el Arduino");
 				return false;
 			}
-				//Si: Inicializar Experto SI tuvo algún problema:
-				//**Pedir a la GUI mostrar error de inicialización de SI
-				//**	  o avisar que hubo un error en la inicialización de los SI
+			//Si: Inicializar Experto SI tuvo algún problema:
+			//**Pedir a la GUI mostrar error de inicialización de SI
+			//**	  o avisar que hubo un error en la inicialización de los SI
 
 			//Pedir a la GUI mostrar pantalla de ingreso de datos a travez de un evento
+			GUI.SolicitarDatosPracticante();
 
 			return true;
 		}

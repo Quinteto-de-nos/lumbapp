@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LumbApp.GUI
+namespace LumbApp.Models
 {
     public class DatosPracticante
     {
