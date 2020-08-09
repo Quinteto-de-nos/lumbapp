@@ -116,6 +116,7 @@
     <Compile Include="Models\DatosPracticante.cs" />
     <Compile Include="GUI\IngresoDatosPracticante.xaml.cs" />
     <Compile Include="GUI\UserDataValidations\DniRangeRule.cs" />
+    <Compile Include="Models\Informe.cs" />
     <Compile Include="StartUp.cs" />
     <Compile Include="Expertos\ExpertoZE\InformeZE.cs" />
     <Compile Include="GUI\GUIController.cs" />

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
-
+using LumbApp.Expertos.ExpertoZE;
 
 namespace LumbApp.GUI
 {
@@ -104,7 +104,21 @@ namespace LumbApp.GUI
 
         }
 
+        public void MostrarCambioZE(CambioZEEventArgs e)
+        {
+            
+        }
 
+        public void FinalizarSimulacion()
+        {
+            _orquestador.TerminarSimulacion();
+            //mostrar_procesado_resultados();
+        }
+
+        public void MostrarResultados( Informe informe)
+        {
+
+        }
 
     }
 }

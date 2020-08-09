@@ -100,7 +100,7 @@ namespace LumbApp.Orquestador {
 		/// - Con la informacion regida genera un informe general que se envia al final feedbacker y se guarda.
 		/// - Si el informe general se genero y guardo bien, levanta un evento ue es atrapado por la GUI para decirle que todo salio bien.
 		/// </summary>
-		public void TerminarSimulacion() { //Funcion llamada por la GUI, devuelve void, respuesta por evento
+		public async Task TerminarSimulacion() { //Funcion llamada por la GUI, devuelve void, respuesta por evento
 			//ExpertoZE.terminarSimulacion()
 
 			InformeZE informeZE; //Llamado a funcion del experto
@@ -126,6 +126,7 @@ namespace LumbApp.Orquestador {
 		private void CambioZE(object sender, CambioZEEventArgs e) {
 			//comunicar los cambios a la GUI levantando un evento
 			//Decidir que comunicamos dependiendo del modo
+			GUIController.MostrarCambioZE(e);
 		}
 
         public ExpertoSI GetExpertoSI () {
