@@ -4,6 +4,8 @@ using LumbApp.Enums;
 using LumbApp.Expertos.ExpertoSI;
 using LumbApp.Expertos.ExpertoZE;
 using LumbApp.GUI;
+using System;
+using System.Threading.Tasks;
 
 namespace LumbApp.Orquestador
 {
@@ -96,9 +98,9 @@ namespace LumbApp.Orquestador
 		/// - Si el informe general se genero y guardo bien, levanta un evento ue es atrapado por la GUI para decirle que todo salio bien.
 		/// </summary>
 		public async Task TerminarSimulacion() { //Funcion llamada por la GUI, devuelve void, respuesta por evento
-			//ExpertoZE.terminarSimulacion()
+												 //ExpertoZE.terminarSimulacion()
 
-			InformeZE informeZE; //Llamado a funcion del experto
+			InformeZE informeZE = expertoZE.TerminarSimulacion();
 			
 			InformeSI informeSI = expertoSI.TerminarSimulacion();
 			
@@ -130,5 +132,6 @@ namespace LumbApp.Orquestador
 		public void SetExpertoSI (ExpertoSI exp) {
 			this.expertoSI = exp;
         }
+
     }
 }
