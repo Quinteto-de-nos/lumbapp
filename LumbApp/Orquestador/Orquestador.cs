@@ -4,14 +4,9 @@ using LumbApp.Enums;
 using LumbApp.Expertos.ExpertoSI;
 using LumbApp.Expertos.ExpertoZE;
 using LumbApp.GUI;
-using LumbApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace LumbApp.Orquestador {
+namespace LumbApp.Orquestador
+{
     public class Orquestador : IOrquestador {
 		public GUIController GUIController { get; set; }
 
