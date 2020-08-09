@@ -2,8 +2,10 @@
 using LumbApp.Expertos.ExpertoZE;
 using Microsoft.Kinect;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -21,6 +23,7 @@ namespace KinectCoordinateMapping
         private readonly Brush inferredJointBrush = Brushes.Yellow;
         private readonly Brush notTrackedJointBrush = Brushes.Red;
         #endregion
+
         #region Variables ZE
         private readonly Brush zeBrush = Brushes.Aqua;
         private readonly Brush inZeBrush = Brushes.Orange;
@@ -30,6 +33,13 @@ namespace KinectCoordinateMapping
         private const float zeZ = 1;
         private const float delta = 0.1f;
         #endregion
+
+        #region Variables calibracion
+        private readonly Brush calBrush = Brushes.DeepPink;
+        private List<Point> points2D;
+        private List<DepthImagePoint> points3D;
+        #endregion
+
         #region Variables generales
         private ConectorKinect conn;
         private ExpertoZE expert;
@@ -43,6 +53,9 @@ namespace KinectCoordinateMapping
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            points2D = new List<Point>();
+            points3D = new List<DepthImagePoint>();
+
             conn = new ConectorKinect();
             expert = new ExpertoZE(conn);
             expert.CambioZE += CambioZE;
@@ -55,6 +68,13 @@ namespace KinectCoordinateMapping
         private void Window_Unloaded(object sender, RoutedEventArgs e)
         {
             expert.Finalizar();
+        }
+
+        private void Left_Down(object sender, MouseEventArgs e)
+        {
+            Point pos = e.GetPosition(camera);
+            points2D.Add(pos);
+            Console.WriteLine("Click en " + pos);
         }
         #endregion
         #region Metodos de ZE
@@ -76,13 +96,13 @@ namespace KinectCoordinateMapping
         #region Metodos de Kinect y Draw
         void Sensor_AllFramesReady(object sender, AllFramesReadyEventArgs e)
         {
+            canvas.Children.Clear();
+
             // Color
             using (var frame = e.OpenColorImageFrame())
             {
                 if (frame != null)
-                {
                     camera.Source = frame.ToBitmap();
-                }
             }
 
             // Body
@@ -90,8 +110,6 @@ namespace KinectCoordinateMapping
             {
                 if (frame != null)
                 {
-                    canvas.Children.Clear();
-
                     frame.CopySkeletonDataTo(_bodies);
 
                     foreach (var body in _bodies)
@@ -106,7 +124,43 @@ namespace KinectCoordinateMapping
                 }
             }
 
+            // ZE
             this.drawZE();
+
+            // Calibration
+            using (var frame = e.OpenDepthImageFrame())
+            {
+                if(frame != null)
+                {
+                    DepthImagePoint[] _depthPoint = new DepthImagePoint[640 * 480];
+                    DepthImagePixel[] _depthPixels = new DepthImagePixel[640 * 480];
+                    frame.CopyDepthImagePixelDataTo(_depthPixels);
+
+                    conn._sensor.CoordinateMapper.MapColorFrameToDepthFrame(
+                        ColorImageFormat.RgbResolution640x480Fps30,
+                        DepthImageFormat.Resolution640x480Fps30,
+                        _depthPixels,
+                        _depthPoint
+                    );
+
+                    if(points2D.Count > 0)
+                    {
+                        foreach (var p in points2D)
+                        {
+                            Point point1 = p;
+                            DepthImagePoint dpoint1 = _depthPoint[(int)point1.X * 640 + (int)point1.Y];
+                            Console.WriteLine("El punto es " + dpoint1);
+                            var colPoint = conn._sensor.CoordinateMapper.MapDepthPointToColorPoint(
+                                DepthImageFormat.Resolution640x480Fps30,
+                                dpoint1,
+                                ColorImageFormat.InfraredResolution640x480Fps30);
+                            draw2DPoint(colPoint, calBrush);
+                        }
+                    }
+                    
+                }
+                
+            }
         }
 
         private void drawJoint(Joint joint)
@@ -140,6 +194,11 @@ namespace KinectCoordinateMapping
             point.X = colorPoint.X;
             point.Y = colorPoint.Y;
 
+            drawPoint(b, point);
+        }
+
+        private void drawPoint(Brush b, Point point)
+        {
             Ellipse ellipse = new Ellipse
             {
                 Fill = b,
