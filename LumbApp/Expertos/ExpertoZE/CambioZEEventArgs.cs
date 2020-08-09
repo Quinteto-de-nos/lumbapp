@@ -1,26 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace LumbApp.Expertos.ExpertoZE{
-    public class CambioZEEventArgs : EventArgs{
+namespace LumbApp.Expertos.ExpertoZE
+{
+    public class CambioZEEventArgs : EventArgs
+    {
+        /// <summary>
+        /// Contiene los datos relacionados a la mano derecha.
+        /// </summary>
+        public Mano ManoDerecha { get; }
+        /// <summary>
+        /// Contiene los datos relacionados a la mano izquierda.
+        /// </summary>
+        public Mano ManoIzquierda { get; }
+        /// <summary>
+        /// Cantidad de veces que fue contaminada la zona esteril, sin importar por que mano.
+        /// </summary>
+        public int VecesContaminado { get; internal set; }
+        /// <summary>
+        /// True si la zona esteril fue contaminada durante este evento.
+        /// </summary>
+        public bool ContaminadoAhora { get; internal set; }
 
-        EstadoMano _estadoI;
-        EstadoMano _estadoD;
-        int _cantContaminadoI;
-        int _cantContaminadoD;
-        int _cantContaminadoTotal;
-        bool _contaminada;
-
-        public CambioZEEventArgs(EstadoMano estadoI, EstadoMano estadoD, int cantContaminadoI, int cantContaminadoD, int cantContaminadoTotal, bool contaminada)
+        internal CambioZEEventArgs(Mano derecha, Mano izquierda)
         {
-            _estadoI = estadoI;
-            _estadoD = estadoD;
-            _cantContaminadoI = cantContaminadoI;
-            _cantContaminadoD = cantContaminadoD;
-            _cantContaminadoTotal = cantContaminadoTotal;
-            _contaminada = contaminada;
+            ManoDerecha = derecha;
+            ManoIzquierda = izquierda;
         }
     }
 }

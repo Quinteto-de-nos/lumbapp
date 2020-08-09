@@ -3,7 +3,7 @@
     public class Mano
     {
         public enum Tracking { Trackeado, Perdido };
-        public Tracking Track;
+        public Tracking Track { get; private set; }
 
         public enum Estados
         {
@@ -30,14 +30,15 @@
             /// </summary>
             Contaminando
         };
-        private Estados estado;
-        public Estados Estado { get => estado; private set => estado = value; }
+        public Estados Estado { get; private set; }
 
+        public int VecesContamino { get; private set; }
 
         public Mano()
         {
             Track = Tracking.Perdido;
-            estado = Estados.Inicial;
+            Estado = Estados.Inicial;
+            VecesContamino = 0;
         }
 
         /// <summary>
@@ -51,13 +52,14 @@
         {
             Track = Tracking.Trackeado;
 
-            switch (estado)
+            switch (Estado)
             {
                 case Estados.Inicial:
-                    estado = Estados.Trabajando;
+                    Estado = Estados.Trabajando;
                     return true;
                 case Estados.Fuera:
-                    estado = Estados.Contaminando;
+                    Estado = Estados.Contaminando;
+                    VecesContamino++;
                     return true;
             }
             return false;
@@ -74,10 +76,24 @@
         public bool Salir()
         {
             Track = Tracking.Trackeado;
-            if (estado == Estados.Inicial || estado == Estados.Fuera)
+            if (Estado == Estados.Inicial || Estado == Estados.Fuera)
                 return false;
-            estado = Estados.Fuera;
+            Estado = Estados.Fuera;
             return true;
+        }
+
+        /// <summary>
+        /// Actualiza el track de la mano.
+        /// </summary>
+        /// <param name="trackeado">True si la mano esta trackeada en este momento</param>
+        /// <returns>True si esta funcion realizo un cambio en Track</returns>
+        public bool ActualizarTrack(bool trackeado)
+        {
+            var old = Track;
+            if (trackeado)
+                Track = Tracking.Trackeado;
+            else Track = Tracking.Perdido;
+            return old != Track;
         }
     }
 }
