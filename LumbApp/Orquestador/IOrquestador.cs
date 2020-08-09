@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 namespace LumbApp.Orquestador {
     interface IOrquestador {
-        void Start ();
-
-        Task<bool> Inicializar();
+        Task Inicializar();
     }
 }

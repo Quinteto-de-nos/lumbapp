@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace LumbApp.Orquestador {
     public class Orquestador : IOrquestador {
-		public GUIController GUI { get; set; }
+		public GUIController GUIController { get; set; }
 
 		private ExpertoZE expertoZE;
 		private ExpertoSI expertoSI;
@@ -22,18 +22,23 @@ namespace LumbApp.Orquestador {
 		/// Constructor del Orquestrador.
 		/// Se encarga de construir los expertos y la GUI manejando para manejar la comunicación entre ellos.
 		/// </summary>
-		public Orquestador () {
+		public Orquestador (GUIController gui) {
+			if (gui == null)
+				throw new Exception("Gui no puede ser null. Necesito un GUIController para crear un Orquestador.");
+			
+			GUIController = gui;
+
 			expertoZE = new ExpertoZE(new ConectorKinect());
 			
 			expertoSI = new ExpertoSI(new ConectorSI());
-
-			//Inicializar();
 		}
 
-		public void Start () {
-			GUI = new GUIController(this);
-		}
-
+		/// <summary>
+		/// IniciarSimulacion: Informa a los expertos que deben inicar el sensado.
+		/// 
+		/// </summary>
+		/// <param name="datosPracticante"> Datos ingresados del practicante </param>
+		/// <param name="modo"> Modo de practica seleccionado (Guiado=0, Evaluacion=1) </param>
 		public void IniciarSimulacion (DatosPracticante datosPracticante) {//Add Modo (Enum)
 			this.datosPracticante = datosPracticante;
 			//Set modo
@@ -42,53 +47,78 @@ namespace LumbApp.Orquestador {
 			expertoSI.IniciarSimulacion();
 		}
 
-		public async Task<bool> Inicializar() {
-			//Pedir a la GUI mostrar msje "inicializando"
+		/// <summary>
+		/// Inicializar: Se encarga de mandar a inicializar los expertos y pedir la pantalla de ingreso de datos.
+		/// - Si algun experto no pudo inicializar correctamente, envía a la GUI un mensaje de error.
+		/// - Sucede al abrir la aplicación. La GUI muestra un gif "checkeando sensores" y nos manda a inicializar.
+		/// </summary>
+		/// <returns></returns>
+		public async Task Inicializar() {
 
-			//Inicializar Experto ZE
-			if (!expertoZE.Inicializar()) {
-				expertoZE.CambioZE += CambioZE; //Ver si hay que desuscribir en caso de error
-				//Si: Inicializar Experto ZE tuvo algún problema:
-				//**Pedir a la GUI mostrar error de inicialización de ZE
-				//**	  o avisar que hubo un error en la inicialización de la ZE
-				return false;
-			}	
-			//Si terminó bien, continuar...
+			try {
+				//INICIALIZAR EXPERTO ZE
+				expertoZE.CambioZE += CambioZE; //suscripción al evento CambioZE
+				if (!expertoZE.Inicializar()) {
+					expertoZE.CambioZE -= CambioZE; //Ver si hay que desuscribir en caso de error
+					//Si: Inicializar Experto ZE tuvo algún problema:
+					//**Pedir a la GUI mostrar error de inicialización de ZE
+					//**	  o avisar que hubo un error en la inicialización de la ZE
+					return;
+				}
 
-			if (!expertoSI.Inicializar())
-            {
-				expertoSI.CambioSI += CambioSI;
-				return false;
+				//INICIALIZAR EXPERTO SI
+				expertoSI.CambioSI += CambioSI; //suscripción al evento CambioSI
+				if (!expertoSI.Inicializar()) {
+					expertoSI.CambioSI -= CambioSI;
+					throw new Exception("No se pudo detectar correctamente los sensores internos.");
+				}
+
+				//Mostrar pantalla de ingreso de datos
+				GUIController.SolicitarDatosPracticante();
+			} catch (Exception ex) {
+				GUIController.MostrarErrorDeConexion(ex.Message);
 			}
-				//Si: Inicializar Experto SI tuvo algún problema:
-				//**Pedir a la GUI mostrar error de inicialización de SI
-				//**	  o avisar que hubo un error en la inicialización de los SI
-
-			//Pedir a la GUI mostrar pantalla de ingreso de datos a travez de un evento
-
-			return true;
+			
 		}
 
-		public void TerminarSimulacion()//Funcion llamada por la GUI, devuelve void, respuesta por evento
-        {
+		/// <summary>
+		/// Terminar simulación: indica a los expertos que dejen de tomar estadísticas y devuelvan la informacion que obtuvo cada uno.
+		/// - Con la informacion regida genera un informe general que se envia al final feedbacker y se guarda.
+		/// - Si el informe general se genero y guardo bien, levanta un evento ue es atrapado por la GUI para decirle que todo salio bien.
+		/// </summary>
+		public void TerminarSimulacion() { //Funcion llamada por la GUI, devuelve void, respuesta por evento
 			//ExpertoZE.terminarSimulacion()
-			//ExpertoSI.terminarSimulacion()
+
 			InformeZE informeZE; //Llamado a funcion del experto
-			InformeSI informeSI; //Llamado a funcion del experto
-								 //Guardar informe en archivo
-								 //Informar a GUI con informe con un evento, que pase si el informe se genero bien, y si se guardó  bien (bool, bool) 
+			
+			InformeSI informeSI = expertoSI.TerminarSimulacion();
+			
+			//Guardar informe en archivo
+			//Informar a GUI con informe con un evento, que pase si el informe se genero bien, y si se guardó  bien (bool, bool) 
 		}
 
-		private void CambioSI(object sender, CambioSIEventArgs e) {
+		/// <summary>
+		/// CambioSI: atrapa los eventos que indican un cambio en el sensado interno
+		/// - En MODO GUIADO, informa los cambios a la GUI para que esta pueda mostrarlos
+		/// - En MODO EVALUACION, ... (creo que no hace nada, ya que el informe lo arman los expertos)
+		/// </summary>
+		/// <param name="sender"> Remitente del evento </param>
+		/// <param name="datosDelEvento"> Datos del cambio (capas, vertebras y correctitud del camino) </param>
+		private void CambioSI(object sender, CambioSIEventArgs datosDelEvento) {
 			//comunicar los cambios a la GUI levantando un evento
 			//Decidir que comunicamos dependiendo del modo
 		}
 
-		private void CambioZE(object sender, CambioZEEventArgs e)
-		{
+		private void CambioZE(object sender, CambioZEEventArgs e) {
 			//comunicar los cambios a la GUI levantando un evento
 			//Decidir que comunicamos dependiendo del modo
 		}
 
-	}
+        public ExpertoSI GetExpertoSI () {
+			return expertoSI;
+        }
+		public void SetExpertoSI (ExpertoSI exp) {
+			this.expertoSI = exp;
+        }
+    }
 }

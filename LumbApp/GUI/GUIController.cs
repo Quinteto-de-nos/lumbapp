@@ -13,5 +13,19 @@ namespace LumbApp.GUI {
         public GUIController (Orquestador.Orquestador orquestador) {
             _orquestrator = orquestador;
         }
+
+        public void Inicializar () { }
+
+        /// <summary>
+        /// Lo llama el orquestador  para mostrar por que fallo la inicializacion de los sensores
+        /// </summary>
+        /// <param name="mensaje"></param>
+        public void MostrarErrorDeConexion (string mensaje) {
+            
+        }
+
+        public void SolicitarDatosPracticante () {
+
+        }
     }
 }

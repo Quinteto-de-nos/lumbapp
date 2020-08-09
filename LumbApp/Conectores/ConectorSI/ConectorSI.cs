@@ -3,11 +3,14 @@ using System.IO.Ports;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace LumbApp.Conectores.ConectorSI {
     class ConectorSI : IConectorSI
     {
         SerialPort mySerialPort;
+
+        private string datosLeidos = null;
 
         public ConectorSI () { }
 
@@ -46,6 +49,15 @@ namespace LumbApp.Conectores.ConectorSI {
             Console.WriteLine(datos[6]);
             //registroEstado = new RegistroEstado();
 
+        }
+
+        public bool ChekearSensado () { //Se puede checkear que todo lo que se reciba sean 0 .... o 1 si usas eso del arduino que dijiste
+            for (int i = 0; i < 5; i++) {
+                if (datosLeidos == null || datosLeidos == "")
+                    return false;
+                Task.Delay(1000);
+            }
+            return true;
         }
     }
 }

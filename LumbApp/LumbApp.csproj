@@ -6,8 +6,9 @@
     <OutputType>Exe</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
     <AssemblyName>WindowsApplication</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -34,6 +35,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>pdbonly</DebugType>
@@ -43,6 +45,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <RootNamespace>LumbApp</RootNamespace>
@@ -80,6 +83,7 @@
     <None Include=".vs\LumbApp\v16\.suo" />
     <None Include=".vs\slnx.sqlite" />
     <None Include=".vs\VSWorkspaceState.json" />
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +92,7 @@
     <Compile Include="Conectores\ConectorSI\CambioSIEventArgs.cs" />
     <Compile Include="Conectores\ConectorSI\ConectorSI.cs" />
     <Compile Include="Conectores\ConectorSI\IConectorSI.cs" />
+    <Compile Include="Expertos\ExpertoSI\RegistroEstado.cs" />
     <Compile Include="Expertos\ExpertoSI\ExpertoSI.cs" />
     <Compile Include="Expertos\ExpertoSI\InformeSI.cs" />
     <Compile Include="Expertos\ExpertoZE\CambioZEEventArgs.cs" />

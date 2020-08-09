@@ -8,7 +8,13 @@ using System.Text;
 namespace LumbApp.Expertos.ExpertoSI {
     public class ExpertoSI {
         private IConectorSI sensoresInternos;
-        // RegistroEstado registroEstado;
+
+        protected RegistroEstado registroEstadoActual;
+        protected RegistroEstado registroEstadoAnterior;
+
+        private bool simulando = false;
+
+        CambioSIEventArgs args;
 
         public ExpertoSI (IConectorSI sensoresInternos) {
             if (sensoresInternos == null)
@@ -17,12 +23,24 @@ namespace LumbApp.Expertos.ExpertoSI {
         }
 
         public bool Inicializar () {
+            registroEstadoActual = new RegistroEstado();
+            registroEstadoAnterior = new RegistroEstado();
 
+            args = new CambioSIEventArgs();
+
+            //sensoresInternos.HayDatos += HayDatosNuevos; //suscripción al evento HayDatos
+            sensoresInternos.Conectar();
+
+            if (!sensoresInternos.ChekearSensado())
+                return false;
+            
             return true;
         }
+
         public bool IniciarSimulacion () {
             return true;
         }
+
         public void Finalizar () {
 
         }
@@ -39,6 +57,10 @@ namespace LumbApp.Expertos.ExpertoSI {
         public InformeSI TerminarSimulacion () {
             InformeSI informe = new InformeSI();
             return informe;
+        }
+
+        public RegistroEstado GetRegistroEstadoActual () {
+            return registroEstadoActual;
         }
     }
 }
