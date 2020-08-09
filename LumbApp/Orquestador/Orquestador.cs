@@ -56,7 +56,11 @@ namespace LumbApp.Orquestador {
 
 			expertoSI.IniciarSimulacion();
 
-			GUIController.IniciarSimulacionModoGuiado();
+
+			if(modoSeleccionado == ModoSimulacion.ModoGuiado)
+				GUIController.IniciarSimulacionModoGuiado();
+			else
+				GUIController.IniciarSimulacionModoEvaluacion();
 		}
 
 		/// <summary>
