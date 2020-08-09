@@ -30,9 +30,11 @@ namespace LumbApp.GUI
         public SimulacionModoGuiado(GUIController gui)
         {
             InitializeComponent();
-            ImageViewer1.Source = new BitmapImage(new Uri("Imagenes/zona actual.png", UriKind.Relative));
+            ManoIzquierda.Source = new BitmapImage(new Uri("GUI//Imagenes//NoTraqueando//mano-fuera-inicial.png", UriKind.Relative));
+            ManoDerecha.Source = new BitmapImage(new Uri("Imagenes/NoTraqueando/mano-fuera-inicial.png", UriKind.Relative));
             _controller = gui;
         }
+
 
     }
 }

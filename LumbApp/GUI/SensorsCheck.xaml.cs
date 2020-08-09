@@ -28,15 +28,10 @@ namespace LumbApp.GUI
         public GUIController _controller { get; set; }
         static readonly string MensajeCheckeandoSensores = "Chequeando Sensores";
 
-        public SensorsCheck()
-        {
-            InitializeComponent();
-            Mensaje.Content = "Arranco";
-        }
-
-        public void setGuiController(GUIController gui)
+        public SensorsCheck(GUIController gui)
         {
             _controller = gui;
+            InitializeComponent();
         }
 
         private void RetryButton_Click(object sender, RoutedEventArgs e)
@@ -53,7 +48,7 @@ namespace LumbApp.GUI
             SpinerIcon.Visibility = Visibility.Visible;
             RetryButton.Visibility = Visibility.Hidden;
             ErrorIcon.Visibility = Visibility.Hidden;
-            Mensaje.Content = "Chequeando Sensores";
+            Mensaje.Content = MensajeCheckeandoSensores;
             //Mensaje.Visibility = Visibility.Visible;
         }
 

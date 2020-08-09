@@ -126,6 +126,26 @@
     <Content Include="Conectores\ConectorSI\conector.exe" />
     <Content Include="Expertos\ExpertoSI\init.txt" />
     <Content Include="FinalFeedbacker\init.txt" />
+    <Content Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada1.png" />
+    <Content Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada2.png" />
+    <Content Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada3.png" />
+    <Content Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada4.png" />
+    <Content Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada5.png" />
+    <Content Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada6.png" />
+    <Content Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada7.png" />
+    <Content Include="GUI\Imagenes\Manos\NoTraqueando\mano-dentro.png" />
+    <Content Include="GUI\Imagenes\Manos\NoTraqueando\mano-fuera-inicial.png" />
+    <Content Include="GUI\Imagenes\Manos\NoTraqueando\mano-fuera.png" />
+    <Content Include="GUI\Imagenes\Manos\Traqueando\mano-contaminada1.png" />
+    <Content Include="GUI\Imagenes\Manos\Traqueando\mano-contaminada2.png" />
+    <Content Include="GUI\Imagenes\Manos\Traqueando\mano-contaminada3.png" />
+    <Content Include="GUI\Imagenes\Manos\Traqueando\mano-contaminada4.png" />
+    <Content Include="GUI\Imagenes\Manos\Traqueando\mano-contaminada5.png" />
+    <Content Include="GUI\Imagenes\Manos\Traqueando\mano-contaminada6.png" />
+    <Content Include="GUI\Imagenes\Manos\Traqueando\mano-contaminada7.png" />
+    <Content Include="GUI\Imagenes\Manos\Traqueando\mano-dentro.png" />
+    <Content Include="GUI\Imagenes\Manos\Traqueando\mano-fuera-inicial.png" />
+    <Content Include="GUI\Imagenes\Manos\Traqueando\mano-fuera.png" />
     <Content Include="GUI\Imagenes\zona actual.png" />
     <Content Include="GUI\init.txt" />
   </ItemGroup>

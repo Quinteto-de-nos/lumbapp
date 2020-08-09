@@ -29,7 +29,7 @@ namespace LumbApp.GUI
         /// </summary>
         public void Inicializar()
         {
-            SensorsCheckPage = new SensorsCheck();
+            SensorsCheckPage = new SensorsCheck(this);
             MainWindow.NavigationService.Navigate(SensorsCheckPage);
             SensorsCheckPage.MostrarCheckeandoSensores();
             _orquestador = new Orquestador.Orquestador(this);
@@ -92,7 +92,8 @@ namespace LumbApp.GUI
         /// </summary>
         public void IniciarSimulacionModoGuiado()
         {
-
+            SimulacionModoGuiado simulacionModoGuiadoPage = new SimulacionModoGuiado(this);
+            MainWindow.NavigationService.Navigate(simulacionModoGuiadoPage);
         }
 
         /// <summary>
