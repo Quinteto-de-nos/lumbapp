@@ -15,6 +15,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Emgu.CV;
+using KinectCoordinateMapping;
+using Emgu.CV.CvEnum;
+using Emgu.CV.UI;
 
 namespace KinectCoordinateMapping
 {
@@ -23,11 +27,14 @@ namespace KinectCoordinateMapping
     /// </summary>
     public partial class MainWindow : Window
     {
+        // Variables de joints
+        internal Skeleton[] _bodies = new Skeleton[6];
 
         private readonly Brush trackedJointBrush = Brushes.Blue;
         private readonly Brush inferredJointBrush = Brushes.Yellow;
         private readonly Brush notTrackedJointBrush = Brushes.Red;
 
+        // Variables de ZE
         private readonly Brush zeBrush = Brushes.Aqua;
         private readonly Brush inZeBrush = Brushes.Orange;
         private const float zeX = 0;
@@ -35,12 +42,13 @@ namespace KinectCoordinateMapping
         private const float zeZ = 1;
         private const float delta = 0.1f;
 
-        internal Skeleton[] _bodies = new Skeleton[6];
-
+        // Variables generales
         private ConectorKinect conn;
         private ExpertoZE expert;
 
+        // Variables de Aruco
 
+        // Metodos de Window
         public MainWindow()
         {
             InitializeComponent();
@@ -57,6 +65,12 @@ namespace KinectCoordinateMapping
             expert.IniciarSimulacion();
         }
 
+        private void Window_Unloaded(object sender, RoutedEventArgs e)
+        {
+            expert.Finalizar();
+        }
+
+        // Metodos de ZE
         void CambioZE(object sender, CambioZEEventArgs e)
         {
             Console.WriteLine("Cambio en ZE:");
@@ -65,6 +79,14 @@ namespace KinectCoordinateMapping
             Console.WriteLine("-Derecha: " + e.ManoIzquierda.Track + " " + e.ManoIzquierda.Estado + " " + e.ManoIzquierda.VecesContamino);
         }
 
+        private bool isInZE(SkeletonPoint pos)
+        {
+            return pos.X < zeX + delta && pos.X > zeX - delta
+                && pos.Y < zeY + delta && pos.Y > zeY - delta
+                && pos.Z < zeZ + delta && pos.Z > zeZ - delta;
+        }
+
+        // Metodos de Kinect y draw
         void Sensor_AllFramesReady(object sender, AllFramesReadyEventArgs e)
         {
             // Color
@@ -72,7 +94,7 @@ namespace KinectCoordinateMapping
             {
                 if (frame != null)
                 {
-                    camera.Source = frame.ToBitmap();
+                    processColor(frame);
                 }
             }
 
@@ -151,11 +173,6 @@ namespace KinectCoordinateMapping
             return conn._sensor.CoordinateMapper.MapSkeletonPointToColorPoint(skeletonPoint, ColorImageFormat.RgbResolution640x480Fps30);
         }
 
-        private void Window_Unloaded(object sender, RoutedEventArgs e)
-        {
-            expert.Finalizar();
-        }
-
         private void drawZE()
         {
 
@@ -185,6 +202,7 @@ namespace KinectCoordinateMapping
 
 
         }
+        
         private SkeletonPoint getPoint(float x, float y, float z)
         {
             SkeletonPoint point = new SkeletonPoint();
@@ -193,19 +211,43 @@ namespace KinectCoordinateMapping
             point.Z = z;
             return point;
         }
-        private bool isInZE(SkeletonPoint pos)
+        
+        // Aruco
+        private void processColor(ColorImageFrame frame)
         {
-            return pos.X < zeX + delta && pos.X > zeX - delta
-                && pos.Y < zeY + delta && pos.Y > zeY - delta
-                && pos.Z < zeZ + delta && pos.Z > zeZ - delta;
+            var bitmapSource = frame.ToBitmap();
+            camera.Source = bitmapSource;
+            
+            var currentImage = ColorExtensions.GetBitmapFromBitmapSource(bitmapSource);
+            var image = currentImage.ToImage<Emgu.CV.Structure.Bgr, byte>();
+            
+            //Emgu.CV.Aruco.Dictionary.PredefinedDictionaryName name = new Emgu.CV.Aruco.Dictionary.PredefinedDictionaryName();
+            //Emgu.CV.Aruco.Dictionary dict = new Emgu.CV.Aruco.Dictionary(name);
+            //Emgu.CV.Util.VectorOfVectorOfPointF corners = new Emgu.CV.Util.VectorOfVectorOfPointF();
+            //Emgu.CV.Util.VectorOfInt ids = new Emgu.CV.Util.VectorOfInt();
+            //Emgu.CV.Aruco.DetectorParameters parameters = Emgu.CV.Aruco.DetectorParameters.GetDefault();
+            
+            //Emgu.CV.Aruco.ArucoInvoke.DetectMarkers(image, dict, corners, ids, parameters);
+
+            /*
+            var borderColor = new Emgu.CV.Structure.MCvScalar(1, 1, 1);
+            Emgu.CV.Aruco.ArucoInvoke.DrawDetectedMarkers(image, corners, ids, borderColor);
+            camera.Source = ColorExtensions.Convert(image.ToBitmap());
+            */
+
+            ImageViewer.Show(image);
+
         }
 
+        // Main
         [STAThread]
         public static void Main()
         {
+            
             MainWindow window = new MainWindow();
             Application app = new Application();
             app.Run(window);
+         
         }
     }
 
