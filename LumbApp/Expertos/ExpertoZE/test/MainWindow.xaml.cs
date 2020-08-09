@@ -2,18 +2,9 @@
 using LumbApp.Expertos.ExpertoZE;
 using Microsoft.Kinect;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace KinectCoordinateMapping
@@ -23,24 +14,28 @@ namespace KinectCoordinateMapping
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Variables de joints
+        internal Skeleton[] _bodies = new Skeleton[6];
 
         private readonly Brush trackedJointBrush = Brushes.Blue;
         private readonly Brush inferredJointBrush = Brushes.Yellow;
         private readonly Brush notTrackedJointBrush = Brushes.Red;
-
+        #endregion
+        #region Variables ZE
         private readonly Brush zeBrush = Brushes.Aqua;
         private readonly Brush inZeBrush = Brushes.Orange;
+
         private const float zeX = 0;
         private const float zeY = 0;
         private const float zeZ = 1;
         private const float delta = 0.1f;
-
-        internal Skeleton[] _bodies = new Skeleton[6];
-
+        #endregion
+        #region Variables generales
         private ConectorKinect conn;
         private ExpertoZE expert;
+        #endregion
 
-
+        #region Metodos de Window
         public MainWindow()
         {
             InitializeComponent();
@@ -57,6 +52,12 @@ namespace KinectCoordinateMapping
             expert.IniciarSimulacion();
         }
 
+        private void Window_Unloaded(object sender, RoutedEventArgs e)
+        {
+            expert.Finalizar();
+        }
+        #endregion
+        #region Metodos de ZE
         void CambioZE(object sender, CambioZEEventArgs e)
         {
             Console.WriteLine("Cambio en ZE:");
@@ -65,6 +66,14 @@ namespace KinectCoordinateMapping
             Console.WriteLine("-Derecha: " + e.ManoIzquierda.Track + " " + e.ManoIzquierda.Estado + " " + e.ManoIzquierda.VecesContamino);
         }
 
+        private bool isInZE(SkeletonPoint pos)
+        {
+            return pos.X < zeX + delta && pos.X > zeX - delta
+                && pos.Y < zeY + delta && pos.Y > zeY - delta
+                && pos.Z < zeZ + delta && pos.Z > zeZ - delta;
+        }
+        #endregion
+        #region Metodos de Kinect y Draw
         void Sensor_AllFramesReady(object sender, AllFramesReadyEventArgs e)
         {
             // Color
@@ -151,11 +160,6 @@ namespace KinectCoordinateMapping
             return conn._sensor.CoordinateMapper.MapSkeletonPointToColorPoint(skeletonPoint, ColorImageFormat.RgbResolution640x480Fps30);
         }
 
-        private void Window_Unloaded(object sender, RoutedEventArgs e)
-        {
-            expert.Finalizar();
-        }
-
         private void drawZE()
         {
 
@@ -193,13 +197,9 @@ namespace KinectCoordinateMapping
             point.Z = z;
             return point;
         }
-        private bool isInZE(SkeletonPoint pos)
-        {
-            return pos.X < zeX + delta && pos.X > zeX - delta
-                && pos.Y < zeY + delta && pos.Y > zeY - delta
-                && pos.Z < zeZ + delta && pos.Z > zeZ - delta;
-        }
+        #endregion
 
+        #region Main
         [STAThread]
         public static void Main()
         {
@@ -207,6 +207,7 @@ namespace KinectCoordinateMapping
             Application app = new Application();
             app.Run(window);
         }
+        #endregion
     }
 
 }
