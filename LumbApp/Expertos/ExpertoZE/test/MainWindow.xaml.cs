@@ -37,7 +37,6 @@ namespace KinectCoordinateMapping
         #region Variables calibracion
         private readonly Brush calBrush = Brushes.DeepPink;
         private List<Point> points2D;
-        private List<DepthImagePoint> points3D;
         #endregion
 
         #region Variables generales
@@ -54,7 +53,6 @@ namespace KinectCoordinateMapping
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             points2D = new List<Point>();
-            points3D = new List<DepthImagePoint>();
 
             conn = new ConectorKinect();
             expert = new ExpertoZE(conn);
@@ -73,7 +71,9 @@ namespace KinectCoordinateMapping
         private void Left_Down(object sender, MouseEventArgs e)
         {
             Point pos = e.GetPosition(camera);
-            points2D.Add(pos);
+
+            Point p = new Point(pos.X, pos.Y);
+            points2D.Add(p);
             Console.WriteLine("Click en " + pos);
         }
         #endregion
@@ -102,7 +102,11 @@ namespace KinectCoordinateMapping
             using (var frame = e.OpenColorImageFrame())
             {
                 if (frame != null)
+                {
+                    //Console.WriteLine(frame.Format);
                     camera.Source = frame.ToBitmap();
+                }
+                    
             }
 
             // Body
@@ -132,34 +136,37 @@ namespace KinectCoordinateMapping
             {
                 if(frame != null)
                 {
+                    Console.WriteLine(frame.Format);
                     DepthImagePoint[] _depthPoint = new DepthImagePoint[640 * 480];
                     DepthImagePixel[] _depthPixels = new DepthImagePixel[640 * 480];
                     frame.CopyDepthImagePixelDataTo(_depthPixels);
 
                     conn._sensor.CoordinateMapper.MapColorFrameToDepthFrame(
                         ColorImageFormat.RgbResolution640x480Fps30,
-                        DepthImageFormat.Resolution640x480Fps30,
+                        frame.Format,
                         _depthPixels,
                         _depthPoint
                     );
 
                     if(points2D.Count > 0)
                     {
-                        foreach (var p in points2D)
+                        Point[] ps = new Point[points2D.Count];
+                        points2D.CopyTo(ps);
+
+                        foreach (var p in ps)
                         {
                             Point point1 = p;
-                            DepthImagePoint dpoint1 = _depthPoint[(int)point1.X * 640 + (int)point1.Y];
-                            Console.WriteLine("El punto es " + dpoint1);
+                            DepthImagePoint dpoint1 = _depthPoint[(int)point1.X * 480 + (int)point1.Y];
+                            Console.WriteLine("El punto es " + dpoint1.X + "," + dpoint1.Y + "," + dpoint1.Depth);
                             var colPoint = conn._sensor.CoordinateMapper.MapDepthPointToColorPoint(
-                                DepthImageFormat.Resolution640x480Fps30,
+                                frame.Format,
                                 dpoint1,
-                                ColorImageFormat.InfraredResolution640x480Fps30);
+                                ColorImageFormat.RgbResolution640x480Fps30);
                             draw2DPoint(colPoint, calBrush);
                         }
                     }
                     
-                }
-                
+                }                
             }
         }
 
