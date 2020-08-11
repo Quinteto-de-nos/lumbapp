@@ -152,7 +152,6 @@
     <Compile Include="GUI\UserDataValidations\DniRangeRule.cs" />
     <Compile Include="Models\Informe.cs" />
     <Compile Include="StartUp.cs" />
-    <Compile Include="Expertos\ExpertoZE\InformeZE.cs" />
     <Compile Include="GUI\GUIController.cs" />
     <Compile Include="Orquestador\DatosPracticante.cs" />
     <Compile Include="Orquestador\IOrquestador.cs" />
