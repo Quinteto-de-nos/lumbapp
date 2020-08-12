@@ -68,7 +68,6 @@ namespace LumbApp.GUI
         {
             _orquestador.SetDatosDeSimulacion(datosPracticante, modoSeleccionado);
             MostrarPasosPreparacion();
-            //orquestador.IniciarSimulacion();????
         }
 
         /// <summary>
