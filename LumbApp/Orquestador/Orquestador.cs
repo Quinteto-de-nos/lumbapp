@@ -85,8 +85,7 @@ namespace LumbApp.Orquestador
 				GUIController.SolicitarDatosPracticante();
 
 			} catch (Exception ex) {
-				GUIController.SolicitarDatosPracticante();
-				//GUIController.MostrarErrorDeConexion(ex.Message);
+				GUIController.MostrarErrorDeConexion(ex.Message);
 			}
 			
 		}
