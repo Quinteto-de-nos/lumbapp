@@ -18,6 +18,9 @@ namespace LumbApp.GUI
         private MainWindow MainWindow { get; set; }
         private SensorsCheck SensorsCheckPage { get; set; }
         private IngresoDatosPracticante IngresoDatosPracticantePage { get; set; }
+        private SimulacionModoGuiado SimulacionModoGuiadoPage { get; set; }
+        private Mano _manoIzquierda { get; set; }
+        private Mano _manoDerecha { get; set; }
 
         public GUIController(MainWindow mainWindow) {
 
@@ -92,8 +95,8 @@ namespace LumbApp.GUI
         /// </summary>
         public void IniciarSimulacionModoGuiado()
         {
-            SimulacionModoGuiado simulacionModoGuiadoPage = new SimulacionModoGuiado(this);
-            MainWindow.NavigationService.Navigate(simulacionModoGuiadoPage);
+            SimulacionModoGuiadoPage = new SimulacionModoGuiado(this);
+            MainWindow.NavigationService.Navigate(SimulacionModoGuiadoPage);
         }
 
         /// <summary>
@@ -106,7 +109,46 @@ namespace LumbApp.GUI
 
         public void MostrarCambioZE(CambioZEEventArgs e)
         {
-            
+            CheckearCambioTracking(_manoIzquierda.Track, e.ManoIzquierda.Track, true);
+            CheckearCambioTracking(_manoDerecha.Track, e.ManoDerecha.Track, false);
+
+            if (e.ContaminadoAhora)
+            {
+                ChequearSiEntro(_manoIzquierda.Estado, e.ManoIzquierda.Estado, e.ManoIzquierda.VecesContamino, true);
+                ChequearSiEntro(_manoDerecha.Estado, e.ManoDerecha.Estado, e.ManoDerecha.VecesContamino, false);
+            }
+            else
+            {
+                ChequearSiSalio(_manoIzquierda.Estado, e.ManoIzquierda.Estado, true);
+                ChequearSiSalio(_manoIzquierda.Estado, e.ManoIzquierda.Estado, false);
+            }
+        }
+
+        private void CheckearCambioTracking(Mano.Tracking oldTrack, Mano.Tracking track, bool esIzquierda)
+        {
+            if( oldTrack != track )
+            {
+                if ( track == Mano.Tracking.Perdido )
+                    SimulacionModoGuiadoPage.MostrarPerdidaTrackeo(esIzquierda);
+                else
+                    SimulacionModoGuiadoPage.MostrarVuelveTrackeo(esIzquierda);
+            }
+        }
+
+        private void ChequearSiSalio(Mano.Estados oldState, Mano.Estados state, bool esIzquierda)
+        {
+            if(oldState != state)
+            {
+                if (state == Mano.Estados.Trabajando)
+                    SimulacionModoGuiadoPage.MostrarPrimerIngresoZE(esIzquierda);
+                if (state == Mano.Estados.Fuera)
+                    SimulacionModoGuiadoPage.MostrarSalidaDeZE(esIzquierda);
+            }
+        }
+        private void ChequearSiEntro(Mano.Estados oldState, Mano.Estados state, int vecesContamino, bool esIzquierda)
+        {
+            if (state == Mano.Estados.Contaminando && oldState == Mano.Estados.Fuera)
+                SimulacionModoGuiadoPage.MostrarIngresoContaminadoZE(esIzquierda, vecesContamino);
         }
 
         public void FinalizarSimulacion()

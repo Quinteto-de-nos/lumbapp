@@ -149,11 +149,8 @@
     <Compile Include="GUI\SensorsCheck.xaml.cs" />
     <Compile Include="Models\DatosPracticante.cs" />
     <Compile Include="GUI\IngresoDatosPracticante.xaml.cs" />
-    <Compile Include="GUI\UserDataValidations\DniRangeRule.cs" />
     <Compile Include="Models\Informe.cs" />
-    <Compile Include="StartUp.cs" />
     <Compile Include="GUI\GUIController.cs" />
-    <Compile Include="Orquestador\DatosPracticante.cs" />
     <Compile Include="Orquestador\IOrquestador.cs" />
     <Compile Include="Orquestador\Orquestador.cs" />
   </ItemGroup>
@@ -181,7 +178,6 @@
     <Content Include="GUI\Imagenes\Manos\Traqueando\mano-dentro.png" />
     <Content Include="GUI\Imagenes\Manos\Traqueando\mano-fuera-inicial.png" />
     <Content Include="GUI\Imagenes\Manos\Traqueando\mano-fuera.png" />
-    <Content Include="GUI\Imagenes\zona actual.png" />
     <Content Include="GUI\init.txt" />
     <Content Include="License-LGPL.txt" />
     <Content Include="Orquestador\init.txt" />

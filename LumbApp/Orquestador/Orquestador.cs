@@ -45,8 +45,6 @@ namespace LumbApp.Orquestador
 		/// IniciarSimulacion: Informa a los expertos que deben inicar el sensado.
 		/// 
 		/// </summary>
-		/// <param name="datosPracticante"> Datos ingresados del practicante </param>
-		/// <param name="modo"> Modo de practica seleccionado (Guiado=0, Evaluacion=1) </param>
 		public void IniciarSimulacion () {
 
 			expertoZE.IniciarSimulacion();
@@ -87,7 +85,8 @@ namespace LumbApp.Orquestador
 				GUIController.SolicitarDatosPracticante();
 
 			} catch (Exception ex) {
-				GUIController.MostrarErrorDeConexion(ex.Message);
+				GUIController.SolicitarDatosPracticante();
+				//GUIController.MostrarErrorDeConexion(ex.Message);
 			}
 			
 		}
