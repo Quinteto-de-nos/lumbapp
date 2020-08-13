@@ -185,7 +185,6 @@
     <Content Include="GUI\Imagenes\zona actual.png" />
     <Content Include="GUI\init.txt" />
     <Content Include="License-LGPL.txt" />
-    <Content Include="Orquestador\init.txt" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">

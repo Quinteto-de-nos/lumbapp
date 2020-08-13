@@ -16,16 +16,6 @@ namespace UnitTestLumbapp {
         }
 
         [TestMethod]
-        public void TestInicializarOK () {
-            Mock<GUIController> gui = new Mock<GUIController>();
-            Mock<Orquestador> orq = new Mock<Orquestador>(gui);
-
-            orq.Setup(x => x.Inicializar());
-
-            orq.Object.Inicializar();           
-        }
-
-        [TestMethod]
         [ExpectedException(typeof(Exception),
             "No se pudo detectar correctamente los sensores internos.")]
         public void TestInicializarErrAsync () {
@@ -34,7 +24,7 @@ namespace UnitTestLumbapp {
             //exp.Setup(x => x.Inicializar()).Returns(false);
 
 
-            Mock<Orquestador> orq = new Mock<Orquestador>();
+            Mock<IOrquestador> orq = new Mock<IOrquestador>();
             //orq.Object.SetExpertoSI(exp.Object);
             orq.Setup(x => x.Inicializar()).Throws(new Exception("No se pudo detectar correctamente los sensores internos."));
 

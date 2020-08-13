@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace LumbApp.Orquestador {
-    interface IOrquestador {
+    public interface IOrquestador {
         //void Start ();
         void SetDatosDeSimulacion(Models.DatosPracticante datosPracticante, ModoSimulacion modo);
         void IniciarSimulacion();
