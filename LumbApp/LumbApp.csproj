@@ -135,8 +135,8 @@
     <Compile Include="Expertos\ExpertoSI\ExpertoSI.cs" />
     <Compile Include="Expertos\ExpertoSI\InformeSI.cs" />
     <Compile Include="Expertos\ExpertoZE\CambioZEEventArgs.cs" />
-    <Compile Include="Expertos\ExpertoZE\EstadoMano.cs" />
     <Compile Include="Expertos\ExpertoZE\ExpertoZE.cs" />
+    <Compile Include="Expertos\ExpertoZE\IExpertoZE.cs" />
     <Compile Include="Expertos\ExpertoZE\InformeZE.cs" />
     <Compile Include="Expertos\ExpertoZE\Mano.cs" />
     <Compile Include="Expertos\ExpertoZE\test\ColorExtensions.cs" />
