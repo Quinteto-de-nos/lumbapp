@@ -77,6 +77,7 @@ namespace KinectCoordinateMapping
             Console.WriteLine("Click en " + pos);
         }
         #endregion
+
         #region Metodos de ZE
         void CambioZE(object sender, CambioZEEventArgs e)
         {
@@ -93,6 +94,7 @@ namespace KinectCoordinateMapping
                 && pos.Z < zeZ + delta && pos.Z > zeZ - delta;
         }
         #endregion
+
         #region Metodos de Kinect y Draw
         void Sensor_AllFramesReady(object sender, AllFramesReadyEventArgs e)
         {
@@ -132,6 +134,11 @@ namespace KinectCoordinateMapping
             this.drawZE();
 
             // Calibration
+            foreach (var p in points2D)
+           {
+                drawPoint(calBrush, p);
+            }
+            /*
             using (var frame = e.OpenDepthImageFrame())
             {
                 if(frame != null)
@@ -166,8 +173,10 @@ namespace KinectCoordinateMapping
                         }
                     }
                     
-                }                
+                }
+            
             }
+            */
         }
 
         private void drawJoint(Joint joint)
