@@ -53,7 +53,7 @@
     <RootNamespace>LumbApp</RootNamespace>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>LumbApp.GUI.MainWindow</StartupObject>
+    <StartupObject>KinectCoordinateMapping.MainWindow</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <Prefer32Bit>false</Prefer32Bit>
@@ -135,7 +135,6 @@
     <Compile Include="Expertos\ExpertoSI\ExpertoSI.cs" />
     <Compile Include="Expertos\ExpertoSI\InformeSI.cs" />
     <Compile Include="Expertos\ExpertoZE\CambioZEEventArgs.cs" />
-    <Compile Include="Expertos\ExpertoZE\EstadoMano.cs" />
     <Compile Include="Expertos\ExpertoZE\ExpertoZE.cs" />
     <Compile Include="Expertos\ExpertoZE\InformeZE.cs" />
     <Compile Include="Expertos\ExpertoZE\Mano.cs" />
