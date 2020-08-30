@@ -37,7 +37,10 @@ namespace KinectCoordinateMapping
         #region Variables calibracion
         private readonly Brush calBrush = Brushes.DeepPink;
         private readonly Brush calBrush2 = Brushes.Pink;
-        private List<Point> points2D;
+        private Point screenPoint1;
+        private Point screenPoint2;
+        private SkeletonPoint basePoint;
+        private List<SkeletonPoint> worldPoints;
         #endregion
 
         #region Variables generales
@@ -53,7 +56,7 @@ namespace KinectCoordinateMapping
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            points2D = new List<Point>();
+            worldPoints = new List<SkeletonPoint>();
 
             conn = new ConectorKinect();
             expert = new ExpertoZE(conn);
@@ -72,9 +75,11 @@ namespace KinectCoordinateMapping
         private void Left_Down(object sender, MouseEventArgs e)
         {
             Point pos = e.GetPosition(camera);
-
-            Point p = new Point(pos.X, pos.Y);
-            points2D.Add(p);
+            Point empty = new Point();
+            if(screenPoint1 == empty)
+                screenPoint1 = new Point(pos.X, pos.Y);
+            else if(screenPoint2 == empty)
+                screenPoint2 = new Point(pos.X, pos.Y);
             Console.WriteLine("Click en " + pos);
         }
         #endregion
@@ -94,6 +99,24 @@ namespace KinectCoordinateMapping
                 && pos.Y < zeY + delta && pos.Y > zeY - delta
                 && pos.Z < zeZ + delta && pos.Z > zeZ - delta;
         }
+
+        private SkeletonPoint toWorld(SkeletonPoint sp)
+        {
+            var wp = new SkeletonPoint();
+            wp.X = sp.X - basePoint.X;
+            wp.Y = sp.Y - basePoint.Y;
+            wp.Z = sp.Z - basePoint.Z;
+            return wp;
+        }
+
+        private SkeletonPoint toSkeleton(SkeletonPoint wp)
+        {
+            var sp = new SkeletonPoint();
+            sp.X = wp.X + basePoint.X;
+            sp.Y = wp.Y + basePoint.Y;
+            sp.Z = wp.Z + basePoint.Z;
+            return sp;
+        }
         #endregion
 
         #region Metodos de Kinect y Draw
@@ -106,17 +129,19 @@ namespace KinectCoordinateMapping
             {
                 if (frame != null)
                 {
-                    //Console.WriteLine(frame.Format);
                     camera.Source = frame.ToBitmap();
 
+                    //Calibration
                     using (var frameDepth = e.OpenDepthImageFrame())
                     {
                         if (frameDepth != null)
                         {
+                            //Init
                             DepthImagePixel[] depthData = new DepthImagePixel[frameDepth.PixelDataLength];
                             frameDepth.CopyDepthImagePixelDataTo(depthData);
                             SkeletonPoint[] skeletonPoints = new SkeletonPoint[frameDepth.PixelDataLength];
 
+                            // Mapeo color a skeleton
                             conn._sensor.CoordinateMapper.MapColorFrameToSkeletonFrame(
                                 frame.Format,
                                 frameDepth.Format,
@@ -124,23 +149,29 @@ namespace KinectCoordinateMapping
                                 skeletonPoints);
 
                             Console.WriteLine("FRAME");
-                            foreach(var p in points2D)
+                            // Recorrer puntos marcados
+                            basePoint = drawMarkedPoint(screenPoint1, skeletonPoints);
+                            var point2 = drawMarkedPoint(screenPoint2, skeletonPoints);
+
+                            // Calcular ZE
+                            var empty = new SkeletonPoint();
+                            if(basePoint != empty && point2 != empty)
                             {
-                                SkeletonPoint sp = skeletonPoints[640*(int)p.Y + (int)p.X];
-                                if (KinectSensor.IsKnownPoint(sp))
-                                {
-                                    Console.WriteLine("Point ["+p.X+","+p.Y+"] - 3D point ["+sp.X+","+sp.Y+","+sp.Z+"]");
-                                    ColorImagePoint colorPoint = SkeletonPointToScreen(sp);
-                                    draw2DPoint(colorPoint, calBrush2);
-                                }
+                                var wb = toWorld(basePoint);
+                                var w2 = toWorld(point2);
+                                Console.WriteLine("Kinect point [" + basePoint.X + "," + basePoint.Y + "," + basePoint.Z + "] - World point [" + wb.X + "," + wb.Y + "," + wb.Z + "]");
+                                Console.WriteLine("Kinect point [" + point2.X + "," + point2.Y + "," + point2.Z + "] - World point [" + w2.X + "," + w2.Y + "," + w2.Z + "]");
+
+                                var p = new SkeletonPoint();
+                                p.X = toWorld(point2).X;
+                                var p2 = toSkeleton(p);
+                                ColorImagePoint colorPoint = SkeletonPointToScreen(p2);
+                                draw2DPoint(colorPoint, zeBrush);
+                                Console.WriteLine("Kinect point [" + p2.X + "," + p2.Y + "," + p2.Z + "] - World point [" + p.X + "," + p.Y + "," + p.Z + "]");
                             }
-                            
                         }
                     }
-
-                    
-                }
-                    
+                }  
             }
 
             // Body
@@ -163,54 +194,25 @@ namespace KinectCoordinateMapping
             }
 
             // ZE
-            this.drawZE();
+           // this.drawZE();
+        }
 
-            // Calibration
-            /*
-            foreach (var p in points2D)
+        private SkeletonPoint drawMarkedPoint(Point screenPoint1, SkeletonPoint[] skeletonPoints)
+        {
+            if (screenPoint1 != null)
             {
-                drawPoint(calBrush, p);
-            }
-            */
-            /*
-            using (var frame = e.OpenDepthImageFrame())
-            {
-                if(frame != null)
+                SkeletonPoint sp = skeletonPoints[640 * (int)screenPoint1.Y + (int)screenPoint1.X];
+                //Console.WriteLine("Point [" + screenPoint1.X + "," + screenPoint1.Y + "] - 3D point [" + sp.X + "," + sp.Y + "," + sp.Z + "]");
+
+                if (KinectSensor.IsKnownPoint(sp))
                 {
-                    Console.WriteLine(frame.Format);
-                    DepthImagePoint[] _depthPoint = new DepthImagePoint[640 * 480];
-                    DepthImagePixel[] _depthPixels = new DepthImagePixel[640 * 480];
-                    frame.CopyDepthImagePixelDataTo(_depthPixels);
-
-                    conn._sensor.CoordinateMapper.MapColorFrameToDepthFrame(
-                        ColorImageFormat.RgbResolution640x480Fps30,
-                        frame.Format,
-                        _depthPixels,
-                        _depthPoint
-                    );
-
-                    if(points2D.Count > 0)
-                    {
-                        Point[] ps = new Point[points2D.Count];
-                        points2D.CopyTo(ps);
-
-                        foreach (var p in ps)
-                        {
-                            Point point1 = p;
-                            DepthImagePoint dpoint1 = _depthPoint[(int)point1.X * 480 + (int)point1.Y];
-                            Console.WriteLine("El punto es " + dpoint1.X + "," + dpoint1.Y + "," + dpoint1.Depth);
-                            var colPoint = conn._sensor.CoordinateMapper.MapDepthPointToColorPoint(
-                                frame.Format,
-                                dpoint1,
-                                ColorImageFormat.RgbResolution640x480Fps30);
-                            draw2DPoint(colPoint, calBrush);
-                        }
-                    }
-                    
+                    ColorImagePoint colorPoint = SkeletonPointToScreen(sp);
+                    draw2DPoint(colorPoint, calBrush2);
+                    return sp;
                 }
-            
+                return new SkeletonPoint();
             }
-            */
+            return new SkeletonPoint();
         }
 
         private void drawJoint(Joint joint)
