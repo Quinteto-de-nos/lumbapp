@@ -113,13 +113,13 @@ namespace LumbApp.GUI
 
             if (e.ContaminadoAhora)
             {
-                ChequearSiEntro(_manoIzquierda.Estado, e.ManoIzquierda.Estado, e.ManoIzquierda.VecesContamino, true);
-                ChequearSiEntro(_manoDerecha.Estado, e.ManoDerecha.Estado, e.ManoDerecha.VecesContamino, false);
+                ChequearSiContamino(_manoIzquierda.Estado, e.ManoIzquierda.Estado, e.ManoIzquierda.VecesContamino, true);
+                ChequearSiContamino(_manoDerecha.Estado, e.ManoDerecha.Estado, e.ManoDerecha.VecesContamino, false);
             }
             else
             {
-                ChequearSiSalio(_manoIzquierda.Estado, e.ManoIzquierda.Estado, true);
-                ChequearSiSalio(_manoIzquierda.Estado, e.ManoIzquierda.Estado, false);
+                ChequearSiTrabajaOSalio(_manoIzquierda.Estado, e.ManoIzquierda.Estado, true);
+                ChequearSiTrabajaOSalio(_manoIzquierda.Estado, e.ManoIzquierda.Estado, false);
             }
         }
 
@@ -127,14 +127,11 @@ namespace LumbApp.GUI
         {
             if( oldTrack != track )
             {
-                if ( track == Mano.Tracking.Perdido )
-                    SimulacionModoGuiadoPage.MostrarPerdidaTrackeo(esIzquierda);
-                else
-                    SimulacionModoGuiadoPage.MostrarVuelveTrackeo(esIzquierda);
+                SimulacionModoGuiadoPage.MostrarCambioTrackeo(esIzquierda);
             }
         }
 
-        private void ChequearSiSalio(Mano.Estados oldState, Mano.Estados state, bool esIzquierda)
+        private void ChequearSiTrabajaOSalio(Mano.Estados oldState, Mano.Estados state, bool esIzquierda)
         {
             if(oldState != state)
             {
@@ -144,7 +141,7 @@ namespace LumbApp.GUI
                     SimulacionModoGuiadoPage.MostrarSalidaDeZE(esIzquierda);
             }
         }
-        private void ChequearSiEntro(Mano.Estados oldState, Mano.Estados state, int vecesContamino, bool esIzquierda)
+        private void ChequearSiContamino(Mano.Estados oldState, Mano.Estados state, int vecesContamino, bool esIzquierda)
         {
             if (state == Mano.Estados.Contaminando && oldState == Mano.Estados.Fuera)
                 SimulacionModoGuiadoPage.MostrarIngresoContaminadoZE(esIzquierda, vecesContamino);
