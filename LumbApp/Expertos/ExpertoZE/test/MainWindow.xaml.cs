@@ -36,6 +36,7 @@ namespace KinectCoordinateMapping
 
         #region Variables calibracion
         private readonly Brush calBrush = Brushes.DeepPink;
+        private readonly Brush calBrush2 = Brushes.Pink;
         private List<Point> points2D;
         #endregion
 
@@ -107,6 +108,37 @@ namespace KinectCoordinateMapping
                 {
                     //Console.WriteLine(frame.Format);
                     camera.Source = frame.ToBitmap();
+
+                    using (var frameDepth = e.OpenDepthImageFrame())
+                    {
+                        if (frameDepth != null)
+                        {
+                            DepthImagePixel[] depthData = new DepthImagePixel[frameDepth.PixelDataLength];
+                            frameDepth.CopyDepthImagePixelDataTo(depthData);
+                            SkeletonPoint[] skeletonPoints = new SkeletonPoint[frameDepth.PixelDataLength];
+
+                            conn._sensor.CoordinateMapper.MapColorFrameToSkeletonFrame(
+                                frame.Format,
+                                frameDepth.Format,
+                                depthData,
+                                skeletonPoints);
+
+                            Console.WriteLine("FRAME");
+                            foreach(var p in points2D)
+                            {
+                                SkeletonPoint sp = skeletonPoints[640*(int)p.Y + (int)p.X];
+                                if (KinectSensor.IsKnownPoint(sp))
+                                {
+                                    Console.WriteLine("Point ["+p.X+","+p.Y+"] - 3D point ["+sp.X+","+sp.Y+","+sp.Z+"]");
+                                    ColorImagePoint colorPoint = SkeletonPointToScreen(sp);
+                                    draw2DPoint(colorPoint, calBrush2);
+                                }
+                            }
+                            
+                        }
+                    }
+
+                    
                 }
                     
             }
@@ -134,10 +166,12 @@ namespace KinectCoordinateMapping
             this.drawZE();
 
             // Calibration
+            /*
             foreach (var p in points2D)
-           {
+            {
                 drawPoint(calBrush, p);
             }
+            */
             /*
             using (var frame = e.OpenDepthImageFrame())
             {
@@ -230,7 +264,6 @@ namespace KinectCoordinateMapping
 
         private ColorImagePoint SkeletonPointToScreen(SkeletonPoint skeletonPoint)
         {
-
             // Skeleton-to-Color mapping
             return conn._sensor.CoordinateMapper.MapSkeletonPointToColorPoint(skeletonPoint, ColorImageFormat.RgbResolution640x480Fps30);
         }
