@@ -39,8 +39,10 @@ namespace KinectCoordinateMapping
         private readonly Brush calBrush2 = Brushes.Pink;
         private Point screenPoint1;
         private Point screenPoint2;
-        private SkeletonPoint basePoint;
-        private List<SkeletonPoint> worldPoints;
+        private Point screenPoint3;
+        private SkeletonPoint s0;
+        private SkeletonPoint s1;
+        private SkeletonPoint s3;
         #endregion
 
         #region Variables generales
@@ -56,8 +58,6 @@ namespace KinectCoordinateMapping
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            worldPoints = new List<SkeletonPoint>();
-
             conn = new ConectorKinect();
             expert = new ExpertoZE(conn);
             expert.CambioZE += CambioZE;
@@ -80,6 +80,8 @@ namespace KinectCoordinateMapping
                 screenPoint1 = new Point(pos.X, pos.Y);
             else if(screenPoint2 == empty)
                 screenPoint2 = new Point(pos.X, pos.Y);
+            else if (screenPoint3 == empty)
+                screenPoint3 = new Point(pos.X, pos.Y);
             Console.WriteLine("Click en " + pos);
         }
         #endregion
@@ -100,15 +102,87 @@ namespace KinectCoordinateMapping
                 && pos.Z < zeZ + delta && pos.Z > zeZ - delta;
         }
 
+        private SkeletonPoint mas(SkeletonPoint a, SkeletonPoint b)
+        {
+            var res = new SkeletonPoint();
+            res.X = a.X + b.X;
+            res.Y = a.Y + b.Y;
+            res.Z = a.Z + b.Z;
+            return res;
+        }
+
+        private SkeletonPoint menos(SkeletonPoint a, SkeletonPoint b)
+        {
+            var res = new SkeletonPoint();
+            res.X = a.X - b.X;
+            res.Y = a.Y - b.Y;
+            res.Z = a.Z - b.Z;
+            return res;
+        }
+
+        private SkeletonPoint cruz(SkeletonPoint a, SkeletonPoint b)
+        {
+            var res = new SkeletonPoint();
+            res.X = a.Y*b.Z - a.Z*b.Y; //a2b3-a3b2
+            res.Y = a.Z*b.X - a.X*b.Z; //a3b1-a1b3
+            res.Z = a.X*b.Y - a.Y*b.X; //a1b2-a2b1
+            return res;
+        }
+
+        private SkeletonPoint por(float a, SkeletonPoint b)
+        {
+            var res = new SkeletonPoint();
+            res.X = a * b.X;
+            res.Y = a * b.Y;
+            res.Z = a * b.Z;
+            return res;
+        }
+
+        private double modulo(SkeletonPoint a)
+        {
+            return Math.Sqrt(Math.Pow(a.X,2) + Math.Pow(a.Y, 2) + Math.Pow(a.Z, 2));
+        }
+
         private SkeletonPoint toWorld(SkeletonPoint sp)
         {
+            //Resto s0
+            /*
+            var aux = new SkeletonPoint();
+            aux.X = sp.X - s0.X;
+            aux.Y = sp.Y - s0.Y;
+            aux.Z = sp.Z - s0.Z;
+            */
+            //Normal
+            var sn = cruz(menos(s1, s0), menos(s3, s0));
+
+
+            //Matriz de transformacion
+            var aux1 = menos(s1, s0);
+            var aux2 = menos(sn, s0);
+            var aux3 = menos(s3, s0);
+
+            float[,] mat = new float[,]{
+                {aux1.X, aux1.Y, aux1.Z},
+                {aux2.X, aux2.Y, aux2.Z},
+                {aux3.X, aux3.Y, aux3.Z}
+            };
+
+            // Calcular
+            var auxSP = menos(sp, s0);
             var wp = new SkeletonPoint();
-            wp.X = sp.X - basePoint.X;
-            wp.Y = sp.Y - basePoint.Y;
-            wp.Z = sp.Z - basePoint.Z;
+            wp.X = auxSP.X * mat[0,0] + auxSP.Y * mat[1,0] + auxSP.Z * mat[2,0];
+            wp.Y = auxSP.X * mat[0, 1] + auxSP.Y * mat[1, 1] + auxSP.Z * mat[2, 1];
+            wp.Z = auxSP.X * mat[0, 2] + auxSP.Y * mat[1, 2] + auxSP.Z * mat[2, 2];
+
+            Console.WriteLine("ToWorld sp: " + sp.X + " " + sp.Y + " " + sp.Z);
+            Console.WriteLine("ToWorld s0: " + s0.X + " " + s0.Y + " " + s0.Z);
+            Console.WriteLine("ToWorld aux: " + auxSP.X + " " + auxSP.Y + " " + auxSP.Z);
+            Console.WriteLine("ToWorld wp: " + wp.X + " " + wp.Y + " " + wp.Z);
+            Console.WriteLine();
             return wp;
         }
 
+        /*
         private SkeletonPoint toSkeleton(SkeletonPoint wp)
         {
             var sp = new SkeletonPoint();
@@ -117,6 +191,7 @@ namespace KinectCoordinateMapping
             sp.Z = wp.Z + basePoint.Z;
             return sp;
         }
+        */
         #endregion
 
         #region Metodos de Kinect y Draw
@@ -150,24 +225,49 @@ namespace KinectCoordinateMapping
 
                             Console.WriteLine("FRAME");
                             // Recorrer puntos marcados
-                            basePoint = drawMarkedPoint(screenPoint1, skeletonPoints);
-                            var point2 = drawMarkedPoint(screenPoint2, skeletonPoints);
+                            s3 = drawMarkedPoint(screenPoint1, skeletonPoints);
+                            s0 = drawMarkedPoint(screenPoint2, skeletonPoints);
+                            s1 = drawMarkedPoint(screenPoint3, skeletonPoints);
 
                             // Calcular ZE
                             var empty = new SkeletonPoint();
-                            if(basePoint != empty && point2 != empty)
+                            if(s0 != empty && s1 != empty && s3 != empty)
                             {
-                                var wb = toWorld(basePoint);
-                                var w2 = toWorld(point2);
-                                Console.WriteLine("Kinect point [" + basePoint.X + "," + basePoint.Y + "," + basePoint.Z + "] - World point [" + wb.X + "," + wb.Y + "," + wb.Z + "]");
-                                Console.WriteLine("Kinect point [" + point2.X + "," + point2.Y + "," + point2.Z + "] - World point [" + w2.X + "," + w2.Y + "," + w2.Z + "]");
+                                //Calculo 4ta esquina
+                                //p4 = p2 - p3 + p1
+                                var s2 = menos(mas(s1, s3), s0);
+                                ColorImagePoint colorPoint = SkeletonPointToScreen(s2);
+                                draw2DPoint(colorPoint, zeBrush);
 
+                                //Puntos de arriba
+                                var sn = cruz(menos(s1, s0), menos(s3, s0));
+                                float altura = (float)(0.3/modulo(sn));
+                                var aux = por(altura, sn);
+                                draw2DPoint(SkeletonPointToScreen(mas(s0, aux)), zeBrush);
+                                draw2DPoint(SkeletonPointToScreen(mas(s1, aux)), zeBrush);
+                                draw2DPoint(SkeletonPointToScreen(mas(s2, aux)), zeBrush);
+                                draw2DPoint(SkeletonPointToScreen(mas(s3, aux)), zeBrush);
+
+                                //Print de puntos
+                                /*
+                                var w0 = toWorld(s0);
+                                var w1 = toWorld(s1);
+                                var w3 = toWorld(s3);
+                                var w2 = toWorld(s2);
+                                Console.WriteLine("Kinect point [" + s0.X + "," + s0.Y + "," + s0.Z + "] - World point [" + w0.X + "," + w0.Y + "," + w0.Z + "]");
+                                Console.WriteLine("Kinect point [" + s1.X + "," + s1.Y + "," + s1.Z + "] - World point [" + w1.X + "," + w1.Y + "," + w1.Z + "]");
+                                Console.WriteLine("Kinect point [" + s3.X + "," + s3.Y + "," + s3.Z + "] - World point [" + w3.X + "," + w3.Y + "," + w3.Z + "]");
+                                Console.WriteLine("Kinect point [" + s2.X + "," + s2.Y + "," + s2.Z + "] - World point [" + w2.X + "," + w2.Y + "," + w2.Z + "]");
+                                */
+
+                                /*
                                 var p = new SkeletonPoint();
-                                p.X = toWorld(point2).X;
+                                p.X = toWorld(s2).X;
                                 var p2 = toSkeleton(p);
                                 ColorImagePoint colorPoint = SkeletonPointToScreen(p2);
                                 draw2DPoint(colorPoint, zeBrush);
                                 Console.WriteLine("Kinect point [" + p2.X + "," + p2.Y + "," + p2.Z + "] - World point [" + p.X + "," + p.Y + "," + p.Z + "]");
+                                */
                             }
                         }
                     }
