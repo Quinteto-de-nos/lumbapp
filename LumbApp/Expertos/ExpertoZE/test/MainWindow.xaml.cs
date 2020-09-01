@@ -42,7 +42,12 @@ namespace KinectCoordinateMapping
         private Point screenPoint3;
         private SkeletonPoint s0;
         private SkeletonPoint s1;
+        private SkeletonPoint s2;
         private SkeletonPoint s3;
+        private SkeletonPoint s4;
+        private SkeletonPoint s5;
+        private SkeletonPoint s6;
+        private SkeletonPoint s7;
         #endregion
 
         #region Variables generales
@@ -97,9 +102,7 @@ namespace KinectCoordinateMapping
 
         private bool isInZE(SkeletonPoint pos)
         {
-            return pos.X < zeX + delta && pos.X > zeX - delta
-                && pos.Y < zeY + delta && pos.Y > zeY - delta
-                && pos.Z < zeZ + delta && pos.Z > zeZ - delta;
+            return distToPlane(s1,s2,s5, pos) > 0;
         }
 
         private SkeletonPoint mas(SkeletonPoint a, SkeletonPoint b)
@@ -141,6 +144,19 @@ namespace KinectCoordinateMapping
         private double modulo(SkeletonPoint a)
         {
             return Math.Sqrt(Math.Pow(a.X,2) + Math.Pow(a.Y, 2) + Math.Pow(a.Z, 2));
+        }
+
+        private double distToPlane(SkeletonPoint p0, SkeletonPoint p1, SkeletonPoint p2, SkeletonPoint test)
+        {
+            //Armo el plano
+            var normal = cruz(menos(p1, p0), menos(p2, p0));
+            var a = normal.X;
+            var b = normal.Y;
+            var c = normal.Z;
+            var d = -a * p0.X - b * p0.Y - c * p0.Z;
+
+            //Calculo la distancia
+            return (a * test.X + b * test.Y + c * test.Z + d) / modulo(normal);
         }
 
         private SkeletonPoint toWorld(SkeletonPoint sp)
