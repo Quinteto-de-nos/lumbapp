@@ -19,6 +19,7 @@ namespace LumbApp.GUI
         private SensorsCheck SensorsCheckPage { get; set; }
         private IngresoDatosPracticante IngresoDatosPracticantePage { get; set; }
         private SimulacionModoGuiado SimulacionModoGuiadoPage { get; set; }
+        private ResultadosSimulacion ResultadosSimulacionPage { get; set; }
         private Mano _manoIzquierda { get; set; }
         private Mano _manoDerecha { get; set; }
 
@@ -141,6 +142,12 @@ namespace LumbApp.GUI
                     SimulacionModoGuiadoPage.MostrarSalidaDeZE(esIzquierda);
             }
         }
+
+        public void DetenerSimulacion()
+        {
+            _orquestador.TerminarSimulacion();
+        }
+
         private void ChequearSiContamino(Mano.Estados oldState, Mano.Estados state, int vecesContamino, bool esIzquierda)
         {
             if (state == Mano.Estados.Contaminando && oldState == Mano.Estados.Fuera)
@@ -150,10 +157,11 @@ namespace LumbApp.GUI
         public void FinalizarSimulacion()
         {
             _orquestador.TerminarSimulacion();
-            //mostrar_procesado_resultados();
+            ResultadosSimulacionPage = new ResultadosSimulacion(this);
+            MainWindow.NavigationService.Navigate(ResultadosSimulacionPage);
         }
 
-        public void MostrarResultados( Informe informe)
+        public void MostrarResultados( Informe informe )
         {
 
         }
