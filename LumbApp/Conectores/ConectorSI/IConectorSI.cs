@@ -7,5 +7,6 @@ namespace LumbApp.Conectores.ConectorSI {
     public interface IConectorSI {
         void Conectar ();
         bool ChekearSensado ();
+        void ActivarSensado ();
     }
 }

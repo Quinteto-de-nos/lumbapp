@@ -1,11 +1,11 @@
-﻿using LumbApp.Expertos.ExpertoSI.Utils;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace LumbApp.Expertos.ExpertoSI {
-    public class RegistroEstado {
+    public class CambioSIEventArgs : EventArgs {
         public Capa TejidoAdiposo; //posicion 2 - (Arduino posicion 0)
 
         public Vertebra L2; //posicion 3 - (Arduino posicion 1)
@@ -22,17 +22,11 @@ namespace LumbApp.Expertos.ExpertoSI {
 
         public Capa Duramadre; //posicion 11 - (Arduino posicion 9)
 
-        public RegistroEstado () {
-            this.TejidoAdiposo = new Capa();
-            this.L2 = new Vertebra();
-            this.L3Arriba = new Vertebra();
-            this.L3Abajo = new Vertebra();
-            this.L4ArribaIzq = new Vertebra();
-            this.L4ArribaDer = new Vertebra();
-            this.L4ArribaCentro = new Vertebra();
-            this.L4Abajo = new Vertebra();
-            this.L5 = new Vertebra();
-            this.Duramadre = new Capa();
+        public bool RozandoAhora { get; internal set; }
+        public bool AtravezandoAhora { get; internal set; }
+
+        public CambioSIEventArgs(RegistroEstado re) {
+            this.reActual = re;
         }
         
     }
