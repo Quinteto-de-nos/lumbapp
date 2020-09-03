@@ -34,6 +34,10 @@ namespace LumbApp.Conectores.ConectorSI {
             mySerialPort.Close();
         }
 
+        public void ActivarSensado () { }
+        public void Desconectar () { }
+        public void PausarSensado () { }
+
         private static void DataReceivedHandler (
                         object sender,
                         SerialDataReceivedEventArgs e) {

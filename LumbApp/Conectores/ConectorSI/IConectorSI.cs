@@ -8,5 +8,7 @@ namespace LumbApp.Conectores.ConectorSI {
         void Conectar ();
         bool ChekearSensado ();
         void ActivarSensado ();
+        void PausarSensado ();
+        void Desconectar ();
     }
 }

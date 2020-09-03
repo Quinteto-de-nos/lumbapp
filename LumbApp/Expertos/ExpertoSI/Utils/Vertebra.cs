@@ -5,17 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace LumbApp.Expertos.ExpertoSI.Utils {
-    public class Vertebra :{
-        public enum Sector {
-            /// <summary>
-            /// Completo es para las vertebras que no son sectorizadas (L2 y L5)
-            /// </summary>
-            Completo,
-            Arriba,
-            Abajo,
-
-        }
-
+    public class Vertebra {
+        
         public enum Estados {
             /// <summary>
             /// Inicial indica que, desde que comenzo la simulacion, la vertebra todavia no fue rozada.
@@ -51,6 +42,7 @@ namespace LumbApp.Expertos.ExpertoSI.Utils {
         }
 
         /// <summary>
+        /// Sirve para vertebras que no estan sectorizadas.
         /// Setea a la vertebra que esta siendo rozada. Segun el estado anterior, puede quedar en Rozando
         /// o RozandoNuevamente.
         /// </summary>
