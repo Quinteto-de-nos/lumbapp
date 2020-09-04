@@ -34,7 +34,7 @@ namespace LumbApp.GUI
         private static string _manoFueraPath = "mano-fuera.png";
         private static string _manoDentroPath = "mano-dentro.png";
         private static string _manoContaminadaPath = "mano-contaminadaX.png";
-        private static string[] coloresContaminando = ["#dcf192", "#f1ef92", "#f1d792", "#f1b392", "#f19292", "#f3817e", "#ff6161"];
+        private static string[] coloresContaminando = { "#dcf192", "#f1ef92", "#f1d792", "#f1b392", "#f19292", "#f3817e", "#ff6161" };
         private Mano.Tracking manoIzqTrack { get; set; }
         private Mano.Tracking manoDerTrack { get; set; }
         private string manoIzqEstadoPath { get; set; }
@@ -46,12 +46,24 @@ namespace LumbApp.GUI
         public SimulacionModoGuiado(GUIController gui)
         {
             InitializeComponent();
+
+            //inicializo manos como no trackeadas
+            manoIzqTrack = manoDerTrack = Mano.Tracking.Perdido;
+
+            //inicializo paths de estados de manos
+            manoIzqEstadoPath = manoDerEstadoPath = _manoFueraInicialPath;
+
+            //inicializo paths de tracking de manos
+            manoIzqTrackPath = manoDerTrackPath = _manoPerdidaSubPath;
+
+            //inicializo imagenes de manos
             ImageSource startHandsSource = new BitmapImage(
-                new Uri(_imagesFolderPath + _manoPerdidaSubPath + _manoFueraInicialPath, UriKind.Absolute));
+                new Uri(_imagesFolderPath + manoIzqTrackPath + manoIzqEstadoPath, UriKind.Absolute));
             ManoIzquierda.Source = startHandsSource;
             ManoDerecha.Source = startHandsSource;
             brushConverter = new BrushConverter();
             
+            //inicializo los labels de las manos
             var colorLabel = (Brush)brushConverter.ConvertFrom("#ffffff");
             ManoIzqLabel.Background = colorLabel;
             ManoIzqLabel.Content = "Inicial";

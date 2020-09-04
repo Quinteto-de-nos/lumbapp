@@ -12,7 +12,8 @@ namespace LumbApp.Orquestador
     public class Orquestador : IOrquestador {
 		public GUIController GUIController { get; set; }
 
-		private ExpertoZE expertoZE;
+		//private ExpertoZE expertoZE;
+		private ExpertoZEMock expertoZE;
 		private ExpertoSI expertoSI;
 
 		private Models.DatosPracticante datosPracticante;
@@ -28,9 +29,10 @@ namespace LumbApp.Orquestador
 			
 			GUIController = gui;
 
-			expertoZE = new ExpertoZE(new ConectorKinect());
+			//expertoZE = new ExpertoZE(new ConectorKinect());
+			expertoZE = new ExpertoZEMock(true);
 
-			expertoSI = new ExpertoSI(new ConectorSI());
+			//expertoSI = new ExpertoSI(new ConectorSI());
 
 		}
 
@@ -49,7 +51,7 @@ namespace LumbApp.Orquestador
 
 			expertoZE.IniciarSimulacion();
 
-			expertoSI.IniciarSimulacion();
+			//expertoSI.IniciarSimulacion();
 
 
 			if(modoSeleccionado == ModoSimulacion.ModoGuiado)
@@ -75,11 +77,11 @@ namespace LumbApp.Orquestador
 				}
 
 				//INICIALIZAR EXPERTO SI
-				expertoSI.CambioSI += CambioSI; //suscripción al evento CambioSI
-				if (!expertoSI.Inicializar()) {
-					expertoSI.CambioSI -= CambioSI;
-					throw new Exception("No se pudo detectar correctamente los sensores internos.");
-				}
+				//expertoSI.CambioSI += CambioSI; //suscripción al evento CambioSI
+				//if (!expertoSI.Inicializar()) {
+				//	expertoSI.CambioSI -= CambioSI;
+				//	throw new Exception("No se pudo detectar correctamente los sensores internos.");
+				//}
 
 				//Mostrar pantalla de ingreso de datos
 				GUIController.SolicitarDatosPracticante();
@@ -100,7 +102,7 @@ namespace LumbApp.Orquestador
 
 			InformeZE informeZE = expertoZE.TerminarSimulacion();
 			
-			InformeSI informeSI = expertoSI.TerminarSimulacion();
+			//InformeSI informeSI = expertoSI.TerminarSimulacion();
 			
 			//Guardar informe en archivo
 			//Informar a GUI con informe con un evento, que pase si el informe se genero bien, y si se guardó  bien (bool, bool) 

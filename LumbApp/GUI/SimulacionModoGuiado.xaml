@@ -48,7 +48,7 @@
                     HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
         </Label>
         <!--Manos-->
-        <Image Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" Name="ManoIzquierda" Height="300" Width="230"  HorizontalAlignment="Right" Margin="0,5,237,0">
+        <Image Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" Name="ManoIzquierda" Height="300" Width="230"  HorizontalAlignment="Right" Margin="0,5,1,0">
             <Image.RenderTransform>
                 <ScaleTransform ScaleX="-1"/>
             </Image.RenderTransform>

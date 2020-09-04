@@ -97,6 +97,8 @@ namespace LumbApp.GUI
         {
             SimulacionModoGuiadoPage = new SimulacionModoGuiado(this);
             MainWindow.NavigationService.Navigate(SimulacionModoGuiadoPage);
+            _manoIzquierda = new Mano();
+            _manoDerecha = new Mano();
         }
 
         /// <summary>
@@ -120,8 +122,9 @@ namespace LumbApp.GUI
             else
             {
                 ChequearSiTrabajaOSalio(_manoIzquierda.Estado, e.ManoIzquierda.Estado, true);
-                ChequearSiTrabajaOSalio(_manoIzquierda.Estado, e.ManoIzquierda.Estado, false);
+                ChequearSiTrabajaOSalio(_manoDerecha.Estado, e.ManoDerecha.Estado, false);
             }
+            _manoIzquierda.Estado = e.ManoIzquierda.Estado;
         }
 
         private void CheckearCambioTracking(Mano.Tracking oldTrack, Mano.Tracking track, bool esIzquierda)
