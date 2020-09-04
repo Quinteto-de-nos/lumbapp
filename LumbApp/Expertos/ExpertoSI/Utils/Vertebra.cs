@@ -51,6 +51,8 @@ namespace LumbApp.Expertos.ExpertoSI.Utils {
             switch (Estado) {
                 case Estados.Inicial:
                     Estado = Estados.Rozando;
+                    if (VecesRozada == 0)
+                        VecesRozada = 1;
                     return true;
                 case Estados.Abandonada:
                     Estado = Estados.RozandoNuevamente;

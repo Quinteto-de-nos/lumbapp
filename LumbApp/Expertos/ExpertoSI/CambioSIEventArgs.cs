@@ -45,7 +45,12 @@ namespace LumbApp.Expertos.ExpertoSI {
         public bool AtravezandoAhora { get; internal set; }
 
         public CambioSIEventArgs(Capa tejidoAdiposo, Vertebra L2, VertebraL3 L3, VertebraL4 L4, Vertebra L5, Capa Duramadre) {
-            
+            this.TejidoAdiposo = tejidoAdiposo;
+            this.L2 = L2;
+            this.L3 = L3;
+            this.L4 = L4;
+            this.L5 = L5;
+            this.Duramadre = Duramadre;
         }
         
     }

@@ -20,9 +20,6 @@ namespace LumbApp.Expertos.ExpertoSI {
         public int VecesCaminoCorrecto;
         public int VecesCaminoIncorrecto;
 
-        protected RegistroEstado registroEstadoActual;
-        protected RegistroEstado registroEstadoAnterior;
-
         private bool simulando = false;
 
         CambioSIEventArgs args;
@@ -34,9 +31,6 @@ namespace LumbApp.Expertos.ExpertoSI {
         }
 
         public bool Inicializar () {
-            registroEstadoActual = new RegistroEstado();
-            registroEstadoAnterior = new RegistroEstado();
-
             //args = new CambioSIEventArgs(TejidoAdiposo, L2, L3, L4, L5, Duramadre);
 
             //sensoresInternos.HayDatos += HayDatosNuevos; //suscripción al evento HayDatos
@@ -72,102 +66,5 @@ namespace LumbApp.Expertos.ExpertoSI {
             return informe;
         }
 
-        public RegistroEstado GetRegistroEstadoActual () {
-            return registroEstadoActual;
-        }
-
-
-
-       /// <summary>
-       /// Acciona cada capa y vertebra de acuerdo a los datos sensados recibidos.
-       /// Cada capa o vertebra se encarga de actualizar su estado segun corresponda.
-       /// </summary>
-       /// <param name="datosSensados"> string que contiene los datos sensados. </param>
-       /// <returns> Retorna true si hubo un cambio de estado en al menos alguna vertebra o capa. </returns>
-        public bool RealizarAcciones (string datosSensados) {
-            bool Cambio = false;
-
-            if (datosSensados[2] == '0') {
-                if (TejidoAdiposo.Atravesar())
-                    Cambio = true;
-            } else {
-                if (TejidoAdiposo.Abandonar())
-                    Cambio = true;
-            }
-
-            if (datosSensados[3] == '0') {
-                if (L2.Rozar())
-                    Cambio = true;
-            } else {
-                if (L2.Abandonar())
-                    Cambio = true;
-            }
-
-            if (datosSensados[4] == '0') {
-                if (L3.RozarSector(VertebraL3.Sectores.Arriba))
-                    Cambio = true;
-            } else {
-                if (L3.Abandonar())
-                    Cambio = true;
-            }
-
-            if (datosSensados[5] == '0') {
-                if (L3.RozarSector(VertebraL3.Sectores.Abajo))
-                    Cambio = true;
-            } else {
-                if (L3.Abandonar())
-                    Cambio = true;
-            }
-
-            if (datosSensados[6] == '0') {
-                if (L4.RozarSector(VertebraL4.Sectores.ArribaIzquierda))
-                    Cambio = true;
-            } else {
-                if (L4.Abandonar())
-                    Cambio = true;
-            }
-
-            if (datosSensados[7] == '0') {
-                if (L4.RozarSector(VertebraL4.Sectores.ArribaDerecha))
-                    Cambio = true;
-            } else {
-                if (L4.Abandonar())
-                    Cambio = true;
-            }
-
-            if (datosSensados[8] == '0') {
-                if (L4.RozarSector(VertebraL4.Sectores.ArribaCentro))
-                    Cambio = true;
-            } else {
-                if (L4.Abandonar())
-                    Cambio = true;
-            }
-
-            if (datosSensados[9] == '0') {
-                if (L4.RozarSector(VertebraL4.Sectores.Abajo))
-                    Cambio = true;
-            } else {
-                if (L4.Abandonar())
-                    Cambio = true;
-            }
-
-            if (datosSensados[10] == '0') {
-                if (L5.Rozar())
-                    Cambio = true;
-            } else {
-                if (L5.Abandonar())
-                    Cambio = true;
-            }
-
-            if (datosSensados[11] == '0') {
-                if (Duramadre.Atravesar())
-                    Cambio = true;
-            } else {
-                if (Duramadre.Abandonar())
-                    Cambio = true;
-            }
-
-            return Cambio;
-        }
     }
 }

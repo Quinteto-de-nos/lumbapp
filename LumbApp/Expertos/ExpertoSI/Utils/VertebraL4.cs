@@ -52,5 +52,11 @@ namespace LumbApp.Expertos.ExpertoSI.Utils {
 
             return base.Rozar();
         }
+
+        public bool AbandonarSector (Sectores sector) {
+            if (this.Sector == sector)
+                return base.Abandonar();
+            return false;
+        }
     }
 }
