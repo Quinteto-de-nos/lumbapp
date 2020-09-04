@@ -6,11 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace LumbApp.Conectores.ConectorSI {
-    class ConectorSI : IConectorSI
+    public class ConectorSI : IConectorSI
     {
         SerialPort mySerialPort;
 
         private string datosLeidos = null;
+
+        public event EventHandler<DatosSensadosEventArgs> HayDatos;
 
         public ConectorSI () { }
 
