@@ -95,5 +95,11 @@
             else Track = Tracking.Perdido;
             return old != Track;
         }
+
+        // method for cloning object 
+        public object Shallowcopy()
+        {
+            return this.MemberwiseClone();
+        }
     }
 }

@@ -124,7 +124,8 @@ namespace LumbApp.GUI
                 ChequearSiTrabajaOSalio(_manoIzquierda.Estado, e.ManoIzquierda.Estado, true);
                 ChequearSiTrabajaOSalio(_manoDerecha.Estado, e.ManoDerecha.Estado, false);
             }
-            _manoIzquierda.Estado = e.ManoIzquierda.Estado;
+            _manoIzquierda = (Mano)e.ManoIzquierda.Shallowcopy();
+            _manoDerecha = (Mano)e.ManoDerecha.Shallowcopy();
         }
 
         private void CheckearCambioTracking(Mano.Tracking oldTrack, Mano.Tracking track, bool esIzquierda)
@@ -144,11 +145,6 @@ namespace LumbApp.GUI
                 if (state == Mano.Estados.Fuera)
                     SimulacionModoGuiadoPage.MostrarSalidaDeZE(esIzquierda);
             }
-        }
-
-        public void DetenerSimulacion()
-        {
-            _orquestador.TerminarSimulacion();
         }
 
         private void ChequearSiContamino(Mano.Estados oldState, Mano.Estados state, int vecesContamino, bool esIzquierda)

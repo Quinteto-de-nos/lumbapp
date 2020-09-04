@@ -40,5 +40,10 @@
                 HorizontalContentAlignment="Center"
                 FontSize="25" FontWeight="Bold"  Foreground="Black" Height="42" Width="780" Margin="320,34,320,0" 
                 Grid.RowSpan="2">Resultados de Simulacion</Label>
+        <Button Grid.Row="16" Height="50" Width="320" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"
+               HorizontalContentAlignment="Center" Background="#4E87D5" Foreground="White" FontSize="20" FontWeight="Bold"
+          Name="IniciarSimulacion" Click="IniciarSimulacion_Click">
+            Nueva Simulación
+        </Button>
     </Grid>
 </Page>

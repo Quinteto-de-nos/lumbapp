@@ -42,6 +42,8 @@ namespace LumbApp.GUI
         private string manoIzqTrackPath { get; set; }
         private string manoDerTrackPath { get; set; }
         private BrushConverter brushConverter { get; set; }
+        private Brush white { get; set; }
+        private Brush black { get; set; }
 
         public SimulacionModoGuiado(GUIController gui)
         {
@@ -62,9 +64,13 @@ namespace LumbApp.GUI
             ManoIzquierda.Source = startHandsSource;
             ManoDerecha.Source = startHandsSource;
             brushConverter = new BrushConverter();
-            
+
+            //inicializo colores
+            white = (Brush)brushConverter.ConvertFrom("#ffffff");
+            black = (Brush)brushConverter.ConvertFrom("#323232");
+
             //inicializo los labels de las manos
-            var colorLabel = (Brush)brushConverter.ConvertFrom("#ffffff");
+            var colorLabel = white;
             ManoIzqLabel.Background = colorLabel;
             ManoIzqLabel.Content = "Inicial";
             ManoDerLabel.Background = colorLabel;
@@ -78,7 +84,7 @@ namespace LumbApp.GUI
 
             #region Cambios Entradas y Salidas
             
-            public void MostrarCambioZE(bool esManoIzq, string newEstadoPath, Brush colorLabel, string textoLabel)
+            public void MostrarCambioZE(bool esManoIzq, string newEstadoPath, Brush colorLabel, Brush colorFont, string textoLabel)
             {
                 ImageSource nuevaImagen = new BitmapImage(
                     new Uri(_imagesFolderPath +
@@ -91,6 +97,7 @@ namespace LumbApp.GUI
                     ManoIzquierda.Source = nuevaImagen;
                     ManoIzqLabel.Background = colorLabel;
                     ManoIzqLabel.Content = textoLabel;
+                    ManoIzqLabel.Foreground = colorFont;
                 }
                 else
                 {
@@ -98,18 +105,19 @@ namespace LumbApp.GUI
                     ManoDerecha.Source = nuevaImagen;
                     ManoDerLabel.Background = colorLabel;
                     ManoDerLabel.Content = textoLabel;
+                    ManoDerLabel.Foreground = colorFont;
                 }
             }
             public void MostrarPrimerIngresoZE(bool esManoIzq)
             {
                 var colorLabel = (Brush)brushConverter.ConvertFrom("#a7f192");
-                MostrarCambioZE(esManoIzq, _manoDentroPath, colorLabel, "Dentro");
+                MostrarCambioZE(esManoIzq, _manoDentroPath, colorLabel, black, "Dentro");
             }
 
             public void MostrarSalidaDeZE(bool esManoIzq)
             {
                 var colorLabel = (Brush)brushConverter.ConvertFrom("#bc100c");
-                MostrarCambioZE(esManoIzq, _manoFueraPath, colorLabel, "Fuera");
+                MostrarCambioZE(esManoIzq, _manoFueraPath, colorLabel, white, "Fuera");
             }
 
             public void MostrarIngresoContaminadoZE(bool esManoIzq, int nroIngreso)
@@ -117,11 +125,11 @@ namespace LumbApp.GUI
                 int nroContaminacion = (nroIngreso > 7 ? 7 : nroIngreso);
 
                 string manoContaminadaPath = _manoContaminadaPath;
-                    manoContaminadaPath.Replace("X", nroContaminacion.ToString() );
+                    manoContaminadaPath = manoContaminadaPath.Replace("X", nroContaminacion.ToString() );
 
                 var colorLabel = (Brush)brushConverter.ConvertFrom(coloresContaminando[nroContaminacion-1]);
                 
-                MostrarCambioZE(esManoIzq, manoContaminadaPath, colorLabel, "Contaminando");
+                MostrarCambioZE(esManoIzq, manoContaminadaPath, colorLabel, black, "Contaminando");
             }
 
             #endregion
@@ -167,7 +175,7 @@ namespace LumbApp.GUI
 
         private void FinalizarSimulacion_Click(object sender, RoutedEventArgs e)
         {
-            _controller.DetenerSimulacion();
+            _controller.FinalizarSimulacion();
         }
 
         #endregion

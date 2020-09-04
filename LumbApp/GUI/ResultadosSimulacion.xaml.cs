@@ -33,9 +33,9 @@ namespace LumbApp.GUI
             _controller = gui;
         }
 
-        private void SaltearButton_Click(object sender, RoutedEventArgs e)
+        private void IniciarSimulacion_Click(object sender, RoutedEventArgs e)
         {
-            _controller.FinPreparacion();
+            _controller.SolicitarDatosPracticante();
         }
 
     }
