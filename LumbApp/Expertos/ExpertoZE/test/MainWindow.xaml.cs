@@ -206,7 +206,7 @@ namespace KinectCoordinateMapping
             {
                 //Calculo 4ta esquina
                 //p4 = p2 - p3 + p1
-                var s2 = menos(mas(s1, s3), s0);
+                s2 = menos(mas(s1, s3), s0);
                 ColorImagePoint colorPoint = SkeletonPointToScreen(s2);
                 draw2DPoint(colorPoint, zeBrush);
 
@@ -214,16 +214,20 @@ namespace KinectCoordinateMapping
                 var sn = cruz(menos(s1, s0), menos(s3, s0));
                 float altura = (float)(0.3 / modulo(sn));
                 var aux = por(altura, sn);
-                draw2DPoint(SkeletonPointToScreen(mas(s0, aux)), zeBrush);
-                draw2DPoint(SkeletonPointToScreen(mas(s1, aux)), zeBrush);
-                draw2DPoint(SkeletonPointToScreen(mas(s2, aux)), zeBrush);
-                draw2DPoint(SkeletonPointToScreen(mas(s3, aux)), zeBrush);
+                s4 = mas(s0, aux);
+                s5 = mas(s1, aux);
+                s6 = mas(s2, aux);
+                s7 = mas(s3, aux);
 
                 //Log
-                logPoint(s0);
-                logPoint(s1);
-                logPoint(s2);
-                logPoint(s3);
+                logPoint(s0, "s0");
+                logPoint(s1, "s1");
+                logPoint(s2, "s2");
+                logPoint(s3, "s3");
+                logPoint(s4, "s4");
+                logPoint(s5, "s5");
+                logPoint(s6, "s6");
+                logPoint(s7, "s7");
             }
         }
 
@@ -232,9 +236,9 @@ namespace KinectCoordinateMapping
             return skeletonPoints[640 * (int)p.Y + (int)p.X];
         }
 
-        private void logPoint(SkeletonPoint p)
+        private void logPoint(SkeletonPoint p, string name)
         {
-            Console.WriteLine("Kinect point [" + p.X + "," + p.Y + "," + p.Z + "]");
+            Console.WriteLine("Kinect point" + name + " [" + p.X + "," + p.Y + "," + p.Z + "]");
         }
         #endregion
 
