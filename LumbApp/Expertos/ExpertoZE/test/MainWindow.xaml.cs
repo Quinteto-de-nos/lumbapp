@@ -153,10 +153,10 @@ namespace KinectCoordinateMapping
             return Math.Sqrt(Math.Pow(a.X,2) + Math.Pow(a.Y, 2) + Math.Pow(a.Z, 2));
         }
 
-        private double distToPlane(SkeletonPoint centro, SkeletonPoint izq, SkeletonPoint der, SkeletonPoint test)
+        private double distToPlane(SkeletonPoint centro, SkeletonPoint right, SkeletonPoint left, SkeletonPoint test)
         {
             //Armo el plano
-            var normal = cruz(menos(izq, centro), menos(der, centro));
+            var normal = cruz(menos(right, centro), menos(left, centro));
             var a = normal.X;
             var b = normal.Y;
             var c = normal.Z;
