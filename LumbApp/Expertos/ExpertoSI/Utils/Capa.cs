@@ -49,8 +49,7 @@ namespace LumbApp.Expertos.ExpertoSI.Utils {
             switch (Estado) {
                 case Estados.Inicial:
                     Estado = Estados.Atravesando;
-                    if (VecesAtravesada == 0)
-                        VecesAtravesada++;
+                    VecesAtravesada++;
                     return true;
                 case Estados.Abandonada:
                     Estado = Estados.AtravesandoNuevamente;
