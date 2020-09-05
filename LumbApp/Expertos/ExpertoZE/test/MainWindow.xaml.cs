@@ -28,19 +28,6 @@ namespace KinectCoordinateMapping
         private readonly Brush zeBrush = Brushes.Aqua;
         private readonly Brush inZeBrush = Brushes.Orange;
 
-        private const float zeX = 0;
-        private const float zeY = 0;
-        private const float zeZ = 1;
-        private const float delta = 0.1f;
-        #endregion
-
-        #region Variables calibracion
-        private bool calcular;
-        private readonly Brush calBrush = Brushes.DeepPink;
-        private readonly Brush calBrush2 = Brushes.Pink;
-        private Point screenPoint1;
-        private Point screenPoint2;
-        private Point screenPoint3;
         private SkeletonPoint s0;
         private SkeletonPoint s1;
         private SkeletonPoint s2;
@@ -49,6 +36,14 @@ namespace KinectCoordinateMapping
         private SkeletonPoint s5;
         private SkeletonPoint s6;
         private SkeletonPoint s7;
+        #endregion
+
+        #region Variables calibracion
+        private bool calcular;
+        private readonly Brush calBrush2 = Brushes.Pink;
+        private Point screenPoint1;
+        private Point screenPoint2;
+        private Point screenPoint3;
         #endregion
 
         #region Variables generales
@@ -205,11 +200,6 @@ namespace KinectCoordinateMapping
 
         private void calcularZE(SkeletonPoint[] skeletonPoints)
         {
-            // Recorrer puntos marcados
-            s3 = drawMarkedPoint(screenPoint1, skeletonPoints);
-            s0 = drawMarkedPoint(screenPoint2, skeletonPoints);
-            s1 = drawMarkedPoint(screenPoint3, skeletonPoints);
-
             // Calcular ZE
             var empty = new SkeletonPoint();
             if (s0 != empty && s1 != empty && s3 != empty)
@@ -228,19 +218,24 @@ namespace KinectCoordinateMapping
                 draw2DPoint(SkeletonPointToScreen(mas(s1, aux)), zeBrush);
                 draw2DPoint(SkeletonPointToScreen(mas(s2, aux)), zeBrush);
                 draw2DPoint(SkeletonPointToScreen(mas(s3, aux)), zeBrush);
+
+                //Log
+                logPoint(s0);
+                logPoint(s1);
+                logPoint(s2);
+                logPoint(s3);
             }
         }
 
-        /*
-        private SkeletonPoint toSkeleton(SkeletonPoint wp)
+        private SkeletonPoint screenPointToSkeleton(Point p, SkeletonPoint[] skeletonPoints)
         {
-            var sp = new SkeletonPoint();
-            sp.X = wp.X + basePoint.X;
-            sp.Y = wp.Y + basePoint.Y;
-            sp.Z = wp.Z + basePoint.Z;
-            return sp;
+            return skeletonPoints[640 * (int)p.Y + (int)p.X];
         }
-        */
+
+        private void logPoint(SkeletonPoint p)
+        {
+            Console.WriteLine("Kinect point [" + p.X + "," + p.Y + "," + p.Z + "]");
+        }
         #endregion
 
         #region Metodos de Kinect y Draw
@@ -275,6 +270,12 @@ namespace KinectCoordinateMapping
                                     skeletonPoints);
 
                                 Console.WriteLine("FRAME");
+
+                                // Recorrer puntos marcados
+                                s3 = screenPointToSkeleton(screenPoint1, skeletonPoints);
+                                s0 = screenPointToSkeleton(screenPoint2, skeletonPoints);
+                                s1 = screenPointToSkeleton(screenPoint3, skeletonPoints);
+
                                 calcularZE(skeletonPoints);
                                 calcular = false;
                             }
@@ -303,15 +304,13 @@ namespace KinectCoordinateMapping
                 }
             }
 
-            // ZE
-            draw2DPoint(SkeletonPointToScreen(s0), calBrush2);
-            draw2DPoint(SkeletonPointToScreen(s1), calBrush2);
-            draw2DPoint(SkeletonPointToScreen(s2), calBrush2);
-            draw2DPoint(SkeletonPointToScreen(s3), calBrush2);
-            draw2DPoint(SkeletonPointToScreen(s4), calBrush2);
-            draw2DPoint(SkeletonPointToScreen(s5), calBrush2);
-            draw2DPoint(SkeletonPointToScreen(s6), calBrush2);
-            draw2DPoint(SkeletonPointToScreen(s7), calBrush2);
+            // Calibracion
+            drawPoint(calBrush2, screenPoint1);
+            drawPoint(calBrush2, screenPoint2);
+            drawPoint(calBrush2, screenPoint3);
+
+            //ZE
+            drawZE();
         }
 
         private SkeletonPoint drawMarkedPoint(Point screenPoint1, SkeletonPoint[] skeletonPoints)
@@ -389,40 +388,14 @@ namespace KinectCoordinateMapping
 
         private void drawZE()
         {
-
-            SkeletonPoint center = getPoint(zeX, zeY, zeZ);
-
-            //up-bottom (Y) left-right (X) front-back (Z)
-            SkeletonPoint ulf = getPoint(zeX + delta, zeY + delta, zeZ - delta);
-            SkeletonPoint urf = getPoint(zeX - delta, zeY + delta, zeZ - delta);
-            SkeletonPoint ulb = getPoint(zeX + delta, zeY + delta, zeZ + delta);
-            SkeletonPoint urb = getPoint(zeX - delta, zeY + delta, zeZ + delta);
-            SkeletonPoint blf = getPoint(zeX + delta, zeY - delta, zeZ - delta);
-            SkeletonPoint brf = getPoint(zeX - delta, zeY - delta, zeZ - delta);
-            SkeletonPoint blb = getPoint(zeX + delta, zeY - delta, zeZ + delta);
-            SkeletonPoint brb = getPoint(zeX - delta, zeY - delta, zeZ + delta);
-
-            draw2DPoint(this.SkeletonPointToScreen(center), zeBrush);
-
-            draw2DPoint(this.SkeletonPointToScreen(center), zeBrush);
-            draw2DPoint(this.SkeletonPointToScreen(ulf), zeBrush);
-            draw2DPoint(this.SkeletonPointToScreen(urf), zeBrush);
-            draw2DPoint(this.SkeletonPointToScreen(ulb), zeBrush);
-            draw2DPoint(this.SkeletonPointToScreen(urb), zeBrush);
-            draw2DPoint(this.SkeletonPointToScreen(blf), zeBrush);
-            draw2DPoint(this.SkeletonPointToScreen(brf), zeBrush);
-            draw2DPoint(this.SkeletonPointToScreen(blb), zeBrush);
-            draw2DPoint(this.SkeletonPointToScreen(brb), zeBrush);
-
-
-        }
-        private SkeletonPoint getPoint(float x, float y, float z)
-        {
-            SkeletonPoint point = new SkeletonPoint();
-            point.X = x;
-            point.Y = y;
-            point.Z = z;
-            return point;
+            draw2DPoint(SkeletonPointToScreen(s0), zeBrush);
+            draw2DPoint(SkeletonPointToScreen(s1), zeBrush);
+            draw2DPoint(SkeletonPointToScreen(s2), zeBrush);
+            draw2DPoint(SkeletonPointToScreen(s3), zeBrush);
+            draw2DPoint(SkeletonPointToScreen(s4), zeBrush);
+            draw2DPoint(SkeletonPointToScreen(s5), zeBrush);
+            draw2DPoint(SkeletonPointToScreen(s6), zeBrush);
+            draw2DPoint(SkeletonPointToScreen(s7), zeBrush);
         }
         #endregion
 
