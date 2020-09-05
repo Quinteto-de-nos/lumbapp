@@ -102,7 +102,14 @@ namespace KinectCoordinateMapping
 
         private bool isInZE(SkeletonPoint pos)
         {
-            return distToPlane(s1,s2,s5, pos) > 0;
+            return 
+                distToPlane(s1,s5,s2, pos) > 0 //cara 2
+                && distToPlane(s0, s3, s4, pos) > 0 //cara 4
+                && distToPlane(s0, s4, s1, pos) > 0 //cara 1
+                && distToPlane(s2, s6, s3, pos) > 0 //cara 3
+                && distToPlane(s4, s7, s5, pos) > 0 //cara 5
+                && distToPlane(s0, s1, s3, pos) > 0 //cara 6
+                ;
         }
 
         private SkeletonPoint mas(SkeletonPoint a, SkeletonPoint b)
@@ -146,14 +153,14 @@ namespace KinectCoordinateMapping
             return Math.Sqrt(Math.Pow(a.X,2) + Math.Pow(a.Y, 2) + Math.Pow(a.Z, 2));
         }
 
-        private double distToPlane(SkeletonPoint p0, SkeletonPoint p1, SkeletonPoint p2, SkeletonPoint test)
+        private double distToPlane(SkeletonPoint centro, SkeletonPoint izq, SkeletonPoint der, SkeletonPoint test)
         {
             //Armo el plano
-            var normal = cruz(menos(p1, p0), menos(p2, p0));
+            var normal = cruz(menos(izq, centro), menos(der, centro));
             var a = normal.X;
             var b = normal.Y;
             var c = normal.Z;
-            var d = -a * p0.X - b * p0.Y - c * p0.Z;
+            var d = -a * centro.X - b * centro.Y - c * centro.Z;
 
             //Calculo la distancia
             return (a * test.X + b * test.Y + c * test.Z + d) / modulo(normal);
