@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Text.Json;
 
 namespace KinectCoordinateMapping
 {
@@ -196,6 +197,12 @@ namespace KinectCoordinateMapping
                 logPoint(s5, "s5");
                 logPoint(s6, "s6");
                 logPoint(s7, "s7");
+
+                //JSON
+                var lista = new SkeletonPoint[] { s0, s1, s2, s3, s4, s5, s6, s7 };
+                Calibracion cal = new Calibracion(lista);
+                string json = JsonSerializer.Serialize(cal);
+                Console.WriteLine(json);
             }
         }
 
