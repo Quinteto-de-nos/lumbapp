@@ -126,14 +126,21 @@
   <ItemGroup>
     <Compile Include="Conectores\ConectorKinect\IConectorKinect.cs" />
     <Compile Include="Conectores\ConectorKinect\ConectorKinect.cs" />
-    <Compile Include="Conectores\ConectorSI\CambioSIEventArgs.cs" />
     <Compile Include="Conectores\ConectorSI\ConectorSI.cs" />
+    <Compile Include="Conectores\ConectorSI\ConectorSIMock.cs" />
+    <Compile Include="Conectores\ConectorSI\DatosSensadosEventArgs.cs" />
     <Compile Include="Conectores\ConectorSI\IConectorSI.cs" />
     <Compile Include="Enums\Manager\BaseEnumManager.cs" />
     <Compile Include="Enums\ModoSimulacion.cs" />
-    <Compile Include="Expertos\ExpertoSI\RegistroEstado.cs" />
+    <Compile Include="Expertos\ExpertoSI\CambioSIEventArgs.cs" />
+    <Compile Include="Expertos\ExpertoSI\Utils\Capa.cs" />
+    <Compile Include="Expertos\ExpertoSI\ExpertoSIMock.cs" />
+    <Compile Include="Expertos\ExpertoSI\IExpertoSI.cs" />
     <Compile Include="Expertos\ExpertoSI\ExpertoSI.cs" />
     <Compile Include="Expertos\ExpertoSI\InformeSI.cs" />
+    <Compile Include="Expertos\ExpertoSI\Utils\Vertebra.cs" />
+    <Compile Include="Expertos\ExpertoSI\Utils\VertebraL3.cs" />
+    <Compile Include="Expertos\ExpertoSI\Utils\VertebraL4.cs" />
     <Compile Include="Expertos\ExpertoZE\CambioZEEventArgs.cs" />
     <Compile Include="Expertos\ExpertoZE\ExpertoZE.cs" />
     <Compile Include="Expertos\ExpertoZE\ExpertoZEMock.cs" />
@@ -157,7 +164,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Conectores\ConectorSI\conector.exe" />
-    <Content Include="Expertos\ExpertoSI\init.txt" />
     <Content Include="FinalFeedbacker\init.txt" />
     <Content Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada1.png" />
     <Content Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada2.png" />
