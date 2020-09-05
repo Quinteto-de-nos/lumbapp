@@ -100,17 +100,17 @@ namespace LumbApp.Expertos.ExpertoSI {
 
             //************ A partir de aca escribir toda la simulacion ****************
 
-            //Ej: mano derecha se trackea a los 5 segundos
+            //Ej: Atraviesa el tejido adiposo a los 5 segundos
             await Task.Delay(5000);
             TejidoAdiposo.Atravesar();
             sendEvent();
 
-            //Ej: entra a los 10 segundos
+            //Ej: Roza L4-arriba-centro a los 10 segundos
             await Task.Delay(5000);
             L4.RozarSector(VertebraL4.Sectores.ArribaCentro);
             sendEvent();
 
-            //Ej: sale a los 20 segundos
+            //Ej: Atraviesa la duramadre a los 20 segundos
             await Task.Delay(10000);
             Duramadre.Atravesar();
             sendEvent();
