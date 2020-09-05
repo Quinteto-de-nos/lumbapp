@@ -34,40 +34,36 @@ namespace LumbApp.GUI
         private static string _manoFueraPath = "mano-fuera.png";
         private static string _manoDentroPath = "mano-dentro.png";
         private static string _manoContaminadaPath = "mano-contaminadaX.png";
-        private static string[] coloresContaminando = { "#dcf192", "#f1ef92", "#f1d792", "#f1b392", "#f19292", "#f3817e", "#ff6161" };
-        private Mano.Tracking manoIzqTrack { get; set; }
-        private Mano.Tracking manoDerTrack { get; set; }
-        private string manoIzqEstadoPath { get; set; }
-        private string manoDerEstadoPath { get; set; }
-        private string manoIzqTrackPath { get; set; }
-        private string manoDerTrackPath { get; set; }
+        private static Brush[] coloresContaminando { get; set; }
         private BrushConverter brushConverter { get; set; }
         private Brush white { get; set; }
         private Brush black { get; set; }
+        private Brush green { get; set; }
+        private Brush darkred { get; set; }
 
         public SimulacionModoGuiado(GUIController gui)
         {
             InitializeComponent();
 
-            //inicializo manos como no trackeadas
-            manoIzqTrack = manoDerTrack = Mano.Tracking.Perdido;
-
-            //inicializo paths de estados de manos
-            manoIzqEstadoPath = manoDerEstadoPath = _manoFueraInicialPath;
-
-            //inicializo paths de tracking de manos
-            manoIzqTrackPath = manoDerTrackPath = _manoPerdidaSubPath;
-
             //inicializo imagenes de manos
             ImageSource startHandsSource = new BitmapImage(
-                new Uri(_imagesFolderPath + manoIzqTrackPath + manoIzqEstadoPath, UriKind.Absolute));
+                new Uri(_imagesFolderPath + _manoPerdidaSubPath + _manoFueraInicialPath, UriKind.Absolute));
+
             ManoIzquierda.Source = startHandsSource;
             ManoDerecha.Source = startHandsSource;
-            brushConverter = new BrushConverter();
 
             //inicializo colores
+            brushConverter = new BrushConverter();
             white = (Brush)brushConverter.ConvertFrom("#ffffff");
             black = (Brush)brushConverter.ConvertFrom("#323232");
+            green= (Brush)brushConverter.ConvertFrom("#a7f192");
+            darkred = (Brush)brushConverter.ConvertFrom("#bc100c");
+            string[] colores = { "#dcf192", "#f1ef92", "#f1d792", "#f1b392", "#f19292", "#f3817e", "#ff6161" };
+            coloresContaminando = new Brush[colores.Count()];
+            for(int i =0; i< colores.Count() ;i++)
+            {
+                coloresContaminando[i]= (Brush)brushConverter.ConvertFrom(colores[i]);
+            }
 
             //inicializo los labels de las manos
             var colorLabel = white;
@@ -82,92 +78,70 @@ namespace LumbApp.GUI
 
         #region Cambios en Manos
 
-            #region Cambios Entradas y Salidas
-            
-            public void MostrarCambioZE(bool esManoIzq, string newEstadoPath, Brush colorLabel, Brush colorFont, string textoLabel)
+        public void MostrarCambioZE(CambioZEEventArgs e)
+        {
+            //ManoIzquierda
+            ManosImageConfig config = GetNuevaConfiguracionImagen(e.ManoIzquierda.Track, e.ManoIzquierda.Estado, e.ManoIzquierda.VecesContamino);
+
+            ImageSource nuevaImagen = new BitmapImage(
+               new Uri(_imagesFolderPath +config.TrackingPath +config.EstadoPath, UriKind.Absolute));
+            ManoIzquierda.Source = nuevaImagen;
+            ManoIzqLabel.Background = config.LabelColor;
+            ManoIzqLabel.Foreground = config.FontColor;
+            ManoIzqLabel.Content = config.Texto;
+
+            //ManoDerecha
+            config = GetNuevaConfiguracionImagen(e.ManoDerecha.Track, e.ManoDerecha.Estado, e.ManoDerecha.VecesContamino);
+
+            nuevaImagen = new BitmapImage(
+               new Uri(_imagesFolderPath + config.TrackingPath + config.EstadoPath, UriKind.Absolute));
+            ManoDerecha.Source = nuevaImagen;
+            ManoDerLabel.Background = config.LabelColor;
+            ManoDerLabel.Foreground = config.FontColor;
+            ManoDerLabel.Content = config.Texto;
+        }            
+
+        public ManosImageConfig GetNuevaConfiguracionImagen(Mano.Tracking track, Mano.Estados estado, int nroIngreso)
+        {
+            ManosImageConfig config = new ManosImageConfig();
+
+            //config trackeo
+            config.TrackingPath = (track == Mano.Tracking.Perdido ? _manoPerdidaSubPath : _manoTrackeadaSubPath);
+
+            //config estado
+            switch (estado)
             {
-                ImageSource nuevaImagen = new BitmapImage(
-                    new Uri(_imagesFolderPath +
-                    (esManoIzq ? manoIzqTrackPath : manoDerTrackPath) +
-                    newEstadoPath, UriKind.Absolute));
-
-                if (esManoIzq)
-                {
-                    manoIzqEstadoPath = newEstadoPath;
-                    ManoIzquierda.Source = nuevaImagen;
-                    ManoIzqLabel.Background = colorLabel;
-                    ManoIzqLabel.Content = textoLabel;
-                    ManoIzqLabel.Foreground = colorFont;
-                }
-                else
-                {
-                    manoDerEstadoPath = newEstadoPath;
-                    ManoDerecha.Source = nuevaImagen;
-                    ManoDerLabel.Background = colorLabel;
-                    ManoDerLabel.Content = textoLabel;
-                    ManoDerLabel.Foreground = colorFont;
-                }
-            }
-            public void MostrarPrimerIngresoZE(bool esManoIzq)
-            {
-                var colorLabel = (Brush)brushConverter.ConvertFrom("#a7f192");
-                MostrarCambioZE(esManoIzq, _manoDentroPath, colorLabel, black, "Dentro");
-            }
-
-            public void MostrarSalidaDeZE(bool esManoIzq)
-            {
-                var colorLabel = (Brush)brushConverter.ConvertFrom("#bc100c");
-                MostrarCambioZE(esManoIzq, _manoFueraPath, colorLabel, white, "Fuera");
-            }
-
-            public void MostrarIngresoContaminadoZE(bool esManoIzq, int nroIngreso)
-            {
-                int nroContaminacion = (nroIngreso > 7 ? 7 : nroIngreso);
-
-                string manoContaminadaPath = _manoContaminadaPath;
-                    manoContaminadaPath = manoContaminadaPath.Replace("X", nroContaminacion.ToString() );
-
-                var colorLabel = (Brush)brushConverter.ConvertFrom(coloresContaminando[nroContaminacion-1]);
-                
-                MostrarCambioZE(esManoIzq, manoContaminadaPath, colorLabel, black, "Contaminando");
-            }
-
-            #endregion
-
-            #region Cambios Traqueo
-
-            public void MostrarCambioTrackeo(bool esManoIzq)
-            {
-                Mano.Tracking nuevoEstado = 
-                    ((esManoIzq ? manoIzqTrack : manoDerTrack) == Mano.Tracking.Perdido) ? 
-                    Mano.Tracking.Trackeado : Mano.Tracking.Perdido;
-
-                string nuevoEstadoPath = 
-                    (nuevoEstado == Mano.Tracking.Perdido ? _manoPerdidaSubPath : _manoTrackeadaSubPath);
-
-                ImageSource nuevaImagen = new BitmapImage(
-                    new Uri(_imagesFolderPath +
-                    //cambio el estado de tracking
-                    nuevoEstadoPath + 
-                    //dejo el estado actual
-                    (esManoIzq? manoIzqEstadoPath : manoDerEstadoPath) , UriKind.Absolute));
-
-                if (esManoIzq)
-                {
-                    manoIzqTrack = nuevoEstado;
-                    manoIzqTrackPath = nuevoEstadoPath;
-                    ManoIzquierda.Source = nuevaImagen;
-                }
-                else
-                {
-                    manoDerTrack = nuevoEstado;
-                    manoDerTrackPath = nuevoEstadoPath;
-                    ManoDerecha.Source = nuevaImagen;
-                }
-
+                case Mano.Estados.Inicial:
+                    config.EstadoPath = _manoFueraInicialPath;
+                    config.LabelColor = white;
+                    config.FontColor = black;
+                    config.Texto = "Inicial";
+                    break;
+                case Mano.Estados.Trabajando:
+                    config.EstadoPath = _manoDentroPath;
+                    config.LabelColor = green;
+                    config.FontColor = black;
+                    config.Texto = "Trabajando";
+                    break;
+                case Mano.Estados.Fuera:
+                    config.EstadoPath = _manoFueraPath;
+                    config.LabelColor = darkred;
+                    config.FontColor = white;
+                    config.Texto = "Fuera";
+                    break;
+                case Mano.Estados.Contaminando:
+                    {
+                        int nroContaminacion = (nroIngreso > 7 ? 7 : nroIngreso);
+                        config.EstadoPath = _manoContaminadaPath.Replace("X", nroContaminacion.ToString()); ;
+                        config.LabelColor = coloresContaminando[nroContaminacion-1];
+                        config.FontColor = black;
+                        config.Texto = "Contaminando";
+                        break;
+                    }
             }
 
-        #endregion
+            return config;
+        }
 
         #endregion
 
@@ -179,6 +153,16 @@ namespace LumbApp.GUI
         }
 
         #endregion
+
+    }
+
+     public class ManosImageConfig
+    {
+        public Brush LabelColor { get; set; }
+        public Brush FontColor { get; set; }
+        public string Texto { get; set; }
+        public string EstadoPath { get; set; }
+        public string TrackingPath { get; set; }
 
     }
 }

@@ -111,46 +111,7 @@ namespace LumbApp.GUI
 
         public void MostrarCambioZE(CambioZEEventArgs e)
         {
-            CheckearCambioTracking(_manoIzquierda.Track, e.ManoIzquierda.Track, true);
-            CheckearCambioTracking(_manoDerecha.Track, e.ManoDerecha.Track, false);
-
-            if (e.ContaminadoAhora)
-            {
-                ChequearSiContamino(_manoIzquierda.Estado, e.ManoIzquierda.Estado, e.ManoIzquierda.VecesContamino, true);
-                ChequearSiContamino(_manoDerecha.Estado, e.ManoDerecha.Estado, e.ManoDerecha.VecesContamino, false);
-            }
-            else
-            {
-                ChequearSiTrabajaOSalio(_manoIzquierda.Estado, e.ManoIzquierda.Estado, true);
-                ChequearSiTrabajaOSalio(_manoDerecha.Estado, e.ManoDerecha.Estado, false);
-            }
-            _manoIzquierda = (Mano)e.ManoIzquierda.Shallowcopy();
-            _manoDerecha = (Mano)e.ManoDerecha.Shallowcopy();
-        }
-
-        private void CheckearCambioTracking(Mano.Tracking oldTrack, Mano.Tracking track, bool esIzquierda)
-        {
-            if( oldTrack != track )
-            {
-                SimulacionModoGuiadoPage.MostrarCambioTrackeo(esIzquierda);
-            }
-        }
-
-        private void ChequearSiTrabajaOSalio(Mano.Estados oldState, Mano.Estados state, bool esIzquierda)
-        {
-            if(oldState != state)
-            {
-                if (state == Mano.Estados.Trabajando)
-                    SimulacionModoGuiadoPage.MostrarPrimerIngresoZE(esIzquierda);
-                if (state == Mano.Estados.Fuera)
-                    SimulacionModoGuiadoPage.MostrarSalidaDeZE(esIzquierda);
-            }
-        }
-
-        private void ChequearSiContamino(Mano.Estados oldState, Mano.Estados state, int vecesContamino, bool esIzquierda)
-        {
-            if (state == Mano.Estados.Contaminando && oldState == Mano.Estados.Fuera)
-                SimulacionModoGuiadoPage.MostrarIngresoContaminadoZE(esIzquierda, vecesContamino);
+            SimulacionModoGuiadoPage.MostrarCambioZE(e);
         }
 
         public void FinalizarSimulacion()
