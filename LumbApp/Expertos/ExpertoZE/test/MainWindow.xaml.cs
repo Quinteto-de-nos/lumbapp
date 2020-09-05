@@ -159,45 +159,6 @@ namespace KinectCoordinateMapping
             return (a * test.X + b * test.Y + c * test.Z + d) / modulo(normal);
         }
 
-        private SkeletonPoint toWorld(SkeletonPoint sp)
-        {
-            //Resto s0
-            /*
-            var aux = new SkeletonPoint();
-            aux.X = sp.X - s0.X;
-            aux.Y = sp.Y - s0.Y;
-            aux.Z = sp.Z - s0.Z;
-            */
-            //Normal
-            var sn = cruz(menos(s1, s0), menos(s3, s0));
-
-
-            //Matriz de transformacion
-            var aux1 = menos(s1, s0);
-            var aux2 = menos(sn, s0);
-            var aux3 = menos(s3, s0);
-
-            float[,] mat = new float[,]{
-                {aux1.X, aux1.Y, aux1.Z},
-                {aux2.X, aux2.Y, aux2.Z},
-                {aux3.X, aux3.Y, aux3.Z}
-            };
-
-            // Calcular
-            var auxSP = menos(sp, s0);
-            var wp = new SkeletonPoint();
-            wp.X = auxSP.X * mat[0,0] + auxSP.Y * mat[1,0] + auxSP.Z * mat[2,0];
-            wp.Y = auxSP.X * mat[0, 1] + auxSP.Y * mat[1, 1] + auxSP.Z * mat[2, 1];
-            wp.Z = auxSP.X * mat[0, 2] + auxSP.Y * mat[1, 2] + auxSP.Z * mat[2, 2];
-
-            Console.WriteLine("ToWorld sp: " + sp.X + " " + sp.Y + " " + sp.Z);
-            Console.WriteLine("ToWorld s0: " + s0.X + " " + s0.Y + " " + s0.Z);
-            Console.WriteLine("ToWorld aux: " + auxSP.X + " " + auxSP.Y + " " + auxSP.Z);
-            Console.WriteLine("ToWorld wp: " + wp.X + " " + wp.Y + " " + wp.Z);
-            Console.WriteLine();
-            return wp;
-        }
-
         private void calcularZE(SkeletonPoint[] skeletonPoints)
         {
             // Calcular ZE
@@ -315,24 +276,6 @@ namespace KinectCoordinateMapping
 
             //ZE
             drawZE();
-        }
-
-        private SkeletonPoint drawMarkedPoint(Point screenPoint1, SkeletonPoint[] skeletonPoints)
-        {
-            if (screenPoint1 != null)
-            {
-                SkeletonPoint sp = skeletonPoints[640 * (int)screenPoint1.Y + (int)screenPoint1.X];
-                //Console.WriteLine("Point [" + screenPoint1.X + "," + screenPoint1.Y + "] - 3D point [" + sp.X + "," + sp.Y + "," + sp.Z + "]");
-
-                if (KinectSensor.IsKnownPoint(sp))
-                {
-                    ColorImagePoint colorPoint = SkeletonPointToScreen(sp);
-                    draw2DPoint(colorPoint, calBrush2);
-                    return sp;
-                }
-                return new SkeletonPoint();
-            }
-            return new SkeletonPoint();
         }
 
         private void drawJoint(Joint joint)
