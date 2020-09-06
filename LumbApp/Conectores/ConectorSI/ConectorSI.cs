@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Management;
+using System.Windows.Documents;
 
 namespace LumbApp.Conectores.ConectorSI {
     public class ConectorSI : IConectorSI
@@ -19,20 +20,30 @@ namespace LumbApp.Conectores.ConectorSI {
             datosLeidos = null;
         }
 
-        public void Conectar () {
-            mySerialPort = new SerialPort(DetectarArduinoPort());
+        public bool Conectar () {
+            try {
+                mySerialPort = new SerialPort(DetectarArduinoPort());
 
-            mySerialPort.BaudRate = 9600;
-            mySerialPort.Parity = Parity.None;
-            mySerialPort.StopBits = StopBits.One;
-            mySerialPort.DataBits = 8;
-            mySerialPort.Handshake = Handshake.None;
-            mySerialPort.RtsEnable = true;
+                mySerialPort.BaudRate = 9600;
+                mySerialPort.Parity = Parity.None;
+                mySerialPort.StopBits = StopBits.One;
+                mySerialPort.DataBits = 8;
+                mySerialPort.Handshake = Handshake.None;
+                mySerialPort.RtsEnable = true;
 
-            mySerialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
+                mySerialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
 
-            mySerialPort.Open();
-            
+                mySerialPort.Open();
+
+                mySerialPort.Open();
+
+                return true;
+
+            } catch (Exception ex) {
+                Console.WriteLine(ex);
+                return false;
+            }
+
         }
 
         private string DetectarArduinoPort () {
@@ -93,13 +104,25 @@ namespace LumbApp.Conectores.ConectorSI {
 
         }
 
-        public bool ChekearComunicacion () { //Se puede checkear que todo lo que se reciba sean 0 .... o 1 si usas eso del arduino que dijiste
-            for (int i = 0; i < 5; i++) {
-                if (datosLeidos == null || datosLeidos == "")
-                    return false;
-                Task.Delay(1000);
+        public bool CheckearComunicacion () { //Se puede checkear que todo lo que se reciba sean 0 .... o 1 si usas eso del arduino que dijiste
+            String datos;
+
+            try {
+                for (int i = 0; i < 50; i++) {
+
+                    mySerialPort.WriteLine("p");
+
+                    datos = mySerialPort.ReadTo("$");
+
+                    if (datos.Contains("1") || datos.Contains("0")) {
+                        return true;
+                    }
+
+                }
+                return false;
+            } catch {
+                return false;
             }
-            return true;
         }
     }
 }

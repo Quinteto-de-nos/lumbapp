@@ -16,7 +16,7 @@ namespace LumbApp.Conectores.ConectorSI {
         /// </summary>
         /// <param name="shouldInit"> Recibe un booleano que de indica si debe iniciar bien o no.</param>
         public ConectorSIMock (bool shouldInit) { this.shouldInit = shouldInit; }
-        public void Conectar () { }
+        public bool Conectar () { return shouldInit; }
         public void ActivarSensado () {
             sensando = shouldInit;
             if (sensando)
@@ -25,7 +25,7 @@ namespace LumbApp.Conectores.ConectorSI {
         public void Desconectar () { }
         public void PausarSensado () { sensando = false; }
 
-        public bool ChekearComunicacion () {
+        public bool CheckearComunicacion () {
             Task.Delay(5000);
             return shouldInit;
         }
