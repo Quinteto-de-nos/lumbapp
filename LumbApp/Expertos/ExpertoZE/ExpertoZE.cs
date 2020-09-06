@@ -4,7 +4,7 @@ using System;
 
 namespace LumbApp.Expertos.ExpertoZE
 {
-    public class ExpertoZE
+    public class ExpertoZE : IExpertoZE
     {
         /// <summary>
         /// CambioZE es un evento que se produce durante la simulacion cada vez que se da un cambio en el estado de alguna
