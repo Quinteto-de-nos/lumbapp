@@ -138,85 +138,86 @@ namespace LumbApp.Expertos.ExpertoSI {
         /// <returns> Retorna true si hubo un cambio de estado en al menos alguna vertebra o capa. </returns>
         public bool RealizarAcciones (string datosSensados) {
             bool Cambio = false;
+            if (datosSensados.Count() == 12) {
+                if (datosSensados[2] == '0') {
+                    if (TejidoAdiposo.Atravesar())
+                        Cambio = true;
+                } else {
+                    if (TejidoAdiposo.Abandonar())
+                        Cambio = true;
+                }
 
-            if (datosSensados[2] == '0') {
-                if (TejidoAdiposo.Atravesar())
-                    Cambio = true;
-            } else {
-                if (TejidoAdiposo.Abandonar())
-                    Cambio = true;
-            }
+                if (datosSensados[3] == '0') {
+                    if (L2.Rozar())
+                        Cambio = true;
+                } else {
+                    if (L2.Abandonar())
+                        Cambio = true;
+                }
 
-            if (datosSensados[3] == '0') {
-                if (L2.Rozar())
-                    Cambio = true;
-            } else {
-                if (L2.Abandonar())
-                    Cambio = true;
-            }
+                if (datosSensados[4] == '0') {
+                    if (L3.RozarSector(VertebraL3.Sectores.Arriba))
+                        Cambio = true;
+                } else {
+                    if (L3.AbandonarSector(VertebraL3.Sectores.Arriba))
+                        Cambio = true;
+                }
 
-            if (datosSensados[4] == '0') {
-                if (L3.RozarSector(VertebraL3.Sectores.Arriba))
-                    Cambio = true;
-            } else {
-                if (L3.AbandonarSector(VertebraL3.Sectores.Arriba))
-                    Cambio = true;
-            }
+                if (datosSensados[5] == '0') {
+                    if (L3.RozarSector(VertebraL3.Sectores.Abajo))
+                        Cambio = true;
+                } else {
+                    if (L3.AbandonarSector(VertebraL3.Sectores.Abajo))
+                        Cambio = true;
+                }
 
-            if (datosSensados[5] == '0') {
-                if (L3.RozarSector(VertebraL3.Sectores.Abajo))
-                    Cambio = true;
-            } else {
-                if (L3.AbandonarSector(VertebraL3.Sectores.Abajo))
-                    Cambio = true;
-            }
+                if (datosSensados[6] == '0') {
+                    if (L4.RozarSector(VertebraL4.Sectores.ArribaIzquierda))
+                        Cambio = true;
+                } else {
+                    if (L4.AbandonarSector(VertebraL4.Sectores.ArribaIzquierda))
+                        Cambio = true;
+                }
 
-            if (datosSensados[6] == '0') {
-                if (L4.RozarSector(VertebraL4.Sectores.ArribaIzquierda))
-                    Cambio = true;
-            } else {
-                if (L4.AbandonarSector(VertebraL4.Sectores.ArribaIzquierda))
-                    Cambio = true;
-            }
+                if (datosSensados[7] == '0') {
+                    if (L4.RozarSector(VertebraL4.Sectores.ArribaDerecha))
+                        Cambio = true;
+                } else {
+                    if (L4.AbandonarSector(VertebraL4.Sectores.ArribaDerecha))
+                        Cambio = true;
+                }
 
-            if (datosSensados[7] == '0') {
-                if (L4.RozarSector(VertebraL4.Sectores.ArribaDerecha))
-                    Cambio = true;
-            } else {
-                if (L4.AbandonarSector(VertebraL4.Sectores.ArribaDerecha))
-                    Cambio = true;
-            }
+                if (datosSensados[8] == '0') {
+                    if (L4.RozarSector(VertebraL4.Sectores.ArribaCentro))
+                        Cambio = true;
+                } else {
+                    if (L4.AbandonarSector(VertebraL4.Sectores.ArribaCentro))
+                        Cambio = true;
+                }
 
-            if (datosSensados[8] == '0') {
-                if (L4.RozarSector(VertebraL4.Sectores.ArribaCentro))
-                    Cambio = true;
-            } else {
-                if (L4.AbandonarSector(VertebraL4.Sectores.ArribaCentro))
-                    Cambio = true;
-            }
+                if (datosSensados[9] == '0') {
+                    if (L4.RozarSector(VertebraL4.Sectores.Abajo))
+                        Cambio = true;
+                } else {
+                    if (L4.AbandonarSector(VertebraL4.Sectores.Abajo))
+                        Cambio = true;
+                }
 
-            if (datosSensados[9] == '0') {
-                if (L4.RozarSector(VertebraL4.Sectores.Abajo))
-                    Cambio = true;
-            } else {
-                if (L4.AbandonarSector(VertebraL4.Sectores.Abajo))
-                    Cambio = true;
-            }
+                if (datosSensados[10] == '0') {
+                    if (L5.Rozar())
+                        Cambio = true;
+                } else {
+                    if (L5.Abandonar())
+                        Cambio = true;
+                }
 
-            if (datosSensados[10] == '0') {
-                if (L5.Rozar())
-                    Cambio = true;
-            } else {
-                if (L5.Abandonar())
-                    Cambio = true;
-            }
-
-            if (datosSensados[11] == '0') {
-                if (Duramadre.Atravesar())
-                    Cambio = true;
-            } else {
-                if (Duramadre.Abandonar())
-                    Cambio = true;
+                if (datosSensados[11] == '0') {
+                    if (Duramadre.Atravesar())
+                        Cambio = true;
+                } else {
+                    if (Duramadre.Abandonar())
+                        Cambio = true;
+                }
             }
 
             return Cambio;
