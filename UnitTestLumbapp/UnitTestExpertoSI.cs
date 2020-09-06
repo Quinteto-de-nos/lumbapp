@@ -35,8 +35,7 @@ namespace UnitTestLumbapp
         [TestMethod]
         public void TestInicializarOK () {
             Mock<IConectorSI> conn = new Mock<IConectorSI>();
-            conn.Setup(x => x.ChekearComunicacion()).Returns(true);
-
+            conn.Setup(x => x.CheckearComunicacion()).Returns(true);
             ExpertoSI exp = new ExpertoSI(conn.Object);
 
             bool init = exp.Inicializar();
@@ -64,7 +63,7 @@ namespace UnitTestLumbapp
         [TestMethod]
         public void TestInicializarCheckeoErr () {
             Mock<IConectorSI> conn = new Mock<IConectorSI>();
-            conn.Setup(x => x.ChekearComunicacion()).Returns(false);
+            conn.Setup(x => x.CheckearComunicacion()).Returns(false);
             ExpertoSI exp = new ExpertoSI(conn.Object);
 
             bool init = exp.Inicializar();
@@ -90,7 +89,7 @@ namespace UnitTestLumbapp
         [TestMethod]
         public void IniciarOK () {
             Mock<IConectorSI> conn = new Mock<IConectorSI>();
-            conn.Setup(x => x.ChekearComunicacion()).Returns(true);
+            conn.Setup(x => x.CheckearComunicacion()).Returns(true);
 
             ExpertoSI exp = new ExpertoSI(conn.Object);
             exp.Inicializar();
@@ -131,7 +130,7 @@ namespace UnitTestLumbapp
         [TestMethod]
         public void TerminarTooSoon2 () {
             Mock<IConectorSI> conn = new Mock<IConectorSI>();
-            conn.Setup(x => x.ChekearComunicacion()).Returns(true);
+            conn.Setup(x => x.CheckearComunicacion()).Returns(true);
 
             ExpertoSI exp = new ExpertoSI(conn.Object);
             exp.Inicializar();
@@ -160,7 +159,7 @@ namespace UnitTestLumbapp
         [TestMethod]
         public void TerminarOkEnCeros () {
             Mock<IConectorSI> conn = new Mock<IConectorSI>();
-            conn.Setup(x => x.ChekearComunicacion()).Returns(true);
+            conn.Setup(x => x.CheckearComunicacion()).Returns(true);
             
             ExpertoSI exp = new ExpertoSI(conn.Object);
             exp.Inicializar();
@@ -182,6 +181,8 @@ namespace UnitTestLumbapp
             Assert.AreEqual(0, informe.L5);
             Assert.AreEqual(0, informe.Duramadre);
         }
+
+
     }
 
 }

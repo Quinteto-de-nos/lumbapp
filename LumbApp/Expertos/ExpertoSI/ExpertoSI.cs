@@ -21,7 +21,7 @@ namespace LumbApp.Expertos.ExpertoSI {
         public int VecesCaminoIncorrecto;
 
         private bool simulando = false;
-        private bool comunicacionCheckeada = false;
+        private bool _comunicacionCheckeada = false;
 
         CambioSIEventArgs args;
 
@@ -38,15 +38,13 @@ namespace LumbApp.Expertos.ExpertoSI {
         public bool Inicializar () {
             sensoresInternos.HayDatos += HayDatosNuevos; //suscripción al evento HayDatos
             try {
-                sensoresInternos.Conectar();
+                if (sensoresInternos.Conectar())
+                    _comunicacionCheckeada = sensoresInternos.CheckearComunicacion();
             } catch {
                 return false;
             }
 
-            comunicacionCheckeada = sensoresInternos.ChekearComunicacion();
-            
-
-            return comunicacionCheckeada;
+            return _comunicacionCheckeada;
         }
 
         /// <summary>
@@ -54,7 +52,7 @@ namespace LumbApp.Expertos.ExpertoSI {
         /// </summary>
         /// <returns></returns>
         public bool IniciarSimulacion () {
-            if (comunicacionCheckeada) {
+            if (_comunicacionCheckeada) {
                 simulando = true;
                 sensoresInternos.ActivarSensado();
             }
@@ -66,8 +64,10 @@ namespace LumbApp.Expertos.ExpertoSI {
         /// Finaliza el sensado.
         /// </summary>
         public void Finalizar () {
-            comunicacionCheckeada = false;
-            sensoresInternos.Desconectar();
+            if (_comunicacionCheckeada) {
+                _comunicacionCheckeada = false;
+                sensoresInternos.Desconectar();
+            }
         }
 
         public InformeSI TerminarSimulacion () {
