@@ -40,5 +40,7 @@ namespace LumbApp.Expertos.ExpertoSI {
             this.CaminoCorrecto = CaminoCorrecto;
             this.CaminoIncorrecto = CaminoIncorrecto;
         }
+
+        public InformeSI() { }
     }
 }
