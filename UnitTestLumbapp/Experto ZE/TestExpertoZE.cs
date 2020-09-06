@@ -46,9 +46,9 @@ namespace UnitTestLumbapp.Experto_ZE
         public void TestInicializarOK()
         {
             Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
-            ExpertoZE exp = new ExpertoZE(conn.Object);
+            ExpertoZE exp = new ExpertoZE(conn.Object, newCalibracion());
 
-            bool init = exp.Inicializar(newCalibracion());
+            bool init = exp.Inicializar();
             Assert.AreEqual(true, init);
         }
 
@@ -61,9 +61,9 @@ namespace UnitTestLumbapp.Experto_ZE
         {
             Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
             conn.Setup(x => x.Conectar()).Throws(new KinectNotFoundException());
-            ExpertoZE exp = new ExpertoZE(conn.Object);
+            ExpertoZE exp = new ExpertoZE(conn.Object, newCalibracion());
 
-            bool init = exp.Inicializar(newCalibracion());
+            bool init = exp.Inicializar();
             Assert.AreEqual(false, init);
         }
 
@@ -87,8 +87,8 @@ namespace UnitTestLumbapp.Experto_ZE
         public void IniciarOK()
         {
             Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
-            ExpertoZE exp = new ExpertoZE(conn.Object);
-            exp.Inicializar(newCalibracion());
+            ExpertoZE exp = new ExpertoZE(conn.Object, newCalibracion());
+            exp.Inicializar();
 
             bool init = exp.IniciarSimulacion();
             Assert.AreEqual(true, init);
@@ -118,8 +118,8 @@ namespace UnitTestLumbapp.Experto_ZE
         public void TerminarTooSoon2()
         {
             Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
-            ExpertoZE exp = new ExpertoZE(conn.Object);
-            exp.Inicializar(newCalibracion());
+            ExpertoZE exp = new ExpertoZE(conn.Object, newCalibracion());
+            exp.Inicializar();
 
             var got = exp.TerminarSimulacion();
 
@@ -136,8 +136,8 @@ namespace UnitTestLumbapp.Experto_ZE
         public void TerminarNada()
         {
             Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
-            ExpertoZE exp = new ExpertoZE(conn.Object);
-            exp.Inicializar(newCalibracion());
+            ExpertoZE exp = new ExpertoZE(conn.Object, newCalibracion());
+            exp.Inicializar();
             exp.IniciarSimulacion();
 
             var got = exp.TerminarSimulacion();

@@ -23,7 +23,23 @@ namespace LumbApp.Expertos.ExpertoZE
         private bool simulando;
 
         /// <summary>
-        /// Constructor de Expero en Zona Esteril.
+        /// Constructor de Experto en Zona Esteril.
+        /// Este experto necesita una kinect para trabajar, que lo recibe por parametro. Tira una excepcion si recibe null.
+        /// </summary>
+        /// <param name="kinect">Conector a la kinect</param>
+        /// <param name="calibracion">Datos de calibracion para la zona esteril</param>
+        public ExpertoZE(IConectorKinect kinect, Calibracion calibracion)
+        {
+            if (kinect == null)
+                throw new Exception("Kinect no puede ser null. Necesito un conector a una kinect para crear un experto en zona esteril");
+            this.kinect = kinect;
+
+            zonaEsteril = new ZonaEsteril(calibracion); //Puede tirar una excepcion si calibracion esta mal formado
+        }
+
+        #region Exclusivo de calibracion
+        /// <summary>
+        /// Constructor para calibracion. No usar en una simulacion, porque no va a tener una ZE definida.
         /// Este experto necesita una kinect para trabajar, que lo recibe por parametro. Tira una excepcion si recibe null.
         /// </summary>
         /// <param name="kinect">Conector a la kinect</param>
@@ -35,32 +51,10 @@ namespace LumbApp.Expertos.ExpertoZE
         }
 
         /// <summary>
-        /// Inicializa todo lo necesario y queda listo para aceptar simulaciones.
-        /// </summary>
-        /// <returns>True si se inicializo todo bien, false si algo fallo y no podra aceptar simulaciones</returns>
-        public bool Inicializar(Calibracion calibracion)
-        {
-            if (!inicializarSinZE())
-                return false;
-
-            try
-            {
-                zonaEsteril = new ZonaEsteril(calibracion);
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex, "No pude inicializar el Experto en Zona Esteril por error con el archivo de calibracion");
-                return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Inicializa todo menos la zona esteril. Pensada para el flujo de calibracion, donde todavia no tengo una ZE.
+        /// Usar solo para calibracion. No inicializa la zona esteril y no va a ser capaz de iniciar una simulacion.
         /// </summary>
         /// <returns></returns>
-        public bool inicializarSinZE()
+        public bool InicializarSinZE()
         {
             try
             {
@@ -72,6 +66,30 @@ namespace LumbApp.Expertos.ExpertoZE
                 logger.Error(ex, "No pude inicializar el Experto en Zona Esteril por error con la Kinect");
                 return false;
             }
+
+            return true;
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Inicializa todo lo necesario y queda listo para aceptar simulaciones.
+        /// </summary>
+        /// <returns>True si se inicializo todo bien, false si algo fallo y no podra aceptar simulaciones</returns>
+        public bool Inicializar()
+        {
+            try
+            {
+                kinect.Conectar();
+                kinect.SubscribeFramesReady(allFramesReady);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "No pude inicializar el Experto en Zona Esteril por error con la Kinect");
+                return false;
+            }
+
+            zonaEsteril.Resetear();
             return true;
         }
 
