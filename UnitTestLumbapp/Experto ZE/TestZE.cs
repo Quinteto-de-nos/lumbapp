@@ -1,4 +1,5 @@
 ﻿using LumbApp.Expertos.ExpertoZE;
+using Microsoft.Kinect;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTestLumbapp.Experto_ZE
@@ -13,7 +14,12 @@ namespace UnitTestLumbapp.Experto_ZE
         [TestMethod]
         public void TestContaminacionZE()
         {
-            ZonaEsteril ze = new ZonaEsteril();
+            SkeletonPoint[] points = {
+                newPoint(0,0,0), newPoint(1,0,0), newPoint(1, 0, 1),  newPoint(0,0,1),
+                newPoint(0,1,0), newPoint(1,1,0), newPoint(1, 1, 1),  newPoint(0,1,1)};
+            Calibracion cal = new Calibracion(points);
+            ZonaEsteril ze = new ZonaEsteril(cal);
+
             Assert.AreEqual(0, ze.Contaminacion);
             ze.Contaminar();
             Assert.AreEqual(1, ze.Contaminacion);
@@ -30,9 +36,23 @@ namespace UnitTestLumbapp.Experto_ZE
         [TestMethod]
         public void TestDentroZEFija()
         {
-            ZonaEsteril ze = new ZonaEsteril();
-            Assert.AreEqual(true, ze.EstaDentro(.09f, -.09f, 1.05f));
-            Assert.AreEqual(false, ze.EstaDentro(2, 0, 0));
+            SkeletonPoint[] points = { 
+                newPoint(0,0,0), newPoint(0,0,1), newPoint(1, 0, 1),  newPoint(1,0,0),
+                newPoint(0,1,0), newPoint(0,1,1), newPoint(1, 1, 1),  newPoint(1,1,0)};
+            Calibracion cal = new Calibracion(points);
+            ZonaEsteril ze = new ZonaEsteril(cal);
+
+            Assert.AreEqual(true, ze.EstaDentro(newPoint(0.1f, 0.5f, 0.9f)));
+            Assert.AreEqual(false, ze.EstaDentro(newPoint(1.2f, 0.5f, 0.9f)));
+        }
+
+        private SkeletonPoint newPoint(float x, float y, float z)
+        {
+            SkeletonPoint p = new SkeletonPoint();
+            p.X = x;
+            p.Y = y;
+            p.Z = z;
+            return p;
         }
     }
 }

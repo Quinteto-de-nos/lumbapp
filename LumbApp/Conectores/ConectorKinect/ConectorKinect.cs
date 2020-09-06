@@ -19,6 +19,7 @@ namespace LumbApp.Conectores.ConectorKinect
             if (_sensor == null)
                 throw new KinectNotFoundException();
 
+            _sensor.DepthStream.Enable();
             _sensor.ColorStream.Enable();
             _sensor.SkeletonStream.Enable();
             _sensor.SkeletonStream.TrackingMode = SkeletonTrackingMode.Seated;
