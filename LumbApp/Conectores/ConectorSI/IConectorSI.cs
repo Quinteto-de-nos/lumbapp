@@ -6,7 +6,7 @@ using System.Text;
 namespace LumbApp.Conectores.ConectorSI {
     public interface IConectorSI {
         void Conectar ();
-        bool ChekearSensado ();
+        bool ChekearComunicacion ();
         void ActivarSensado ();
         void PausarSensado ();
         void Desconectar ();
