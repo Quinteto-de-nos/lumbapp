@@ -17,11 +17,20 @@ namespace LumbApp.Expertos.ExpertoSI {
         public Vertebra L5 = new Vertebra();
         public Capa Duramadre = new Capa();
 
-        public int VecesCaminoCorrecto;
-        public int VecesCaminoIncorrecto;
+        private bool AhoraTejidoAdiposo = false;
+        private bool AhoraL2 = false;
+        private bool AhoraL3 = false;
+        private bool AhoraL4 = false;
+        private bool AhoraL5 = false;
+        private bool AhoraDuramadre = false;
 
-        private bool simulando = false;
-        private bool comunicacionCheckeada = false;
+        private int VecesCaminoCorrecto = 0;
+        private int VecesCaminoIncorrecto = 0;
+
+        private bool _simulando = false;
+        private bool _comunicacionCheckeada = false;
+
+        private bool CaminoIncorrecto = false;
 
         CambioSIEventArgs args;
 
@@ -42,11 +51,9 @@ namespace LumbApp.Expertos.ExpertoSI {
             } catch {
                 return false;
             }
-
-            comunicacionCheckeada = sensoresInternos.ChekearComunicacion();
+            _comunicacionCheckeada = sensoresInternos.ChekearComunicacion();
             
-
-            return comunicacionCheckeada;
+            return _comunicacionCheckeada;
         }
 
         /// <summary>
@@ -54,27 +61,27 @@ namespace LumbApp.Expertos.ExpertoSI {
         /// </summary>
         /// <returns></returns>
         public bool IniciarSimulacion () {
-            if (comunicacionCheckeada) {
-                simulando = true;
+            if (_comunicacionCheckeada) {
+                _simulando = true;
                 sensoresInternos.ActivarSensado();
             }
 
-            return simulando;
+            return _simulando;
         }
 
         /// <summary>
         /// Finaliza el sensado.
         /// </summary>
         public void Finalizar () {
-            comunicacionCheckeada = false;
+            _comunicacionCheckeada = false;
             sensoresInternos.Desconectar();
         }
 
         public InformeSI TerminarSimulacion () {
-            if (!simulando)
+            if (!_simulando)
                 return new InformeSI(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
-            simulando = false;
+            _simulando = false;
 
             sensoresInternos.PausarSensado();
 
@@ -87,6 +94,9 @@ namespace LumbApp.Expertos.ExpertoSI {
             return informe;
         }
 
+        /// <summary>
+        /// Vuelve Capas, Vertebras y estadisticas al estado inicial.
+        /// </summary>
         public void Resetear () {
             TejidoAdiposo.Resetear();
             L2.Resetear();
@@ -94,6 +104,9 @@ namespace LumbApp.Expertos.ExpertoSI {
             L4.Resetear();
             L5.Resetear();
             Duramadre.Resetear();
+
+            VecesCaminoCorrecto = 0;
+            VecesCaminoIncorrecto = 0;
         }
 
         /// <summary>
@@ -122,12 +135,26 @@ namespace LumbApp.Expertos.ExpertoSI {
         /// <param name="sender"></param>
         /// <param name="datosSensados"></param>
         public void HayDatosNuevos (object sender, DatosSensadosEventArgs datosSensados) {
-            if (simulando) {
+            if (_simulando) {
                 if (RealizarAcciones(datosSensados.datosSensados)) {
-                    args = new CambioSIEventArgs(TejidoAdiposo, L2, L3, L4, L5, Duramadre);
+                    args = new CambioSIEventArgs(TejidoAdiposo, L2, L3, L4, L5, Duramadre, 
+                        AhoraTejidoAdiposo, AhoraL2, AhoraL3, AhoraL4, AhoraL5, AhoraDuramadre,
+                        CaminoIncorrecto);
+
+                    ResetearAhoras();
+
                     HayCambioSI(args);
                 }
             }
+        }
+
+        public void ResetearAhoras () {
+            AhoraTejidoAdiposo = false;
+            AhoraL2 = false;
+            AhoraL3 = false;
+            AhoraL4 = false;
+            AhoraL5 = false;
+            AhoraDuramadre = false;
         }
 
         /// <summary>
@@ -138,85 +165,125 @@ namespace LumbApp.Expertos.ExpertoSI {
         /// <returns> Retorna true si hubo un cambio de estado en al menos alguna vertebra o capa. </returns>
         public bool RealizarAcciones (string datosSensados) {
             bool Cambio = false;
+            bool CaminoCorrecto = false;
+            CaminoIncorrecto = false;
 
+            //Camino CORRECTO - TEJIDO ADIPOSO
             if (datosSensados[2] == '0') {
-                if (TejidoAdiposo.Atravesar())
-                    Cambio = true;
+                if (TejidoAdiposo.Atravesar()) {
+                    AhoraTejidoAdiposo = true;
+                    CaminoCorrecto = true;
+                }
             } else {
                 if (TejidoAdiposo.Abandonar())
-                    Cambio = true;
+                    AhoraTejidoAdiposo = true;
             }
 
+            //Camino INCORRECTO - L2
             if (datosSensados[3] == '0') {
-                if (L2.Rozar())
-                    Cambio = true;
+                if (L2.Rozar()) {
+                    AhoraL2 = true;
+                    CaminoIncorrecto = true;
+                }
             } else {
                 if (L2.Abandonar())
-                    Cambio = true;
+                    AhoraL2 = true;
             }
 
+            //Camino INCORRECTO - L3 ARRIBA
             if (datosSensados[4] == '0') {
-                if (L3.RozarSector(VertebraL3.Sectores.Arriba))
-                    Cambio = true;
+                if (L3.RozarSector(VertebraL3.Sectores.Arriba)) {
+                    AhoraL3 = true;
+                    CaminoIncorrecto = true;
+                }
             } else {
                 if (L3.AbandonarSector(VertebraL3.Sectores.Arriba))
-                    Cambio = true;
+                    AhoraL3 = true;
             }
-
+            //Camino INCORRECTO - L3 ABAJO
             if (datosSensados[5] == '0') {
-                if (L3.RozarSector(VertebraL3.Sectores.Abajo))
-                    Cambio = true;
+                if (L3.RozarSector(VertebraL3.Sectores.Abajo)) {
+                    AhoraL3 = true;
+                    CaminoIncorrecto = true;
+                }
             } else {
                 if (L3.AbandonarSector(VertebraL3.Sectores.Abajo))
-                    Cambio = true;
+                    AhoraL3 = true;
             }
 
+            //Camino INCORRECTO - L4 ARRIBA IZQUIERDA ---------------------------- NO SE SI ES INCORRECTO
             if (datosSensados[6] == '0') {
-                if (L4.RozarSector(VertebraL4.Sectores.ArribaIzquierda))
-                    Cambio = true;
+                if (L4.RozarSector(VertebraL4.Sectores.ArribaIzquierda)) {
+                    AhoraL4 = true;
+                    CaminoIncorrecto = true; ///NO SE SI CONSIDERARLO UN ERROR
+                }
             } else {
                 if (L4.AbandonarSector(VertebraL4.Sectores.ArribaIzquierda))
-                    Cambio = true;
+                    AhoraL4 = true;
             }
-
+            //Camino INCORRECTO - L4 ARRIBA DERECHA ---------------------------- NO SE SI ES INCORRECTO
             if (datosSensados[7] == '0') {
-                if (L4.RozarSector(VertebraL4.Sectores.ArribaDerecha))
-                    Cambio = true;
+                if (L4.RozarSector(VertebraL4.Sectores.ArribaDerecha)) {
+                    AhoraL4 = true;
+                    CaminoIncorrecto = true; ///NO SE SI CONSIDERARLO UN ERROR
+                }
             } else {
                 if (L4.AbandonarSector(VertebraL4.Sectores.ArribaDerecha))
-                    Cambio = true;
+                    AhoraL4 = true;
             }
-
+            //Camino CORRECTO - L4 ARRIBA CENTRO
             if (datosSensados[8] == '0') {
-                if (L4.RozarSector(VertebraL4.Sectores.ArribaCentro))
-                    Cambio = true;
+                if (L4.RozarSector(VertebraL4.Sectores.ArribaCentro)) {
+                    AhoraL4 = true;
+                    CaminoCorrecto = true;
+                }
             } else {
                 if (L4.AbandonarSector(VertebraL4.Sectores.ArribaCentro))
-                    Cambio = true;
+                    AhoraL4 = true;
             }
-
+            //Camino INCORRECTO - L4 ABAJO
             if (datosSensados[9] == '0') {
-                if (L4.RozarSector(VertebraL4.Sectores.Abajo))
-                    Cambio = true;
+                if (L4.RozarSector(VertebraL4.Sectores.Abajo)) {
+                    AhoraL4 = true;
+                    CaminoIncorrecto = true;
+                }
             } else {
                 if (L4.AbandonarSector(VertebraL4.Sectores.Abajo))
-                    Cambio = true;
+                    AhoraL4 = true;
             }
 
+            //Camino INCORRECTO - L5
             if (datosSensados[10] == '0') {
-                if (L5.Rozar())
-                    Cambio = true;
+                if (L5.Rozar()) {
+                    AhoraL5 = true;
+                    CaminoIncorrecto = true;
+                }
             } else {
                 if (L5.Abandonar())
-                    Cambio = true;
+                    AhoraL5 = true;
             }
 
+            //Camino CORRECTO - TEJIDO ADIPOSO
             if (datosSensados[11] == '0') {
-                if (Duramadre.Atravesar())
-                    Cambio = true;
+                if (Duramadre.Atravesar()) {
+                    AhoraDuramadre = true;
+                    CaminoCorrecto = true;
+                }
             } else {
                 if (Duramadre.Abandonar())
-                    Cambio = true;
+                    AhoraDuramadre = true;
+            }
+
+            if (AhoraTejidoAdiposo || AhoraL2 || AhoraL3 || AhoraL4 || AhoraL5 || AhoraDuramadre)
+                Cambio = true;
+
+            if (CaminoIncorrecto)
+                VecesCaminoIncorrecto++;
+            else if (CaminoCorrecto && (TejidoAdiposo.Estado == Capa.Estados.AtravesandoNuevamente || 
+                L4.Estado == VertebraL4.Estados.RozandoNuevamente || 
+                Duramadre.Estado == Capa.Estados.AtravesandoNuevamente || Duramadre.Estado == Capa.Estados.Atravesando)) {
+                
+                VecesCaminoCorrecto++;
             }
 
             return Cambio;

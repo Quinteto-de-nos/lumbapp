@@ -28,15 +28,19 @@ namespace LumbApp.Expertos.ExpertoSI.Utils {
         public bool RozarSector(Sectores sector) {
             this.Sector=sector;
 
-            switch (Sector) {
-                case Sectores.Arriba:
-                    VecesAbajo++;
-                    break;
-                case Sectores.Abajo:
-                    VecesAbajo++;
-                    break;
+            if (Rozar()) {
+                switch (Sector) {
+                    case Sectores.Arriba:
+                        VecesArriba++;
+                        break;
+                    case Sectores.Abajo:
+                        VecesAbajo++;
+                        break;
+                }
+                return true;
             }
-            return base.Rozar();
+
+            return false;
         }
 
         public bool AbandonarSector (Sectores sector) {

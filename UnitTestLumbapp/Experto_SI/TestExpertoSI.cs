@@ -4,10 +4,10 @@ using LumbApp.Expertos.ExpertoSI;
 using LumbApp.Conectores.ConectorSI;
 using Moq;
 
-namespace UnitTestLumbapp 
+namespace UnitTestLumbapp.Experto_SI
 {
     [TestClass]
-    public class UnitTestExpertoSI {
+    public class TestExpertoSI {
 
         /// <summary>
         /// Si el constructor de Experto SI se llama con null, debe tirar excepcion.
