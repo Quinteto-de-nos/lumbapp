@@ -21,6 +21,7 @@ namespace LumbApp.Expertos.ExpertoZE
         private Mano manoIzquierda;
 
         private bool simulando;
+        private bool inicializado;
 
         /// <summary>
         /// Constructor de Experto en Zona Esteril.
@@ -49,27 +50,6 @@ namespace LumbApp.Expertos.ExpertoZE
                 throw new Exception("Kinect no puede ser null. Necesito un conector a una kinect para crear un experto en zona esteril");
             this.kinect = kinect;
         }
-
-        /// <summary>
-        /// Usar solo para calibracion. No inicializa la zona esteril y no va a ser capaz de iniciar una simulacion.
-        /// </summary>
-        /// <returns></returns>
-        public bool InicializarSinZE()
-        {
-            try
-            {
-                kinect.Conectar();
-                kinect.SubscribeFramesReady(allFramesReady);
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex, "No pude inicializar el Experto en Zona Esteril por error con la Kinect");
-                return false;
-            }
-
-            return true;
-        }
-
         #endregion
 
         /// <summary>
@@ -86,10 +66,10 @@ namespace LumbApp.Expertos.ExpertoZE
             catch (Exception ex)
             {
                 logger.Error(ex, "No pude inicializar el Experto en Zona Esteril por error con la Kinect");
+                inicializado = false;
                 return false;
             }
-
-            zonaEsteril.Resetear();
+            inicializado = true;
             return true;
         }
 
@@ -101,7 +81,7 @@ namespace LumbApp.Expertos.ExpertoZE
         /// False si esta funcion se llama antes de Inicializar</returns>
         public bool IniciarSimulacion()
         {
-            if (zonaEsteril == null)
+            if (!inicializado || zonaEsteril == null)
                 return false;
 
             manoDerecha = new Mano();

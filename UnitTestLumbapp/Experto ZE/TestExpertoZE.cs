@@ -20,7 +20,18 @@ namespace UnitTestLumbapp.Experto_ZE
             "Kinect no puede ser null. Necesito un conector a una kinect para crear un experto en zona esteril")]
         public void TestConstructorNull()
         {
-            ExpertoZE exp = new ExpertoZE(null);
+            ExpertoZE exp = new ExpertoZE(null, null);
+        }
+
+        /// <summary>
+        /// Si la calibracion de Experto ZE se llama con null, debe tirar excepcion.
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(Exception), "Datos de calibracion mal formados.")]
+        public void TestConstructorCalNull()
+        {
+            Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
+            ExpertoZE exp = new ExpertoZE(conn.Object, null);
         }
 
         /// <summary>
@@ -30,7 +41,7 @@ namespace UnitTestLumbapp.Experto_ZE
         public void TestConstructorOK()
         {
             Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
-            ExpertoZE exp = new ExpertoZE(conn.Object);
+            ExpertoZE exp = new ExpertoZE(conn.Object, newCalibracion());
         }
 
         private Calibracion newCalibracion()
@@ -74,7 +85,7 @@ namespace UnitTestLumbapp.Experto_ZE
         public void IniciarTooSoon()
         {
             Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
-            ExpertoZE exp = new ExpertoZE(conn.Object);
+            ExpertoZE exp = new ExpertoZE(conn.Object, newCalibracion());
 
             bool init = exp.IniciarSimulacion();
             Assert.AreEqual(false, init);
@@ -101,7 +112,7 @@ namespace UnitTestLumbapp.Experto_ZE
         public void TerminarTooSoon1()
         {
             Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
-            ExpertoZE exp = new ExpertoZE(conn.Object);
+            ExpertoZE exp = new ExpertoZE(conn.Object, newCalibracion());
 
             var got = exp.TerminarSimulacion();
 
