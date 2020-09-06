@@ -182,6 +182,7 @@
     <Compile Include="Expertos\ExpertoSI\Utils\Vertebra.cs" />
     <Compile Include="Expertos\ExpertoSI\Utils\VertebraL3.cs" />
     <Compile Include="Expertos\ExpertoSI\Utils\VertebraL4.cs" />
+    <Compile Include="Expertos\ExpertoZE\Calibracion.cs" />
     <Compile Include="Expertos\ExpertoZE\CambioZEEventArgs.cs" />
     <Compile Include="Expertos\ExpertoZE\ExpertoZE.cs" />
     <Compile Include="Expertos\ExpertoZE\ExpertoZEMock.cs" />
