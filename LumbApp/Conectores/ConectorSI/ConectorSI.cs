@@ -106,7 +106,6 @@ namespace LumbApp.Conectores.ConectorSI {
 
         public bool CheckearComunicacion () { //Se puede checkear que todo lo que se reciba sean 0 .... o 1 si usas eso del arduino que dijiste
             String datos;
-            bool arduinoInicializado = false;
 
             try {
                 for (int i = 0; i < 50; i++) {
@@ -116,12 +115,11 @@ namespace LumbApp.Conectores.ConectorSI {
                     datos = mySerialPort.ReadTo("$");
 
                     if (datos.Contains("1") || datos.Contains("0")) {
-                        arduinoInicializado = true;
-                        i = 50;
+                        return true;
                     }
 
                 }
-                return arduinoInicializado;
+                return false;
             } catch {
                 return false;
             }
