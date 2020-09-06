@@ -69,10 +69,10 @@ namespace KinectCoordinateMapping
             conn = new ConectorKinect();
             expert = new ExpertoZE(conn);
             // expert.CambioZE += CambioZE; //No hace falta para la calibracion
-            expert.inicializarSinZE();
+            expert.InicializarSinZE();
 
             conn.SubscribeFramesReady(Sensor_AllFramesReady);
-            expert.IniciarSimulacion();
+            //expert.IniciarSimulacion();
         }
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)
@@ -193,9 +193,9 @@ namespace KinectCoordinateMapping
 
                 //Expert
                 Console.WriteLine("Regenerando experto");
-                expert = new ExpertoZE(conn);
+                expert = new ExpertoZE(conn, cal);
                 expert.CambioZE += CambioZE;
-                expert.Inicializar(cal);
+                expert.Inicializar();
 
                 conn.SubscribeFramesReady(Sensor_AllFramesReady);
                 expert.IniciarSimulacion();
