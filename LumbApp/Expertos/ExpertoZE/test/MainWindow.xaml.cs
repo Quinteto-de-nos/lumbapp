@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Text.Json;
+using System.IO;
 
 namespace KinectCoordinateMapping
 {
@@ -190,6 +191,9 @@ namespace KinectCoordinateMapping
                 Calibracion cal = new Calibracion(lista);
                 string json = JsonSerializer.Serialize(cal);
                 Console.WriteLine(json);
+
+                //Guardar
+                File.WriteAllText("./zonaEsteril.json", json);
 
                 //Expert
                 Console.WriteLine("Regenerando experto");
