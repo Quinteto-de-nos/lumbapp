@@ -38,7 +38,29 @@ namespace LumbApp.Expertos.ExpertoZE
         /// Inicializa todo lo necesario y queda listo para aceptar simulaciones.
         /// </summary>
         /// <returns>True si se inicializo todo bien, false si algo fallo y no podra aceptar simulaciones</returns>
-        public bool Inicializar()
+        public bool Inicializar(Calibracion calibracion)
+        {
+            if (!inicializarSinZE())
+                return false;
+
+            try
+            {
+                zonaEsteril = new ZonaEsteril(calibracion);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "No pude inicializar el Experto en Zona Esteril por error con el archivo de calibracion");
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Inicializa todo menos la zona esteril. Pensada para el flujo de calibracion, donde todavia no tengo una ZE.
+        /// </summary>
+        /// <returns></returns>
+        public bool inicializarSinZE()
         {
             try
             {
@@ -50,8 +72,6 @@ namespace LumbApp.Expertos.ExpertoZE
                 logger.Error(ex, "No pude inicializar el Experto en Zona Esteril por error con la Kinect");
                 return false;
             }
-
-            zonaEsteril = new ZonaEsteril();
             return true;
         }
 
@@ -160,9 +180,9 @@ namespace LumbApp.Expertos.ExpertoZE
                 return cambioTrack;
 
             //Zona esteril
-            bool cambioZE = false;
+            bool cambioZE;
             var pos = joint.Position;
-            if (zonaEsteril.EstaDentro(pos.X, pos.Y, pos.Z))
+            if (zonaEsteril.EstaDentro(pos))
             {
                 cambioZE = mano.Entrar();
                 if (cambioZE && mano.Estado == Mano.Estados.Contaminando)
