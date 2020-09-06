@@ -5,6 +5,7 @@ using LumbApp.Conectores.ConectorKinect;
 using Moq;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json;
 
 namespace UnitTestLumbapp.Experto_ZE
 {
@@ -32,6 +33,12 @@ namespace UnitTestLumbapp.Experto_ZE
             ExpertoZE exp = new ExpertoZE(conn.Object);
         }
 
+        private Calibracion newCalibracion()
+        {
+            string json = "{\"zonaEsteril\":[{\"X\":-0.0531591699,\"Y\":-0.191040874,\"Z\":0.949000061},{\"X\":0.0752977654,\"Y\":-0.116173707,\"Z\":1.22900009},{\"X\":0.268609017,\"Y\":-0.144120455,\"Z\":1.11400008},{\"X\":0.140152082,\"Y\":-0.218987614,\"Z\":0.834000051},{\"X\":-0.0564637221,\"Y\":0.0991351306,\"Z\":0.872928083},{\"X\":0.0719932094,\"Y\":0.17400229,\"Z\":1.15292811},{\"X\":0.265304476,\"Y\":0.146055549,\"Z\":1.0379281},{\"X\":0.136847526,\"Y\":0.0711883903,\"Z\":0.757928073}]}";
+            return JsonSerializer.Deserialize<Calibracion>(json);
+        }
+
         /// <summary>
         /// Si en Inicializar pasa todo OK debe devolver true.
         /// </summary>
@@ -41,7 +48,7 @@ namespace UnitTestLumbapp.Experto_ZE
             Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
             ExpertoZE exp = new ExpertoZE(conn.Object);
 
-            bool init = exp.Inicializar();
+            bool init = exp.Inicializar(newCalibracion());
             Assert.AreEqual(true, init);
         }
 
@@ -56,7 +63,7 @@ namespace UnitTestLumbapp.Experto_ZE
             conn.Setup(x => x.Conectar()).Throws(new KinectNotFoundException());
             ExpertoZE exp = new ExpertoZE(conn.Object);
 
-            bool init = exp.Inicializar();
+            bool init = exp.Inicializar(newCalibracion());
             Assert.AreEqual(false, init);
         }
 
@@ -81,7 +88,7 @@ namespace UnitTestLumbapp.Experto_ZE
         {
             Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
             ExpertoZE exp = new ExpertoZE(conn.Object);
-            exp.Inicializar();
+            exp.Inicializar(newCalibracion());
 
             bool init = exp.IniciarSimulacion();
             Assert.AreEqual(true, init);
@@ -112,7 +119,7 @@ namespace UnitTestLumbapp.Experto_ZE
         {
             Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
             ExpertoZE exp = new ExpertoZE(conn.Object);
-            exp.Inicializar();
+            exp.Inicializar(newCalibracion());
 
             var got = exp.TerminarSimulacion();
 
@@ -130,7 +137,7 @@ namespace UnitTestLumbapp.Experto_ZE
         {
             Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
             ExpertoZE exp = new ExpertoZE(conn.Object);
-            exp.Inicializar();
+            exp.Inicializar(newCalibracion());
             exp.IniciarSimulacion();
 
             var got = exp.TerminarSimulacion();
