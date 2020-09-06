@@ -25,7 +25,7 @@ namespace LumbApp.Conectores.ConectorSI {
         public void Desconectar () { }
         public void PausarSensado () { sensando = false; }
 
-        public bool ChekearSensado () {
+        public bool ChekearComunicacion () {
             Task.Delay(5000);
             return shouldInit;
         }

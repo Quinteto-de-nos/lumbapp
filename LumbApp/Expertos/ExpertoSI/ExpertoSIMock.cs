@@ -36,7 +36,7 @@ namespace LumbApp.Expertos.ExpertoSI {
             sensoresInternos.HayDatos += HayDatosNuevos;
             sensoresInternos.Conectar();
 
-            return sensoresInternos.ChekearSensado();
+            return sensoresInternos.ChekearComunicacion();
         }
 
         protected virtual void HayCambioSI (CambioSIEventArgs datosCambioSI) {
