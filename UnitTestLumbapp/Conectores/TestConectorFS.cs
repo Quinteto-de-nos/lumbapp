@@ -12,6 +12,9 @@ namespace UnitTestLumbapp.Conectores
     [TestClass]
     public class TestConectorFS
     {
+        /// <summary>
+        /// Test que verifica el guardado de un objeto genericamente
+        /// </summary>
         [TestMethod]
         public void TestGuardadoDeObjeto()
         {
@@ -24,6 +27,9 @@ namespace UnitTestLumbapp.Conectores
             Assert.IsTrue(isOk);
         }
 
+        /// <summary>
+        /// Test que verifica el guardado de un objeto en especifico
+        /// </summary>
         [TestMethod]
         public void TestGuardadoDeObjetoReal()
         {
@@ -37,6 +43,9 @@ namespace UnitTestLumbapp.Conectores
             Assert.IsTrue(isOk);
         }
 
+        /// <summary>
+        /// Test que verifica el guardado de un objeto cuando no se puede generar el Json o no se puede guardar
+        /// </summary>
         [TestMethod]
         public void TestGuardadoDeObjetoLanzaException()
         {
@@ -48,6 +57,9 @@ namespace UnitTestLumbapp.Conectores
             Assert.IsFalse(isOk);
         }
 
+        /// <summary>
+        /// Test que verifica el levantado de un objeto genericamente
+        /// </summary>
         [TestMethod]
         public void TestLevantadoDeObjeto()
         {
@@ -62,6 +74,9 @@ namespace UnitTestLumbapp.Conectores
             Assert.AreEqual(false, example._boolExample);
         }
 
+        /// <summary>
+        /// Test que verifica el levantado de un objeto en especifico
+        /// </summary>
         [TestMethod]
         public void TestLevantadoDeObjetoReal()
         {
@@ -76,6 +91,9 @@ namespace UnitTestLumbapp.Conectores
             Assert.AreEqual(true, example._boolExample);
         }
 
+        /// <summary>
+        /// Test que verifica el levantado de un objeto cuando falla la deserialización o el levantado de archivo
+        /// </summary>
         [TestMethod]
         public void TestLevantadoDeObjetoLanzaException()
         {
