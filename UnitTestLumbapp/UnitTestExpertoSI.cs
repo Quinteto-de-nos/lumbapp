@@ -35,6 +35,7 @@ namespace UnitTestLumbapp
         [TestMethod]
         public void TestInicializarOK () {
             Mock<IConectorSI> conn = new Mock<IConectorSI>();
+            conn.Setup(x => x.Conectar()).Returns(true);
             conn.Setup(x => x.CheckearComunicacion()).Returns(true);
             ExpertoSI exp = new ExpertoSI(conn.Object);
 
@@ -89,6 +90,7 @@ namespace UnitTestLumbapp
         [TestMethod]
         public void IniciarOK () {
             Mock<IConectorSI> conn = new Mock<IConectorSI>();
+            conn.Setup(x => x.Conectar()).Returns(true);
             conn.Setup(x => x.CheckearComunicacion()).Returns(true);
 
             ExpertoSI exp = new ExpertoSI(conn.Object);
