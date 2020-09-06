@@ -58,5 +58,13 @@ namespace LumbApp.Expertos.ExpertoSI.Utils {
                 return base.Abandonar();
             return false;
         }
+
+        public new void Resetear () {
+            VecesArribaIzquierda = 0;
+            VecesArribaDerecha = 0;
+            VecesArribaCentro = 0;
+            VecesAbajo = 0;
+            base.Resetear();
+        }
     }
 }

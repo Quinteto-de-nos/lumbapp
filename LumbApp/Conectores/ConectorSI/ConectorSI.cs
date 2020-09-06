@@ -4,20 +4,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Management;
 
 namespace LumbApp.Conectores.ConectorSI {
     public class ConectorSI : IConectorSI
     {
         SerialPort mySerialPort;
+        private bool sensando = false;
 
         private string datosLeidos = null;
 
-        public event EventHandler<DatosSensadosEventArgs> HayDatos;
-
-        public ConectorSI () { }
+        public ConectorSI () { 
+            sensando = false;
+            datosLeidos = null;
+        }
 
         public void Conectar () {
-            mySerialPort = new SerialPort("COM5");
+            mySerialPort = new SerialPort(DetectarArduinoPort());
 
             mySerialPort.BaudRate = 9600;
             mySerialPort.Parity = Parity.None;
@@ -29,35 +32,68 @@ namespace LumbApp.Conectores.ConectorSI {
             mySerialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
 
             mySerialPort.Open();
-
-            Console.WriteLine("Press any key to continue...");
-            Console.WriteLine();
-            Console.ReadKey();
-            mySerialPort.Close();
+            
         }
 
-        public void ActivarSensado () { }
-        public void Desconectar () { }
-        public void PausarSensado () { }
+        private string DetectarArduinoPort () {
+            ManagementScope connectionScope = new ManagementScope();
+            SelectQuery serialQuery = new SelectQuery("SELECT * FROM Win32_SerialPort");
+            ManagementObjectSearcher searcher = new ManagementObjectSearcher(connectionScope, serialQuery);
 
-        private static void DataReceivedHandler (
-                        object sender,
-                        SerialDataReceivedEventArgs e) {
+            try {
+                foreach (ManagementObject item in searcher.Get()) {
+                    string desc = item["Description"].ToString();
+                    string deviceId = item["DeviceID"].ToString();
 
-            SerialPort sp = (SerialPort)sender;
-            //string indata = sp.ReadExisting();
-            //string indata = sp.ReadLine();
-            // int data = sp.ReadByte();
-            //Console.Write(indata);
-            string datos = sp.ReadTo("$");
+                    if (desc.Contains("Dispositivo")) {
+                        return deviceId;
+                    }
+                }
+            } catch (ManagementException e) {
+                Console.WriteLine(e);
+            }
 
-            //Console.WriteLine(datos);
-            Console.WriteLine(datos[6]);
-            //registroEstado = new RegistroEstado();
+            return null;
+        }
+
+        public void ActivarSensado () { sensando = true; }
+        public void Desconectar () { mySerialPort.Close(); }
+        public void PausarSensado () { sensando = false; }
+
+        /// <summary>
+        /// Evento que le indica al experto que llegaron datos al conector
+        /// </summary>
+        public event EventHandler<DatosSensadosEventArgs> HayDatos;
+
+        /// <summary>
+        /// Método que levanta el evento HayDatos
+        /// </summary>
+        /// <param name="datosDelEvento">
+        /// Recibe los datos de cada puerto a traves de  la clase DatosSensadosEventArgs.
+        /// </param>
+        protected virtual void SiHayDatos (DatosSensadosEventArgs datosDelEvento) {
+            EventHandler<DatosSensadosEventArgs> handler = HayDatos;
+            if (handler != null) {
+                handler(this, datosDelEvento);
+            }
+        }
+
+        public virtual void DataReceivedHandler (object sender, SerialDataReceivedEventArgs e) {
+            if (sensando) {
+                SerialPort sp = (SerialPort)sender;
+
+                datosLeidos = sp.ReadTo("$");
+
+                if (datosLeidos.Length == 12) {
+                    //Cada vez que el conector recibe datos del arduino en medio de una simulación, llama al método SiHayDatos
+                    DatosSensadosEventArgs args = new DatosSensadosEventArgs(datosLeidos);
+                    SiHayDatos(args);
+                }
+            }
 
         }
 
-        public bool ChekearSensado () { //Se puede checkear que todo lo que se reciba sean 0 .... o 1 si usas eso del arduino que dijiste
+        public bool ChekearComunicacion () { //Se puede checkear que todo lo que se reciba sean 0 .... o 1 si usas eso del arduino que dijiste
             for (int i = 0; i < 5; i++) {
                 if (datosLeidos == null || datosLeidos == "")
                     return false;

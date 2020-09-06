@@ -70,5 +70,10 @@ namespace LumbApp.Expertos.ExpertoSI.Utils {
             Estado = Estados.Abandonada;
             return true;
         }
+
+        public void Resetear () {
+            Estado = Estados.Inicial;
+            VecesAtravesada = 0;
+        }
     }
 }

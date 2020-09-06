@@ -73,5 +73,9 @@ namespace LumbApp.Expertos.ExpertoSI.Utils {
             return true;
         }
 
+        public void Resetear () {
+            Estado = Estados.Inicial;
+            VecesRozada = 0;
+        }
     }
 }
