@@ -23,6 +23,9 @@ namespace KinectCoordinateMapping
         private readonly Brush trackedJointBrush = Brushes.Blue;
         private readonly Brush inferredJointBrush = Brushes.Yellow;
         private readonly Brush notTrackedJointBrush = Brushes.Red;
+
+        private Brush rightHand;
+        private Brush leftHand;
         #endregion
 
         #region Variables ZE
@@ -60,10 +63,13 @@ namespace KinectCoordinateMapping
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            leftHand = notTrackedJointBrush;
+            rightHand = notTrackedJointBrush;
+
             conn = new ConectorKinect();
             expert = new ExpertoZE(conn);
-            expert.CambioZE += CambioZE;
-            expert.Inicializar();
+            // expert.CambioZE += CambioZE; //No hace falta para la calibracion
+            expert.inicializarSinZE();
 
             conn.SubscribeFramesReady(Sensor_AllFramesReady);
             expert.IniciarSimulacion();
@@ -98,19 +104,10 @@ namespace KinectCoordinateMapping
             Console.WriteLine("Cambio en ZE:");
             Console.WriteLine("-Contaminacion: " + e.ContaminadoAhora + " " + e.VecesContaminado);
             Console.WriteLine("-Derecha: " + e.ManoDerecha.Track + " " + e.ManoDerecha.Estado + " " + e.ManoDerecha.VecesContamino);
-            Console.WriteLine("-Derecha: " + e.ManoIzquierda.Track + " " + e.ManoIzquierda.Estado + " " + e.ManoIzquierda.VecesContamino);
-        }
+            Console.WriteLine("-Izquierda: " + e.ManoIzquierda.Track + " " + e.ManoIzquierda.Estado + " " + e.ManoIzquierda.VecesContamino);
 
-        private bool isInZE(SkeletonPoint pos)
-        {
-            return 
-                distToPlane(s1,s5,s2, pos) > 0 //cara 2
-                && distToPlane(s0, s3, s4, pos) > 0 //cara 4
-                && distToPlane(s0, s4, s1, pos) > 0 //cara 1
-                && distToPlane(s2, s6, s3, pos) > 0 //cara 3
-                && distToPlane(s4, s7, s5, pos) > 0 //cara 5
-                && distToPlane(s0, s1, s3, pos) > 0 //cara 6
-                ;
+            rightHand = setBrush(e.ManoDerecha);
+            leftHand = setBrush(e.ManoIzquierda);
         }
 
         private SkeletonPoint mas(SkeletonPoint a, SkeletonPoint b)
@@ -188,21 +185,20 @@ namespace KinectCoordinateMapping
                 s6 = mas(s2, aux);
                 s7 = mas(s3, aux);
 
-                //Log
-                logPoint(s0, "s0");
-                logPoint(s1, "s1");
-                logPoint(s2, "s2");
-                logPoint(s3, "s3");
-                logPoint(s4, "s4");
-                logPoint(s5, "s5");
-                logPoint(s6, "s6");
-                logPoint(s7, "s7");
-
                 //JSON
                 var lista = new SkeletonPoint[] { s0, s1, s2, s3, s4, s5, s6, s7 };
                 Calibracion cal = new Calibracion(lista);
                 string json = JsonSerializer.Serialize(cal);
                 Console.WriteLine(json);
+
+                //Expert
+                Console.WriteLine("Regenerando experto");
+                expert = new ExpertoZE(conn);
+                expert.CambioZE += CambioZE;
+                expert.Inicializar(cal);
+
+                conn.SubscribeFramesReady(Sensor_AllFramesReady);
+                expert.IniciarSimulacion();
             }
         }
 
@@ -248,7 +244,7 @@ namespace KinectCoordinateMapping
                                     depthData,
                                     skeletonPoints);
 
-                                Console.WriteLine("FRAME");
+                                Console.WriteLine("Calibrando");
 
                                 // Recorrer puntos marcados
                                 s3 = screenPointToSkeleton(screenPoint1, skeletonPoints);
@@ -276,8 +272,8 @@ namespace KinectCoordinateMapping
                         if (body.TrackingState == SkeletonTrackingState.Tracked)
                         {
                             // Console.WriteLine(body.ClippedEdges);
-                            drawJoint(body.Joints[JointType.HandRight]);
-                            drawJoint(body.Joints[JointType.HandLeft]);
+                            drawJoint(body.Joints[JointType.HandRight], rightHand);
+                            drawJoint(body.Joints[JointType.HandLeft], leftHand);
                         }
                     }
                 }
@@ -292,25 +288,20 @@ namespace KinectCoordinateMapping
             drawZE();
         }
 
-        private void drawJoint(Joint joint)
+        private Brush setBrush(Mano data)
+        {
+            if(data.Track == Mano.Tracking.Perdido)
+                return inferredJointBrush;
+            if (data.Estado == Mano.Estados.Fuera || data.Estado == Mano.Estados.Inicial)
+                return trackedJointBrush;
+            return inZeBrush;
+        }
+        
+        private void drawJoint(Joint joint, Brush b)
         {
             // 3D coordinates in meters
             SkeletonPoint skeletonPoint = joint.Position;
-
-            Brush b;
-            if (joint.TrackingState == JointTrackingState.Tracked)
-            {
-                if (isInZE(joint.Position))
-                    b = inZeBrush;
-                else b = trackedJointBrush;
-            }
-            else if (joint.TrackingState == JointTrackingState.Inferred)
-                b = inferredJointBrush;
-            else b = notTrackedJointBrush;
-
             ColorImagePoint colorPoint = SkeletonPointToScreen(skeletonPoint);
-
-
 
             // DRAWING...
             draw2DPoint(colorPoint, b);
