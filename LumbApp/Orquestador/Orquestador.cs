@@ -87,7 +87,7 @@ namespace LumbApp.Orquestador
 
 			} catch (Exception ex) {
 				expertoZE.CambioZE -= CambioZE;
-				if(ex.Message.Contains("sensores"))
+				if(ex.Message.Contains("sensores"))//
 					expertoSI.CambioSI -= CambioSI;
 
 				GUIController.MostrarErrorDeConexion(ex.Message);
