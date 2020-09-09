@@ -12,9 +12,8 @@ namespace LumbApp.Orquestador
     public class Orquestador : IOrquestador {
 		public GUIController GUIController { get; set; }
 
-		//private ExpertoZE expertoZE;
-		private ExpertoZEMock expertoZE;
-		private ExpertoSI expertoSI;
+		private IExpertoZE expertoZE;
+		private IExpertoSI expertoSI;
 
 		private Models.DatosPracticante datosPracticante;
 		private ModoSimulacion modoSeleccionado;
@@ -130,7 +129,7 @@ namespace LumbApp.Orquestador
 			GUIController.MostrarCambioZE(e);
 		}
 
-        public ExpertoSI GetExpertoSI () {
+        public IExpertoSI GetExpertoSI () {
 			return expertoSI;
         }
 		public void SetExpertoSI (ExpertoSI exp) {
