@@ -8,6 +8,9 @@ using LumbApp.GUI;
 namespace UnitTestLumbapp {
     [TestClass]
     public class UnitTestOrquestador {
+        /// <summary>
+        /// Test que prueba el caso de intentar crear un orquestador sin una GUI, generando una exception
+        /// </summary>
         [TestMethod]
         [ExpectedException(typeof(Exception),
             "Gui no puede ser null. Necesito un GUIController para crear un Orquestador.")]
