@@ -228,7 +228,6 @@
     <Content Include="GUI\Imagenes\Manos\Traqueando\mano-dentro.png" />
     <Content Include="GUI\Imagenes\Manos\Traqueando\mano-fuera-inicial.png" />
     <Content Include="GUI\Imagenes\Manos\Traqueando\mano-fuera.png" />
-    <Content Include="GUI\init.txt" />
     <Content Include="License-LGPL.txt" />
   </ItemGroup>
   <ItemGroup>

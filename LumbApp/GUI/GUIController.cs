@@ -1,13 +1,5 @@
-﻿
-using KinectCoordinateMapping;
-using LumbApp.Enums;
-using LumbApp.Orquestador;
+﻿using LumbApp.Enums;
 using LumbApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
 using LumbApp.Expertos.ExpertoZE;
 
 namespace LumbApp.GUI
@@ -20,8 +12,6 @@ namespace LumbApp.GUI
         private IngresoDatosPracticante IngresoDatosPracticantePage { get; set; }
         private SimulacionModoGuiado SimulacionModoGuiadoPage { get; set; }
         private ResultadosSimulacion ResultadosSimulacionPage { get; set; }
-        private Mano _manoIzquierda { get; set; }
-        private Mano _manoDerecha { get; set; }
 
         public GUIController(MainWindow mainWindow) {
 
@@ -97,8 +87,6 @@ namespace LumbApp.GUI
         {
             SimulacionModoGuiadoPage = new SimulacionModoGuiado(this);
             MainWindow.NavigationService.Navigate(SimulacionModoGuiadoPage);
-            _manoIzquierda = new Mano();
-            _manoDerecha = new Mano();
         }
 
         /// <summary>
