@@ -136,5 +136,8 @@ namespace LumbApp.Orquestador
 			this.expertoSI = exp;
         }
 
+		public ExpertoZE GetExpertoZE () { return expertoZE; }
+
+		public void SetExpertoZE (ExpertoZE exp) { this.expertoZE = exp; }
     }
 }
