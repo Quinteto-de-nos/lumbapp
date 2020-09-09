@@ -19,6 +19,9 @@ namespace LumbApp.Orquestador
 		private Models.DatosPracticante datosPracticante;
 		private ModoSimulacion modoSeleccionado;
 
+		private IConectorKinect conectorKinect;
+		private IConectorSI conectorSI;
+
 		/// <summary>
 		/// Constructor del Orquestrador.
 		/// Se encarga de construir los expertos y la GUI manejando para manejar la comunicación entre ellos.
@@ -29,10 +32,11 @@ namespace LumbApp.Orquestador
 			
 			GUIController = gui;
 
-			//expertoZE = new ExpertoZE(new ConectorKinect());
-			expertoZE = new ExpertoZEMock(true);
+			conectorKinect = new ConectorKinect();
+			expertoZE = new ExpertoZE(conectorKinect);
 
-			//expertoSI = new ExpertoSI(new ConectorSI());
+			conectorSI = new ConectorSI();
+			expertoSI = new ExpertoSI(conectorSI);
 
 		}
 

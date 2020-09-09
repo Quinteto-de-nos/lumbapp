@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Kinect;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,13 +31,26 @@ namespace LumbApp.Expertos.ExpertoZE
 
         public bool IniciarSimulacion()
         {
-            zonaEsteril = new ZonaEsteril();
+            SkeletonPoint[] points = {
+                newPoint(0,0,0), newPoint(1,0,0), newPoint(1, 0, 1),  newPoint(0,0,1),
+                newPoint(0,1,0), newPoint(1,1,0), newPoint(1, 1, 1),  newPoint(0,1,1)};
+            Calibracion cal = new Calibracion(points);
+            zonaEsteril = new ZonaEsteril(cal);
             manoDerecha = new Mano();
             manoIzquierda = new Mano();
 
             if (shouldInit)
                 simulateAsync();
             return shouldInit;
+        }
+
+        private SkeletonPoint newPoint(float x, float y, float z)
+        {
+            SkeletonPoint p = new SkeletonPoint();
+            p.X = x;
+            p.Y = y;
+            p.Z = z;
+            return p;
         }
 
         public InformeZE TerminarSimulacion()
