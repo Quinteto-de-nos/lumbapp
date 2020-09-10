@@ -1,10 +1,12 @@
-﻿using LumbApp.Conectores.ConectorKinect;
+﻿using LumbApp.Conectores.ConectorFS;
+using LumbApp.Conectores.ConectorKinect;
 using LumbApp.Conectores.ConectorSI;
 using LumbApp.Enums;
 using LumbApp.Expertos.ExpertoSI;
 using LumbApp.Expertos.ExpertoZE;
 using LumbApp.GUI;
 using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace LumbApp.Orquestador
@@ -31,8 +33,18 @@ namespace LumbApp.Orquestador
 			
 			GUIController = gui;
 
+			IConectorFS conectorFs = new ConectorFS();
+			Calibracion calibracion;
+			try
+			{
+				calibracion = conectorFs.LevantarArchivoDeTextoComoObjeto<Calibracion>("./zonaEsteril.json");
+			}catch(Exception e){
+				Console.WriteLine(e);
+				//Acá debería haber un nuevo mensaje por pantalla que me permita quitar las app, esto es incluso antes de la inicialización, asíq ue no puedo reintentar.
+				throw new Exception("Error al tratar de cargar el archivo de calibración.");
+			}
 			conectorKinect = new ConectorKinect();
-			expertoZE = new ExpertoZE(conectorKinect);
+			expertoZE = new ExpertoZE(conectorKinect, calibracion);
 
 			conectorSI = new ConectorSI();
 			expertoSI = new ExpertoSI(conectorSI);
