@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace LumbApp.Expertos.ExpertoSI {
-    interface IExpertoSI {
+    public interface IExpertoSI {
         event EventHandler<CambioSIEventArgs> CambioSI;
         bool Inicializar ();
         bool IniciarSimulacion ();
