@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace LumbApp.Orquestador
 {
     public class Orquestador : IOrquestador {
-		public GUIController GUIController { get; set; }
+		public IGUIController IGUIController { get; set; }
 
 		private ExpertoZE expertoZE;
 		private ExpertoSI expertoSI;
@@ -27,21 +27,18 @@ namespace LumbApp.Orquestador
 		/// Constructor del Orquestrador.
 		/// Se encarga de construir los expertos y la GUI manejando para manejar la comunicación entre ellos.
 		/// </summary>
-		public Orquestador (GUIController gui) {
+		public Orquestador (IGUIController gui, IConectorFS conectorFS) {
 			if (gui == null)
 				throw new Exception("Gui no puede ser null. Necesito un GUIController para crear un Orquestador.");
-			
-			GUIController = gui;
-
-			IConectorFS conectorFs = new ConectorFS();
+			IGUIController = gui;
 			Calibracion calibracion;
 			try
 			{
-				calibracion = conectorFs.LevantarArchivoDeTextoComoObjeto<Calibracion>("./zonaEsteril.json");
+				calibracion = conectorFS.LevantarArchivoDeTextoComoObjeto<Calibracion>("./zonaEsteril.json");
 			}catch(Exception e){
 				Console.WriteLine(e);
 				//Acá debería haber un nuevo mensaje por pantalla que me permita quitar las app, esto es incluso antes de la inicialización, asíq ue no puedo reintentar.
-				throw new Exception("Error al tratar de cargar el archivo de calibración.");
+				throw new Exception("Error al tratar de cargar el archivo de calibracion.");
 			}
 			conectorKinect = new ConectorKinect();
 			expertoZE = new ExpertoZE(conectorKinect, calibracion);
@@ -70,9 +67,9 @@ namespace LumbApp.Orquestador
 
 
 			if(modoSeleccionado == ModoSimulacion.ModoGuiado)
-				GUIController.IniciarSimulacionModoGuiado();
+				IGUIController.IniciarSimulacionModoGuiado();
 			else
-				GUIController.IniciarSimulacionModoEvaluacion();
+				IGUIController.IniciarSimulacionModoEvaluacion();
 		}
 
 		/// <summary>
@@ -99,10 +96,10 @@ namespace LumbApp.Orquestador
 				}
 
 				//Mostrar pantalla de ingreso de datos
-				GUIController.SolicitarDatosPracticante();
+				IGUIController.SolicitarDatosPracticante();
 
 			} catch (Exception ex) {
-				GUIController.MostrarErrorDeConexion(ex.Message);
+				IGUIController.MostrarErrorDeConexion(ex.Message);
 			}
 			
 		}
@@ -138,7 +135,7 @@ namespace LumbApp.Orquestador
 		private void CambioZE(object sender, CambioZEEventArgs e) {
 			//comunicar los cambios a la GUI levantando un evento
 			//Decidir que comunicamos dependiendo del modo
-			GUIController.MostrarCambioZE(e);
+			IGUIController.MostrarCambioZE(e);
 		}
 
         public ExpertoSI GetExpertoSI () {
