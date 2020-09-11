@@ -47,11 +47,12 @@ namespace LumbApp.Expertos.ExpertoSI {
         public bool Inicializar () {
             sensoresInternos.HayDatos += HayDatosNuevos; //suscripción al evento HayDatos
             try {
-                sensoresInternos.Conectar();
+                if (sensoresInternos.Conectar())
+                    _comunicacionCheckeada = sensoresInternos.CheckearComunicacion();
             } catch {
                 return false;
             }
-            _comunicacionCheckeada = sensoresInternos.ChekearComunicacion();
+            _comunicacionCheckeada = sensoresInternos.CheckearComunicacion();
             
             return _comunicacionCheckeada;
         }
@@ -73,8 +74,10 @@ namespace LumbApp.Expertos.ExpertoSI {
         /// Finaliza el sensado.
         /// </summary>
         public void Finalizar () {
-            _comunicacionCheckeada = false;
-            sensoresInternos.Desconectar();
+            if (_comunicacionCheckeada) {
+                _comunicacionCheckeada = false;
+                sensoresInternos.Desconectar();
+            }
         }
 
         public InformeSI TerminarSimulacion () {

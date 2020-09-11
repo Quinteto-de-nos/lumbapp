@@ -21,9 +21,26 @@ namespace LumbApp.Expertos.ExpertoZE
         private Mano manoIzquierda;
 
         private bool simulando;
+        private bool inicializado;
 
         /// <summary>
-        /// Constructor de Expero en Zona Esteril.
+        /// Constructor de Experto en Zona Esteril.
+        /// Este experto necesita una kinect para trabajar, que lo recibe por parametro. Tira una excepcion si recibe null.
+        /// </summary>
+        /// <param name="kinect">Conector a la kinect</param>
+        /// <param name="calibracion">Datos de calibracion para la zona esteril</param>
+        public ExpertoZE(IConectorKinect kinect, Calibracion calibracion)
+        {
+            if (kinect == null)
+                throw new Exception("Kinect no puede ser null. Necesito un conector a una kinect para crear un experto en zona esteril");
+            this.kinect = kinect;
+
+            zonaEsteril = new ZonaEsteril(calibracion); //Puede tirar una excepcion si calibracion esta mal formado
+        }
+
+        #region Exclusivo de calibracion
+        /// <summary>
+        /// Constructor para calibracion. No usar en una simulacion, porque no va a tener una ZE definida.
         /// Este experto necesita una kinect para trabajar, que lo recibe por parametro. Tira una excepcion si recibe null.
         /// </summary>
         /// <param name="kinect">Conector a la kinect</param>
@@ -33,6 +50,7 @@ namespace LumbApp.Expertos.ExpertoZE
                 throw new Exception("Kinect no puede ser null. Necesito un conector a una kinect para crear un experto en zona esteril");
             this.kinect = kinect;
         }
+        #endregion
 
         /// <summary>
         /// Inicializa todo lo necesario y queda listo para aceptar simulaciones.
@@ -48,10 +66,10 @@ namespace LumbApp.Expertos.ExpertoZE
             catch (Exception ex)
             {
                 logger.Error(ex, "No pude inicializar el Experto en Zona Esteril por error con la Kinect");
+                inicializado = false;
                 return false;
             }
-
-            zonaEsteril = new ZonaEsteril();
+            inicializado = true;
             return true;
         }
 
@@ -63,7 +81,7 @@ namespace LumbApp.Expertos.ExpertoZE
         /// False si esta funcion se llama antes de Inicializar</returns>
         public bool IniciarSimulacion()
         {
-            if (zonaEsteril == null)
+            if (!inicializado || zonaEsteril == null)
                 return false;
 
             manoDerecha = new Mano();
@@ -160,9 +178,9 @@ namespace LumbApp.Expertos.ExpertoZE
                 return cambioTrack;
 
             //Zona esteril
-            bool cambioZE = false;
+            bool cambioZE;
             var pos = joint.Position;
-            if (zonaEsteril.EstaDentro(pos.X, pos.Y, pos.Z))
+            if (zonaEsteril.EstaDentro(pos))
             {
                 cambioZE = mano.Entrar();
                 if (cambioZE && mano.Estado == Mano.Estados.Contaminando)
