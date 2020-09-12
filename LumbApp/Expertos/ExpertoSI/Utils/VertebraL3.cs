@@ -26,9 +26,10 @@ namespace LumbApp.Expertos.ExpertoSI.Utils {
         /// </summary>
         /// <returns>Si hubo cambio de estado retorna true.</returns>
         public bool RozarSector(Sectores sector) {
-            this.Sector=sector;
-
+            
             if (Rozar()) {
+                this.Sector = sector;
+
                 switch (Sector) {
                     case Sectores.Arriba:
                         VecesArriba++;

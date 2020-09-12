@@ -9,10 +9,11 @@ namespace UnitTestLumbapp.Experto_SI {
     public class TestVertebra {
         /// <summary>
         /// La Vertebra debe cambiar de estado con Rozar() y Abandonar().
-        /// Los estados son Inicial, Rozando, Abandonada y RozandoNuevamente.
+        /// Los estados son Inicial, Rozando, Abandonada y RozandoNuevamente e incrementar el contador de veces rozada
+        /// cuando hay un cambio de Inicial a Rozando o de Abandonada a RozandoNuevamente.
         /// </summary>
         [TestMethod]
-        public void TestEstadoVertebra () {
+        public void TestEstadosYVecesVertebra () {
             Vertebra vertebra = new Vertebra();
             bool cambio;
 
@@ -62,8 +63,17 @@ namespace UnitTestLumbapp.Experto_SI {
             Assert.AreEqual(Vertebra.Estados.RozandoNuevamente, vertebra.Estado);
             Assert.AreEqual(true, cambio);
             Assert.AreEqual(3, vertebra.VecesRozada);
+
+            vertebra.Resetear();
+            Assert.AreEqual(Vertebra.Estados.Inicial, vertebra.Estado);
+            Assert.AreEqual(0, vertebra.VecesRozada);
         }
 
+        /// <summary>
+        /// La VertebraL3 debe cambiar de estado con Rozar() y Abandonar().
+        /// Los estados son Inicial, Rozando, Abandonada y RozandoNuevamente e incrementar el contador de veces rozada
+        /// cuando hay un cambio de Inicial a Rozando o de Abandonada a RozandoNuevamente.
+        /// </summary>
         [TestMethod]
         public void TestEstadosYVecesVertebraL3 () {
             VertebraL3 vertebra = new VertebraL3();
@@ -121,6 +131,9 @@ namespace UnitTestLumbapp.Experto_SI {
             Assert.AreEqual(true, cambio);
             Assert.AreEqual(3, vertebra.VecesRozada);
 
+            vertebra.Resetear();
+            Assert.AreEqual(VertebraL3.Estados.Inicial, vertebra.Estado);
+            Assert.AreEqual(0, vertebra.VecesRozada);
         }
 
         [TestMethod]
@@ -179,10 +192,19 @@ namespace UnitTestLumbapp.Experto_SI {
             Assert.AreEqual(1, vertebra.VecesAbajo);
             Assert.AreEqual(VertebraL3.Sectores.Arriba, vertebra.Sector);
 
+            vertebra.Resetear();
+            Assert.AreEqual(0, vertebra.VecesArriba);
+            Assert.AreEqual(0, vertebra.VecesAbajo);
+            Assert.AreEqual(VertebraL3.Sectores.Arriba, vertebra.Sector);
         }
 
+        /// <summary>
+        /// La VertebraL4 debe cambiar de estado con Rozar() y Abandonar().
+        /// Los estados son Inicial, Rozando, Abandonada y RozandoNuevamente e incrementar el contador de veces rozada
+        /// cuando hay un cambio de Inicial a Rozando o de Abandonada a RozandoNuevamente.
+        /// </summary>
         [TestMethod]
-        public void TestEstadosVertebraL4 () {
+        public void TestEstadosYVecesVertebraL4 () {
             VertebraL4 vertebra = new VertebraL4();
             bool cambio;
 
@@ -235,13 +257,144 @@ namespace UnitTestLumbapp.Experto_SI {
             Assert.AreEqual(true, cambio);
             Assert.AreEqual(2, vertebra.VecesRozada);
 
-            cambio = vertebra.RozarSector(VertebraL4.Sectores.ArribaDerecha);
+            cambio = vertebra.RozarSector(VertebraL4.Sectores.ArribaCentro);
             Assert.AreEqual(VertebraL4.Estados.RozandoNuevamente, vertebra.Estado);
             Assert.AreEqual(true, cambio);
             Assert.AreEqual(3, vertebra.VecesRozada);
+
+            cambio = vertebra.AbandonarSector(VertebraL4.Sectores.ArribaCentro);
+            Assert.AreEqual(VertebraL4.Estados.Abandonada, vertebra.Estado);
+            Assert.AreEqual(true, cambio);
+            Assert.AreEqual(3, vertebra.VecesRozada);
+
+            cambio = vertebra.RozarSector(VertebraL4.Sectores.Abajo);
+            Assert.AreEqual(VertebraL4.Estados.RozandoNuevamente, vertebra.Estado);
+            Assert.AreEqual(true, cambio);
+            Assert.AreEqual(4, vertebra.VecesRozada);
+
+            cambio = vertebra.AbandonarSector(VertebraL4.Sectores.Abajo);
+            Assert.AreEqual(VertebraL4.Estados.Abandonada, vertebra.Estado);
+            Assert.AreEqual(true, cambio);
+            Assert.AreEqual(4, vertebra.VecesRozada);
+
+            vertebra.Resetear();
+            Assert.AreEqual(VertebraL4.Estados.Inicial, vertebra.Estado);
+            Assert.AreEqual(0, vertebra.VecesRozada);
         }
 
         [TestMethod]
-        public void TestSectoresVertebraL4 () { }
+        public void TestSectoresYVecesVertebraL4 () {
+            VertebraL4 vertebra = new VertebraL4();
+
+            Assert.AreEqual(VertebraL4.Estados.Inicial, vertebra.Estado);
+
+            vertebra.AbandonarSector(VertebraL4.Sectores.ArribaIzquierda);
+            Assert.AreEqual(0, vertebra.VecesArribaIzquierda);
+            Assert.AreEqual(0, vertebra.VecesArribaDerecha);
+            Assert.AreEqual(0, vertebra.VecesArribaCentro);
+            Assert.AreEqual(0, vertebra.VecesAbajo);
+            Assert.AreEqual(VertebraL4.Sectores.ArribaIzquierda, vertebra.Sector); // sacar
+
+
+            vertebra.RozarSector(VertebraL4.Sectores.ArribaIzquierda);
+            Assert.AreEqual(1, vertebra.VecesArribaIzquierda);
+            Assert.AreEqual(0, vertebra.VecesArribaDerecha);
+            Assert.AreEqual(0, vertebra.VecesArribaCentro);
+            Assert.AreEqual(0, vertebra.VecesAbajo);
+            Assert.AreEqual(VertebraL4.Sectores.ArribaIzquierda, vertebra.Sector);
+
+            vertebra.RozarSector(VertebraL4.Sectores.ArribaIzquierda);
+            Assert.AreEqual(1, vertebra.VecesArribaIzquierda);
+            Assert.AreEqual(0, vertebra.VecesArribaDerecha);
+            Assert.AreEqual(0, vertebra.VecesArribaCentro);
+            Assert.AreEqual(0, vertebra.VecesAbajo);
+            Assert.AreEqual(VertebraL4.Sectores.ArribaIzquierda, vertebra.Sector);
+
+            vertebra.AbandonarSector(VertebraL4.Sectores.ArribaDerecha);
+            Assert.AreEqual(1, vertebra.VecesArribaIzquierda);
+            Assert.AreEqual(0, vertebra.VecesArribaDerecha);
+            Assert.AreEqual(0, vertebra.VecesArribaCentro);
+            Assert.AreEqual(0, vertebra.VecesAbajo);
+            Assert.AreEqual(VertebraL4.Sectores.ArribaIzquierda, vertebra.Sector);
+
+            vertebra.AbandonarSector(VertebraL4.Sectores.ArribaIzquierda);
+            Assert.AreEqual(1, vertebra.VecesArribaIzquierda);
+            Assert.AreEqual(0, vertebra.VecesArribaDerecha);
+            Assert.AreEqual(0, vertebra.VecesArribaCentro);
+            Assert.AreEqual(0, vertebra.VecesAbajo);
+            Assert.AreEqual(VertebraL4.Sectores.ArribaIzquierda, vertebra.Sector);
+
+            vertebra.AbandonarSector(VertebraL4.Sectores.ArribaIzquierda);
+            Assert.AreEqual(1, vertebra.VecesArribaIzquierda);
+            Assert.AreEqual(0, vertebra.VecesArribaDerecha);
+            Assert.AreEqual(0, vertebra.VecesArribaCentro);
+            Assert.AreEqual(0, vertebra.VecesAbajo);
+            Assert.AreEqual(VertebraL4.Sectores.ArribaIzquierda, vertebra.Sector);
+
+            vertebra.RozarSector(VertebraL4.Sectores.ArribaDerecha);
+            Assert.AreEqual(1, vertebra.VecesArribaIzquierda);
+            Assert.AreEqual(1, vertebra.VecesArribaDerecha);
+            Assert.AreEqual(0, vertebra.VecesArribaCentro);
+            Assert.AreEqual(0, vertebra.VecesAbajo);
+            Assert.AreEqual(VertebraL4.Sectores.ArribaDerecha, vertebra.Sector);
+
+            //Si L4 está siendo rozada en el sector ArribaDerecha y se roza también en el sector ArribaCentro,
+            //se debe mantener el primer sector y no haber cambio de estado de la vertebra ni aumentar la cantidad de veces rozada.
+            vertebra.RozarSector(VertebraL4.Sectores.ArribaCentro);
+            Assert.AreEqual(1, vertebra.VecesArribaIzquierda);
+            Assert.AreEqual(1, vertebra.VecesArribaDerecha);
+            Assert.AreEqual(0, vertebra.VecesArribaCentro);
+            Assert.AreEqual(0, vertebra.VecesAbajo);
+            Assert.AreEqual(VertebraL4.Sectores.ArribaDerecha, vertebra.Sector);
+
+            vertebra.AbandonarSector(VertebraL4.Sectores.ArribaDerecha);
+            Assert.AreEqual(1, vertebra.VecesArribaIzquierda);
+            Assert.AreEqual(1, vertebra.VecesArribaDerecha);
+            Assert.AreEqual(0, vertebra.VecesArribaCentro);
+            Assert.AreEqual(0, vertebra.VecesAbajo);
+            Assert.AreEqual(VertebraL4.Sectores.ArribaDerecha, vertebra.Sector);
+
+            vertebra.RozarSector(VertebraL4.Sectores.ArribaCentro);
+            Assert.AreEqual(1, vertebra.VecesArribaIzquierda);
+            Assert.AreEqual(1, vertebra.VecesArribaDerecha);
+            Assert.AreEqual(1, vertebra.VecesArribaCentro);
+            Assert.AreEqual(0, vertebra.VecesAbajo);
+            Assert.AreEqual(VertebraL4.Sectores.ArribaCentro, vertebra.Sector);
+
+            vertebra.AbandonarSector(VertebraL4.Sectores.Abajo);
+            Assert.AreEqual(1, vertebra.VecesArribaIzquierda);
+            Assert.AreEqual(1, vertebra.VecesArribaDerecha);
+            Assert.AreEqual(1, vertebra.VecesArribaCentro);
+            Assert.AreEqual(0, vertebra.VecesAbajo);
+            Assert.AreEqual(VertebraL4.Sectores.ArribaCentro, vertebra.Sector);
+
+            vertebra.AbandonarSector(VertebraL4.Sectores.ArribaCentro);
+            Assert.AreEqual(1, vertebra.VecesArribaIzquierda);
+            Assert.AreEqual(1, vertebra.VecesArribaDerecha);
+            Assert.AreEqual(1, vertebra.VecesArribaCentro);
+            Assert.AreEqual(0, vertebra.VecesAbajo);
+            Assert.AreEqual(VertebraL4.Sectores.ArribaCentro, vertebra.Sector);
+
+            vertebra.RozarSector(VertebraL4.Sectores.Abajo);
+            Assert.AreEqual(1, vertebra.VecesArribaIzquierda);
+            Assert.AreEqual(1, vertebra.VecesArribaDerecha);
+            Assert.AreEqual(1, vertebra.VecesArribaCentro);
+            Assert.AreEqual(1, vertebra.VecesAbajo);
+            Assert.AreEqual(VertebraL4.Sectores.Abajo, vertebra.Sector);
+
+            vertebra.AbandonarSector(VertebraL4.Sectores.Abajo);
+            Assert.AreEqual(1, vertebra.VecesArribaIzquierda);
+            Assert.AreEqual(1, vertebra.VecesArribaDerecha);
+            Assert.AreEqual(1, vertebra.VecesArribaCentro);
+            Assert.AreEqual(1, vertebra.VecesAbajo);
+            Assert.AreEqual(VertebraL4.Sectores.Abajo, vertebra.Sector);
+
+            vertebra.Resetear();
+            Assert.AreEqual(0, vertebra.VecesArribaIzquierda);
+            Assert.AreEqual(0, vertebra.VecesArribaDerecha);
+            Assert.AreEqual(0, vertebra.VecesArribaCentro);
+            Assert.AreEqual(0, vertebra.VecesAbajo);
+            Assert.AreEqual(VertebraL4.Sectores.Abajo, vertebra.Sector);
+        }
     }
 }
