@@ -7,15 +7,15 @@ using System.Linq;
 using System.Text;
 
 namespace LumbApp.Expertos.ExpertoSI {
-    public class ExpertoSI {
+    public class ExpertoSI : IExpertoSI{
         private IConectorSI sensoresInternos;
 
-        public Capa TejidoAdiposo = new Capa();
-        public Vertebra L2 = new Vertebra();
-        public VertebraL3 L3 = new VertebraL3();
-        public VertebraL4 L4 = new VertebraL4();
-        public Vertebra L5 = new Vertebra();
-        public Capa Duramadre = new Capa();
+        private Capa TejidoAdiposo = new Capa();
+        private Vertebra L2 = new Vertebra();
+        private VertebraL3 L3 = new VertebraL3();
+        private VertebraL4 L4 = new VertebraL4();
+        private Vertebra L5 = new Vertebra();
+        private Capa Duramadre = new Capa();
 
         private bool AhoraTejidoAdiposo = false;
         private bool AhoraL2 = false;
@@ -52,7 +52,6 @@ namespace LumbApp.Expertos.ExpertoSI {
             } catch {
                 return false;
             }
-            _comunicacionCheckeada = sensoresInternos.CheckearComunicacion();
             
             return _comunicacionCheckeada;
         }
@@ -100,7 +99,7 @@ namespace LumbApp.Expertos.ExpertoSI {
         /// <summary>
         /// Vuelve Capas, Vertebras y estadisticas al estado inicial.
         /// </summary>
-        public void Resetear () {
+        private void Resetear () {
             TejidoAdiposo.Resetear();
             L2.Resetear();
             L3.Resetear();
@@ -110,6 +109,13 @@ namespace LumbApp.Expertos.ExpertoSI {
 
             VecesCaminoCorrecto = 0;
             VecesCaminoIncorrecto = 0;
+
+            AhoraTejidoAdiposo = false;
+            AhoraL2 = false;
+            AhoraL3 = false;
+            AhoraL4 = false;
+            AhoraL5 = false;
+            AhoraDuramadre = false;
         }
 
         /// <summary>
@@ -137,7 +143,7 @@ namespace LumbApp.Expertos.ExpertoSI {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="datosSensados"></param>
-        public void HayDatosNuevos (object sender, DatosSensadosEventArgs datosSensados) {
+        private void HayDatosNuevos (object sender, DatosSensadosEventArgs datosSensados) {
             if (_simulando) {
                 if (RealizarAcciones(datosSensados.datosSensados)) {
                     args = new CambioSIEventArgs(TejidoAdiposo, L2, L3, L4, L5, Duramadre, 
@@ -162,7 +168,7 @@ namespace LumbApp.Expertos.ExpertoSI {
         /// </summary>
         /// <param name="datosSensados"> string que contiene los datos sensados. </param>
         /// <returns> Retorna true si hubo un cambio de estado en al menos alguna vertebra o capa. </returns>
-        public bool RealizarAcciones (string datosSensados) {
+        private bool RealizarAcciones (string datosSensados) {
             bool Cambio = false;
             bool CaminoCorrecto = false;
             CaminoIncorrecto = false;
@@ -287,5 +293,6 @@ namespace LumbApp.Expertos.ExpertoSI {
 
             return Cambio;
         }
+
     }
 }

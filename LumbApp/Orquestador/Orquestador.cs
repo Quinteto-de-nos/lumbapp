@@ -80,7 +80,7 @@ namespace LumbApp.Orquestador
 				//INICIALIZAR EXPERTO SI
 				expertoSI.CambioSI += CambioSI; //suscripción al evento CambioSI
 				if (!expertoSI.Inicializar())
-					throw new Exception("No se pudo detectar correctamente los sensores internos.");
+					throw new Exception("No se pudieron detectar correctamente los sensores internos.");
 
 				//Mostrar pantalla de ingreso de datos
 				GUIController.SolicitarDatosPracticante();
