@@ -144,20 +144,16 @@ namespace LumbApp.Expertos.ExpertoSI {
                         AhoraTejidoAdiposo, AhoraL2, AhoraL3, AhoraL4, AhoraL5, AhoraDuramadre,
                         CaminoIncorrecto);
 
-                    ResetearAhoras();
+                    AhoraTejidoAdiposo = false;
+                    AhoraL2 = false;
+                    AhoraL3 = false;
+                    AhoraL4 = false;
+                    AhoraL5 = false;
+                    AhoraDuramadre = false;
 
                     HayCambioSI(args);
                 }
             }
-        }
-
-        public void ResetearAhoras () {
-            AhoraTejidoAdiposo = false;
-            AhoraL2 = false;
-            AhoraL3 = false;
-            AhoraL4 = false;
-            AhoraL5 = false;
-            AhoraDuramadre = false;
         }
 
         /// <summary>
