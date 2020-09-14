@@ -73,11 +73,11 @@ namespace LumbApp.Orquestador
 
 			try {
 				//INICIALIZAR EXPERTO ZE
-				expertoZE.CambioZE += CambioZE; //suscripción al evento CambioZE
-				if (!expertoZE.Inicializar()) {
-					expertoZE.CambioZE -= CambioZE; //Ver si hay que desuscribir en caso de error
-					throw new Exception("No se pudo detectar correctamente la kinect.");
-				}
+				//expertoZE.CambioZE += CambioZE; //suscripción al evento CambioZE
+				//if (!expertoZE.Inicializar()) {
+				//	expertoZE.CambioZE -= CambioZE; //Ver si hay que desuscribir en caso de error
+				//	throw new Exception("No se pudo detectar correctamente la kinect.");
+				//}
 
 				//INICIALIZAR EXPERTO SI
 				//expertoSI.CambioSI += CambioSI; //suscripción al evento CambioSI
@@ -86,8 +86,8 @@ namespace LumbApp.Orquestador
 				//	throw new Exception("No se pudo detectar correctamente los sensores internos.");
 				//}
 
-				//Mostrar pantalla de ingreso de datos
-				GUIController.SolicitarDatosPracticante();
+				//Mostrar pantalla de ingreso de datos, le mandamos el path por default donde se guarda la practica
+				GUIController.SolicitarDatosPracticante("C:/Lara");
 
 			} catch (Exception ex) {
 				GUIController.MostrarErrorDeConexion(ex.Message);

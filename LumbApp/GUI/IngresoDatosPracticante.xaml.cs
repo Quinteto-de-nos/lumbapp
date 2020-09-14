@@ -24,17 +24,20 @@ namespace LumbApp.GUI
         public string Text { get { return GetValue(TextProperty) as string; } set { SetValue(TextProperty, value); } }
         public string Description { get { return GetValue(DescriptionProperty) as string; } set { SetValue(DescriptionProperty, value); } }
         
-        private Regex regexApYN = new Regex("^[a-zA-Z ]*$");
+        private Regex regexApYN = new Regex("^[a-zA-ZñÑ ]*$");
+        private Regex regexMail = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
         private bool dniValido;
         private bool nombreValido;
         private bool apellidoValido;
         private bool mailValido;
 
-        public IngresoDatosPracticante(GUIController guiController)
+        public IngresoDatosPracticante(GUIController guiController,string savefolderPath)
         {
             InitializeComponent();
             _controller = guiController;
             IniciarSimulacion.IsEnabled = false;
+            mailValido = true;
+            FolderPath.Content = savefolderPath;
         }
 
         /// <summary>
@@ -146,13 +149,12 @@ namespace LumbApp.GUI
 
         private void ValidarMail(object sender, TextChangedEventArgs e)
         {
-            try
+            if(Mail.Text.Length == 0 || (Mail.Text.Length > 0 && regexMail.IsMatch(Mail.Text)))
             {
-                MailAddress m = new MailAddress(Mail.Text);
                 mailValido = true;
                 ErrorMail.Content = "";
             }
-            catch (FormatException)
+            else
             {
                 mailValido = false;
                 ErrorMail.Content = "Ingrese un mail válido";

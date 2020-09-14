@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Media;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -87,6 +88,10 @@ namespace LumbApp.GUI
             ManoDerLabel.Background = config.LabelColor;
             ManoDerLabel.Foreground = config.FontColor;
             ManoDerLabel.Content = config.Texto;
+
+            //Alerta sonido
+            if(e.ContaminadoAhora)
+                SystemSounds.Exclamation.Play();
         }            
 
         public ManosImageConfig GetNuevaConfiguracionImagen(Mano.Tracking track, Mano.Estados estado, int nroIngreso)

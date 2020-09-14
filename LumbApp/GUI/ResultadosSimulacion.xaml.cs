@@ -19,7 +19,7 @@ namespace LumbApp.GUI
 
         private void IniciarSimulacion_Click(object sender, RoutedEventArgs e)
         {
-            _controller.SolicitarDatosPracticante();
+            _controller.CheckearSensores();
         }
 
     }
