@@ -59,31 +59,96 @@
                 Grid.ColumnSpan="3"
                 Background="White" Opacity="0.5"
                 CornerRadius="40" 
-                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="13"
+               VerticalAlignment="Top" HorizontalAlignment="Center"
+               VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                   Margin="0,10,0,0"
+               FontSize="25" FontWeight="Regular" Foreground="#595959">1. Lavado de manos</Label>
+        </Border>
+        <Image Grid.Column="1" Grid.Row="1"
+                Grid.ColumnSpan="3"
+               Source="C:\Users\Lara\Downloads\handwashing.png"
+               Width="180" Height="180"  
+               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,30,0,0"/>
         <Border Grid.Column="5" Grid.Row="1"
                  Grid.ColumnSpan="3"
                 Background="White" Opacity="0.5"
                 CornerRadius="40" 
-                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="13"
+               VerticalAlignment="Top" HorizontalAlignment="Center"
+               VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                   Margin="0,10,0,0"
+               FontSize="25" FontWeight="Regular" Foreground="#595959">3. Colocación de barbijo</Label>
+        </Border>
+        <Image Grid.Column="5" Grid.Row="1"
+                Grid.ColumnSpan="3"
+               Source="C:\Users\Lara\Downloads\facemask.png"
+               Width="180" Height="180"  
+               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,30,0,0" RenderTransformOrigin="0.5,0.5">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="44.756"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
         <Border Grid.Column="9" Grid.Row="1"
                 Grid.ColumnSpan="3"
                 Background="White" Opacity="0.5"
                 CornerRadius="40" 
-                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="13"
+               VerticalAlignment="Top" HorizontalAlignment="Center"
+               VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                   Margin="0,10,0,0"
+               FontSize="25" FontWeight="Regular" Foreground="#595959" Content="5. Esterilización de la zona estéril">
+               </Label>
+        </Border>
+        <Image Grid.Column="9" Grid.Row="1"
+                Grid.ColumnSpan="3"
+               Source="C:\Users\Lara\Downloads\liquid-soap.png"
+               Width="150" Height="150"  
+               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,30,0,0"/>
         <Border Grid.Column="7" Grid.Row="3" Grid.ColumnSpan="3"
                 Background="White" Opacity="0.5"
                 CornerRadius="40" 
-                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="13"
+               VerticalAlignment="Top" HorizontalAlignment="Center"
+                   Margin="0,10,0,0"
+               VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+               FontSize="25" FontWeight="Regular" Foreground="#595959">4. Colocación de los guantes</Label>
+        </Border>
+        <Image Grid.Column="7" Grid.Row="3"
+                Grid.ColumnSpan="3"
+               Source="C:\Users\Lara\Downloads\rubber-gloves.png"
+               Width="160" Height="160"  
+               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,30,0,0"/>
         <Border Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="3"
                 Background="White" Opacity="0.5"
                 CornerRadius="40" 
-                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="13"
+               VerticalAlignment="Top" HorizontalAlignment="Center"
+                   Margin="0,10,0,0"
+               VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+               FontSize="25" FontWeight="Regular" Foreground="#595959">2. Colocación del camisolin</Label>
+        </Border>
+        <Image Grid.Column="3" Grid.Row="3"
+                Grid.ColumnSpan="3"
+               Source="C:\Users\Lara\Downloads\gown.png"
+               Width="180" Height="180"  
+               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,30,0,0"/>
         <!--Pasos-->
         <!--Timer-->
         <Border Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3" 
                  Width="250" VerticalAlignment="Stretch" Background="White" Opacity="0.5"
                 CornerRadius="40" >
-        <Label Name="LabelTimer"
+            <Label Name="LabelTimer"
                HorizontalAlignment="Center" VerticalAlignment="Stretch" 
                HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                Foreground="#00613d" FontWeight="Bold" FontSize="40" ></Label>
