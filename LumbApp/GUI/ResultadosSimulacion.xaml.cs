@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using LumbApp.Models;
+using System;
+using System.Windows;
 using System.Windows.Controls;
 
 
@@ -17,10 +19,14 @@ namespace LumbApp.GUI
             _controller = gui;
         }
 
-        private void IniciarSimulacion_Click(object sender, RoutedEventArgs e)
+        private void NuevaSimulacion_Click(object sender, RoutedEventArgs e)
         {
             _controller.CheckearSensores();
         }
 
+        public void MostrarResultados(Informe informe)
+        {
+            
+        }
     }
 }

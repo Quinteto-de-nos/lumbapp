@@ -12,25 +12,31 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition/>
-            <RowDefinition Height="50" />
-            <RowDefinition/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="80" />
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="90*"/>
+            <RowDefinition Height="250*"/>
+            <RowDefinition Height="50*" />
+            <RowDefinition Height="250*"/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="70*" />
+            <RowDefinition Height="50*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50"/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="50"/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="50"/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="15*"/>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="15*"/>
         </Grid.ColumnDefinitions>
         <Rectangle Width="1420" Height="800" 
-                   Grid.RowSpan="24" Grid.ColumnSpan="12">
+                   Grid.RowSpan="24" Grid.ColumnSpan="13">
 
             <Rectangle.Fill>
 
@@ -45,38 +51,45 @@
             </Rectangle.Fill>
 
         </Rectangle>
+        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="13"
+               VerticalAlignment="Center" HorizontalAlignment="Center"
+               VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+               FontSize="35" FontWeight="Regular" Foreground="#595959">Recuerde seguir los protocolos de Seguridad</Label>
         <Border Grid.Column="1" Grid.Row="1"
-                Background="White" Opacity="0.5"
-                CornerRadius="40" 
-                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-        <Border Grid.Column="3" Grid.Row="1"
+                Grid.ColumnSpan="3"
                 Background="White" Opacity="0.5"
                 CornerRadius="40" 
                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
         <Border Grid.Column="5" Grid.Row="1"
+                 Grid.ColumnSpan="3"
                 Background="White" Opacity="0.5"
                 CornerRadius="40" 
                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-        <Border Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3"
+        <Border Grid.Column="9" Grid.Row="1"
+                Grid.ColumnSpan="3"
                 Background="White" Opacity="0.5"
                 CornerRadius="40" 
-                Width="400"
+                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+        <Border Grid.Column="7" Grid.Row="3" Grid.ColumnSpan="3"
+                Background="White" Opacity="0.5"
+                CornerRadius="40" 
                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
         <Border Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="3"
                 Background="White" Opacity="0.5"
                 CornerRadius="40" 
-                Width="400"
                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
         <!--Pasos-->
         <!--Timer-->
+        <Border Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3" 
+                 Width="250" VerticalAlignment="Stretch" Background="White" Opacity="0.5"
+                CornerRadius="40" >
         <Label Name="LabelTimer"
-               Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" 
-               Width="300"
-               HorizontalAlignment="Center" VerticalAlignment="Center" 
-               HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"
-               Foreground="Black" FontWeight="Bold" FontSize="50" ></Label>
+               HorizontalAlignment="Center" VerticalAlignment="Stretch" 
+               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+               Foreground="#00613d" FontWeight="Bold" FontSize="40" ></Label>
+        </Border>
         <!--Saltear Preparacion Button -->
-        <Button Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3"
+        <Button Grid.Row="5" Grid.Column="7" Grid.ColumnSpan="3"
                  Width="300" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Stretch"
                HorizontalContentAlignment="Center" 
                 Background="#009960" Foreground="White"  BorderThickness="0"

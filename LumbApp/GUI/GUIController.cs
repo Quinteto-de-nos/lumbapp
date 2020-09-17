@@ -111,7 +111,7 @@ namespace LumbApp.GUI
 
         public void MostrarResultados( Informe informe )
         {
-
+            ResultadosSimulacionPage.MostrarResultados(informe);
         }
 
     }

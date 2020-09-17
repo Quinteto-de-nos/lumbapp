@@ -105,7 +105,7 @@ namespace LumbApp.Orquestador
 
 			InformeZE informeZE = expertoZE.TerminarSimulacion();
 			
-			//InformeSI informeSI = expertoSI.TerminarSimulacion();
+			InformeSI informeSI = expertoSI.TerminarSimulacion();
 			
 			//Guardar informe en archivo
 			//Informar a GUI con informe con un evento, que pase si el informe se genero bien, y si se guardó  bien (bool, bool) 
