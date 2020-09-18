@@ -228,6 +228,13 @@
     <Content Include="GUI\Imagenes\Manos\Traqueando\mano-dentro.png" />
     <Content Include="GUI\Imagenes\Manos\Traqueando\mano-fuera-inicial.png" />
     <Content Include="GUI\Imagenes\Manos\Traqueando\mano-fuera.png" />
+    <Content Include="GUI\Imagenes\Preparacion\alcohol-gel.png" />
+    <Content Include="GUI\Imagenes\Preparacion\cap.png" />
+    <Content Include="GUI\Imagenes\Preparacion\eye-protection.png" />
+    <Content Include="GUI\Imagenes\Preparacion\facemask.png" />
+    <Content Include="GUI\Imagenes\Preparacion\gown.png" />
+    <Content Include="GUI\Imagenes\Preparacion\handwashing.png" />
+    <Content Include="GUI\Imagenes\Preparacion\rubber-gloves.png" />
     <Content Include="License-LGPL.txt" />
   </ItemGroup>
   <ItemGroup>

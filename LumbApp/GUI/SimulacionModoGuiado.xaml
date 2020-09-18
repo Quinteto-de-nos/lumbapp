@@ -22,14 +22,35 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
+        <Rectangle Width="1420" Height="800" 
+                   Grid.RowSpan="24" Grid.ColumnSpan="4">
+
+            <Rectangle.Fill>
+
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1" >
+
+                    <GradientStop Color="#009960" Offset="0" />
+
+                    <GradientStop Color="#96f2d0" Offset="1.0" />
+
+                </LinearGradientBrush>
+
+            </Rectangle.Fill>
+
+        </Rectangle>
+        <Border Grid.Column="0" Grid.Row="0"   Grid.ColumnSpan="3"
+                Background="White" Opacity="0.5"
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.RowSpan="5"
+                CornerRadius="40" Margin="10,50,10,10"/>
+
         <!--Titulo-->
-        <Border Grid.Row="0"  Grid.Column="0" Height="35" Width="637" Padding="5" Background="#4E87D4" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,310.2,0" Grid.ColumnSpan="2">
+        <Border Grid.Row="0"  Grid.Column="0" Height="35" Width="473" Padding="5" Background="#009960" HorizontalAlignment="Center" VerticalAlignment="Top">
             <Label VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="White"></Label>
         </Border>
-        <Border Grid.Row="0" Grid.Column="1" Height="35" Width="800" Padding="5" Background="#4E87D4" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,0">
-            <Label VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="White" FontSize="16" Height="53" Margin="317.2,-4.8,319.2,-22.6">Simulación en Curso</Label>
+        <Border Grid.Row="0" Grid.Column="1" Height="35" Width="800" Padding="5" Background="#009960" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,0">
+            <Label VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" Margin="0,-5">SIMULACION EN CURSO</Label>
         </Border>
-        <Border Grid.Row="0" Grid.Column="1" Height="35" Width="636" Padding="5" Background="#4E87D4" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="310.4,0,0.8,0" Grid.ColumnSpan="2">
+        <Border Grid.Row="0" Grid.Column="2" Height="35" Width="472" Padding="5" Background="#009960" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,1,0">
             <Label VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="White"></Label>
         </Border>
 
@@ -41,7 +62,7 @@
                Height="50" Width="220" Padding="5" Margin="10,10,0,8"
                FontSize="25" FontWeight="DemiBold"
                HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
-        Izquierda
+            Izquierda
         </Label>
         <Label Grid.Row="1" Grid.Column="2" x:Name="ManoDerLabel"
                VerticalAlignment="Center" HorizontalAlignment="Right"
@@ -49,7 +70,7 @@
                Height="50" Width="220" Padding="5" Margin="0,10,10,8"
                FontSize="25" FontWeight="DemiBold"
                HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
-        Derecha
+            Derecha
         </Label>
         <!--Manos-->
         <Image Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" 
@@ -68,10 +89,15 @@
                 Height="66" Width="402" Padding="5" 
                 HorizontalAlignment="Left" VerticalAlignment="Top"
                 HorizontalContentAlignment="Center"
-                Background="#4E87D5" Foreground="White" 
-                FontSize="26" FontWeight="Bold"
+                Background="#009960" Foreground="White"  BorderThickness="0"
+                FontSize="26" FontWeight="Regular"
                 Click="FinalizarSimulacion_Click" Margin="35,65,0,0">
-            Finalizar Simulación
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="20"/>
+                </Style>
+            </Button.Resources>
+            FINALIZAR SIMULACION
         </Button>
     </Grid>
 </Page>

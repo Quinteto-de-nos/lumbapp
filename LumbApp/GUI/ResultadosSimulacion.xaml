@@ -50,7 +50,7 @@
         <Label  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
                 VerticalAlignment="Bottom" HorizontalAlignment="Center" 
                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                FontSize="25" FontWeight="Regular"  Foreground="Black"
+                FontSize="28" FontWeight="Regular"  Foreground="Black"
                 >RESULTADOS DE SIMULACION</Label>
         <!--RESULTADOS-->
         <Label  Grid.Row="3" Grid.Column="1"
@@ -107,49 +107,49 @@
                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                 Margin="0,0,40,0"
                 FontSize="25" FontWeight="Regular"  Foreground="Black"
-                >66</Label>
+                >2</Label>
         <Label  Grid.Row="4" Grid.Column="1"
                 VerticalAlignment="Center" HorizontalAlignment="Right"
                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                 Margin="0,0,40,0"
                 FontSize="25" FontWeight="Regular"  Foreground="Black"
-                >66</Label>
+                >2</Label>
         <Label  Grid.Row="5" Grid.Column="1"
                 VerticalAlignment="Center" HorizontalAlignment="Right"
                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                  Margin="0,0,40,0"
                 FontSize="25" FontWeight="Regular"  Foreground="Black"
-                >66</Label>
+                >1</Label>
         <Label  Grid.Row="6" Grid.Column="1"
                 VerticalAlignment="Center" HorizontalAlignment="Right"
                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                 Margin="0,0,40,0"
                 FontSize="25" FontWeight="Regular"  Foreground="Black"
-                >66</Label>
+                >0</Label>
         <Label  Grid.Row="7" Grid.Column="1"
                 VerticalAlignment="Center" HorizontalAlignment="Right"
                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                 Margin="0,0,40,0"
                 FontSize="25" FontWeight="Regular"  Foreground="Black"
-                >66</Label>
+                >1</Label>
         <Label  Grid.Row="8" Grid.Column="1"
                 VerticalAlignment="Center" HorizontalAlignment="Right"
                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                 Margin="0,0,40,0"
                 FontSize="25" FontWeight="Regular"  Foreground="Black"
-                >66</Label>
+                >2</Label>
         <Label  Grid.Row="9" Grid.Column="1"
                 VerticalAlignment="Center" HorizontalAlignment="Right"
                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                 Margin="0,0,40,0"
                 FontSize="25" FontWeight="Regular"  Foreground="Black"
-                >66</Label>
+                >0</Label>
         <Label  Grid.Row="10" Grid.Column="1"
                 VerticalAlignment="Center" HorizontalAlignment="Right"
                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                  Margin="0,0,40,0"
                 FontSize="25" FontWeight="Regular"  Foreground="Black"
-                >66</Label>
+                >00:10:25</Label>
         <!--BUTTON-->
         <Button Grid.Row="13" Grid.Column="1" Grid.ColumnSpan="2"
                  Width="320" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Stretch"
