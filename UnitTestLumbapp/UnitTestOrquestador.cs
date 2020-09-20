@@ -62,6 +62,80 @@ namespace UnitTestLumbapp {
         }
 
         [TestMethod]
+        public void TestIniciarSimulaciónModoEvaluacion()
+        {
+            Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
+            Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
+            Mock<IGUIController> gui = new Mock<IGUIController>();
+
+            expSI.Setup(x => x.Inicializar()).Returns(true);
+            expZE.Setup(x => x.Inicializar()).Returns(true);
+
+            Orquestador orq = new Orquestador(gui.Object, mockedConectorFS());
+            orq.SetExpertoSI(expSI.Object);
+            orq.SetExpertoZE(expZE.Object);
+
+            orq.Inicializar();
+            gui.Verify(x => x.SolicitarDatosPracticante(), Times.Once);
+            orq.SetDatosDeSimulacion(new Mock<LumbApp.Models.DatosPracticante>().Object, LumbApp.Enums.ModoSimulacion.ModoEvaluacion);
+            orq.IniciarSimulacion();
+            expSI.Verify(x => x.IniciarSimulacion(), Times.Once);
+            expZE.Verify(x => x.IniciarSimulacion(), Times.Once);
+            gui.Verify(x => x.IniciarSimulacionModoEvaluacion(), Times.Once);
+        }
+
+        [TestMethod]
+        public void TestIniciarSimulaciónModoGuiado()
+        {
+            Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
+            Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
+            Mock<IGUIController> gui = new Mock<IGUIController>();
+
+            expSI.Setup(x => x.Inicializar()).Returns(true);
+            expZE.Setup(x => x.Inicializar()).Returns(true);
+
+            Orquestador orq = new Orquestador(gui.Object, mockedConectorFS());
+            orq.SetExpertoSI(expSI.Object);
+            orq.SetExpertoZE(expZE.Object);
+
+            orq.Inicializar();
+            gui.Verify(x => x.SolicitarDatosPracticante(), Times.Once);
+            orq.SetDatosDeSimulacion(new Mock<LumbApp.Models.DatosPracticante>().Object, LumbApp.Enums.ModoSimulacion.ModoGuiado);
+            orq.IniciarSimulacion();
+            expSI.Verify(x => x.IniciarSimulacion(), Times.Once);
+            expZE.Verify(x => x.IniciarSimulacion(), Times.Once);
+            gui.Verify(x => x.IniciarSimulacionModoGuiado(), Times.Once);
+        }
+
+        [TestMethod]
+        public void TestTerminarSimulacion()
+        {
+            Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
+            Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
+            Mock<IGUIController> gui = new Mock<IGUIController>();
+
+            expSI.Setup(x => x.Inicializar()).Returns(true);
+            expZE.Setup(x => x.Inicializar()).Returns(true);
+
+            Orquestador orq = new Orquestador(gui.Object, mockedConectorFS());
+            orq.SetExpertoSI(expSI.Object);
+            orq.SetExpertoZE(expZE.Object);
+
+            orq.Inicializar();
+            gui.Verify(x => x.SolicitarDatosPracticante(), Times.Once);
+
+            orq.SetDatosDeSimulacion(new Mock<LumbApp.Models.DatosPracticante>().Object, LumbApp.Enums.ModoSimulacion.ModoEvaluacion);
+            orq.IniciarSimulacion();
+            expSI.Verify(x => x.IniciarSimulacion(), Times.Once);
+            expZE.Verify(x => x.IniciarSimulacion(), Times.Once);
+            gui.Verify(x => x.IniciarSimulacionModoEvaluacion(), Times.Once);
+
+            orq.TerminarSimulacion();
+            expSI.Verify(x => x.TerminarSimulacion(), Times.Once);
+            expZE.Verify(x => x.TerminarSimulacion(), Times.Once);
+        }
+
+        [TestMethod]
         public void TestInicializarSIErrAsyncInSI()
         {
             Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();

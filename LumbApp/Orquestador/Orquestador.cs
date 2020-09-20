@@ -23,6 +23,9 @@ namespace LumbApp.Orquestador
 		private IConectorKinect conectorKinect;
 		private IConectorSI conectorSI;
 
+		private DateTime tiempoInicialDeEjecucion;
+		private TimeSpan tiempoTotalDeEjecucion;
+
 		/// <summary>
 		/// Constructor del Orquestrador.
 		/// Se encarga de construir los expertos y la GUI manejando para manejar la comunicación entre ellos.
@@ -70,6 +73,9 @@ namespace LumbApp.Orquestador
 				IGUIController.IniciarSimulacionModoGuiado();
 			else
 				IGUIController.IniciarSimulacionModoEvaluacion();
+
+			tiempoInicialDeEjecucion = DateTime.UtcNow;
+			
 		}
 
 		/// <summary>
@@ -115,7 +121,9 @@ namespace LumbApp.Orquestador
 			InformeZE informeZE = expertoZE.TerminarSimulacion();
 			
 			InformeSI informeSI = expertoSI.TerminarSimulacion();
-			
+
+			tiempoTotalDeEjecucion = DateTime.UtcNow - tiempoInicialDeEjecucion;
+			Console.WriteLine("Tiempo total: "+tiempoTotalDeEjecucion);
 			//Guardar informe en archivo
 			//Informar a GUI con informe con un evento, que pase si el informe se genero bien, y si se guardó  bien (bool, bool) 
 		}
