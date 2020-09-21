@@ -1,10 +1,11 @@
 ﻿using LumbApp.Enums;
 using LumbApp.Models;
 using LumbApp.Expertos.ExpertoZE;
+using LumbApp.Conectores.ConectorFS;
 
 namespace LumbApp.GUI
 {
-    public class GUIController
+    public class GUIController : IGUIController
     {
         private Orquestador.Orquestador _orquestador { get; set; }
         private MainWindow MainWindow { get; set; }
@@ -26,7 +27,7 @@ namespace LumbApp.GUI
             SensorsCheckPage = new SensorsCheck(this);
             MainWindow.NavigationService.Navigate(SensorsCheckPage);
             SensorsCheckPage.MostrarCheckeandoSensores();
-            _orquestador = new Orquestador.Orquestador(this);
+            _orquestador = new Orquestador.Orquestador(this, new ConectorFS());
             _orquestador.Inicializar();
         }
 

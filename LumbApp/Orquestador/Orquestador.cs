@@ -1,16 +1,18 @@
-﻿using LumbApp.Conectores.ConectorKinect;
+﻿using LumbApp.Conectores.ConectorFS;
+using LumbApp.Conectores.ConectorKinect;
 using LumbApp.Conectores.ConectorSI;
 using LumbApp.Enums;
 using LumbApp.Expertos.ExpertoSI;
 using LumbApp.Expertos.ExpertoZE;
 using LumbApp.GUI;
 using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace LumbApp.Orquestador
 {
     public class Orquestador : IOrquestador {
-		public GUIController GUIController { get; set; }
+		public IGUIController IGUIController { get; set; }
 
 		private IExpertoZE expertoZE;
 		private IExpertoSI expertoSI;
@@ -21,18 +23,28 @@ namespace LumbApp.Orquestador
 		private IConectorKinect conectorKinect;
 		private IConectorSI conectorSI;
 
+		private DateTime tiempoInicialDeEjecucion;
+		private TimeSpan tiempoTotalDeEjecucion;
+
 		/// <summary>
 		/// Constructor del Orquestrador.
 		/// Se encarga de construir los expertos y la GUI manejando para manejar la comunicación entre ellos.
 		/// </summary>
-		public Orquestador (GUIController gui) {
+		public Orquestador (IGUIController gui, IConectorFS conectorFS) {
 			if (gui == null)
 				throw new Exception("Gui no puede ser null. Necesito un GUIController para crear un Orquestador.");
-			
-			GUIController = gui;
-
+			IGUIController = gui;
+			Calibracion calibracion;
+			try
+			{
+				calibracion = conectorFS.LevantarArchivoDeTextoComoObjeto<Calibracion>("./zonaEsteril.json");
+			}catch(Exception e){
+				Console.WriteLine(e);
+				//Acá debería haber un nuevo mensaje por pantalla que me permita quitar las app, esto es incluso antes de la inicialización, asíq ue no puedo reintentar.
+				throw new Exception("Error al tratar de cargar el archivo de calibracion.");
+			}
 			conectorKinect = new ConectorKinect();
-			expertoZE = new ExpertoZE(conectorKinect);
+			expertoZE = new ExpertoZE(conectorKinect, calibracion);
 
 			conectorSI = new ConectorSI();
 			expertoSI = new ExpertoSI(conectorSI);
@@ -54,13 +66,16 @@ namespace LumbApp.Orquestador
 
 			expertoZE.IniciarSimulacion();
 
-			//expertoSI.IniciarSimulacion();
+			expertoSI.IniciarSimulacion();
 
 
 			if(modoSeleccionado == ModoSimulacion.ModoGuiado)
-				GUIController.IniciarSimulacionModoGuiado();
+				IGUIController.IniciarSimulacionModoGuiado();
 			else
-				GUIController.IniciarSimulacionModoEvaluacion();
+				IGUIController.IniciarSimulacionModoEvaluacion();
+
+			tiempoInicialDeEjecucion = DateTime.UtcNow;
+			
 		}
 
 		/// <summary>
@@ -73,24 +88,24 @@ namespace LumbApp.Orquestador
 
 			try {
 				//INICIALIZAR EXPERTO ZE
-				//expertoZE.CambioZE += CambioZE; //suscripción al evento CambioZE
-				//if (!expertoZE.Inicializar()) {
-				//	expertoZE.CambioZE -= CambioZE; //Ver si hay que desuscribir en caso de error
-				//	throw new Exception("No se pudo detectar correctamente la kinect.");
-				//}
+				expertoZE.CambioZE += CambioZE; //suscripción al evento CambioZE
+				if (!expertoZE.Inicializar()) {
+					expertoZE.CambioZE -= CambioZE; //Ver si hay que desuscribir en caso de error
+					throw new Exception("No se pudo detectar correctamente la kinect.");
+				}
 
 				//INICIALIZAR EXPERTO SI
-				//expertoSI.CambioSI += CambioSI; //suscripción al evento CambioSI
-				//if (!expertoSI.Inicializar()) {
-				//	expertoSI.CambioSI -= CambioSI;
-				//	throw new Exception("No se pudo detectar correctamente los sensores internos.");
-				//}
+				expertoSI.CambioSI += CambioSI; //suscripción al evento CambioSI
+				if (!expertoSI.Inicializar()) {
+					expertoSI.CambioSI -= CambioSI;
+					throw new Exception("No se pudo detectar correctamente los sensores internos.");
+				}
 
 				//Mostrar pantalla de ingreso de datos, le mandamos el path por default donde se guarda la practica
 				GUIController.SolicitarDatosPracticante("C:\\Desktop");
 
 			} catch (Exception ex) {
-				GUIController.MostrarErrorDeConexion(ex.Message);
+				IGUIController.MostrarErrorDeConexion(ex.Message);
 			}
 			
 		}
@@ -111,7 +126,9 @@ namespace LumbApp.Orquestador
 			InformeZE informeZE = expertoZE.TerminarSimulacion();
 			
 			InformeSI informeSI = expertoSI.TerminarSimulacion();
-			
+
+			tiempoTotalDeEjecucion = DateTime.UtcNow - tiempoInicialDeEjecucion;
+			Console.WriteLine("Tiempo total: "+tiempoTotalDeEjecucion);
 			//Guardar informe en archivo
 			//Informar a GUI con informe con un evento, que pase si el informe se genero bien, y si se guardó  bien (bool, bool) 
 		}
@@ -131,15 +148,20 @@ namespace LumbApp.Orquestador
 		private void CambioZE(object sender, CambioZEEventArgs e) {
 			//comunicar los cambios a la GUI levantando un evento
 			//Decidir que comunicamos dependiendo del modo
-			GUIController.MostrarCambioZE(e);
+			IGUIController.MostrarCambioZE(e);
 		}
 
         public IExpertoSI GetExpertoSI () {
 			return expertoSI;
         }
-		public void SetExpertoSI (ExpertoSI exp) {
+		public void SetExpertoSI (IExpertoSI exp) {
 			this.expertoSI = exp;
         }
 
-    }
+		public void SetExpertoZE(IExpertoZE exp)
+		{
+			this.expertoZE = exp;
+		}
+
+	}
 }
