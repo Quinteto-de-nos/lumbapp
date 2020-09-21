@@ -294,5 +294,12 @@ namespace LumbApp.Expertos.ExpertoSI {
             return Cambio;
         }
 
+        /*Declaro los siguientes get para realizar los tests del expertoSI*/
+        public Capa GetTejidoAdiposo() { return TejidoAdiposo; }
+        public Vertebra GetL2 () { return L2; }
+        public VertebraL3 GetL3 () { return L3; }
+        public VertebraL4 GetL4 () { return L4; }
+        public Vertebra GetL5 () { return L5; }
+        public Capa GetDuramadre () { return Duramadre; }
     }
 }
