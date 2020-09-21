@@ -1,8 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.Media;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
 namespace LumbApp.GUI
@@ -13,6 +15,7 @@ namespace LumbApp.GUI
     public partial class PasosPreparacion : Page
     {
         public GUIController _controller { get; set; }
+        private static string _imagesFolderPath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\GUI\\Imagenes\\Preparacion\\";
         private DispatcherTimer timer;
         private int timeLeft { get; set; }
 
@@ -26,6 +29,14 @@ namespace LumbApp.GUI
             timer.Tick += timer_Tick;
             timer.Start();
 
+            //seteo imagenes
+            HandWashingImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "handwashing.png", UriKind.Absolute));
+            CapImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "cap.png", UriKind.Absolute));
+            FacemaskImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "facemask.png", UriKind.Absolute));
+            EyeProtectionImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "eye-protection.png", UriKind.Absolute));
+            AlcoholGelImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "alcohol-gel.png", UriKind.Absolute));
+            GownImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "gown.png", UriKind.Absolute));
+            RubberGlovesImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "rubber-gloves.png", UriKind.Absolute));
         }
 
         void timer_Tick(object sender, EventArgs e)
@@ -50,6 +61,7 @@ namespace LumbApp.GUI
 
         private void SaltearButton_Click(object sender, RoutedEventArgs e)
         {
+            timer.Stop();
             _controller.FinPreparacion();
         }
 

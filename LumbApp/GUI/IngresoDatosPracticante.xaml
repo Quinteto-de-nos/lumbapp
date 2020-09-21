@@ -7,6 +7,7 @@
       xmlns:local="clr-namespace:LumbApp.GUI" 
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="1420"
+     
       Title="LumbApp">
     <!--<Page.Resources>
         <local:DatosPracticante x:Key="Ods"/>
@@ -44,7 +45,7 @@
                                                     Background="#009960" BorderBrush="Transparent" BorderThickness="1" />
                                             <Border Grid.Column="0" CornerRadius="10,0,0,10"  Margin="1"
                                                     Background="White"  BorderBrush="Green" BorderThickness="0,0,0,0" />
-                                            <Path x:Name="Arrow" Grid.Column="1"  Fill="White" HorizontalAlignment="Center" VerticalAlignment="Center" Data="M 0 0 L 4 4 L 8 0 Z"/>
+                                            <Path x:Name="Arrow" Grid.Column="2"  Fill="White" HorizontalAlignment="Center" VerticalAlignment="Center" Data="M 0 0 L 4 4 L 8 0 Z"/>
                                         </Grid>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="ToggleButton.IsMouseOver" Value="true">
@@ -104,13 +105,15 @@
             <RowDefinition Height="50*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="460"/>
-            <ColumnDefinition Width="70*"/>
-            <ColumnDefinition Width="30*"/>
-            <ColumnDefinition Width="460"/>
+            <ColumnDefinition Width="300*"/>
+            <ColumnDefinition Width="40*"/>
+            <ColumnDefinition Width="200*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="40*"/>
+            <ColumnDefinition Width="300*"/>
         </Grid.ColumnDefinitions>
-        <Rectangle Width="1420" Height="800" 
-                   Grid.RowSpan="24" Grid.ColumnSpan="4">
+        <Rectangle Grid.Column="0" Grid.Row="0"
+                   Grid.RowSpan="24" Grid.ColumnSpan="6">
 
             <Rectangle.Fill>
 
@@ -125,20 +128,20 @@
             </Rectangle.Fill>
 
         </Rectangle>
-        <Border Grid.Column="0" Grid.Row="2"   Grid.ColumnSpan="4"
+        <Border Grid.Column="1" Grid.Row="2"   Grid.ColumnSpan="4"
                 Background="White" Opacity="0.5"
-                Width="600" Grid.RowSpan="19"
+                Grid.RowSpan="19"
                 CornerRadius="40"/>
 
         <!--Nombre-->
-        <Label Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
+        <Label Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                 HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
                FontSize="14" FontWeight="Thin" 
                Foreground="#595959">Nombre</Label>
 
         <TextBox Name="Nombre"  TextChanged="ValidarNombre"
-                Grid.Row="4"  Grid.Column="1" Grid.ColumnSpan="2" 
+                Grid.Row="4"  Grid.Column="2" Grid.ColumnSpan="2" 
                 FontSize="14" BorderThickness="0"
                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                 Padding="20,0,0,0" VerticalContentAlignment="Center">
@@ -148,19 +151,19 @@
                 </Style>
             </TextBox.Resources>
         </TextBox>
-        <Label Name="ErrorNombre" Grid.Row="5"  Grid.Column="1" Grid.ColumnSpan="2"
+        <Label Name="ErrorNombre" Grid.Row="5"  Grid.Column="2" Grid.ColumnSpan="2"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                VerticalContentAlignment="Top" HorizontalContentAlignment="Left"
                FontSize="12" Foreground="Red"></Label>
 
         <!--Apellido-->
-        <Label Grid.Row="6"  Grid.Column="1" Grid.ColumnSpan="2"
+        <Label Grid.Row="6"  Grid.Column="2" Grid.ColumnSpan="2"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
                FontSize="14" FontWeight="Thin" 
                Foreground="#595959">Apellido</Label>
         <TextBox Name="Apellido" TextChanged="ValidarApellido"
-                Grid.Row="7"  Grid.Column="1" Grid.ColumnSpan="2"
+                Grid.Row="7"  Grid.Column="2" Grid.ColumnSpan="2"
                 FontSize="14"  BorderThickness="0"
                  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                  Padding="20,0,0,0" VerticalContentAlignment="Center">
@@ -170,19 +173,19 @@
                 </Style>
             </TextBox.Resources>
         </TextBox>
-        <Label Name="ErrorApellido" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2"
+        <Label Name="ErrorApellido" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="2"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                HorizontalContentAlignment="Left" VerticalContentAlignment="Top" 
                FontSize="12" Foreground="Red"></Label>
 
         <!--Dni-->
-        <Label Grid.Row="9"  Grid.Column="1" Grid.ColumnSpan="2"
+        <Label Grid.Row="9"  Grid.Column="2" Grid.ColumnSpan="2"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
                FontSize="14" FontWeight="Thin" 
                Foreground="#595959">Dni</Label>
         <TextBox  Name="Dni"  TextChanged="ValidarDni"
-                 Grid.Row="10"  Grid.Column="1" Grid.ColumnSpan="2"
+                 Grid.Row="10"  Grid.Column="2" Grid.ColumnSpan="2"
                  FontSize="14"   BorderThickness="0"
                   VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                   Padding="20,0,0,0" 
@@ -194,19 +197,19 @@
             </TextBox.Resources>
         </TextBox>
 
-        <Label Name="ErrorDni" Grid.Row="11"  Grid.Column="1" Grid.ColumnSpan="2"
+        <Label Name="ErrorDni" Grid.Row="11"  Grid.Column="2" Grid.ColumnSpan="2"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                VerticalContentAlignment="Top" HorizontalContentAlignment="Left"
                FontSize="12" Foreground="Red"></Label>
 
         <!--Mail-->
-        <Label Grid.Row="12"  Grid.Column="1" Grid.ColumnSpan="2"
+        <Label Grid.Row="12"  Grid.Column="2" Grid.ColumnSpan="2"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
                FontSize="14" FontWeight="Thin" 
                Foreground="#595959">Mail</Label>
         <TextBox  Name="Mail"  TextChanged="ValidarMail"
-                 Grid.Row="13" Grid.Column="1" Grid.ColumnSpan="2"
+                 Grid.Row="13" Grid.Column="2" Grid.ColumnSpan="2"
                   FontSize="14" BorderThickness="0"
                   VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                   Padding="20,0,0,0" 
@@ -218,12 +221,12 @@
             </TextBox.Resources>
         </TextBox>
 
-        <Label Name="ErrorMail" Grid.Row="14"  Grid.Column="1" Grid.ColumnSpan="2"
+        <Label Name="ErrorMail" Grid.Row="14"  Grid.Column="2" Grid.ColumnSpan="2"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                VerticalContentAlignment="Top" HorizontalContentAlignment="Left"
                FontSize="12" Foreground="Red"></Label>
 
-        <ComboBox Name="ComboModo" Grid.Row="15" Grid.Column="1" Grid.ColumnSpan="2"
+        <ComboBox Name="ComboModo" Grid.Row="15" Grid.Column="2" Grid.ColumnSpan="2"
                   SelectedIndex="0" FontSize="14"
                   VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                   VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
@@ -243,13 +246,13 @@
             </ComboBoxItem>
         </ComboBox>
 
-        <Label Grid.Row="16"  Grid.Column="1" Grid.ColumnSpan="2"
+        <Label Grid.Row="16"  Grid.Column="2" Grid.ColumnSpan="2"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                VerticalContentAlignment="Bottom" HorizontalContentAlignment="Left"
                FontSize="12" Foreground="Black">
             Los resultados de la práctica se guardarán en...</Label>
 
-        <Button Grid.Row="17" Grid.Column="2"
+        <Button Grid.Row="17" Grid.Column="3" Grid.ColumnSpan="1"
                 DockPanel.Dock="Right" 
                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                 Click="BrowseFolder" 
@@ -263,7 +266,7 @@
             </Button.Resources>
             SELECCIONAR</Button>
 
-        <Border Grid.Row="17"  Grid.Column="1" Margin="0,0,10,0"
+        <Border Grid.Row="17"  Grid.Column="2" Grid.ColumnSpan="1" Margin="0,0,10,0"
                 Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
             <Label Name="FolderPath" 
                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
@@ -271,7 +274,7 @@
                    FontSize="14" Foreground="Black" FontWeight="DemiBold"
                    Margin="10,0">C:/</Label>
         </Border>
-        <Button Grid.Row="19" Grid.Column="1" Grid.ColumnSpan="2"
+        <Button Grid.Row="19" Grid.Column="2" Grid.ColumnSpan="2"
                  Width="320" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Stretch"
                HorizontalContentAlignment="Center" 
                 Background="#009960" Foreground="White"  BorderThickness="0"
@@ -284,7 +287,7 @@
             </Button.Resources>
                 INICIAR SIMULACION
         </Button>
-        <fa:ImageAwesome Grid.Column="1" Grid.ColumnSpan="2"
+        <fa:ImageAwesome Grid.Column="2" Grid.ColumnSpan="2"
                          Opacity="0.6"
                          Icon="UserCircle" Foreground="#009960" 
                          

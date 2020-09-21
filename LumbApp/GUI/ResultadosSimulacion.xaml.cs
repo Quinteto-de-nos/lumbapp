@@ -21,7 +21,7 @@ namespace LumbApp.GUI
 
         private void NuevaSimulacion_Click(object sender, RoutedEventArgs e)
         {
-            _controller.CheckearSensores();
+            _controller.NuevaSimulacion();
         }
 
         public void MostrarResultados(Informe informe)

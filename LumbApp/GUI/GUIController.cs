@@ -34,6 +34,11 @@ namespace LumbApp.GUI
         {
             _orquestador.Inicializar();  //si fallo la primera vez reintento
         }
+        
+        public void NuevaSimulacion()
+        {
+            _orquestador.NuevaSimulacion();  //si fallo la primera vez reintento
+        }
 
         /// <summary>
         /// Lo llama el orquestador  para mostrar por que fallo la inicializacion de los sensores

@@ -87,12 +87,17 @@ namespace LumbApp.Orquestador
 				//}
 
 				//Mostrar pantalla de ingreso de datos, le mandamos el path por default donde se guarda la practica
-				GUIController.SolicitarDatosPracticante("C:/Desktop");
+				GUIController.SolicitarDatosPracticante("C:\\Desktop");
 
 			} catch (Exception ex) {
 				GUIController.MostrarErrorDeConexion(ex.Message);
 			}
 			
+		}
+
+		public async Task NuevaSimulacion()
+		{ //Funcion llamada por la GUI, devuelve void, respuesta por evento
+			GUIController.SolicitarDatosPracticante(datosPracticante.FolderPath);
 		}
 
 		/// <summary>

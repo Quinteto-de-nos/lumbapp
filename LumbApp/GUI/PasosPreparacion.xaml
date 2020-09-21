@@ -35,7 +35,7 @@
             <ColumnDefinition Width="50*"/>
             <ColumnDefinition Width="15*"/>
         </Grid.ColumnDefinitions>
-        <Rectangle Width="1420" Height="800" 
+        <Rectangle Grid.Row="0" Grid.Column="0"
                    Grid.RowSpan="24" Grid.ColumnSpan="13">
 
             <Rectangle.Fill>
@@ -68,7 +68,7 @@
         </Border>
         <Image Grid.Column="1" Grid.Row="1"
                 Grid.ColumnSpan="3"
-               Source="C:\Users\Lara\Downloads\handwashing.png"
+               Name="HandWashingImage"
                Width="150" Height="150"  
                HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20"/>
         <Border Grid.Column="5" Grid.Row="1"
@@ -84,8 +84,8 @@
                    Content="2. Colocación de cofia,&#10;  barbijo y antiparras"></Label>
         </Border>
         <Image Grid.Column="5" Grid.Row="1"
-                Grid.ColumnSpan="3"
-               Source="C:\Users\Lara\Downloads\cap.png"
+               Grid.ColumnSpan="3"
+               Name="CapImage"
                Width="100" Height="100"  
                HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,40,0,0">
             <Image.RenderTransform>
@@ -94,13 +94,13 @@
         </Image>
         <Image Grid.Column="5" Grid.Row="1"
                 Grid.ColumnSpan="3"
-               Source="C:\Users\Lara\Downloads\eye-protection.png"
+               Name="EyeProtectionImage"
                Width="100" Height="100"  
                HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,40,40,0">
         </Image>
         <Image Grid.Column="5" Grid.Row="1"
-                Grid.ColumnSpan="3"
-               Source="C:\Users\Lara\Downloads\facemask.png"
+               Grid.ColumnSpan="3"
+               Name="FacemaskImage"
                Width="100" Height="100"  
                HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
@@ -126,7 +126,7 @@
         </Border>
         <Image Grid.Column="9" Grid.Row="1"
                 Grid.ColumnSpan="3"
-               Source="C:\Users\Lara\Downloads\alcohol-gel.png"
+               Name="AlcoholGelImage"
                Width="120" Height="120"  
                HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20"/>
         <Border Grid.Column="7" Grid.Row="3" Grid.ColumnSpan="3"
@@ -141,8 +141,8 @@
                    Content="5. Colocación de los&#10;  guantes estériles"></Label>
         </Border>
         <Image Grid.Column="7" Grid.Row="3"
-                Grid.ColumnSpan="3"
-               Source="C:\Users\Lara\Downloads\rubber-gloves.png"
+               Grid.ColumnSpan="3"
+               Name="RubberGlovesImage"
                Width="120" Height="120"  
                HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20"/>
         <Border Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="3"
@@ -156,8 +156,8 @@
                FontSize="25" FontWeight="Regular" Foreground="#595959">4. Colocación del camisolín</Label>
         </Border>
         <Image Grid.Column="3" Grid.Row="3"
-                Grid.ColumnSpan="3"
-               Source="C:\Users\Lara\Downloads\gown.png"
+               Grid.ColumnSpan="3"
+               Name="GownImage"
                Width="160" Height="160"  
                HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20"/>
         <!--Pasos-->
