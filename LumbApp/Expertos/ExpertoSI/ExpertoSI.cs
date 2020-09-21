@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 
 namespace LumbApp.Expertos.ExpertoSI {
-    public class ExpertoSI {
+    public class ExpertoSI:IExpertoSI {
         private IConectorSI sensoresInternos;
 
         public Capa TejidoAdiposo = new Capa();
