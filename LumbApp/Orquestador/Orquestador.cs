@@ -105,7 +105,7 @@ namespace LumbApp.Orquestador
 				if(ex.Message.Contains("sensores"))
 					expertoSI.CambioSI -= CambioSI;
 
-				GUIController.MostrarErrorDeConexion(ex.Message);
+				IGUIController.MostrarErrorDeConexion(ex.Message);
 			}
 			
 		}
