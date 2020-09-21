@@ -216,21 +216,21 @@ namespace LumbApp.Expertos.ExpertoSI {
                     AhoraL3 = true;
             }
 
-            //Camino INCORRECTO - L4 ARRIBA IZQUIERDA ---------------------------- NO SE SI ES INCORRECTO
+            //Camino INCORRECTO - L4 ARRIBA IZQUIERDA
             if (datosSensados[6] == '0') {
                 if (L4.RozarSector(VertebraL4.Sectores.ArribaIzquierda)) {
                     AhoraL4 = true;
-                    CaminoIncorrecto = true; ///NO SE SI CONSIDERARLO UN ERROR
+                    CaminoIncorrecto = true; 
                 }
             } else {
                 if (L4.AbandonarSector(VertebraL4.Sectores.ArribaIzquierda))
                     AhoraL4 = true;
             }
-            //Camino INCORRECTO - L4 ARRIBA DERECHA ---------------------------- NO SE SI ES INCORRECTO
+            //Camino INCORRECTO - L4 ARRIBA DERECHA 
             if (datosSensados[7] == '0') {
                 if (L4.RozarSector(VertebraL4.Sectores.ArribaDerecha)) {
                     AhoraL4 = true;
-                    CaminoIncorrecto = true; ///NO SE SI CONSIDERARLO UN ERROR
+                    CaminoIncorrecto = true;
                 }
             } else {
                 if (L4.AbandonarSector(VertebraL4.Sectores.ArribaDerecha))
