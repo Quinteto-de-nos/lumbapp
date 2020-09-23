@@ -89,22 +89,22 @@ namespace LumbApp.Orquestador
 			try {
 				//INICIALIZAR EXPERTO ZE
 				expertoZE.CambioZE += CambioZE; //suscripción al evento CambioZE
-				if (!expertoZE.Inicializar()) {
-					expertoZE.CambioZE -= CambioZE; //Ver si hay que desuscribir en caso de error
+				if (!expertoZE.Inicializar())
 					throw new Exception("No se pudo detectar correctamente la kinect.");
-				}
 
 				//INICIALIZAR EXPERTO SI
 				expertoSI.CambioSI += CambioSI; //suscripción al evento CambioSI
-				if (!expertoSI.Inicializar()) {
-					expertoSI.CambioSI -= CambioSI;
-					throw new Exception("No se pudo detectar correctamente los sensores internos.");
-				}
+				if (!expertoSI.Inicializar())
+					throw new Exception("No se pudieron detectar correctamente los sensores internos.");
 
 				//Mostrar pantalla de ingreso de datos
 				IGUIController.SolicitarDatosPracticante();
 
 			} catch (Exception ex) {
+				expertoZE.CambioZE -= CambioZE;
+				if(ex.Message.Contains("sensores"))
+					expertoSI.CambioSI -= CambioSI;
+
 				IGUIController.MostrarErrorDeConexion(ex.Message);
 			}
 			
