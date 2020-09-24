@@ -1,4 +1,5 @@
 ﻿using LumbApp.Expertos.ExpertoZE;
+using LumbApp.Models;
 
 namespace LumbApp.GUI
 {
@@ -11,5 +12,6 @@ namespace LumbApp.GUI
         void MostrarCambioZE(CambioZEEventArgs e);
         void IniciarSimulacionModoEvaluacion();
         void IniciarSimulacionModoGuiado();
+        void MostrarResultados(Informe informe);
     }
 }
