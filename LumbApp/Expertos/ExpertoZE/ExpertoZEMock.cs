@@ -14,8 +14,8 @@ namespace LumbApp.Expertos.ExpertoZE
         private bool shouldInit;
         private bool simulando;
         private ZonaEsteril zonaEsteril;
-        private Mano manoDerecha;
-        private Mano manoIzquierda;
+        private Mano manoDerecha = new Mano();
+        private Mano manoIzquierda = new Mano();
 
         public ExpertoZEMock(bool shouldInit)
         {

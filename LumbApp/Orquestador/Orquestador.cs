@@ -105,7 +105,7 @@ namespace LumbApp.Orquestador
 				if(ex.Message.Contains("sensores"))
 					expertoSI.CambioSI -= CambioSI;
 
-				GUIController.MostrarErrorDeConexion(ex.Message);
+				IGUIController.MostrarErrorDeConexion(ex.Message);
 			}
 			
 		}
@@ -134,16 +134,17 @@ namespace LumbApp.Orquestador
 		/// - En MODO EVALUACION, ... (creo que no hace nada, ya que el informe lo arman los expertos)
 		/// </summary>
 		/// <param name="sender"> Remitente del evento </param>
-		/// <param name="datosDelEvento"> Datos del cambio (capas, vertebras y correctitud del camino) </param>
-		private void CambioSI(object sender, CambioSIEventArgs datosDelEvento) {
+		/// <param name="e"> Datos del cambio (capas, vertebras y correctitud del camino) </param>
+		private void CambioSI(object sender, CambioSIEventArgs e) {
 			//comunicar los cambios a la GUI levantando un evento
-			//Decidir que comunicamos dependiendo del modo
+			if (modoSeleccionado == ModoSimulacion.ModoGuiado)
+				IGUIController.MostrarCambioSI(e);
 		}
 
 		private void CambioZE(object sender, CambioZEEventArgs e) {
 			//comunicar los cambios a la GUI levantando un evento
-			//Decidir que comunicamos dependiendo del modo
-			IGUIController.MostrarCambioZE(e);
+			if (modoSeleccionado == ModoSimulacion.ModoGuiado)
+				IGUIController.MostrarCambioZE(e);
 		}
 
         public IExpertoSI GetExpertoSI () {
