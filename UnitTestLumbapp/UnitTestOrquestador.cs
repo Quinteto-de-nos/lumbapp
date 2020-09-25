@@ -10,7 +10,6 @@ using LumbApp.Expertos.ExpertoSI;
 using LumbApp.Conectores.ConectorSI;
 using System.IO.Abstractions;
 using LumbApp.Conectores.ConectorFS;
-using System.Security.Cryptography.X509Certificates;
 
 namespace UnitTestLumbapp {
     [TestClass]
