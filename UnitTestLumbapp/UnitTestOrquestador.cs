@@ -142,6 +142,8 @@ namespace UnitTestLumbapp {
             Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
             Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
             Mock<IGUIController> gui = new Mock<IGUIController>();
+            Mock<InformeZE> infZE = new Mock<InformeZE>();
+            Mock<InformeSI> infSI = new Mock<InformeSI>();
 
             expSI.Setup(x => x.Inicializar()).Returns(true);
             expZE.Setup(x => x.Inicializar()).Returns(true);
@@ -151,17 +153,14 @@ namespace UnitTestLumbapp {
             orq.SetExpertoZE(expZE.Object);
 
             orq.Inicializar();
-            gui.Verify(x => x.SolicitarDatosPracticante(), Times.Once);
 
             orq.SetDatosDeSimulacion(new Mock<LumbApp.Models.DatosPracticante>().Object, LumbApp.Enums.ModoSimulacion.ModoEvaluacion);
             orq.IniciarSimulacion();
-            expSI.Verify(x => x.IniciarSimulacion(), Times.Once);
-            expZE.Verify(x => x.IniciarSimulacion(), Times.Once);
-            gui.Verify(x => x.IniciarSimulacionModoEvaluacion(), Times.Once);
+
+            expSI.Setup(x => x.TerminarSimulacion()).Returns(infSI.Object);
+            expZE.Setup(x => x.TerminarSimulacion()).Returns(infZE.Object);
 
             orq.TerminarSimulacion();
-            expSI.Verify(x => x.TerminarSimulacion(), Times.Once);
-            expZE.Verify(x => x.TerminarSimulacion(), Times.Once);
             gui.Verify(x => x.MostrarResultados(It.IsAny<Informe>()), Times.Once);
         }
 
@@ -171,6 +170,8 @@ namespace UnitTestLumbapp {
             Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
             Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
             Mock<IGUIController> gui = new Mock<IGUIController>();
+            Mock<InformeZE> infZE = new Mock<InformeZE>();
+            Mock<InformeSI> infSI = new Mock<InformeSI>();
 
             expSI.Setup(x => x.Inicializar()).Returns(true);
             expZE.Setup(x => x.Inicializar()).Returns(true);
@@ -180,20 +181,47 @@ namespace UnitTestLumbapp {
             orq.SetExpertoZE(expZE.Object);
 
             orq.Inicializar();
-            gui.Verify(x => x.SolicitarDatosPracticante(), Times.Once);
 
-            orq.SetDatosDeSimulacion(new Mock<LumbApp.Models.DatosPracticante>().Object, LumbApp.Enums.ModoSimulacion.ModoEvaluacion);
+            DatosPracticante dp = new DatosPracticante();
+            dp.Dni = 39879304;
+            dp.Nombre = "Alexis";
+            dp.Apellido = "Aranda";
+            dp.FolderPath = ".\\folder";
+
+            orq.SetDatosDeSimulacion(dp, LumbApp.Enums.ModoSimulacion.ModoEvaluacion);
             orq.IniciarSimulacion();
-            expSI.Verify(x => x.IniciarSimulacion(), Times.Once);
-            expZE.Verify(x => x.IniciarSimulacion(), Times.Once);
-            gui.Verify(x => x.IniciarSimulacionModoEvaluacion(), Times.Once);
+
+            InformeSI informeSI = new InformeSI(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
+            InformeZE informeZE = new InformeZE(1, 2, 3);
+            expSI.Setup(x => x.TerminarSimulacion()).Returns(informeSI);
+            expZE.Setup(x => x.TerminarSimulacion()).Returns(informeZE);
 
             orq.TerminarSimulacion();
-            expSI.Verify(x => x.TerminarSimulacion(), Times.Once);
-            expZE.Verify(x => x.TerminarSimulacion(), Times.Once);
             var arg = new ArgumentCaptor<Informe>();
             gui.Verify(x => x.MostrarResultados(arg.Capture()), Times.Once);
-            Assert.IsNotNull(arg.Value);
+            Informe informe = arg.Value;
+            Assert.IsNotNull(informe);
+            Assert.AreEqual(dp.Dni, informe.Dni);
+            Assert.AreEqual(dp.Nombre, informe.Nombre);
+            Assert.AreEqual(dp.Apellido, informe.Apellido);
+            Assert.AreEqual(dp.FolderPath, informe.FolderPath);
+            Assert.AreEqual(informeZE.ManoDerecha, informe.ManoDerecha);
+            Assert.AreEqual(informeZE.ManoIzquierda, informe.ManoIzquierda);
+            Assert.AreEqual(informeZE.Zona, informe.Zona);
+            Assert.AreEqual(informeSI.TejidoAdiposo, informe.TejidoAdiposo);
+            Assert.AreEqual(informeSI.L5, informe.L5);
+            Assert.AreEqual(informeSI.L4ArribaIzquierda, informe.L4ArribaIzquierda);
+            Assert.AreEqual(informeSI.L4ArribaDerecha, informe.L4ArribaDerecha);
+            Assert.AreEqual(informeSI.L4ArribaCentro, informe.L4ArribaCentro);
+            Assert.AreEqual(informeSI.L4Abajo, informe.L4Abajo);
+            Assert.AreEqual(informeSI.L3Arriba, informe.L3Arriba);
+            Assert.AreEqual(informeSI.L3Abajo, informe.L3Abajo);
+            Assert.AreEqual(informeSI.L2, informe.L2);
+            Assert.AreEqual(informeSI.Duramadre, informe.Duramadre);
+            Assert.AreEqual(informeSI.CaminoIncorrecto, informe.caminoIncorrecto);
+            Assert.AreEqual(informeSI.CaminoCorrecto, informe.caminoCorrecto);
+            Assert.AreNotEqual(TimeSpan.Zero, informe.TiempoTotalDeEjecucion);
+            Assert.IsTrue(informe.PdfGenerado);
         }
 
         [TestMethod]

@@ -126,8 +126,40 @@ namespace LumbApp.Orquestador
 			tiempoTotalDeEjecucion = DateTime.UtcNow - tiempoInicialDeEjecucion;
 			Console.WriteLine("Tiempo total: "+tiempoTotalDeEjecucion);
 			bool pdfGenerado = true; //Guardar informe en archivo
-			Informe informeFinal = CrearInformeFinal(informeZE, informeSI, pdfGenerado);
-            IGUIController.MostrarResultados(informeFinal);
+			Informe informeFinal = new Informe(
+				this.datosPracticante.Nombre,
+				this.datosPracticante.Apellido,
+				this.datosPracticante.Dni,
+				this.datosPracticante.FolderPath,
+				this.tiempoTotalDeEjecucion,
+				informeZE.Zona,
+				informeZE.ManoIzquierda,
+				informeZE.ManoDerecha,
+				informeSI.TejidoAdiposo,
+				informeSI.L2,
+				informeSI.L3Arriba,
+				informeSI.L3Abajo,
+				informeSI.L4ArribaIzquierda,
+				informeSI.L4ArribaDerecha,
+				informeSI.L4ArribaCentro,
+				informeSI.L4Abajo,
+				informeSI.L5,
+				informeSI.Duramadre,
+				informeSI.CaminoCorrecto,
+				informeSI.CaminoIncorrecto,
+				pdfGenerado
+				);
+			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
+			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
+			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
+			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
+			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
+			IGUIController.MostrarResultados(informeFinal);
+			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
+			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
+			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
+			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
+
 			//Informar a GUI con informe con un evento, que pase si el informe se genero bien, y si se guardó  bien (bool, bool)
 		}
 
