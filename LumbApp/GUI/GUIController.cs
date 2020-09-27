@@ -2,6 +2,7 @@
 using LumbApp.Models;
 using LumbApp.Expertos.ExpertoZE;
 using LumbApp.Conectores.ConectorFS;
+using LumbApp.Expertos.ExpertoSI;
 
 namespace LumbApp.GUI
 {
@@ -106,6 +107,11 @@ namespace LumbApp.GUI
         public void MostrarCambioZE(CambioZEEventArgs e)
         {
             SimulacionModoGuiadoPage.MostrarCambioZE(e);
+        }
+
+        //TO DO
+        public void MostrarCambioSI(CambioSIEventArgs e)
+        { //TO DO
         }
 
         public void FinalizarSimulacion()

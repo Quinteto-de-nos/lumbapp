@@ -57,7 +57,7 @@ namespace LumbApp.Expertos.ExpertoSI {
         }
 
         /// <summary>
-        /// 
+        /// Inicia el sensado interno.
         /// </summary>
         /// <returns></returns>
         public bool IniciarSimulacion () {
@@ -268,7 +268,7 @@ namespace LumbApp.Expertos.ExpertoSI {
                     AhoraL5 = true;
             }
 
-            //Camino CORRECTO - TEJIDO ADIPOSO
+            //Camino CORRECTO - DURAMADRE
             if (datosSensados[11] == '0') {
                 if (Duramadre.Atravesar()) {
                     AhoraDuramadre = true;
