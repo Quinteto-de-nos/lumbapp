@@ -19,6 +19,15 @@ namespace LumbApp.Expertos.ExpertoSI {
         public Vertebra L5 = new Vertebra();
         public Capa Duramadre = new Capa();
 
+        private bool AhoraTejidoAdiposo = false;
+        private bool AhoraL2 = false;
+        private bool AhoraL3 = false;
+        private bool AhoraL4 = false;
+        private bool AhoraL5 = false;
+        private bool AhoraDuramadre = false;
+
+        private bool CaminoIncorrecto = false;
+
         public int VecesCaminoCorrecto;
         public int VecesCaminoIncorrecto;
 
@@ -49,7 +58,10 @@ namespace LumbApp.Expertos.ExpertoSI {
         public void HayDatosNuevos (object sender, DatosSensadosEventArgs datosNuevos) {
             if (simulando) {
                 if (RealizarAcciones(datosNuevos.datosSensados)) {
-                    args = new CambioSIEventArgs(TejidoAdiposo, L2, L3, L4, L5, Duramadre);
+                    args = new CambioSIEventArgs(TejidoAdiposo, L2, L3, L4, L5, Duramadre,
+                        AhoraTejidoAdiposo, AhoraL2, AhoraL3, AhoraL4, AhoraL5, AhoraDuramadre, 
+                        CaminoIncorrecto);
+
                     HayCambioSI(args);
                 }
             }
@@ -78,7 +90,10 @@ namespace LumbApp.Expertos.ExpertoSI {
         public void Finalizar () { }
 
         private void sendEvent () {
-            var datosCambioSI = new CambioSIEventArgs(TejidoAdiposo, L2, L3, L4, L5, Duramadre);
+            var datosCambioSI = new CambioSIEventArgs(TejidoAdiposo, L2, L3, L4, L5, Duramadre, 
+                AhoraTejidoAdiposo, AhoraL2, AhoraL3, AhoraL4, AhoraL5, AhoraDuramadre,
+                CaminoIncorrecto);
+
             EventHandler<CambioSIEventArgs> handler = CambioSI;
             if (handler != null) {
                 handler(this, datosCambioSI);
