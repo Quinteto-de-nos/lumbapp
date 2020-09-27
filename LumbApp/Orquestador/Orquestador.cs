@@ -126,29 +126,7 @@ namespace LumbApp.Orquestador
 			tiempoTotalDeEjecucion = DateTime.UtcNow - tiempoInicialDeEjecucion;
 			Console.WriteLine("Tiempo total: "+tiempoTotalDeEjecucion);
 			bool pdfGenerado = true; //Guardar informe en archivo
-			Informe informeFinal = new Informe(
-				this.datosPracticante.Nombre,
-				this.datosPracticante.Apellido,
-				this.datosPracticante.Dni,
-				this.datosPracticante.FolderPath,
-				this.tiempoTotalDeEjecucion,
-				informeZE.Zona,
-				informeZE.ManoIzquierda,
-				informeZE.ManoDerecha,
-				informeSI.TejidoAdiposo,
-				informeSI.L2,
-				informeSI.L3Arriba,
-				informeSI.L3Abajo,
-				informeSI.L4ArribaIzquierda,
-				informeSI.L4ArribaDerecha,
-				informeSI.L4ArribaCentro,
-				informeSI.L4Abajo,
-				informeSI.L5,
-				informeSI.Duramadre,
-				informeSI.CaminoCorrecto,
-				informeSI.CaminoIncorrecto,
-				pdfGenerado
-				);
+			Informe informeFinal = CrearInformeFinal(informeZE, informeSI, pdfGenerado);
 			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
 			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
 			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
