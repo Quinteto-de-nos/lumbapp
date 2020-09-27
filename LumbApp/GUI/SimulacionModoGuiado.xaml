@@ -18,30 +18,82 @@
             <RowDefinition Height="35*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="33*"/>
+            <ColumnDefinition Width="33*"/>
+            <ColumnDefinition Width="16*"/>
+            <ColumnDefinition Width="16*"/>
         </Grid.ColumnDefinitions>
+        <Rectangle Grid.Column="0" Grid.Row="0"
+                   Grid.RowSpan="24" Grid.ColumnSpan="4">
+
+            <Rectangle.Fill>
+
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1" >
+
+                    <GradientStop Color="#009960" Offset="0" />
+
+                    <GradientStop Color="#96f2d0" Offset="1.0" />
+
+                </LinearGradientBrush>
+
+            </Rectangle.Fill>
+
+        </Rectangle>
+        <Border Grid.Column="0" Grid.Row="0"   Grid.ColumnSpan="4"
+                Background="White" Opacity="0.7"
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.RowSpan="5"
+                CornerRadius="40" Margin="10,50,10,10"/>
+
         <!--Titulo-->
-        <Border Grid.Row="0"  Grid.Column="0" Height="35" Width="637" Padding="5" Background="#4E87D4" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,310.2,0" Grid.ColumnSpan="2">
-            <Label VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="White"></Label>
+        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Height="35" Padding="5" Background="#009960" 
+                HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,0">
+            <Label VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" Margin="0,-5">SIMULACION EN CURSO</Label>
         </Border>
-        <Border Grid.Row="0" Grid.Column="1" Height="35" Width="800" Padding="5" Background="#4E87D4" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,0">
-            <Label VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="White" FontSize="16" Height="53" Margin="317.2,-4.8,319.2,-22.6">Simulación en Curso</Label>
-        </Border>
-        <Border Grid.Row="0" Grid.Column="1" Height="35" Width="636" Padding="5" Background="#4E87D4" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="310.4,0,0.8,0" Grid.ColumnSpan="2">
-            <Label VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="White"></Label>
-        </Border>
+
+        <!--Etiquetas Manos-->
+
+        <Label Grid.Row="1" Grid.Column="2" Name="ManoIzqLabel"
+               VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+               Foreground="#323232" Background="AliceBlue"
+               Padding="5" Margin="10,0,10,0"
+               FontSize="25" FontWeight="DemiBold"
+               HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+            Izquierda
+        </Label>
+        <Label Grid.Row="1" Grid.Column="3" x:Name="ManoDerLabel"
+               VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+               Foreground="#323232" Background="AliceBlue"
+               Padding="5" Margin="10,0,20,0"
+               FontSize="25" FontWeight="DemiBold"
+               HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+            Derecha
+        </Label>
         <!--Manos-->
-        <Image Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" Name="ManoIzquierda" Height="300" Width="230"  HorizontalAlignment="Right" Margin="0,5.4,6.4,0.2">
+        <Image Grid.Row="2" Grid.Column="3" Grid.RowSpan="2" 
+               Name="ManoIzquierda" VerticalAlignment="Stretch"
+               HorizontalAlignment="Stretch" Margin="10,0,10,0">
             <Image.RenderTransform>
                 <ScaleTransform ScaleX="-1"/>
             </Image.RenderTransform>
         </Image>
-        <Image Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" Name="ManoDerecha"  Height="300" Width="230"  HorizontalAlignment="Right"/>
-
+        <Image Grid.Row="2" Grid.Column="3" Grid.RowSpan="2" 
+               Name="ManoDerecha"  Height="300" VerticalAlignment="Stretch"
+               HorizontalAlignment="Stretch" Margin="10,0,20,0"/>
+        <!--Source="C:\Users\LaraJazminCavicchiol\Documents\Proyecto\estados-manos\traqueada\mano-fuera-inicial.png"-->
         <!-- View report button -->
-        <!--
-        <Button Name="RetryButton" Grid.Column="0" Grid.Row="2" Margin="0,363,342.6,32" Width="125" Height="35" HorizontalAlignment="Center" VerticalAlignment="Center" Click="RetryButton_Click">Reintentar</Button>-->
+        <Button Grid.Row="0" Grid.Column="0" Name="FinalizarSimulacion" 
+                Height="66" Width="402" Padding="5" 
+                HorizontalAlignment="Left" VerticalAlignment="Top"
+                HorizontalContentAlignment="Center"
+                Background="#009960" Foreground="White"  BorderThickness="0"
+                FontSize="26" FontWeight="Regular"
+                Click="FinalizarSimulacion_Click" Margin="35,65,0,0">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="20"/>
+                </Style>
+            </Button.Resources>
+            FINALIZAR SIMULACION
+        </Button>
     </Grid>
 </Page>

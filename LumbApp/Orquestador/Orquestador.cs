@@ -98,8 +98,8 @@ namespace LumbApp.Orquestador
 				if (!expertoSI.Inicializar())
 					throw new Exception("No se pudieron detectar correctamente los sensores internos.");
 
-				//Mostrar pantalla de ingreso de datos
-				IGUIController.SolicitarDatosPracticante();
+				//Mostrar pantalla de ingreso de datos, le mandamos el path por default donde se guarda la practica
+				IGUIController.SolicitarDatosPracticante("C:\\Desktop");
 
 			} catch (Exception ex) {
 				expertoZE.CambioZE -= CambioZE;
@@ -109,6 +109,11 @@ namespace LumbApp.Orquestador
 				IGUIController.MostrarErrorDeConexion(ex.Message);
 			}
 			
+		}
+
+		public async Task NuevaSimulacion()
+		{ //Funcion llamada por la GUI, devuelve void, respuesta por evento
+			IGUIController.SolicitarDatosPracticante(datosPracticante.FolderPath);
 		}
 
 		/// <summary>
