@@ -10,6 +10,7 @@ using System.Text;
 using System.Windows;
 using LumbApp.Expertos.ExpertoZE;
 using LumbApp.Conectores.ConectorFS;
+using LumbApp.Expertos.ExpertoSI;
 
 namespace LumbApp.GUI
 {
@@ -122,6 +123,11 @@ namespace LumbApp.GUI
                 ChequearSiSalio(_manoIzquierda.Estado, e.ManoIzquierda.Estado, true);
                 ChequearSiSalio(_manoIzquierda.Estado, e.ManoIzquierda.Estado, false);
             }
+        }
+
+        //TO DO
+        public void MostrarCambioSI (CambioSIEventArgs e) 
+        { //TO DO
         }
 
         private void CheckearCambioTracking(Mano.Tracking oldTrack, Mano.Tracking track, bool esIzquierda)

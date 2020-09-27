@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace LumbApp.Expertos.ExpertoSI {
-    public class ExpertoSIMock {
+    public class ExpertoSIMock : IExpertoSI{
         private IConectorSI sensoresInternos;
         private bool simulando = false;
         private bool shouldInit;
@@ -28,18 +28,16 @@ namespace LumbApp.Expertos.ExpertoSI {
 
         private bool CaminoIncorrecto = false;
 
-        public int VecesCaminoCorrecto;
-        public int VecesCaminoIncorrecto;
+        public int VecesCaminoCorrecto = 0;
+        public int VecesCaminoIncorrecto = 0;
 
         private CambioSIEventArgs args;
 
         public event EventHandler<CambioSIEventArgs> CambioSI;
 
-        public ExpertoSIMock (bool shouldInit, IConectorSI conector) {
+        public ExpertoSIMock (bool shouldInit) {
             this.shouldInit = shouldInit;
             sensoresInternos = new ConectorSIMock(shouldInit);
-            VecesCaminoCorrecto = 0;
-            VecesCaminoIncorrecto = 0;
         }
         public bool Inicializar () {
             sensoresInternos.HayDatos += HayDatosNuevos;
@@ -62,9 +60,20 @@ namespace LumbApp.Expertos.ExpertoSI {
                         AhoraTejidoAdiposo, AhoraL2, AhoraL3, AhoraL4, AhoraL5, AhoraDuramadre, 
                         CaminoIncorrecto);
 
+                    ResetearAhora();
+
                     HayCambioSI(args);
                 }
             }
+        }
+
+        public void ResetearAhora () {
+            AhoraTejidoAdiposo = false;
+            AhoraL2 = false;
+            AhoraL3 = false;
+            AhoraL4 = false;
+            AhoraL5 = false;
+            AhoraDuramadre = false;
         }
 
         public bool IniciarSimulacion () {
@@ -138,87 +147,133 @@ namespace LumbApp.Expertos.ExpertoSI {
             simulando = false;
         }
 
-        public bool RealizarAcciones (string datosSensados) {
+        /// <summary>
+        /// Acciona cada capa y vertebra de acuerdo a los datos sensados recibidos.
+        /// Cada capa o vertebra se encarga de actualizar su estado segun corresponda.
+        /// </summary>
+        /// <param name="datosSensados"> string que contiene los datos sensados. </param>
+        /// <returns> Retorna true si hubo un cambio de estado en al menos alguna vertebra o capa. </returns>
+        private bool RealizarAcciones (string datosSensados) {
             bool Cambio = false;
+            bool CaminoCorrecto = false;
+            CaminoIncorrecto = false;
 
+            //Camino CORRECTO - TEJIDO ADIPOSO
             if (datosSensados[2] == '0') {
-                if (TejidoAdiposo.Atravesar())
-                    Cambio = true;
+                if (TejidoAdiposo.Atravesar()) {
+                    AhoraTejidoAdiposo = true;
+                    CaminoCorrecto = true;
+                }
             } else {
                 if (TejidoAdiposo.Abandonar())
-                    Cambio = true;
+                    AhoraTejidoAdiposo = true;
             }
 
+            //Camino INCORRECTO - L2
             if (datosSensados[3] == '0') {
-                if (L2.Rozar())
-                    Cambio = true;
+                if (L2.Rozar()) {
+                    AhoraL2 = true;
+                    CaminoIncorrecto = true;
+                }
             } else {
                 if (L2.Abandonar())
-                    Cambio = true;
+                    AhoraL2 = true;
             }
 
+            //Camino INCORRECTO - L3 ARRIBA
             if (datosSensados[4] == '0') {
-                if (L3.RozarSector(VertebraL3.Sectores.Arriba))
-                    Cambio = true;
+                if (L3.RozarSector(VertebraL3.Sectores.Arriba)) {
+                    AhoraL3 = true;
+                    CaminoIncorrecto = true;
+                }
             } else {
                 if (L3.AbandonarSector(VertebraL3.Sectores.Arriba))
-                    Cambio = true;
+                    AhoraL3 = true;
             }
-
+            //Camino INCORRECTO - L3 ABAJO
             if (datosSensados[5] == '0') {
-                if (L3.RozarSector(VertebraL3.Sectores.Abajo))
-                    Cambio = true;
+                if (L3.RozarSector(VertebraL3.Sectores.Abajo)) {
+                    AhoraL3 = true;
+                    CaminoIncorrecto = true;
+                }
             } else {
                 if (L3.AbandonarSector(VertebraL3.Sectores.Abajo))
-                    Cambio = true;
+                    AhoraL3 = true;
             }
 
+            //Camino INCORRECTO - L4 ARRIBA IZQUIERDA
             if (datosSensados[6] == '0') {
-                if (L4.RozarSector(VertebraL4.Sectores.ArribaIzquierda))
-                    Cambio = true;
+                if (L4.RozarSector(VertebraL4.Sectores.ArribaIzquierda)) {
+                    AhoraL4 = true;
+                    CaminoIncorrecto = true;
+                }
             } else {
                 if (L4.AbandonarSector(VertebraL4.Sectores.ArribaIzquierda))
-                    Cambio = true;
+                    AhoraL4 = true;
             }
-
+            //Camino INCORRECTO - L4 ARRIBA DERECHA 
             if (datosSensados[7] == '0') {
-                if (L4.RozarSector(VertebraL4.Sectores.ArribaDerecha))
-                    Cambio = true;
+                if (L4.RozarSector(VertebraL4.Sectores.ArribaDerecha)) {
+                    AhoraL4 = true;
+                    CaminoIncorrecto = true;
+                }
             } else {
                 if (L4.AbandonarSector(VertebraL4.Sectores.ArribaDerecha))
-                    Cambio = true;
+                    AhoraL4 = true;
             }
-
+            //Camino CORRECTO - L4 ARRIBA CENTRO
             if (datosSensados[8] == '0') {
-                if (L4.RozarSector(VertebraL4.Sectores.ArribaCentro))
-                    Cambio = true;
+                if (L4.RozarSector(VertebraL4.Sectores.ArribaCentro)) {
+                    AhoraL4 = true;
+                    CaminoCorrecto = true;
+                }
             } else {
                 if (L4.AbandonarSector(VertebraL4.Sectores.ArribaCentro))
-                    Cambio = true;
+                    AhoraL4 = true;
             }
-
+            //Camino INCORRECTO - L4 ABAJO
             if (datosSensados[9] == '0') {
-                if (L4.RozarSector(VertebraL4.Sectores.Abajo))
-                    Cambio = true;
+                if (L4.RozarSector(VertebraL4.Sectores.Abajo)) {
+                    AhoraL4 = true;
+                    CaminoIncorrecto = true;
+                }
             } else {
                 if (L4.AbandonarSector(VertebraL4.Sectores.Abajo))
-                    Cambio = true;
+                    AhoraL4 = true;
             }
 
+            //Camino INCORRECTO - L5
             if (datosSensados[10] == '0') {
-                if (L5.Rozar())
-                    Cambio = true;
+                if (L5.Rozar()) {
+                    AhoraL5 = true;
+                    CaminoIncorrecto = true;
+                }
             } else {
                 if (L5.Abandonar())
-                    Cambio = true;
+                    AhoraL5 = true;
             }
 
+            //Camino CORRECTO - DURAMADRE
             if (datosSensados[11] == '0') {
-                if (Duramadre.Atravesar())
-                    Cambio = true;
+                if (Duramadre.Atravesar()) {
+                    AhoraDuramadre = true;
+                    CaminoCorrecto = true;
+                }
             } else {
                 if (Duramadre.Abandonar())
-                    Cambio = true;
+                    AhoraDuramadre = true;
+            }
+
+            if (AhoraTejidoAdiposo || AhoraL2 || AhoraL3 || AhoraL4 || AhoraL5 || AhoraDuramadre)
+                Cambio = true;
+
+            if (CaminoIncorrecto)
+                VecesCaminoIncorrecto++;
+            else if (CaminoCorrecto && (TejidoAdiposo.Estado == Capa.Estados.AtravesandoNuevamente ||
+                L4.Estado == VertebraL4.Estados.RozandoNuevamente ||
+                Duramadre.Estado == Capa.Estados.AtravesandoNuevamente || Duramadre.Estado == Capa.Estados.Atravesando)) {
+
+                VecesCaminoCorrecto++;
             }
 
             return Cambio;
