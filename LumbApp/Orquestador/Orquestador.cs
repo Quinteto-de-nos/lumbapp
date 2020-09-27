@@ -98,7 +98,7 @@ namespace LumbApp.Orquestador
 					throw new Exception("No se pudieron detectar correctamente los sensores internos.");
 
 				//Mostrar pantalla de ingreso de datos, le mandamos el path por default donde se guarda la practica
-				GUIController.SolicitarDatosPracticante("C:\\Desktop");
+				IGUIController.SolicitarDatosPracticante("C:\\Desktop");
 
 			} catch (Exception ex) {
 				expertoZE.CambioZE -= CambioZE;
@@ -112,7 +112,7 @@ namespace LumbApp.Orquestador
 
 		public async Task NuevaSimulacion()
 		{ //Funcion llamada por la GUI, devuelve void, respuesta por evento
-			GUIController.SolicitarDatosPracticante(datosPracticante.FolderPath);
+			IGUIController.SolicitarDatosPracticante(datosPracticante.FolderPath);
 		}
 
 		/// <summary>

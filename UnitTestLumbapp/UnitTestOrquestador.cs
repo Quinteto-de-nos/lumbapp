@@ -58,7 +58,7 @@ namespace UnitTestLumbapp {
             orq.SetExpertoZE(expZE.Object);
 
             orq.Inicializar();
-            gui.Verify(x => x.SolicitarDatosPracticante(), Times.Once);
+            gui.Verify(x => x.SolicitarDatosPracticante(It.IsAny<string>()), Times.Once) ;
         }
 
         [TestMethod]
@@ -76,7 +76,7 @@ namespace UnitTestLumbapp {
             orq.SetExpertoZE(expZE.Object);
 
             orq.Inicializar();
-            gui.Verify(x => x.SolicitarDatosPracticante(), Times.Once);
+            gui.Verify(x => x.SolicitarDatosPracticante(It.IsAny<string>()), Times.Once);
             orq.SetDatosDeSimulacion(new Mock<LumbApp.Models.DatosPracticante>().Object, LumbApp.Enums.ModoSimulacion.ModoEvaluacion);
             orq.IniciarSimulacion();
             expSI.Verify(x => x.IniciarSimulacion(), Times.Once);
@@ -99,7 +99,7 @@ namespace UnitTestLumbapp {
             orq.SetExpertoZE(expZE.Object);
 
             orq.Inicializar();
-            gui.Verify(x => x.SolicitarDatosPracticante(), Times.Once);
+            gui.Verify(x => x.SolicitarDatosPracticante(It.IsAny<string>()), Times.Once);
             orq.SetDatosDeSimulacion(new Mock<LumbApp.Models.DatosPracticante>().Object, LumbApp.Enums.ModoSimulacion.ModoGuiado);
             orq.IniciarSimulacion();
             expSI.Verify(x => x.IniciarSimulacion(), Times.Once);
@@ -122,7 +122,7 @@ namespace UnitTestLumbapp {
             orq.SetExpertoZE(expZE.Object);
 
             orq.Inicializar();
-            gui.Verify(x => x.SolicitarDatosPracticante(), Times.Once);
+            gui.Verify(x => x.SolicitarDatosPracticante(It.IsAny<string>()), Times.Once);
 
             orq.SetDatosDeSimulacion(new Mock<LumbApp.Models.DatosPracticante>().Object, LumbApp.Enums.ModoSimulacion.ModoEvaluacion);
             orq.IniciarSimulacion();
