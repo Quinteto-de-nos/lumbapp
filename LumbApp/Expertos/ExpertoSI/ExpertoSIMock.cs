@@ -67,7 +67,7 @@ namespace LumbApp.Expertos.ExpertoSI {
             }
         }
 
-        public void ResetearAhoras () {
+        public void ResetearAhora () {
             AhoraTejidoAdiposo = false;
             AhoraL2 = false;
             AhoraL3 = false;
