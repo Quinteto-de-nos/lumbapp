@@ -177,13 +177,14 @@ namespace LumbApp.Orquestador
         /// <param name="datosDelEvento"> Datos del cambio (capas, vertebras y correctitud del camino) </param>
         private void CambioSI(object sender, CambioSIEventArgs datosDelEvento) {
 			//comunicar los cambios a la GUI levantando un evento
-			//Decidir que comunicamos dependiendo del modo
+			if (modoSeleccionado == ModoSimulacion.ModoGuiado)
+				IGUIController.MostrarCambioSI(datosDelEvento);
 		}
 
 		private void CambioZE(object sender, CambioZEEventArgs e) {
 			//comunicar los cambios a la GUI levantando un evento
-			//Decidir que comunicamos dependiendo del modo
-			IGUIController.MostrarCambioZE(e);
+			if (modoSeleccionado == ModoSimulacion.ModoGuiado)
+				IGUIController.MostrarCambioZE(e);
 		}
 
         public IExpertoSI GetExpertoSI () {

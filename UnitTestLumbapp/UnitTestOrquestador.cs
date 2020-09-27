@@ -142,8 +142,6 @@ namespace UnitTestLumbapp {
             Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
             Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
             Mock<IGUIController> gui = new Mock<IGUIController>();
-            Mock<InformeZE> infZE = new Mock<InformeZE>();
-            Mock<InformeSI> infSI = new Mock<InformeSI>();
 
             expSI.Setup(x => x.Inicializar()).Returns(true);
             expZE.Setup(x => x.Inicializar()).Returns(true);
@@ -154,11 +152,19 @@ namespace UnitTestLumbapp {
 
             orq.Inicializar();
 
-            orq.SetDatosDeSimulacion(new Mock<LumbApp.Models.DatosPracticante>().Object, LumbApp.Enums.ModoSimulacion.ModoEvaluacion);
+            DatosPracticante dp = new DatosPracticante();
+            dp.Dni = 39879304;
+            dp.Nombre = "Alexis";
+            dp.Apellido = "Aranda";
+            dp.FolderPath = ".\\folder";
+
+            orq.SetDatosDeSimulacion(dp, LumbApp.Enums.ModoSimulacion.ModoEvaluacion);
             orq.IniciarSimulacion();
 
-            expSI.Setup(x => x.TerminarSimulacion()).Returns(infSI.Object);
-            expZE.Setup(x => x.TerminarSimulacion()).Returns(infZE.Object);
+            InformeSI informeSI = new InformeSI(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
+            InformeZE informeZE = new InformeZE(1, 2, 3);
+            expSI.Setup(x => x.TerminarSimulacion()).Returns(informeSI);
+            expZE.Setup(x => x.TerminarSimulacion()).Returns(informeZE);
 
             orq.TerminarSimulacion();
             gui.Verify(x => x.MostrarResultados(It.IsAny<Informe>()), Times.Once);
@@ -170,8 +176,6 @@ namespace UnitTestLumbapp {
             Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
             Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
             Mock<IGUIController> gui = new Mock<IGUIController>();
-            Mock<InformeZE> infZE = new Mock<InformeZE>();
-            Mock<InformeSI> infSI = new Mock<InformeSI>();
 
             expSI.Setup(x => x.Inicializar()).Returns(true);
             expZE.Setup(x => x.Inicializar()).Returns(true);
