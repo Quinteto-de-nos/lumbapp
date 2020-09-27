@@ -10,6 +10,7 @@ using LumbApp.Expertos.ExpertoSI;
 using LumbApp.Conectores.ConectorSI;
 using System.IO.Abstractions;
 using LumbApp.Conectores.ConectorFS;
+using LumbApp.Models;
 
 namespace UnitTestLumbapp {
     [TestClass]
@@ -136,6 +137,98 @@ namespace UnitTestLumbapp {
         }
 
         [TestMethod]
+        public void TestInformeGenerico()
+        {
+            Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
+            Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
+            Mock<IGUIController> gui = new Mock<IGUIController>();
+
+            expSI.Setup(x => x.Inicializar()).Returns(true);
+            expZE.Setup(x => x.Inicializar()).Returns(true);
+
+            Orquestador orq = new Orquestador(gui.Object, mockedConectorFS());
+            orq.SetExpertoSI(expSI.Object);
+            orq.SetExpertoZE(expZE.Object);
+
+            orq.Inicializar();
+
+            DatosPracticante dp = new DatosPracticante();
+            dp.Dni = 39879304;
+            dp.Nombre = "Alexis";
+            dp.Apellido = "Aranda";
+            dp.FolderPath = ".\\folder";
+
+            orq.SetDatosDeSimulacion(dp, LumbApp.Enums.ModoSimulacion.ModoEvaluacion);
+            orq.IniciarSimulacion();
+
+            InformeSI informeSI = new InformeSI(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
+            InformeZE informeZE = new InformeZE(1, 2, 3);
+            expSI.Setup(x => x.TerminarSimulacion()).Returns(informeSI);
+            expZE.Setup(x => x.TerminarSimulacion()).Returns(informeZE);
+
+            orq.TerminarSimulacion();
+            gui.Verify(x => x.MostrarResultados(It.IsAny<Informe>()), Times.Once);
+        }
+
+        [TestMethod]
+        public void TestInformeCorrecto()
+        {
+            Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
+            Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
+            Mock<IGUIController> gui = new Mock<IGUIController>();
+
+            expSI.Setup(x => x.Inicializar()).Returns(true);
+            expZE.Setup(x => x.Inicializar()).Returns(true);
+
+            Orquestador orq = new Orquestador(gui.Object, mockedConectorFS());
+            orq.SetExpertoSI(expSI.Object);
+            orq.SetExpertoZE(expZE.Object);
+
+            orq.Inicializar();
+
+            DatosPracticante dp = new DatosPracticante();
+            dp.Dni = 39879304;
+            dp.Nombre = "Alexis";
+            dp.Apellido = "Aranda";
+            dp.FolderPath = ".\\folder";
+
+            orq.SetDatosDeSimulacion(dp, LumbApp.Enums.ModoSimulacion.ModoEvaluacion);
+            orq.IniciarSimulacion();
+
+            InformeSI informeSI = new InformeSI(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
+            InformeZE informeZE = new InformeZE(1, 2, 3);
+            expSI.Setup(x => x.TerminarSimulacion()).Returns(informeSI);
+            expZE.Setup(x => x.TerminarSimulacion()).Returns(informeZE);
+
+            orq.TerminarSimulacion();
+            var arg = new ArgumentCaptor<Informe>();
+            gui.Verify(x => x.MostrarResultados(arg.Capture()), Times.Once);
+            Informe informe = arg.Value;
+            Assert.IsNotNull(informe);
+            Assert.AreEqual(dp.Dni, informe.Dni);
+            Assert.AreEqual(dp.Nombre, informe.Nombre);
+            Assert.AreEqual(dp.Apellido, informe.Apellido);
+            Assert.AreEqual(dp.FolderPath, informe.FolderPath);
+            Assert.AreEqual(informeZE.ManoDerecha, informe.ManoDerecha);
+            Assert.AreEqual(informeZE.ManoIzquierda, informe.ManoIzquierda);
+            Assert.AreEqual(informeZE.Zona, informe.Zona);
+            Assert.AreEqual(informeSI.TejidoAdiposo, informe.TejidoAdiposo);
+            Assert.AreEqual(informeSI.L5, informe.L5);
+            Assert.AreEqual(informeSI.L4ArribaIzquierda, informe.L4ArribaIzquierda);
+            Assert.AreEqual(informeSI.L4ArribaDerecha, informe.L4ArribaDerecha);
+            Assert.AreEqual(informeSI.L4ArribaCentro, informe.L4ArribaCentro);
+            Assert.AreEqual(informeSI.L4Abajo, informe.L4Abajo);
+            Assert.AreEqual(informeSI.L3Arriba, informe.L3Arriba);
+            Assert.AreEqual(informeSI.L3Abajo, informe.L3Abajo);
+            Assert.AreEqual(informeSI.L2, informe.L2);
+            Assert.AreEqual(informeSI.Duramadre, informe.Duramadre);
+            Assert.AreEqual(informeSI.CaminoIncorrecto, informe.caminoIncorrecto);
+            Assert.AreEqual(informeSI.CaminoCorrecto, informe.caminoCorrecto);
+            Assert.AreNotEqual(TimeSpan.Zero, informe.TiempoTotalDeEjecucion);
+            Assert.IsTrue(informe.PdfGenerado);
+        }
+
+        [TestMethod]
         public void TestInicializarSIErrAsyncInSI()
         {
             Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
@@ -178,5 +271,21 @@ namespace UnitTestLumbapp {
             filesystem.Setup(x => x.File.ReadAllText(It.IsAny<String>())).Returns(textToBeReturned);
             return new ConectorFS(filesystem.Object);
         }
+    }
+
+    public class ArgumentCaptor<T>
+    {
+        public T Capture()
+        {
+            return It.Is<T>(t => SaveValue(t));
+        }
+
+        private bool SaveValue(T t)
+        {
+            Value = t;
+            return true;
+        }
+
+        public T Value { get; private set; }
     }
 }
