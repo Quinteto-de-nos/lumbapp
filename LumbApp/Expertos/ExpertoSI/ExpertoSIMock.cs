@@ -60,7 +60,7 @@ namespace LumbApp.Expertos.ExpertoSI {
                         AhoraTejidoAdiposo, AhoraL2, AhoraL3, AhoraL4, AhoraL5, AhoraDuramadre, 
                         CaminoIncorrecto);
 
-                    ResetearAhoras();
+                    ResetearAhora();
 
                     HayCambioSI(args);
                 }
