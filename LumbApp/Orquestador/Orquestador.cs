@@ -143,6 +143,7 @@ namespace LumbApp.Orquestador
 		private void CambioSI(object sender, CambioSIEventArgs datosDelEvento) {
 			//comunicar los cambios a la GUI levantando un evento
 			//Decidir que comunicamos dependiendo del modo
+			IGUIController.MostrarCambioSI(datosDelEvento);
 		}
 
 		private void CambioZE(object sender, CambioZEEventArgs e) {

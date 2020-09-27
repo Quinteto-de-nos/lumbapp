@@ -11,17 +11,18 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="28*"/>
+            <RowDefinition Height="20*"/>
             <RowDefinition Height="10*"/>
             <RowDefinition Height="10*"/>
             <RowDefinition Height="35*"/>
-            <RowDefinition Height="35*"/>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="15*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="33*"/>
             <ColumnDefinition Width="33*"/>
-            <ColumnDefinition Width="16*"/>
-            <ColumnDefinition Width="16*"/>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="20*"/>
         </Grid.ColumnDefinitions>
         <Rectangle Grid.Column="0" Grid.Row="0"
                    Grid.RowSpan="24" Grid.ColumnSpan="4">
@@ -39,9 +40,10 @@
             </Rectangle.Fill>
 
         </Rectangle>
-        <Border Grid.Column="0" Grid.Row="0"   Grid.ColumnSpan="4"
+        <Border Grid.Column="0" Grid.Row="0" 
+                Grid.ColumnSpan="4"  Grid.RowSpan="6"
                 Background="White" Opacity="0.7"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.RowSpan="5"
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                 CornerRadius="40" Margin="10,50,10,10"/>
 
         <!--Titulo-->
@@ -49,13 +51,81 @@
                 HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,0">
             <Label VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" Margin="0,-5">SIMULACION EN CURSO</Label>
         </Border>
+        
+        <!--TituloCapaActual-->
+
+        <Border Grid.Column="0" Grid.Row="1"
+                Grid.RowSpan="2"
+                Background="White" Opacity="0.7"
+                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                Margin="30,10,10,10">
+            <Label VerticalAlignment="Top" HorizontalAlignment="Center"
+               VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+               Margin="0,10,0,0"
+               FontSize="25" FontWeight="Regular" Foreground="#595959">Capa Actual</Label>
+        </Border>
+        <Label Name="CapaActualLabel"
+            Grid.Column="0" Grid.Row="2"
+            VerticalAlignment="Top" HorizontalAlignment="Center"
+               VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+               Margin="0,0,0,10"
+               FontSize="30" FontWeight="DemiBold" Foreground="#595959"></Label>
+        <!--EtiquetasCapas-->
+
+        <Image Grid.Row="3" Grid.Column="0" 
+               Grid.RowSpan="3" 
+               VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+               Margin="20,10,10,20"
+               Source="C:\Users\LaraJazminCavicchiol\source\repos\lumbapp\LumbApp\GUI\Imagenes\Capas\capas.png"/>
+
+        <Image  Name="DuramadreImage"
+                Grid.Row="3" Grid.Column="0" 
+                Grid.RowSpan="4" 
+                VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                Margin="20,10,10,20"/>
+
+        <Image  Name="L2Image"
+                Grid.Row="3" Grid.Column="0" 
+                Grid.RowSpan="4" 
+                VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                Margin="20,10,10,20"/>
+
+        <Image  Name="L3Image"
+                Grid.Row="3" Grid.Column="0" 
+                Grid.RowSpan="4" 
+                VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                Margin="20,10,10,20"/>
+
+        <Image  Name="L4Image"
+                Grid.Row="3" Grid.Column="0" 
+                Grid.RowSpan="4" 
+                VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                Margin="20,10,10,20"/>
+
+        <Image  Name="L5Image"
+                Grid.Row="3" Grid.Column="0" 
+                Grid.RowSpan="4" 
+                VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                Margin="20,10,10,20"/>
+
+        <Image  Name="LigamentoInterespinosoImage"
+                Grid.Row="3" Grid.Column="0" 
+                Grid.RowSpan="4" 
+                VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                Margin="20,10,10,20"/>
+
+        <Image  Name="TejidoAdiposoImage"
+                Grid.Row="3" Grid.Column="0" 
+                Grid.RowSpan="4" 
+                VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                Margin="20,10,10,20"/>
 
         <!--Etiquetas Manos-->
 
         <Label Grid.Row="1" Grid.Column="2" Name="ManoIzqLabel"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                Foreground="#323232" Background="AliceBlue"
-               Padding="5" Margin="10,0,10,0"
+               Padding="5" Margin="20,10,10,10"
                FontSize="25" FontWeight="DemiBold"
                HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
             Izquierda
@@ -63,7 +133,7 @@
         <Label Grid.Row="1" Grid.Column="3" x:Name="ManoDerLabel"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                Foreground="#323232" Background="AliceBlue"
-               Padding="5" Margin="10,0,20,0"
+               Padding="5" Margin="10,10,30,10"
                FontSize="25" FontWeight="DemiBold"
                HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
             Derecha
@@ -71,23 +141,31 @@
         <!--Manos-->
         <Image Grid.Row="2" Grid.Column="3" Grid.RowSpan="2" 
                Name="ManoIzquierda" VerticalAlignment="Stretch"
-               HorizontalAlignment="Stretch" Margin="10,0,10,0">
+               HorizontalAlignment="Stretch" Margin="10,10,30,10">
             <Image.RenderTransform>
                 <ScaleTransform ScaleX="-1"/>
             </Image.RenderTransform>
         </Image>
         <Image Grid.Row="2" Grid.Column="3" Grid.RowSpan="2" 
-               Name="ManoDerecha"  Height="300" VerticalAlignment="Stretch"
-               HorizontalAlignment="Stretch" Margin="10,0,20,0"/>
-        <!--Source="C:\Users\LaraJazminCavicchiol\Documents\Proyecto\estados-manos\traqueada\mano-fuera-inicial.png"-->
+               Name="ManoDerecha" VerticalAlignment="Stretch"
+               HorizontalAlignment="Stretch" Margin="10,10,30,10"/>
+        <!--Salidas.de.ZE-->
+        <Label Name="SalidasZELabel"
+            Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2"
+               VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+               Foreground="#323232" Background="AliceBlue"
+               Padding="5" Margin="10,10,30,10"
+               FontSize="25" FontWeight="DemiBold"
+               HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+        </Label> 
         <!-- View report button -->
         <Button Grid.Row="0" Grid.Column="0" Name="FinalizarSimulacion" 
-                Height="66" Width="402" Padding="5" 
-                HorizontalAlignment="Left" VerticalAlignment="Top"
-                HorizontalContentAlignment="Center"
+                Height="66" Padding="5" 
+                HorizontalAlignment="Stretch" VerticalAlignment="Bottom"
+                HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                 Background="#009960" Foreground="White"  BorderThickness="0"
                 FontSize="26" FontWeight="Regular"
-                Click="FinalizarSimulacion_Click" Margin="35,65,0,0">
+                Click="FinalizarSimulacion_Click" Margin="30,0,10,20">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="20"/>

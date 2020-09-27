@@ -209,6 +209,7 @@
   <ItemGroup>
     <Content Include="Conectores\ConectorSI\conector.exe" />
     <Content Include="FinalFeedbacker\init.txt" />
+    <Content Include="GUI\Imagenes\Capas\capas.png" />
     <Content Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada1.png" />
     <Content Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada2.png" />
     <Content Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada3.png" />
@@ -277,6 +278,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GUI\Imagenes\Vertebras\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>

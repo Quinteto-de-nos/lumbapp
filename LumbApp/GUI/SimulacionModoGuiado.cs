@@ -1,4 +1,6 @@
-﻿using LumbApp.Expertos.ExpertoZE;
+﻿using LumbApp.Expertos.ExpertoSI;
+using LumbApp.Expertos.ExpertoSI.Utils;
+using LumbApp.Expertos.ExpertoZE;
 using System;
 using System.IO;
 using System.Linq;
@@ -17,13 +19,28 @@ namespace LumbApp.GUI
     public partial class SimulacionModoGuiado : Page
     {
         public GUIController _controller { get; set; }
+
+        //Path General de Carpeta de Imagenes
         private static string _imagesFolderPath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\GUI\\Imagenes\\";
+
+        //Paths de manos
         private static string _manoPerdidaSubPath = "Manos\\NoTraqueando\\";
         private static string _manoTrackeadaSubPath = "Manos\\Traqueando\\";
         private static string _manoFueraInicialPath = "mano-fuera-inicial.png";
         private static string _manoFueraPath = "mano-fuera.png";
         private static string _manoDentroPath = "mano-dentro.png";
         private static string _manoContaminadaPath = "mano-contaminadaX.png";
+
+        //Paths de capas
+        private static string _pielImagePath = _imagesFolderPath + "Capas\\piel.png";
+        private static string _ligamentoInterespinalImagePath = _imagesFolderPath + "Capas\\ligamento-interespinoso.png";
+        private static string _duramadreImagePath = _imagesFolderPath + "Capas\\duramadre.png";
+        private static string _l3ArribaImagePath = _imagesFolderPath + "Capas\\l3-arriba.png";
+        private static string _l3AbajoImagePath = _imagesFolderPath + "Capas\\l3-abajo.png";
+        private static string _l4ArribaImagePath = _imagesFolderPath + "Capas\\l4-arriba.png";
+        private static string _l4AbajoImagePath = _imagesFolderPath + "Capas\\l4-abajo.png";
+
+        //Colores
         private static Brush[] coloresContaminando { get; set; }
         private BrushConverter brushConverter { get; set; }
         private Brush white { get; set; }
@@ -61,8 +78,7 @@ namespace LumbApp.GUI
             ManoIzqLabel.Content = "Inicial";
             ManoDerLabel.Background = colorLabel;
             ManoDerLabel.Content = "Inicial";
-            //cargar primeras imagenes de capas y vertebra
-            //..............
+
             _controller = gui;
         }
 
@@ -70,7 +86,7 @@ namespace LumbApp.GUI
         public void MostrarCambioZE(CambioZEEventArgs e)
         {
             //ManoIzquierda
-            ManosImageConfig config = GetNuevaConfiguracionImagen(e.ManoIzquierda.Track, e.ManoIzquierda.Estado, e.ManoIzquierda.VecesContamino);
+            ManosImageConfig config = GetNuevaConfiguracionImagenMano(e.ManoIzquierda.Track, e.ManoIzquierda.Estado, e.ManoIzquierda.VecesContamino);
 
             ImageSource nuevaImagen = new BitmapImage(
                new Uri(_imagesFolderPath +config.TrackingPath +config.EstadoPath, UriKind.Absolute));
@@ -80,7 +96,7 @@ namespace LumbApp.GUI
             ManoIzqLabel.Content = config.Texto;
 
             //ManoDerecha
-            config = GetNuevaConfiguracionImagen(e.ManoDerecha.Track, e.ManoDerecha.Estado, e.ManoDerecha.VecesContamino);
+            config = GetNuevaConfiguracionImagenMano(e.ManoDerecha.Track, e.ManoDerecha.Estado, e.ManoDerecha.VecesContamino);
 
             nuevaImagen = new BitmapImage(
                new Uri(_imagesFolderPath + config.TrackingPath + config.EstadoPath, UriKind.Absolute));
@@ -92,9 +108,16 @@ namespace LumbApp.GUI
             //Alerta sonido
             if(e.ContaminadoAhora)
                 SystemSounds.Exclamation.Play();
-        }            
 
-        public ManosImageConfig GetNuevaConfiguracionImagen(Mano.Tracking track, Mano.Estados estado, int nroIngreso)
+            SalidasZELabel.Content = String.Format("Se contamino la Zona Estéril {0} Veces", e.VecesContaminado);
+        }
+
+        internal void MostrarCambioSI(CambioSIEventArgs datosDelEvento)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ManosImageConfig GetNuevaConfiguracionImagenMano(Mano.Tracking track, Mano.Estados estado, int nroIngreso)
         {
             ManosImageConfig config = new ManosImageConfig();
 
@@ -135,6 +158,110 @@ namespace LumbApp.GUI
 
             return config;
         }
+
+        #endregion
+
+        #region Cambio en Vertebras
+
+        public void MostrarCambioVertebras(CambioSIEventArgs e)
+        {
+            UpdateCapaActualLabel(e);
+        }
+
+        private void UpdateCapaActualLabel(CambioSIEventArgs e)
+        {
+            //ATRAVIESA LA PIEL
+            if (e.TejidoAdiposo.Estado == Capa.Estados.Atravesando || e.TejidoAdiposo.Estado == Capa.Estados.AtravesandoNuevamente)
+            {
+                TejidoAdiposoImage.Source = new BitmapImage(new Uri(_pielImagePath, UriKind.Absolute));
+                CapaActualLabel.Content = "TEJIDO ADIPOSO";
+            }
+            else
+            {
+                TejidoAdiposoImage.Source = null;
+                CapaActualLabel.Content = "NINGUNA";
+            }
+
+            //ROZA UNA VERTEBRA
+            if(e.RozandoAhora)
+                CapaActualLabel.Content = "LIGAMENTO INTERESPINOSO";
+
+            if (e.L3.Estado == Vertebra.Estados.Rozando || e.L3.Estado == Vertebra.Estados.RozandoNuevamente)
+            {
+                if((e.L3.Sector == VertebraL3.Sectores.Abajo))
+                {
+                    L3Image.Source = new BitmapImage(new Uri(_l3AbajoImagePath, UriKind.Absolute));
+                    //vista front l3
+                }
+                else
+                {
+                    L3Image.Source = new BitmapImage(new Uri(_l3ArribaImagePath, UriKind.Absolute));
+                    //vista front l3
+                }
+            }
+            else {
+                L3Image.Source = null;
+                //vista front l3
+            }
+
+
+            if (e.L4.Estado == Vertebra.Estados.Rozando || e.L4.Estado == Vertebra.Estados.RozandoNuevamente)
+            {
+                switch (e.L4.Sector)
+                {
+                    case VertebraL4.Sectores.Abajo:
+                        L4Image.Source = new BitmapImage(new Uri(_l4AbajoImagePath, UriKind.Absolute));
+                        //vista front l4
+                        break;
+                    case VertebraL4.Sectores.ArribaIzquierda:
+                        L4Image.Source = new BitmapImage(new Uri(_l4ArribaImagePath, UriKind.Absolute));
+                        //vista front l4
+                        break;
+                    case VertebraL4.Sectores.ArribaCentro:
+                        L4Image.Source = new BitmapImage(new Uri(_l4ArribaImagePath, UriKind.Absolute));
+                        //vista front l4
+                        break;
+                    case VertebraL4.Sectores.ArribaDerecha:
+                        L4Image.Source = new BitmapImage(new Uri(_l4ArribaImagePath, UriKind.Absolute));
+                        //vista front l4
+                        break;
+                }
+            }
+            else
+            {
+                L4Image.Source = null;
+                //vista front l4
+            }
+
+            //ATRAVIESA LA DURAMADRE
+            if (e.Duramadre.Estado == Capa.Estados.Atravesando || e.Duramadre.Estado == Capa.Estados.AtravesandoNuevamente)
+            {
+                CapaActualLabel.Content = "DURAMADRE";
+                DuramadreImage.Source = new BitmapImage(new Uri(_duramadreImagePath, UriKind.Absolute));
+            }
+            else
+                DuramadreImage.Source = null;
+
+
+        }
+        //private void UpdateImagenCapas(CambioSIEventArgs e)
+        //{
+        //    TejidoAdiposoImage.Source = (e.TejidoAdiposo.Estado == Capa.Estados.Atravesando || e.TejidoAdiposo.Estado == Capa.Estados.AtravesandoNuevamente) ? 
+        //        new BitmapImage(new Uri(_pielImagePath, UriKind.Absolute)) : null;
+
+        //    LigamentoInterespinosoImage.Source = (e.RozandoAhora) ?
+        //        new BitmapImage(new Uri(_ligamentoInterespinalImagePath, UriKind.Absolute)) : null;
+
+        //    L3Image.Source = (e.L3.Estado == Vertebra.Estados.Rozando || e.L3.Estado == Vertebra.Estados.RozandoNuevamente)?
+        //        new BitmapImage(new Uri((e.L3.Sector == VertebraL3.Sectores.Abajo)? _l3AbajoImagePath : _l3ArribaImagePath, UriKind.Absolute)) : null;
+
+        //    L4Image.Source = (e.L4.Estado == Vertebra.Estados.Rozando || e.L4.Estado == Vertebra.Estados.RozandoNuevamente) ?
+        //        new BitmapImage(new Uri((e.L4.Sector == VertebraL4.Sectores.Abajo) ? _l4AbajoImagePath : _l4ArribaImagePath, UriKind.Absolute)) : null;
+
+        //    DuramadreImage.Source = (e.Duramadre.Estado == Capa.Estados.Atravesando || e.Duramadre.Estado == Capa.Estados.AtravesandoNuevamente)? 
+        //        new BitmapImage(new Uri(_duramadreImagePath, UriKind.Absolute)) : null;
+
+        //}
 
         #endregion
 
