@@ -47,7 +47,8 @@ namespace LumbApp.Orquestador
 			conectorKinect = new ConectorKinect();
 			expertoZE = new ExpertoZE(conectorKinect, calibracion);
 
-			conectorSI = new ConectorSI();
+			//conectorSI = new ConectorSI();
+			conectorSI = new ConectorSIMock(true);
 			expertoSI = new ExpertoSI(conectorSI);
 
 		}
