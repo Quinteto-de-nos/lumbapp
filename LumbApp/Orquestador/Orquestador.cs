@@ -14,8 +14,10 @@ namespace LumbApp.Orquestador
     public class Orquestador : IOrquestador {
 		public IGUIController IGUIController { get; set; }
 
-		private IExpertoZE expertoZE;
-		private IExpertoSI expertoSI;
+		//private IExpertoZE expertoZE;
+		private ExpertoZEMock expertoZE;
+		//private IExpertoSI expertoSI;
+		private ExpertoSIMock expertoSI;
 
 		private Models.DatosPracticante datosPracticante;
 		private ModoSimulacion modoSeleccionado;
@@ -44,10 +46,12 @@ namespace LumbApp.Orquestador
 				throw new Exception("Error al tratar de cargar el archivo de calibracion.");
 			}
 			conectorKinect = new ConectorKinect();
-			expertoZE = new ExpertoZE(conectorKinect, calibracion);
+			//expertoZE = new ExpertoZE(conectorKinect, calibracion);
+			expertoZE = new ExpertoZEMock(true);
 
 			conectorSI = new ConectorSI();
-			expertoSI = new ExpertoSI(conectorSI);
+			//expertoSI = new ExpertoSI(conectorSI);
+			expertoSI = new ExpertoSIMock(true,conectorSI);
 
 		}
 
@@ -98,7 +102,7 @@ namespace LumbApp.Orquestador
 					throw new Exception("No se pudieron detectar correctamente los sensores internos.");
 
 				//Mostrar pantalla de ingreso de datos, le mandamos el path por default donde se guarda la practica
-				GUIController.SolicitarDatosPracticante("C:\\Desktop");
+				IGUIController.SolicitarDatosPracticante("C:\\Desktop");
 
 			} catch (Exception ex) {
 				expertoZE.CambioZE -= CambioZE;
@@ -112,7 +116,7 @@ namespace LumbApp.Orquestador
 
 		public async Task NuevaSimulacion()
 		{ //Funcion llamada por la GUI, devuelve void, respuesta por evento
-			GUIController.SolicitarDatosPracticante(datosPracticante.FolderPath);
+			IGUIController.SolicitarDatosPracticante(datosPracticante.FolderPath);
 		}
 
 		/// <summary>
@@ -152,14 +156,17 @@ namespace LumbApp.Orquestador
 			IGUIController.MostrarCambioZE(e);
 		}
 
-        public IExpertoSI GetExpertoSI () {
+		//public IExpertoSI GetExpertoSI () {
+		public ExpertoSIMock GetExpertoSI(){
 			return expertoSI;
         }
-		public void SetExpertoSI (IExpertoSI exp) {
+		//public void SetExpertoSI(IExpertoSI exp) {
+		public void SetExpertoSI(ExpertoSIMock exp){
 			this.expertoSI = exp;
-        }
+		}
 
-		public void SetExpertoZE(IExpertoZE exp)
+		//public void SetExpertoZE(IExpertoZE exp)
+		public void SetExpertoZE(ExpertoZEMock exp)
 		{
 			this.expertoZE = exp;
 		}

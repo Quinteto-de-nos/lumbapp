@@ -158,10 +158,10 @@ namespace LumbApp.GUI
 
         #region Cambio en Vertebras
 
-        private void MostrarCambioSI(CambioSIEventArgs e)
+        public void MostrarCambioSI(CambioSIEventArgs e)
         {
 
-            EntradasCapasLabel.Content = String.Format("{0} Tejido Adiposo&#10;{1} Duramadre", e.TejidoAdiposo.VecesAtravesada, e.Duramadre.VecesAtravesada);
+            EntradasCapasLabel.Content = String.Format("{0} Tejido Adiposo" + Environment.NewLine + "{1} Duramadre", e.TejidoAdiposo.VecesAtravesada, e.Duramadre.VecesAtravesada);
 
             //ATRAVIESA LA PIEL
             if (e.TejidoAdiposo.Estado == Capa.Estados.Atravesando || e.TejidoAdiposo.Estado == Capa.Estados.AtravesandoNuevamente)

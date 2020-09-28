@@ -68,88 +68,99 @@
             Grid.Column="0" Grid.Row="2"
             VerticalAlignment="Top" HorizontalAlignment="Center"
                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-               Margin="0,0,0,10"
-               FontSize="30" FontWeight="DemiBold" Foreground="#595959"></Label>
+               Margin="20,0,0,0"
+               FontSize="26" FontWeight="DemiBold" Foreground="#595959"></Label>
         
         <!--Imagenes Capas Side-->
         
         <Image  Name="PielSideImage"
                 Grid.Row="3" Grid.Column="0" 
-                Grid.RowSpan="4" 
-                VerticalAlignment="Center" HorizontalAlignment="Stretch" 
-                
+                Grid.RowSpan="4"  Stretch="UniformToFill"
+                VerticalAlignment="Stretch" HorizontalAlignment="Center" 
                 Margin="20,10,10,20"/>
 
         <Image Grid.Row="3" Grid.Column="0" 
                Grid.RowSpan="3" Name="SideBaseImage"
-               VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+               Stretch="UniformToFill"
+               VerticalAlignment="Stretch" HorizontalAlignment="Center" 
                Margin="20,10,10,20" />
 
         <Image  Name="DuramadreSideImage"
                 Grid.Row="3" Grid.Column="0" 
                 Grid.RowSpan="4" 
-                VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                Stretch="UniformToFill"
+               VerticalAlignment="Stretch" HorizontalAlignment="Center" 
                 Margin="20,10,10,20"/>
 
         <Image  Name="L2SideImage"
                 Grid.Row="3" Grid.Column="0" 
                 Grid.RowSpan="4" 
-                VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                 Stretch="UniformToFill"
+               VerticalAlignment="Stretch" HorizontalAlignment="Center" 
                 Margin="20,10,10,20"/>
 
         <Image  Name="L3SideImage"
                 Grid.Row="3" Grid.Column="0" 
                 Grid.RowSpan="4" 
-                VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                 Stretch="UniformToFill"
+               VerticalAlignment="Stretch" HorizontalAlignment="Center" 
                 Margin="20,10,10,20"/>
 
         <Image  Name="L4SideImage"
                 Grid.Row="3" Grid.Column="0" 
                 Grid.RowSpan="4" 
-                VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                 Stretch="UniformToFill"
+               VerticalAlignment="Stretch" HorizontalAlignment="Center" 
                 Margin="20,10,10,20"/>
 
         <Image  Name="L5SideImage"
                 Grid.Row="3" Grid.Column="0" 
                 Grid.RowSpan="4" 
-                VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                Stretch="UniformToFill"
+               VerticalAlignment="Stretch" HorizontalAlignment="Center" 
                 Margin="20,10,10,20"/>
 
         <!--Imagenes Front Capas-->
 
         <Image Grid.Row="3" Grid.Column="1" 
                Grid.RowSpan="3" Name="FrontBaseImage"
-               VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                Stretch="UniformToFill"
+               VerticalAlignment="Stretch" HorizontalAlignment="Center" 
                Margin="20,10,10,20" />
 
         <Image  Name="DuramadreFrontImage"
                 Grid.Row="3" Grid.Column="1" 
                 Grid.RowSpan="4" 
-                VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                 Stretch="UniformToFill"
+               VerticalAlignment="Stretch" HorizontalAlignment="Center" 
                 Margin="20,10,10,20"/>
 
         <Image  Name="L2SFrontImage"
                 Grid.Row="3" Grid.Column="1" 
                 Grid.RowSpan="4" 
-                VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                 Stretch="UniformToFill"
+               VerticalAlignment="Stretch" HorizontalAlignment="Center" 
                 Margin="20,10,10,20"/>
 
         <Image  Name="L3FrontImage"
                 Grid.Row="3" Grid.Column="1" 
                 Grid.RowSpan="4" 
-                VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                 Stretch="UniformToFill"
+               VerticalAlignment="Stretch" HorizontalAlignment="Center" 
                 Margin="20,10,10,20"/>
 
         <Image  Name="L4FrontImage"
                 Grid.Row="3" Grid.Column="1" 
                 Grid.RowSpan="4" 
-                VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                 Stretch="UniformToFill"
+               VerticalAlignment="Stretch" HorizontalAlignment="Center" 
                 Margin="20,10,10,20"/>
 
         <Image  Name="L5FrontImage"
                 Grid.Row="3" Grid.Column="1" 
                 Grid.RowSpan="4" 
-                VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                 Stretch="UniformToFill"
+               VerticalAlignment="Stretch" HorizontalAlignment="Center" 
                 Margin="20,10,10,20"/>
         
         <!--Etiquetas Manos-->
@@ -194,8 +205,7 @@
             Grid.Column="1" Grid.Row="2"
             VerticalAlignment="Top" HorizontalAlignment="Center"
                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-               Margin="0,0,0,0"
-               FontSize="30" FontWeight="DemiBold" Foreground="#595959"></Label>
+               FontSize="26" FontWeight="DemiBold" Foreground="#595959"></Label>
         
         <!--Label de Salidas de ZE-->
         <Border Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"

@@ -109,7 +109,7 @@ namespace LumbApp.GUI
             SimulacionModoGuiadoPage.MostrarCambioZE(e);
         }
 
-        void MostrarCambioSI(CambioSIEventArgs datosDelEvento)
+        public void MostrarCambioSI(CambioSIEventArgs datosDelEvento)
         {
             SimulacionModoGuiadoPage.MostrarCambioSI(datosDelEvento);
         }

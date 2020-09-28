@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LumbApp.Expertos.ExpertoZE
 {
-    class ExpertoZEMock : IExpertoZE
+    public class ExpertoZEMock : IExpertoZE
     {
         public event EventHandler<CambioZEEventArgs> CambioZE;
 
