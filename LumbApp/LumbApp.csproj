@@ -217,6 +217,7 @@
     <Compile Include="Expertos\ExpertoZE\ZonaEsteril.cs" />
     <Compile Include="GUI\IGUIController.cs" />
     <Compile Include="GUI\MainWindow.xaml.cs" />
+    <Compile Include="GUI\ResultadosSimulacion.xaml.cs" />
     <Compile Include="GUI\PasosPreparacion.xaml.cs" />
     <Compile Include="GUI\SimulacionModoGuiado.cs" />
     <Compile Include="GUI\SensorsCheck.xaml.cs" />
@@ -250,7 +251,13 @@
     <Content Include="GUI\Imagenes\Manos\Traqueando\mano-dentro.png" />
     <Content Include="GUI\Imagenes\Manos\Traqueando\mano-fuera-inicial.png" />
     <Content Include="GUI\Imagenes\Manos\Traqueando\mano-fuera.png" />
-    <Content Include="GUI\init.txt" />
+    <Content Include="GUI\Imagenes\Preparacion\alcohol-gel.png" />
+    <Content Include="GUI\Imagenes\Preparacion\cap.png" />
+    <Content Include="GUI\Imagenes\Preparacion\eye-protection.png" />
+    <Content Include="GUI\Imagenes\Preparacion\facemask.png" />
+    <Content Include="GUI\Imagenes\Preparacion\gown.png" />
+    <Content Include="GUI\Imagenes\Preparacion\handwashing.png" />
+    <Content Include="GUI\Imagenes\Preparacion\rubber-gloves.png" />
     <Content Include="License-LGPL.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -266,6 +273,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GUI\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\ResultadosSimulacion.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

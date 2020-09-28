@@ -69,26 +69,58 @@ namespace LumbApp.Expertos.ExpertoZE
 
             //************ A partir de aca escribir toda la simulacion ****************
 
+            //Ej: mano izquierda se trackea a los 2 segundos
+            await Task.Delay(2000);
+            manoIzquierda.ActualizarTrack(true);
+            sendEvent();
+
             //Ej: mano derecha se trackea a los 5 segundos
-            await Task.Delay(5000);
+            await Task.Delay(2000);
             manoDerecha.ActualizarTrack(true);
             sendEvent();
 
-            //Ej: entra a los 10 segundos
-            await Task.Delay(5000);
+            //Ej: entra a los 7 segundos
+            await Task.Delay(2000);
+            manoIzquierda.Entrar();
+            sendEvent();
+
+            await Task.Delay(2000);
+            manoIzquierda.ActualizarTrack(false);
+            sendEvent();
+
+            await Task.Delay(2000);
+            manoIzquierda.ActualizarTrack(true);
+            sendEvent();
+
+            //Ej: der entra a los 10 segundos
+            await Task.Delay(2000);
             manoDerecha.Entrar();
             sendEvent();
 
-            //Ej: sale a los 20 segundos
-            await Task.Delay(10000);
+            //Ej: izq sale a los 15 segundos
+            await Task.Delay(2000);
+            manoIzquierda.Salir();
+            sendEvent();
+
+            //Ej: der sale a los 20 segundos
+            await Task.Delay(2000);
             manoDerecha.Salir();
             sendEvent();
 
-            //Ej: entra y contamina a los 30 segundos (sendEvent no marca el contaminando ahora)
-            await Task.Delay(10000);
-            manoDerecha.Entrar();
+            //Ej: izq entra y contamina a los 35 segundos (sendEvent no marca el contaminando ahora)
+            await Task.Delay(2000);
+            manoIzquierda.Entrar();
             zonaEsteril.Contaminar();
             var args = new CambioZEEventArgs(manoDerecha, manoIzquierda);
+            args.VecesContaminado = zonaEsteril.Contaminacion;
+            args.ContaminadoAhora = true;
+            CambioZE.Invoke(this, args);
+
+            //Ej: der entra y contamina a los 30 segundos (sendEvent no marca el contaminando ahora)
+            await Task.Delay(2000);
+            manoDerecha.Entrar();
+            zonaEsteril.Contaminar();
+            args = new CambioZEEventArgs(manoDerecha, manoIzquierda);
             args.VecesContaminado = zonaEsteril.Contaminacion;
             args.ContaminadoAhora = true;
             CambioZE.Invoke(this, args);
@@ -96,7 +128,7 @@ namespace LumbApp.Expertos.ExpertoZE
             // ************** Fin seccion simulacion *************
 
             //Termina simulacion
-            await Task.Delay(10000);
+            await Task.Delay(5000);
             Console.WriteLine("Finished mocked simulation");
             simulando = false;
         }

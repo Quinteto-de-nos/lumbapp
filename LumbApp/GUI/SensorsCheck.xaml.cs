@@ -1,22 +1,5 @@
-﻿using LumbApp;
-using LumbApp.Conectores.ConectorKinect;
-using LumbApp.Expertos.ExpertoZE;
-using LumbApp.Orquestador;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
 
 namespace LumbApp.GUI
 {
@@ -49,7 +32,6 @@ namespace LumbApp.GUI
             RetryButton.Visibility = Visibility.Hidden;
             ErrorIcon.Visibility = Visibility.Hidden;
             Mensaje.Content = MensajeCheckeandoSensores;
-            //Mensaje.Visibility = Visibility.Visible;
         }
 
         public void MostrarErrorDeConexion(string mensaje)
@@ -59,6 +41,5 @@ namespace LumbApp.GUI
             SpinerIcon.Visibility = Visibility.Hidden;
             Mensaje.Content = mensaje;
         }
-
     }
 }
