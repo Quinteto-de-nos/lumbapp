@@ -5,6 +5,7 @@ using LumbApp.Enums;
 using LumbApp.Expertos.ExpertoSI;
 using LumbApp.Expertos.ExpertoZE;
 using LumbApp.GUI;
+using LumbApp.Models;
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -133,27 +134,66 @@ namespace LumbApp.Orquestador
 
 			tiempoTotalDeEjecucion = DateTime.UtcNow - tiempoInicialDeEjecucion;
 			Console.WriteLine("Tiempo total: "+tiempoTotalDeEjecucion);
-			//Guardar informe en archivo
-			//Informar a GUI con informe con un evento, que pase si el informe se genero bien, y si se guardó  bien (bool, bool) 
+			bool pdfGenerado = true; //Guardar informe en archivo
+			Informe informeFinal = CrearInformeFinal(informeZE, informeSI, pdfGenerado);
+			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
+			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
+			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
+			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
+			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
+			IGUIController.MostrarResultados(informeFinal);
+			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
+			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
+			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
+			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
+
+			//Informar a GUI con informe con un evento, que pase si el informe se genero bien, y si se guardó  bien (bool, bool)
 		}
 
-		/// <summary>
-		/// CambioSI: atrapa los eventos que indican un cambio en el sensado interno
-		/// - En MODO GUIADO, informa los cambios a la GUI para que esta pueda mostrarlos
-		/// - En MODO EVALUACION, ... (creo que no hace nada, ya que el informe lo arman los expertos)
-		/// </summary>
-		/// <param name="sender"> Remitente del evento </param>
-		/// <param name="datosDelEvento"> Datos del cambio (capas, vertebras y correctitud del camino) </param>
-		private void CambioSI(object sender, CambioSIEventArgs datosDelEvento) {
+        private Informe CrearInformeFinal(InformeZE informeZE, InformeSI informeSI, bool pdfGenerado)
+        {
+			return new Informe(
+				this.datosPracticante.Nombre,
+				this.datosPracticante.Apellido,
+				this.datosPracticante.Dni,
+				this.datosPracticante.FolderPath,
+				this.tiempoTotalDeEjecucion,
+				informeZE.Zona,
+				informeZE.ManoIzquierda,
+				informeZE.ManoDerecha,
+				informeSI.TejidoAdiposo,
+				informeSI.L2,
+				informeSI.L3Arriba,
+				informeSI.L3Abajo,
+				informeSI.L4ArribaIzquierda,
+				informeSI.L4ArribaDerecha,
+				informeSI.L4ArribaCentro,
+				informeSI.L4Abajo,
+				informeSI.L5,
+				informeSI.Duramadre,
+				informeSI.CaminoCorrecto,
+				informeSI.CaminoIncorrecto,
+				pdfGenerado
+				);
+        }
+
+        /// <summary>
+        /// CambioSI: atrapa los eventos que indican un cambio en el sensado interno
+        /// - En MODO GUIADO, informa los cambios a la GUI para que esta pueda mostrarlos
+        /// - En MODO EVALUACION, ... (creo que no hace nada, ya que el informe lo arman los expertos)
+        /// </summary>
+        /// <param name="sender"> Remitente del evento </param>
+        /// <param name="datosDelEvento"> Datos del cambio (capas, vertebras y correctitud del camino) </param>
+        private void CambioSI(object sender, CambioSIEventArgs datosDelEvento) {
 			//comunicar los cambios a la GUI levantando un evento
-			//Decidir que comunicamos dependiendo del modo
-			IGUIController.MostrarCambioSI(datosDelEvento);
+			if (modoSeleccionado == ModoSimulacion.ModoGuiado)
+				IGUIController.MostrarCambioSI(datosDelEvento);
 		}
 
 		private void CambioZE(object sender, CambioZEEventArgs e) {
 			//comunicar los cambios a la GUI levantando un evento
-			//Decidir que comunicamos dependiendo del modo
-			IGUIController.MostrarCambioZE(e);
+			if (modoSeleccionado == ModoSimulacion.ModoGuiado)
+				IGUIController.MostrarCambioZE(e);
 		}
 
 		//public IExpertoSI GetExpertoSI () {
