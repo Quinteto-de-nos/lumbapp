@@ -15,11 +15,13 @@
         /// </summary>
         public int ManoDerecha { get; private set; }
 
-        internal InformeZE(int zona, int derecha, int izquierda)
+        public InformeZE(int zona, int derecha, int izquierda)
         {
             Zona = zona;
             ManoDerecha = derecha;
             ManoIzquierda = izquierda;
         }
+
+        public InformeZE() { }
     }
 }

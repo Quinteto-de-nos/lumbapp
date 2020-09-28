@@ -1,4 +1,6 @@
-﻿using LumbApp.Expertos.ExpertoZE;
+﻿using LumbApp.Expertos.ExpertoSI;
+using LumbApp.Expertos.ExpertoZE;
+using LumbApp.Models;
 
 namespace LumbApp.GUI
 {
@@ -7,9 +9,11 @@ namespace LumbApp.GUI
         void Inicializar();
         void CheckearSensores();
         void MostrarErrorDeConexion(string mensaje);
-        void SolicitarDatosPracticante();
+        void SolicitarDatosPracticante(string folderPath);
         void MostrarCambioZE(CambioZEEventArgs e);
+        void MostrarCambioSI(CambioSIEventArgs e);
         void IniciarSimulacionModoEvaluacion();
         void IniciarSimulacionModoGuiado();
+        void MostrarResultados(Informe informe);
     }
 }
