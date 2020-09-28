@@ -1,11 +1,13 @@
 ﻿using LumbApp.Conectores.ConectorKinect;
 using Microsoft.Kinect;
 using System;
+using Accord.Video.FFMPEG;
 
 namespace LumbApp.Expertos.ExpertoZE
 {
     public class ExpertoZE : IExpertoZE
     {
+        #region Variables
         /// <summary>
         /// CambioZE es un evento que se produce durante la simulacion cada vez que se da un cambio en el estado de alguna
         /// mano.
@@ -23,6 +25,10 @@ namespace LumbApp.Expertos.ExpertoZE
         private bool simulando;
         private bool inicializado;
 
+        private Video videoWriter;
+        #endregion
+
+        #region Metodos de experto
         /// <summary>
         /// Constructor de Experto en Zona Esteril.
         /// Este experto necesita una kinect para trabajar, que lo recibe por parametro. Tira una excepcion si recibe null.
@@ -87,6 +93,7 @@ namespace LumbApp.Expertos.ExpertoZE
             manoDerecha = new Mano();
             manoIzquierda = new Mano();
             zonaEsteril.Resetear();
+            videoWriter = new Video();
             simulando = true;
             return true;
         }
@@ -102,6 +109,7 @@ namespace LumbApp.Expertos.ExpertoZE
             if (!simulando)
                 return new InformeZE(0,0,0);
 
+            videoWriter.save("Desktop/test.mp4");
             simulando = false;
             return new InformeZE(zonaEsteril.Contaminacion, manoDerecha.VecesContamino, manoIzquierda.VecesContamino);
         }
@@ -114,7 +122,9 @@ namespace LumbApp.Expertos.ExpertoZE
             kinect.Desconectar();
             simulando = false;
         }
+        #endregion
 
+        #region Metodos de procesamiento
         /// <summary>
         /// Esta funcion se llama cada vez que la kinect termina de calcular todas las frames.
         /// Solo procesa durante una simulacion.
@@ -126,6 +136,7 @@ namespace LumbApp.Expertos.ExpertoZE
             if (!simulando)
                 return;
 
+            // Proceso esqueleto
             using (var frame = e.OpenSkeletonFrame())
             {
                 if (frame != null)
@@ -141,6 +152,13 @@ namespace LumbApp.Expertos.ExpertoZE
                         }
                     }
                 }
+            }
+
+            // Proceso video
+            using (var frame = e.OpenColorImageFrame())
+            {
+                if (frame != null)
+                    videoWriter.addFrame(frame);
             }
         }
 
@@ -193,5 +211,6 @@ namespace LumbApp.Expertos.ExpertoZE
 
             return cambioTrack || cambioZE;
         }
+        #endregion
     }
 }
