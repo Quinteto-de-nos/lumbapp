@@ -1,7 +1,6 @@
 ﻿using LumbApp.Conectores.ConectorKinect;
 using Microsoft.Kinect;
 using System;
-using Accord.Video.FFMPEG;
 
 namespace LumbApp.Expertos.ExpertoZE
 {
@@ -107,11 +106,11 @@ namespace LumbApp.Expertos.ExpertoZE
         public InformeZE TerminarSimulacion()
         {
             if (!simulando)
-                return new InformeZE(0,0,0);
+                return new InformeZE(0, 0, 0, videoWriter);
 
-            videoWriter.save("D:\\Leyluchy\\Documents\\LumbApp\\test.mp4");
+            Console.WriteLine("Terminando simulacion ZE");
             simulando = false;
-            return new InformeZE(zonaEsteril.Contaminacion, manoDerecha.VecesContamino, manoIzquierda.VecesContamino);
+            return new InformeZE(zonaEsteril.Contaminacion, manoDerecha.VecesContamino, manoIzquierda.VecesContamino, videoWriter);
         }
 
         /// <summary>

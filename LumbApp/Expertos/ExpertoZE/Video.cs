@@ -4,34 +4,40 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LumbApp.Expertos.ExpertoZE
 {
-    class Video
+    public class Video
     {
         private List<Bitmap> frames;
 
-        internal Video()
+        public Video()
         {
             frames = new List<Bitmap>();
         }
 
+        /// <summary>
+        /// Agrega un nuevo frame al video.
+        /// </summary>
+        /// <param name="frame">Frame de la camara de color de la kinect</param>
         internal void addFrame(ColorImageFrame frame)
         {
             frames.Add(ImageToBitmap(frame));
         }
 
-        internal void save(string path)
+        /// <summary>
+        /// Procesa la lista de frames que tiene, encodea el video y lo guarda.
+        /// </summary>
+        /// <param name="path">Path completo, con nombre de archivo y extension mp4</param>
+        public void Save(string path)
         {
             VideoFileWriter writer = new VideoFileWriter();
             writer.Open(path, 640, 480, 30, VideoCodec.MPEG4);
             foreach (var frame in frames)
                 writer.WriteVideoFrame(frame);
             writer.Close();
+            Console.WriteLine("Video guardado en " + path);
         }
 
         private Bitmap ImageToBitmap(ColorImageFrame Image)

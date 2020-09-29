@@ -14,12 +14,17 @@
         /// Cantidad de veces que la mano derecha contamino la zona estril
         /// </summary>
         public int ManoDerecha { get; private set; }
+        /// <summary>
+        /// Video de toda la simulacion grabado por la camara de la Kinect
+        /// </summary>
+        public Video Video { get; private set; }
 
-        public InformeZE(int zona, int derecha, int izquierda)
+        public InformeZE(int zona, int derecha, int izquierda, Video video)
         {
             Zona = zona;
             ManoDerecha = derecha;
             ManoIzquierda = izquierda;
+            Video = video;
         }
 
         public InformeZE() { }
