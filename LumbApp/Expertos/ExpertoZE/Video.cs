@@ -28,7 +28,7 @@ namespace LumbApp.Expertos.ExpertoZE
         internal void save(string path)
         {
             VideoFileWriter writer = new VideoFileWriter();
-            writer.Open(path, 640, 480, 25, VideoCodec.H264);
+            writer.Open(path, 640, 480, 30, VideoCodec.MPEG4);
             foreach (var frame in frames)
                 writer.WriteVideoFrame(frame);
             writer.Close();

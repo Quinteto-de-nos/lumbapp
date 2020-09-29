@@ -26,6 +26,8 @@ namespace LumbApp.Conectores.ConectorKinect
 
             _sensor.Start();
 
+            Console.WriteLine("Color format: " + _sensor.ColorStream.Format);
+
         }
 
         /// <summary>
