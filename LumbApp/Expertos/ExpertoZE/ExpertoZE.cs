@@ -109,7 +109,7 @@ namespace LumbApp.Expertos.ExpertoZE
             if (!simulando)
                 return new InformeZE(0,0,0);
 
-            videoWriter.save("Desktop/test.mp4");
+            videoWriter.save("D:\\Leyluchy\\Documents\\LumbApp\\test.mp4");
             simulando = false;
             return new InformeZE(zonaEsteril.Contaminacion, manoDerecha.VecesContamino, manoIzquierda.VecesContamino);
         }
