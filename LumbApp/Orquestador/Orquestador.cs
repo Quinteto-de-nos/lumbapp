@@ -52,7 +52,7 @@ namespace LumbApp.Orquestador
 
 			conectorSI = new ConectorSI();
 			//expertoSI = new ExpertoSI(conectorSI);
-			expertoSI = new ExpertoSIMock(true,conectorSI);
+			expertoSI = new ExpertoSIMock(true);
 
 		}
 
@@ -153,28 +153,28 @@ namespace LumbApp.Orquestador
         private Informe CrearInformeFinal(InformeZE informeZE, InformeSI informeSI, bool pdfGenerado)
         {
 			return new Informe(
-				this.datosPracticante.Nombre,
-				this.datosPracticante.Apellido,
-				this.datosPracticante.Dni,
-				this.datosPracticante.FolderPath,
-				this.tiempoTotalDeEjecucion,
-				informeZE.Zona,
-				informeZE.ManoIzquierda,
-				informeZE.ManoDerecha,
-				informeSI.TejidoAdiposo,
-				informeSI.L2,
-				informeSI.L3Arriba,
-				informeSI.L3Abajo,
-				informeSI.L4ArribaIzquierda,
-				informeSI.L4ArribaDerecha,
-				informeSI.L4ArribaCentro,
-				informeSI.L4Abajo,
-				informeSI.L5,
-				informeSI.Duramadre,
-				informeSI.CaminoCorrecto,
-				informeSI.CaminoIncorrecto,
-				pdfGenerado
-				);
+                this.datosPracticante.Nombre,
+                this.datosPracticante.Apellido,
+                this.datosPracticante.Dni,
+                this.datosPracticante.FolderPath,
+                this.tiempoTotalDeEjecucion,
+                informeZE.Zona,
+                informeZE.ManoIzquierda,
+                informeZE.ManoDerecha,
+                informeSI.TejidoAdiposo,
+                informeSI.L2,
+                informeSI.L3Arriba,
+                informeSI.L3Abajo,
+                informeSI.L4ArribaIzquierda,
+                informeSI.L4ArribaDerecha,
+                informeSI.L4ArribaCentro,
+                informeSI.L4Abajo,
+                informeSI.L5,
+                informeSI.Duramadre,
+                informeSI.CaminoCorrecto,
+                informeSI.CaminoIncorrecto,
+                pdfGenerado
+                );
         }
 
         /// <summary>

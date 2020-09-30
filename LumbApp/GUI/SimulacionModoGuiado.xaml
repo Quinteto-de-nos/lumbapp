@@ -206,7 +206,16 @@
             VerticalAlignment="Top" HorizontalAlignment="Center"
                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                FontSize="26" FontWeight="DemiBold" Foreground="#595959"></Label>
-        
+        <!--Label de alertas-->
+        <Border Grid.Row="0" Grid.Column="1" Name="AlertaLabelBorder"
+                Background="#f52c4a"  Opacity="0"
+                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                 Margin="10,70,10,10">
+            <Label Name="AlertaLabel"
+                VerticalAlignment="Center" HorizontalAlignment="Center"
+               VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+               FontSize="24" FontWeight="DemiBold" Foreground="White"></Label>
+        </Border>
         <!--Label de Salidas de ZE-->
         <Border Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"
                 Background="White" Opacity="0.7"
@@ -239,11 +248,12 @@
         <!-- View report button -->
         <Button Grid.Row="0" Grid.Column="0" Name="FinalizarSimulacion" 
                 Height="66" Padding="5" 
-                HorizontalAlignment="Stretch" VerticalAlignment="Bottom"
+                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                 Margin="30,70,10,10"
                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                 Background="#009960" Foreground="White"  BorderThickness="0"
                 FontSize="26" FontWeight="Regular"
-                Click="FinalizarSimulacion_Click" Margin="30,0,10,20">
+                Click="FinalizarSimulacion_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="20"/>

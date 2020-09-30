@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-
+using System.Windows.Threading;
 
 namespace LumbApp.GUI
 {
@@ -19,6 +19,11 @@ namespace LumbApp.GUI
     public partial class SimulacionModoGuiado : Page
     {
         public GUIController _controller { get; set; }
+
+        //para alertas
+
+        private DispatcherTimer timer;
+        int timeLeft { get; set; }
 
         //Path General de Carpeta de Imagenes
         private static string _imagesFolderPath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\GUI\\Imagenes\\";
@@ -160,7 +165,7 @@ namespace LumbApp.GUI
 
         public void MostrarCambioSI(CambioSIEventArgs e)
         {
-
+            MostrarAlertas(e);
             EntradasCapasLabel.Content = String.Format("{0} Tejido Adiposo" + Environment.NewLine + "{1} Duramadre", e.TejidoAdiposo.VecesAtravesada, e.Duramadre.VecesAtravesada);
 
             //ATRAVIESA LA PIEL
@@ -255,7 +260,54 @@ namespace LumbApp.GUI
             }
         }
 
+        private void MostrarAlertas(CambioSIEventArgs e)
+        {
+            if((e.L3RozandoAhora && e.L3.Sector == VertebraL3.Sectores.Arriba) ||
+               (e.L4RozandoAhora && e.L4.Sector == VertebraL4.Sectores.Abajo) ||
+                e.L2RozandoAhora || e.L5RozandoAhora)
+            {
+                AlertaLabel.Content = "Hey!! mira donde estas pinchando!";
+                AlertaLabelBorder.Opacity=0.7;
+                SystemSounds.Exclamation.Play();
+                StartAlertTimer();
+            }
+            else if (e.L4RozandoAhora && 
+                e.L4.Sector != VertebraL4.Sectores.Abajo && 
+                e.L4.Sector != VertebraL4.Sectores.ArribaCentro)
+            {
+                AlertaLabel.Content = "Casi casi!";
+                AlertaLabelBorder.Opacity = 0.7;
+                SystemSounds.Exclamation.Play();
+                StartAlertTimer();
+            }
 
+        }
+
+        private void StartAlertTimer()
+        {
+            timeLeft = 5;
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += alertTimerTick;
+            timer.Start();
+        }
+
+        private void StopAlertTimer()
+        {
+            AlertaLabel.Content = "";
+            AlertaLabelBorder.Opacity = 0;
+            timer.Stop();
+        }
+
+        private void alertTimerTick(object sender, EventArgs e)
+        {
+            if (timeLeft > 0)
+                timeLeft -= 1;
+            else
+            {
+                StopAlertTimer();
+            }
+        }
         #endregion
 
         #region Finalizar Simulacion
