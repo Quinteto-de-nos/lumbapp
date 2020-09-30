@@ -8,11 +8,11 @@ using System.Runtime.InteropServices;
 
 namespace LumbApp.Expertos.ExpertoZE
 {
-    public class Video
+    public class Video : IVideo
     {
         private List<Bitmap> frames;
 
-        public Video()
+        internal Video()
         {
             frames = new List<Bitmap>();
         }
