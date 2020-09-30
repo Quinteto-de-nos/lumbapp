@@ -197,6 +197,7 @@
     <Compile Include="GUI\MainWindow.xaml.cs" />
     <Compile Include="GUI\ResultadosSimulacion.xaml.cs" />
     <Compile Include="GUI\PasosPreparacion.xaml.cs" />
+    <Compile Include="GUI\SimulacionModoEvaluacion.cs" />
     <Compile Include="GUI\SimulacionModoGuiado.cs" />
     <Compile Include="GUI\SensorsCheck.xaml.cs" />
     <Compile Include="Models\DatosPracticante.cs" />
@@ -281,6 +282,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GUI\PasosPreparacion.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\SimulacionModoEvaluacion.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

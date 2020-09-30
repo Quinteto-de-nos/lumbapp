@@ -313,6 +313,7 @@ namespace LumbApp.GUI
         #region Finalizar Simulacion
         private void FinalizarSimulacion_Click(object sender, RoutedEventArgs e)
         {
+            StopAlertTimer();
             _controller.FinalizarSimulacion();
         }
 
