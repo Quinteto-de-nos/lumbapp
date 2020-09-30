@@ -207,6 +207,7 @@
     <Compile Include="GUI\PasosPreparacion.xaml.cs" />
     <Compile Include="GUI\SimulacionModoGuiado.cs" />
     <Compile Include="GUI\SensorsCheck.xaml.cs" />
+    <Compile Include="Models\TuplaDeStrings.cs" />
     <Compile Include="Models\DatosPracticante.cs" />
     <Compile Include="GUI\IngresoDatosPracticante.xaml.cs" />
     <Compile Include="Models\Informe.cs" />
