@@ -141,17 +141,39 @@ namespace LumbApp.Orquestador
 
 			DateTime tiempoFinal = DateTime.Now;
 			String ruta = ObtenerRuta(tiempoFinal);
-
+            TuplaDeStrings[] datosinforme = ArmarListaDeTuplaDeStrings(informeSI, informeZE, tiempoTotalDeEjecucion);
 			ffb = new FinalFeedbacker((ruta + ".pdf"), datosPracticante, informeZE, informeSI, tiempoTotalDeEjecucion, tiempoFinal);
 			bool pdfGenerado = ffb.GenerarPDF();
 
 			Informe informeFinal = CrearInformeFinal(informeZE, informeSI, pdfGenerado);
-			//IGUIController.MostrarResultados(informeFinal);
+			IGUIController.MostrarResultados(informeFinal);
 
 			//Informar a GUI con informe con un evento, que pase si el informe se genero bien, y si se guardó  bien (bool, bool)
 		}
 
-		private String ObtenerRuta (DateTime tiempo) {
+        private TuplaDeStrings[] ArmarListaDeTuplaDeStrings(InformeSI informeSI, InformeZE informeZE, TimeSpan tiempoTotalDeEjecucion)
+        {
+			TuplaDeStrings[] lista = new TuplaDeStrings[16];
+			lista[0] = new TuplaDeStrings("Zona", Convert.ToString(informeZE.Zona));
+			lista[1] = new TuplaDeStrings("ManoIzquierda", Convert.ToString(informeZE.ManoIzquierda));
+			lista[2] = new TuplaDeStrings("ManoDerecha", Convert.ToString(informeZE.ManoDerecha));
+			lista[3] = new TuplaDeStrings("TejidoAdiposo", Convert.ToString(informeSI.TejidoAdiposo));
+			lista[4] = new TuplaDeStrings("L2", Convert.ToString(informeSI.L2));
+			lista[5] = new TuplaDeStrings("L3Arriba", Convert.ToString(informeSI.L3Arriba));
+			lista[6] = new TuplaDeStrings("L3Abajo", Convert.ToString(informeSI.L3Abajo));
+			lista[7] = new TuplaDeStrings("L4ArribaIzquierda", Convert.ToString(informeSI.L4ArribaIzquierda));
+			lista[8] = new TuplaDeStrings("L4ArribaDerecha", Convert.ToString(informeSI.L4ArribaDerecha));
+			lista[9] = new TuplaDeStrings("L4ArribaCentro", Convert.ToString(informeSI.L4ArribaCentro));
+			lista[10] = new TuplaDeStrings("L4Abajo", Convert.ToString(informeSI.L4Abajo));
+			lista[11] = new TuplaDeStrings("L5", Convert.ToString(informeSI.L5));
+			lista[12] = new TuplaDeStrings("Duramadre", Convert.ToString(informeSI.Duramadre));
+			lista[13] = new TuplaDeStrings("CaminoCorrecto", Convert.ToString(informeSI.CaminoCorrecto));
+			lista[14] = new TuplaDeStrings("CaminoIncorrecto", Convert.ToString(informeSI.CaminoIncorrecto));
+			lista[15] = new TuplaDeStrings("tiempoTotalDeEjecucion", Convert.ToString(tiempoTotalDeEjecucion));
+			return lista;
+		}
+
+        private String ObtenerRuta (DateTime tiempo) {
 			string ruta = datosPracticante.FolderPath;
 			string carpetaAlumno = datosPracticante.Apellido + "_" + datosPracticante.Nombre + "_" + datosPracticante.Dni;
 
