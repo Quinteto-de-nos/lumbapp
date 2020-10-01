@@ -34,7 +34,7 @@ namespace LumbApp.FinalFeedbacker_ {
 
         public bool GenerarPDF () {
             try {
-                Document doc = new Document(PageSize.LETTER);
+                Document doc = new Document(PageSize.A4);
                 // Indicamos donde vamos a guardar el documento
                 PdfWriter writer = PdfWriter.GetInstance(doc,
                                             new FileStream(_path, FileMode.Create));
@@ -42,7 +42,7 @@ namespace LumbApp.FinalFeedbacker_ {
                 // Le colocamos el título y el autor
                 // **Nota: Esto no será visible en el documento
                 doc.AddTitle("Informe Final");
-                doc.AddCreator("LumbApp");//_datosPracticante.Nombre + " " + _datosPracticante.Apellido);
+                doc.AddCreator("LumbApp");
 
                 // Abrimos el archivo
                 doc.Open();
@@ -54,8 +54,9 @@ namespace LumbApp.FinalFeedbacker_ {
                 doc.Add(Chunk.NEWLINE);
 
                 #region Datos del alumno
-
-                doc.Add(new Paragraph("Información del alumno", new Font(Font.FontFamily.COURIER, 12, Font.BOLD, BaseColor.GREEN)));
+                Font fuenteTitulos = new Font(Font.FontFamily.COURIER, 12, Font.BOLD, BaseColor.GREEN);
+                //fuenteTitulos.SetColor(123, 421, 231);
+                doc.Add(new Paragraph("Información del alumno", fuenteTitulos));
 
                 // Creamos una tabla que contendrá los datos del alumno
                 PdfPTable tblDatosAlumno = new PdfPTable(4);
