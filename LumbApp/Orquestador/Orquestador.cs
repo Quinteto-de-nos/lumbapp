@@ -8,6 +8,7 @@ using LumbApp.FinalFeedbacker_;
 using LumbApp.GUI;
 using LumbApp.Models;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -141,11 +142,13 @@ namespace LumbApp.Orquestador
 
 			DateTime tiempoFinal = DateTime.Now;
 			String ruta = ObtenerRuta(tiempoFinal);
-            TuplaDeStrings[] datosinforme = ArmarListaDeTuplaDeStrings(informeSI, informeZE, tiempoTotalDeEjecucion);
-			ffb = new FinalFeedbacker((ruta + ".pdf"), datosPracticante, informeZE, informeSI, tiempoTotalDeEjecucion, tiempoFinal);
+            
+			TuplaDeStrings[] datosPractica = ArmarListaDeTuplaDeStrings(informeSI, informeZE, tiempoTotalDeEjecucion);
+
+			ffb = new FinalFeedbacker((ruta + ".pdf"), datosPracticante, datosPractica, tiempoFinal);
 			bool pdfGenerado = ffb.GenerarPDF();
 
-			Informe informeFinal = CrearInformeFinal(informeZE, informeSI, pdfGenerado);
+			Informe informeFinal = CrearInformeFinal(datosPractica, pdfGenerado);
 			IGUIController.MostrarResultados(informeFinal);
 
 			//Informar a GUI con informe con un evento, que pase si el informe se genero bien, y si se guardó  bien (bool, bool)
@@ -154,22 +157,23 @@ namespace LumbApp.Orquestador
         private TuplaDeStrings[] ArmarListaDeTuplaDeStrings(InformeSI informeSI, InformeZE informeZE, TimeSpan tiempoTotalDeEjecucion)
         {
 			TuplaDeStrings[] lista = new TuplaDeStrings[16];
-			lista[0] = new TuplaDeStrings("Zona", Convert.ToString(informeZE.Zona));
-			lista[1] = new TuplaDeStrings("ManoIzquierda", Convert.ToString(informeZE.ManoIzquierda));
-			lista[2] = new TuplaDeStrings("ManoDerecha", Convert.ToString(informeZE.ManoDerecha));
-			lista[3] = new TuplaDeStrings("TejidoAdiposo", Convert.ToString(informeSI.TejidoAdiposo));
-			lista[4] = new TuplaDeStrings("L2", Convert.ToString(informeSI.L2));
-			lista[5] = new TuplaDeStrings("L3Arriba", Convert.ToString(informeSI.L3Arriba));
-			lista[6] = new TuplaDeStrings("L3Abajo", Convert.ToString(informeSI.L3Abajo));
-			lista[7] = new TuplaDeStrings("L4ArribaIzquierda", Convert.ToString(informeSI.L4ArribaIzquierda));
-			lista[8] = new TuplaDeStrings("L4ArribaDerecha", Convert.ToString(informeSI.L4ArribaDerecha));
-			lista[9] = new TuplaDeStrings("L4ArribaCentro", Convert.ToString(informeSI.L4ArribaCentro));
-			lista[10] = new TuplaDeStrings("L4Abajo", Convert.ToString(informeSI.L4Abajo));
-			lista[11] = new TuplaDeStrings("L5", Convert.ToString(informeSI.L5));
-			lista[12] = new TuplaDeStrings("Duramadre", Convert.ToString(informeSI.Duramadre));
-			lista[13] = new TuplaDeStrings("CaminoCorrecto", Convert.ToString(informeSI.CaminoCorrecto));
-			lista[14] = new TuplaDeStrings("CaminoIncorrecto", Convert.ToString(informeSI.CaminoIncorrecto));
-			lista[15] = new TuplaDeStrings("tiempoTotalDeEjecucion", Convert.ToString(tiempoTotalDeEjecucion));
+			lista[0] = new TuplaDeStrings("Contaminaciones Zona", Convert.ToString(informeZE.Zona));
+			lista[1] = new TuplaDeStrings("Contaminaciones Mano Izquierda", Convert.ToString(informeZE.ManoIzquierda));
+			lista[2] = new TuplaDeStrings("Contaminaciones Mano Derecha", Convert.ToString(informeZE.ManoDerecha));
+			lista[3] = new TuplaDeStrings("Punciones Tejido Adiposo", Convert.ToString(informeSI.TejidoAdiposo));
+			lista[4] = new TuplaDeStrings("Roces L2", Convert.ToString(informeSI.L2));
+			lista[5] = new TuplaDeStrings("Roces L3 Arriba", Convert.ToString(informeSI.L3Arriba));
+			lista[6] = new TuplaDeStrings("Roces L3 Abajo", Convert.ToString(informeSI.L3Abajo));
+			lista[7] = new TuplaDeStrings("Roces L4 Arriba Izquierda", Convert.ToString(informeSI.L4ArribaIzquierda));
+			lista[8] = new TuplaDeStrings("Roces L4 Arriba Derecha", Convert.ToString(informeSI.L4ArribaDerecha));
+			lista[9] = new TuplaDeStrings("Roces L4 Arriba Centro", Convert.ToString(informeSI.L4ArribaCentro));
+			lista[10] = new TuplaDeStrings("Roces L4 Abajo", Convert.ToString(informeSI.L4Abajo));
+			lista[11] = new TuplaDeStrings("Roces L5", Convert.ToString(informeSI.L5));
+			lista[12] = new TuplaDeStrings("Punciones Duramadre", Convert.ToString(informeSI.Duramadre));
+			lista[13] = new TuplaDeStrings("Camino Correcto", Convert.ToString(informeSI.CaminoCorrecto));
+			lista[14] = new TuplaDeStrings("Camino Incorrecto", Convert.ToString(informeSI.CaminoIncorrecto));
+			lista[15] = new TuplaDeStrings("Tiempo Total", (tiempoTotalDeEjecucion.Hours + ":" +
+				tiempoTotalDeEjecucion.Minutes + ":" + tiempoTotalDeEjecucion.Seconds));
 			return lista;
 		}
 
@@ -193,29 +197,14 @@ namespace LumbApp.Orquestador
 			return ruta;
 		}
 
-        private Informe CrearInformeFinal(InformeZE informeZE, InformeSI informeSI, bool pdfGenerado)
+        private Informe CrearInformeFinal(TuplaDeStrings[] datosPractica, bool pdfGenerado)
         {
 			return new Informe(
 				this.datosPracticante.Nombre,
 				this.datosPracticante.Apellido,
 				this.datosPracticante.Dni,
 				this.datosPracticante.FolderPath,
-				this.tiempoTotalDeEjecucion,
-				informeZE.Zona,
-				informeZE.ManoIzquierda,
-				informeZE.ManoDerecha,
-				informeSI.TejidoAdiposo,
-				informeSI.L2,
-				informeSI.L3Arriba,
-				informeSI.L3Abajo,
-				informeSI.L4ArribaIzquierda,
-				informeSI.L4ArribaDerecha,
-				informeSI.L4ArribaCentro,
-				informeSI.L4Abajo,
-				informeSI.L5,
-				informeSI.Duramadre,
-				informeSI.CaminoCorrecto,
-				informeSI.CaminoIncorrecto,
+				datosPractica,
 				pdfGenerado
 				);
         }

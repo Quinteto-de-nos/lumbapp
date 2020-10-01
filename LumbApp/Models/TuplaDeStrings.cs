@@ -8,8 +8,8 @@ namespace LumbApp.Models
 {
     public class TuplaDeStrings
     {
-        string Clave { get; }
-        string Valor { get; }
+        public string Clave { get; private set; }
+        public string Valor { get; private set; }
 
         public TuplaDeStrings (string clave, string valor)
         {
