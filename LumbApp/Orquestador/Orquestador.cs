@@ -47,7 +47,8 @@ namespace LumbApp.Orquestador
 			conectorKinect = new ConectorKinect();
 			expertoZE = new ExpertoZE(conectorKinect, calibracion);
 
-			conectorSI = new ConectorSI();
+			//conectorSI = new ConectorSI();
+			conectorSI = new ConectorSIMock(true);
 			expertoSI = new ExpertoSI(conectorSI);
 
 		}
@@ -125,23 +126,18 @@ namespace LumbApp.Orquestador
 												 //ExpertoZE.terminarSimulacion()
 
 			InformeZE informeZE = expertoZE.TerminarSimulacion();
-			
 			InformeSI informeSI = expertoSI.TerminarSimulacion();
 
 			tiempoTotalDeEjecucion = DateTime.UtcNow - tiempoInicialDeEjecucion;
 			Console.WriteLine("Tiempo total: "+tiempoTotalDeEjecucion);
+
 			bool pdfGenerado = true; //Guardar informe en archivo
+
+			// Esta linea guarda el video de la kinect. TODO: mover a donde corresponda
+			informeZE.Video.Save("D:\\Leyluchy\\Documents\\LumbApp\\test.mp4");
+
 			Informe informeFinal = CrearInformeFinal(informeZE, informeSI, pdfGenerado);
-			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
-			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
-			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
-			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
-			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
 			IGUIController.MostrarResultados(informeFinal);
-			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
-			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
-			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
-			Console.WriteLine("Tiempo total: " + tiempoTotalDeEjecucion);
 
 			//Informar a GUI con informe con un evento, que pase si el informe se genero bien, y si se guardó  bien (bool, bool)
 		}

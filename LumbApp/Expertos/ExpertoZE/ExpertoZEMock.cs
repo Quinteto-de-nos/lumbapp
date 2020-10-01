@@ -56,10 +56,10 @@ namespace LumbApp.Expertos.ExpertoZE
         public InformeZE TerminarSimulacion()
         {
             if (!simulando)
-                return new InformeZE(0, 0, 0);
+                return new InformeZE(0, 0, 0, new Video());
 
             simulando = false;
-            return new InformeZE(zonaEsteril.Contaminacion, manoDerecha.VecesContamino, manoIzquierda.VecesContamino);
+            return new InformeZE(zonaEsteril.Contaminacion, manoDerecha.VecesContamino, manoIzquierda.VecesContamino, new Video());
         }
 
         private async Task simulateAsync()

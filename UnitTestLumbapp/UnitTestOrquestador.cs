@@ -162,7 +162,8 @@ namespace UnitTestLumbapp {
             orq.IniciarSimulacion();
 
             InformeSI informeSI = new InformeSI(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
-            InformeZE informeZE = new InformeZE(1, 2, 3);
+            Mock<IVideo> video = new Mock<IVideo>();
+            InformeZE informeZE = new InformeZE(1, 2, 3, video.Object);
             expSI.Setup(x => x.TerminarSimulacion()).Returns(informeSI);
             expZE.Setup(x => x.TerminarSimulacion()).Returns(informeZE);
 
@@ -196,7 +197,8 @@ namespace UnitTestLumbapp {
             orq.IniciarSimulacion();
 
             InformeSI informeSI = new InformeSI(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
-            InformeZE informeZE = new InformeZE(1, 2, 3);
+            Mock<IVideo> video = new Mock<IVideo>();
+            InformeZE informeZE = new InformeZE(1, 2, 3, video.Object);
             expSI.Setup(x => x.TerminarSimulacion()).Returns(informeSI);
             expZE.Setup(x => x.TerminarSimulacion()).Returns(informeZE);
 
