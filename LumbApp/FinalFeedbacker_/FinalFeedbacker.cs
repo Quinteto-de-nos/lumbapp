@@ -25,7 +25,7 @@ namespace LumbApp.FinalFeedbacker_ {
         public FinalFeedbacker (String path, DatosPracticante datosPracticante,
             OrderedDictionary datosPractica, DateTime fecha) {
 
-            if(path==null || path=="" || datosPracticante == null || datosPractica == null)
+            if(path==null || path=="" || datosPracticante == null || datosPractica == null || fecha == null)
                 throw new Exception("Los datos de entrada no peden ser nulos, los necesito para crear el informe en PDF.");
 
             this._path = path;
