@@ -4,6 +4,7 @@ using LumbApp.Expertos.ExpertoSI;
 using LumbApp.Expertos.ExpertoZE;
 using LumbApp.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -144,17 +145,15 @@ namespace LumbApp.FinalFeedbacker_ {
                 tblDatosPractica.AddCell(columnaDescripcion);
                 tblDatosPractica.AddCell(columnaCantidad);
 
-                String[] claves = new String[_datosPractica.Count];
-                String[] valores = new String[_datosPractica.Count];
-                _datosPractica.Keys.CopyTo(claves, 0);
-                _datosPractica.Values.CopyTo(valores, 0);
+                Console.WriteLine("Roces L2: " + _datosPractica["Roces L2"]);
 
-                // Llenamos la tabla con información
-                for (int i = 0; i < _datosPractica.Count; i++) {
-                    columnaDescripcion = new PdfPCell(new Phrase( claves[i], _standardFont));
+                foreach(DictionaryEntry de in _datosPractica)
+                {
+                    Console.WriteLine(de.Key + "-" + de.Value);
+                    columnaDescripcion = new PdfPCell(new Phrase(de.Key.ToString(), _standardFont));
                     columnaDescripcion.BorderWidth = 0;
 
-                    columnaCantidad = new PdfPCell(new Phrase( valores[i], _standardFont));
+                    columnaCantidad = new PdfPCell(new Phrase(de.Value.ToString(), _standardFont));
                     columnaCantidad.BorderWidth = 0;
 
                     // Añadimos las celdas a la tabla
