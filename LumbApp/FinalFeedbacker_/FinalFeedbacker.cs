@@ -145,11 +145,8 @@ namespace LumbApp.FinalFeedbacker_ {
                 tblDatosPractica.AddCell(columnaDescripcion);
                 tblDatosPractica.AddCell(columnaCantidad);
 
-                Console.WriteLine("Roces L2: " + _datosPractica["Roces L2"]);
-
                 foreach(DictionaryEntry de in _datosPractica)
                 {
-                    Console.WriteLine(de.Key + "-" + de.Value);
                     columnaDescripcion = new PdfPCell(new Phrase(de.Key.ToString(), _standardFont));
                     columnaDescripcion.BorderWidth = 0;
 
