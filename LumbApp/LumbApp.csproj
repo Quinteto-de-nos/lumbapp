@@ -200,6 +200,8 @@
     <Compile Include="GUI\SimulacionModoEvaluacion.cs" />
     <Compile Include="GUI\SimulacionModoGuiado.cs" />
     <Compile Include="GUI\SensorsCheck.xaml.cs" />
+    <Compile Include="GUI\WatermarkAdorner.cs" />
+    <Compile Include="GUI\WatermarkService.cs" />
     <Compile Include="Models\DatosPracticante.cs" />
     <Compile Include="GUI\IngresoDatosPracticante.xaml.cs" />
     <Compile Include="Models\Informe.cs" />
@@ -306,6 +308,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="GUI\Fonts\" />
     <Folder Include="GUI\Imagenes\Vertebras\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
