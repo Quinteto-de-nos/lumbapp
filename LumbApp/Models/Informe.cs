@@ -1,5 +1,4 @@
-﻿using Emgu.CV;
-using LumbApp.Expertos.ExpertoSI;
+﻿using LumbApp.Expertos.ExpertoSI;
 using LumbApp.Expertos.ExpertoZE;
 using System;
 using System.Collections.Generic;

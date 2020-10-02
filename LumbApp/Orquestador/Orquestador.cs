@@ -134,16 +134,6 @@ namespace LumbApp.Orquestador
 			
 			tiempoTotalDeEjecucion = DateTime.UtcNow - tiempoInicialDeEjecucion;
 
-			Console.WriteLine("Tiempo total: "+tiempoTotalDeEjecucion);
-
-			bool pdfGenerado = true; //Guardar informe en archivo
-
-			// Esta linea guarda el video de la kinect. TODO: mover a donde corresponda
-			informeZE.Video.Save("D:\\Leyluchy\\Documents\\LumbApp\\test.mp4");
-
-			Informe informeFinal = CrearInformeFinal(informeZE, informeSI, pdfGenerado);
-			IGUIController.MostrarResultados(informeFinal);
-
 			DateTime tiempoFinal = DateTime.Now;
 			String ruta = ObtenerRuta(tiempoFinal);
 
@@ -158,6 +148,9 @@ namespace LumbApp.Orquestador
 			ffb = new FinalFeedbacker((ruta + ".pdf"), datosPracticante, informeFinal.DatosPractica, tiempoFinal);
 
 			informeFinal.SetPdfGenerado(ffb.GenerarPDF());
+
+			// Esta linea guarda el video de la kinect.
+			informeZE.Video.Save(ruta + ".mp4");
 
 			IGUIController.MostrarResultados(informeFinal);
 
