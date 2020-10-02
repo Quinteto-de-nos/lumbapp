@@ -129,16 +129,20 @@ namespace LumbApp.Orquestador
 		/// </summary>
 		public async Task TerminarSimulacion() { //Funcion llamada por la GUI, devuelve void, respuesta por evento
 
-			//TO DO pasar toda la info lo los informes a un HashMap 
-			//para que no sea necesario de que los que muestran conozcan los datos
-
 			InformeZE informeZE = expertoZE.TerminarSimulacion();
-			
 			InformeSI informeSI = expertoSI.TerminarSimulacion();
 			
 			tiempoTotalDeEjecucion = DateTime.UtcNow - tiempoInicialDeEjecucion;
 
 			Console.WriteLine("Tiempo total: "+tiempoTotalDeEjecucion);
+
+			bool pdfGenerado = true; //Guardar informe en archivo
+
+			// Esta linea guarda el video de la kinect. TODO: mover a donde corresponda
+			informeZE.Video.Save("D:\\Leyluchy\\Documents\\LumbApp\\test.mp4");
+
+			Informe informeFinal = CrearInformeFinal(informeZE, informeSI, pdfGenerado);
+			IGUIController.MostrarResultados(informeFinal);
 
 			DateTime tiempoFinal = DateTime.Now;
 			String ruta = ObtenerRuta(tiempoFinal);
