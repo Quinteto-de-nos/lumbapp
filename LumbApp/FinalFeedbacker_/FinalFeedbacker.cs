@@ -5,6 +5,8 @@ using LumbApp.Expertos.ExpertoZE;
 using LumbApp.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -16,11 +18,13 @@ using System.Windows;
 namespace LumbApp.FinalFeedbacker_ {
     public class FinalFeedbacker : IFinalFeedbacker {
         private DatosPracticante _datosPracticante;
-        private TuplaDeStrings[] _datosPractica;
+        private OrderedDictionary _datosPractica;
         private String _path;
         private DateTime _fecha;
 
-        public FinalFeedbacker (String path, DatosPracticante datosPracticante, TuplaDeStrings[] datosPractica, DateTime fecha) {
+        public FinalFeedbacker (String path, DatosPracticante datosPracticante,
+            OrderedDictionary datosPractica, DateTime fecha) {
+
             if(path==null || path=="" || datosPracticante == null || datosPractica == null)
                 throw new Exception("Los datos de entrada no peden ser nulos, los necesito para crear el informe en PDF.");
 
@@ -140,12 +144,17 @@ namespace LumbApp.FinalFeedbacker_ {
                 tblDatosPractica.AddCell(columnaDescripcion);
                 tblDatosPractica.AddCell(columnaCantidad);
 
+                String[] claves = new String[_datosPractica.Count];
+                String[] valores = new String[_datosPractica.Count];
+                _datosPractica.Keys.CopyTo(claves, 0);
+                _datosPractica.Values.CopyTo(valores, 0);
+
                 // Llenamos la tabla con información
-                foreach (TuplaDeStrings tupla in _datosPractica) {
-                    columnaDescripcion = new PdfPCell(new Phrase(tupla.Clave, _standardFont));
+                for (int i = 0; i < _datosPractica.Count; i++) {
+                    columnaDescripcion = new PdfPCell(new Phrase( claves[i], _standardFont));
                     columnaDescripcion.BorderWidth = 0;
 
-                    columnaCantidad = new PdfPCell(new Phrase(tupla.Valor, _standardFont));
+                    columnaCantidad = new PdfPCell(new Phrase( valores[i], _standardFont));
                     columnaCantidad.BorderWidth = 0;
 
                     // Añadimos las celdas a la tabla

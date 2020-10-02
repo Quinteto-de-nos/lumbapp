@@ -142,39 +142,22 @@ namespace LumbApp.Orquestador
 
 			DateTime tiempoFinal = DateTime.Now;
 			String ruta = ObtenerRuta(tiempoFinal);
-            
-			TuplaDeStrings[] datosPractica = ArmarListaDeTuplaDeStrings(informeSI, informeZE, tiempoTotalDeEjecucion);
 
-			ffb = new FinalFeedbacker((ruta + ".pdf"), datosPracticante, datosPractica, tiempoFinal);
-			bool pdfGenerado = ffb.GenerarPDF();
+			Informe informeFinal = new Informe(
+				this.datosPracticante.Nombre,
+				this.datosPracticante.Apellido,
+				this.datosPracticante.Dni,
+				this.datosPracticante.FolderPath,
+				informeSI, informeZE, tiempoTotalDeEjecucion
+				);
 
-			Informe informeFinal = CrearInformeFinal(datosPractica, pdfGenerado);
+			ffb = new FinalFeedbacker((ruta + ".pdf"), datosPracticante, informeFinal.DatosPractica, tiempoFinal);
+
+			informeFinal.SetPdfGenerado(ffb.GenerarPDF());
+
 			IGUIController.MostrarResultados(informeFinal);
 
 			//Informar a GUI con informe con un evento, que pase si el informe se genero bien, y si se guardó  bien (bool, bool)
-		}
-
-        private TuplaDeStrings[] ArmarListaDeTuplaDeStrings(InformeSI informeSI, InformeZE informeZE, TimeSpan tiempoTotalDeEjecucion)
-        {
-			TuplaDeStrings[] lista = new TuplaDeStrings[16];
-			lista[0] = new TuplaDeStrings("Contaminaciones Zona", Convert.ToString(informeZE.Zona));
-			lista[1] = new TuplaDeStrings("Contaminaciones Mano Izquierda", Convert.ToString(informeZE.ManoIzquierda));
-			lista[2] = new TuplaDeStrings("Contaminaciones Mano Derecha", Convert.ToString(informeZE.ManoDerecha));
-			lista[3] = new TuplaDeStrings("Punciones Tejido Adiposo", Convert.ToString(informeSI.TejidoAdiposo));
-			lista[4] = new TuplaDeStrings("Roces L2", Convert.ToString(informeSI.L2));
-			lista[5] = new TuplaDeStrings("Roces L3 Arriba", Convert.ToString(informeSI.L3Arriba));
-			lista[6] = new TuplaDeStrings("Roces L3 Abajo", Convert.ToString(informeSI.L3Abajo));
-			lista[7] = new TuplaDeStrings("Roces L4 Arriba Izquierda", Convert.ToString(informeSI.L4ArribaIzquierda));
-			lista[8] = new TuplaDeStrings("Roces L4 Arriba Derecha", Convert.ToString(informeSI.L4ArribaDerecha));
-			lista[9] = new TuplaDeStrings("Roces L4 Arriba Centro", Convert.ToString(informeSI.L4ArribaCentro));
-			lista[10] = new TuplaDeStrings("Roces L4 Abajo", Convert.ToString(informeSI.L4Abajo));
-			lista[11] = new TuplaDeStrings("Roces L5", Convert.ToString(informeSI.L5));
-			lista[12] = new TuplaDeStrings("Punciones Duramadre", Convert.ToString(informeSI.Duramadre));
-			lista[13] = new TuplaDeStrings("Camino Correcto", Convert.ToString(informeSI.CaminoCorrecto));
-			lista[14] = new TuplaDeStrings("Camino Incorrecto", Convert.ToString(informeSI.CaminoIncorrecto));
-			lista[15] = new TuplaDeStrings("Tiempo Total", (tiempoTotalDeEjecucion.Hours + ":" +
-				tiempoTotalDeEjecucion.Minutes + ":" + tiempoTotalDeEjecucion.Seconds));
-			return lista;
 		}
 
         private String ObtenerRuta (DateTime tiempo) {
@@ -197,17 +180,6 @@ namespace LumbApp.Orquestador
 			return ruta;
 		}
 
-        private Informe CrearInformeFinal(TuplaDeStrings[] datosPractica, bool pdfGenerado)
-        {
-			return new Informe(
-				this.datosPracticante.Nombre,
-				this.datosPracticante.Apellido,
-				this.datosPracticante.Dni,
-				this.datosPracticante.FolderPath,
-				datosPractica,
-				pdfGenerado
-				);
-        }
 
         /// <summary>
         /// CambioSI: atrapa los eventos que indican un cambio en el sensado interno
