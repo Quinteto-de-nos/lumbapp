@@ -10,11 +10,11 @@ namespace LumbApp.Expertos.ExpertoZE
 {
     public class Video : IVideo
     {
-        private List<Bitmap> frames;
+        private List<BitmapData> frames;
 
         internal Video()
         {
-            frames = new List<Bitmap>();
+            frames = new List<BitmapData>();
         }
 
         /// <summary>
@@ -23,7 +23,14 @@ namespace LumbApp.Expertos.ExpertoZE
         /// <param name="frame">Frame de la camara de color de la kinect</param>
         internal void addFrame(ColorImageFrame frame)
         {
-            frames.Add(ImageToBitmap(frame));
+            try
+            {
+                frames.Add(ImageToBitmap(frame));
+            } catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            
         }
 
         /// <summary>
@@ -40,7 +47,7 @@ namespace LumbApp.Expertos.ExpertoZE
             Console.WriteLine("Video guardado en " + path);
         }
 
-        private Bitmap ImageToBitmap(ColorImageFrame Image)
+        private BitmapData ImageToBitmap(ColorImageFrame Image)
         {
             byte[] pixeldata = new byte[Image.PixelDataLength];
             Image.CopyPixelDataTo(pixeldata);
@@ -50,12 +57,13 @@ namespace LumbApp.Expertos.ExpertoZE
                 new Rectangle(0, 0, Image.Width, Image.Height),
                 ImageLockMode.WriteOnly,
                 bmap.PixelFormat);
+            
             IntPtr ptr = bmapdata.Scan0;
 
             Marshal.Copy(pixeldata, 0, ptr, Image.PixelDataLength);
             bmap.UnlockBits(bmapdata);
 
-            return bmap;
+            return bmapdata;
         }
     }
 }
