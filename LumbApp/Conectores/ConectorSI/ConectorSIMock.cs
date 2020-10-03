@@ -31,12 +31,8 @@ namespace LumbApp.Conectores.ConectorSI {
         }
 
         private void sendEvent (String datosSensados) {
-
             var datosDelEvento = new DatosSensadosEventArgs(datosSensados);
-            EventHandler<DatosSensadosEventArgs> handler = HayDatos;
-            if (handler != null) {
-                handler(this, datosDelEvento);
-            }
+            HayDatos?.Invoke(this, datosDelEvento);
         }
 
         /// <summary>
@@ -112,6 +108,12 @@ namespace LumbApp.Conectores.ConectorSI {
             await Task.Delay(5000);
             Console.WriteLine("Finished mocked simulation");
             sensando = false;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is ConectorSIMock mock &&
+                   shouldInit == mock.shouldInit;
         }
     }
 }
