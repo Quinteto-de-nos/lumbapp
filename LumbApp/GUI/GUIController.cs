@@ -29,17 +29,17 @@ namespace LumbApp.GUI
             MainWindow.NavigationService.Navigate(SensorsCheckPage);
             SensorsCheckPage.MostrarCheckeandoSensores();
             _orquestador = new Orquestador.Orquestador(this, new ConectorFS());
-            _orquestador.Inicializar();
+            _ = _orquestador.Inicializar();
         }
 
         public void CheckearSensores()
         {
-            _orquestador.Inicializar();  //si fallo la primera vez reintento
+            _ = _orquestador.Inicializar();  //si fallo la primera vez reintento
         }
         
         public void NuevaSimulacion()
         {
-            _orquestador.NuevaSimulacion();  //si fallo la primera vez reintento
+            _ = _orquestador.NuevaSimulacion();  //si fallo la primera vez reintento
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace LumbApp.GUI
 
         public void FinalizarSimulacion()
         {
-            _orquestador.TerminarSimulacion();
+            _ = _orquestador.TerminarSimulacion();
             ResultadosSimulacionPage = new ResultadosSimulacion(this);
             MainWindow.NavigationService.Navigate(ResultadosSimulacionPage);
         }

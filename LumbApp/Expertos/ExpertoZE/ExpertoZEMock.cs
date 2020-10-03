@@ -40,7 +40,7 @@ namespace LumbApp.Expertos.ExpertoZE
             manoIzquierda = new Mano();
 
             if (shouldInit)
-                simulateAsync();
+                _ = simulateAsync();
             return shouldInit;
         }
 

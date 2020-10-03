@@ -20,7 +20,7 @@ namespace LumbApp.Conectores.ConectorSI {
         public void ActivarSensado () {
             sensando = shouldInit;
             if (sensando)
-                simulateAsync();
+                _ = simulateAsync();
         }
         public void Desconectar () { }
         public void PausarSensado () { sensando = false; }
