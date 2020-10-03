@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace LumbApp.Conectores.ConectorSI {
     public class ConectorSIMock : IConectorSI {
         private bool sensando = false;
-        private bool shouldInit;
+        private readonly bool shouldInit;
 
         public event EventHandler<DatosSensadosEventArgs> HayDatos;
 

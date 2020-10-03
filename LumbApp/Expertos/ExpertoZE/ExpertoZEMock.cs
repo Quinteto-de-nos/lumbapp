@@ -11,7 +11,7 @@ namespace LumbApp.Expertos.ExpertoZE
     {
         public event EventHandler<CambioZEEventArgs> CambioZE;
 
-        private bool shouldInit;
+        private readonly bool shouldInit;
         private bool simulando;
         private ZonaEsteril zonaEsteril;
         private Mano manoDerecha;
