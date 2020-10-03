@@ -53,10 +53,9 @@ namespace LumbApp.Orquestador
 
 		}
 
-		public void SetDatosDeSimulacion(Models.DatosPracticante datosPracticante, ModoSimulacion modo)
+		public void SetDatosDeSimulacion(DatosPracticante datosPracticante, ModoSimulacion modo)
 		{
 			this.datosPracticante = datosPracticante;
-		
 			this.modoSeleccionado = modo;
 		}
 
@@ -65,11 +64,8 @@ namespace LumbApp.Orquestador
 		/// 
 		/// </summary>
 		public void IniciarSimulacion () {
-
-			expertoZE.IniciarSimulacion();
-
+			expertoZE.IniciarSimulacion(new Video("D:\\Leyluchy\\Documents\\LumbApp\\test.mp4"));
 			expertoSI.IniciarSimulacion();
-
 
 			if(modoSeleccionado == ModoSimulacion.ModoGuiado)
 				IGUIController.IniciarSimulacionModoGuiado();
@@ -124,7 +120,6 @@ namespace LumbApp.Orquestador
 		/// </summary>
 		public async Task TerminarSimulacion() { //Funcion llamada por la GUI, devuelve void, respuesta por evento
 												 //ExpertoZE.terminarSimulacion()
-
 			InformeZE informeZE = expertoZE.TerminarSimulacion();
 			InformeSI informeSI = expertoSI.TerminarSimulacion();
 
@@ -134,7 +129,7 @@ namespace LumbApp.Orquestador
 			bool pdfGenerado = true; //Guardar informe en archivo
 
 			// Esta linea guarda el video de la kinect. TODO: mover a donde corresponda
-			informeZE.Video.Save("D:\\Leyluchy\\Documents\\LumbApp\\test.mp4");
+			informeZE.Video.Save();
 
 			Informe informeFinal = CrearInformeFinal(informeZE, informeSI, pdfGenerado);
 			IGUIController.MostrarResultados(informeFinal);

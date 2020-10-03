@@ -1,7 +1,6 @@
 ﻿using Accord.Video.FFMPEG;
 using Microsoft.Kinect;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
@@ -16,18 +15,18 @@ namespace LumbApp.Expertos.ExpertoZE
         private VideoFileWriter writer;
         private Bitmap bitmap;
 
-        internal Video()
+        public Video(string path)
         {
             bitmap = new Bitmap(width, height, PixelFormat.Format32bppRgb);
             writer = new VideoFileWriter();
-            writer.Open("D:\\Leyluchy\\Documents\\LumbApp\\test.mp4", width, height, 30, VideoCodec.MPEG4);
+            writer.Open(path, width, height, 30, VideoCodec.MPEG4);
         }
 
         /// <summary>
         /// Agrega un nuevo frame al video.
         /// </summary>
         /// <param name="frame">Frame de la camara de color de la kinect</param>
-        internal void addFrame(ColorImageFrame frame)
+        public void addFrame(ColorImageFrame frame)
         {
             ImageToBitmap(frame);
             writer.WriteVideoFrame(bitmap);
@@ -37,10 +36,9 @@ namespace LumbApp.Expertos.ExpertoZE
         /// Procesa la lista de frames que tiene, encodea el video y lo guarda.
         /// </summary>
         /// <param name="path">Path completo, con nombre de archivo y extension mp4</param>
-        public void Save(string path)
+        public void Save()
         {
             writer.Close();
-            //Console.WriteLine("Video guardado en " + path);
         }
 
         private void ImageToBitmap(ColorImageFrame Image)
