@@ -81,7 +81,7 @@ namespace UnitTestLumbapp {
             orq.SetDatosDeSimulacion(new Mock<LumbApp.Models.DatosPracticante>().Object, LumbApp.Enums.ModoSimulacion.ModoEvaluacion);
             orq.IniciarSimulacion();
             expSI.Verify(x => x.IniciarSimulacion(), Times.Once);
-            expZE.Verify(x => x.IniciarSimulacion(), Times.Once);
+            expZE.Verify(x => x.IniciarSimulacion(It.IsAny<IVideo>()), Times.Once);
             gui.Verify(x => x.IniciarSimulacionModoEvaluacion(), Times.Once);
         }
 
@@ -104,7 +104,7 @@ namespace UnitTestLumbapp {
             orq.SetDatosDeSimulacion(new Mock<LumbApp.Models.DatosPracticante>().Object, LumbApp.Enums.ModoSimulacion.ModoGuiado);
             orq.IniciarSimulacion();
             expSI.Verify(x => x.IniciarSimulacion(), Times.Once);
-            expZE.Verify(x => x.IniciarSimulacion(), Times.Once);
+            expZE.Verify(x => x.IniciarSimulacion(It.IsAny<IVideo>()), Times.Once);
             gui.Verify(x => x.IniciarSimulacionModoGuiado(), Times.Once);
         }
 
@@ -128,7 +128,7 @@ namespace UnitTestLumbapp {
             orq.SetDatosDeSimulacion(new Mock<LumbApp.Models.DatosPracticante>().Object, LumbApp.Enums.ModoSimulacion.ModoEvaluacion);
             orq.IniciarSimulacion();
             expSI.Verify(x => x.IniciarSimulacion(), Times.Once);
-            expZE.Verify(x => x.IniciarSimulacion(), Times.Once);
+            expZE.Verify(x => x.IniciarSimulacion(It.IsAny<IVideo>()), Times.Once);
             gui.Verify(x => x.IniciarSimulacionModoEvaluacion(), Times.Once);
 
             orq.TerminarSimulacion();

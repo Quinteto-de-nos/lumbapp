@@ -86,8 +86,9 @@ namespace UnitTestLumbapp.Experto_ZE
         {
             Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
             ExpertoZE exp = new ExpertoZE(conn.Object, newCalibracion());
+            Mock<IVideo> video = new Mock<IVideo>();
 
-            bool init = exp.IniciarSimulacion();
+            bool init = exp.IniciarSimulacion(video.Object);
             Assert.AreEqual(false, init);
         }
 
@@ -97,15 +98,13 @@ namespace UnitTestLumbapp.Experto_ZE
         [TestMethod]
         public void IniciarOK()
         {
+            var videoMock = new Mock<IVideo>();
             Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
             ExpertoZE exp = new ExpertoZE(conn.Object, newCalibracion());
             exp.Inicializar();
-            try { 
-                bool init = exp.IniciarSimulacion();
+
+                bool init = exp.IniciarSimulacion(videoMock.Object);
                 Assert.AreEqual(true, init);
-            } catch(System.IO.FileNotFoundException ex){
-                //Problema entre System.Drawing para LumbApp y System.Drawing.Common para UnitTest
-            }
         }
 
         /// <summary>
