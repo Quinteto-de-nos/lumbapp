@@ -70,11 +70,12 @@ namespace LumbApp.Expertos.ExpertoZE
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "No pude inicializar el Experto en Zona Esteril por error con la Kinect");
+                Console.WriteLine("ZE: No pude inicializar el Experto en Zona Esteril por error con la Kinect. Error: " + ex);
                 inicializado = false;
                 return false;
             }
             inicializado = true;
+            Console.WriteLine("ZE: Inicializado");
             return true;
         }
 
@@ -87,13 +88,17 @@ namespace LumbApp.Expertos.ExpertoZE
         public bool IniciarSimulacion()
         {
             if (!inicializado || zonaEsteril == null)
+            {
+                Console.WriteLine("ZE: No pude iniciar la simulación. Inicialice primero");
                 return false;
+            }
 
             manoDerecha = new Mano();
             manoIzquierda = new Mano();
             zonaEsteril.Resetear();
             videoWriter = new Video();
             simulando = true;
+            Console.WriteLine("ZE: Simulación iniciada");
             return true;
         }
 
@@ -108,7 +113,7 @@ namespace LumbApp.Expertos.ExpertoZE
             if (!simulando)
                 return new InformeZE(0, 0, 0, videoWriter);
 
-            Console.WriteLine("Terminando simulacion ZE");
+            Console.WriteLine("ZE: Simulación terminada");
             simulando = false;
             return new InformeZE(zonaEsteril.Contaminacion, manoDerecha.VecesContamino, manoIzquierda.VecesContamino, videoWriter);
         }
@@ -120,6 +125,7 @@ namespace LumbApp.Expertos.ExpertoZE
         {
             kinect.Desconectar();
             simulando = false;
+            Console.WriteLine("ZE: Finalizado");
         }
         #endregion
 
