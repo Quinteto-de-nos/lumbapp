@@ -10,11 +10,14 @@ namespace LumbApp.Expertos.ExpertoZE
 {
     public class Video : IVideo
     {
-        private List<BitmapData> frames;
+        //private List<BitmapData> frames;
+        VideoFileWriter writer;
 
         internal Video()
         {
-            frames = new List<BitmapData>();
+            //frames = new List<BitmapData>();
+            writer = new VideoFileWriter();
+            writer.Open("D:\\Leyluchy\\Documents\\LumbApp\\test.mp4", 640, 480, 30, VideoCodec.MPEG4);
         }
 
         /// <summary>
@@ -23,14 +26,7 @@ namespace LumbApp.Expertos.ExpertoZE
         /// <param name="frame">Frame de la camara de color de la kinect</param>
         internal void addFrame(ColorImageFrame frame)
         {
-            try
-            {
-                frames.Add(ImageToBitmap(frame));
-            } catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-            
+            writer.WriteVideoFrame(ImageToBitmap(frame));
         }
 
         /// <summary>
@@ -39,15 +35,11 @@ namespace LumbApp.Expertos.ExpertoZE
         /// <param name="path">Path completo, con nombre de archivo y extension mp4</param>
         public void Save(string path)
         {
-            VideoFileWriter writer = new VideoFileWriter();
-            writer.Open(path, 640, 480, 30, VideoCodec.MPEG4);
-            foreach (var frame in frames)
-                writer.WriteVideoFrame(frame);
             writer.Close();
-            Console.WriteLine("Video guardado en " + path);
+            //Console.WriteLine("Video guardado en " + path);
         }
 
-        private BitmapData ImageToBitmap(ColorImageFrame Image)
+        private Bitmap ImageToBitmap(ColorImageFrame Image)
         {
             byte[] pixeldata = new byte[Image.PixelDataLength];
             Image.CopyPixelDataTo(pixeldata);
@@ -63,7 +55,7 @@ namespace LumbApp.Expertos.ExpertoZE
             Marshal.Copy(pixeldata, 0, ptr, Image.PixelDataLength);
             bmap.UnlockBits(bmapdata);
 
-            return bmapdata;
+            return bmap;
         }
     }
 }
