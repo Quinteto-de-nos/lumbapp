@@ -11,13 +11,16 @@ namespace LumbApp.Expertos.ExpertoZE
     public class Video : IVideo
     {
         //private List<BitmapData> frames;
-        VideoFileWriter writer;
+        private const int width = 640;
+        private const int height = 480;
+        private VideoFileWriter writer;
+        private Bitmap bitmap;
 
         internal Video()
         {
-            //frames = new List<BitmapData>();
+            bitmap = new Bitmap(width, height, PixelFormat.Format32bppRgb);
             writer = new VideoFileWriter();
-            writer.Open("D:\\Leyluchy\\Documents\\LumbApp\\test.mp4", 640, 480, 30, VideoCodec.MPEG4);
+            writer.Open("D:\\Leyluchy\\Documents\\LumbApp\\test.mp4", width, height, 30, VideoCodec.MPEG4);
         }
 
         /// <summary>
@@ -26,7 +29,8 @@ namespace LumbApp.Expertos.ExpertoZE
         /// <param name="frame">Frame de la camara de color de la kinect</param>
         internal void addFrame(ColorImageFrame frame)
         {
-            writer.WriteVideoFrame(ImageToBitmap(frame));
+            ImageToBitmap(frame);
+            writer.WriteVideoFrame(bitmap);
         }
 
         /// <summary>
@@ -39,23 +43,20 @@ namespace LumbApp.Expertos.ExpertoZE
             //Console.WriteLine("Video guardado en " + path);
         }
 
-        private Bitmap ImageToBitmap(ColorImageFrame Image)
+        private void ImageToBitmap(ColorImageFrame Image)
         {
             byte[] pixeldata = new byte[Image.PixelDataLength];
             Image.CopyPixelDataTo(pixeldata);
 
-            Bitmap bmap = new Bitmap(Image.Width, Image.Height, PixelFormat.Format32bppRgb);
-            BitmapData bmapdata = bmap.LockBits(
+            BitmapData bmapdata = bitmap.LockBits(
                 new Rectangle(0, 0, Image.Width, Image.Height),
                 ImageLockMode.WriteOnly,
-                bmap.PixelFormat);
+                bitmap.PixelFormat);
             
             IntPtr ptr = bmapdata.Scan0;
 
             Marshal.Copy(pixeldata, 0, ptr, Image.PixelDataLength);
-            bmap.UnlockBits(bmapdata);
-
-            return bmap;
+            bitmap.UnlockBits(bmapdata);
         }
     }
 }
