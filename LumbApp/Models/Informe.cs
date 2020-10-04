@@ -50,8 +50,8 @@ namespace LumbApp.Models
             DatosPractica.Add("Punciones Duramadre", Convert.ToString(informeSI.Duramadre));
             DatosPractica.Add("Camino Correcto", Convert.ToString(informeSI.CaminoCorrecto));
             DatosPractica.Add("Camino Incorrecto", Convert.ToString(informeSI.CaminoIncorrecto));
-            DatosPractica.Add("Tiempo Total", (tiempoTotalDeEjecucion.Hours + ":" +
-                tiempoTotalDeEjecucion.Minutes + ":" + tiempoTotalDeEjecucion.Seconds));
+            DatosPractica.Add("Tiempo Total", string.Format("{0:D2}:{1:D2}:{2:D2}",
+                tiempoTotalDeEjecucion.Hours, tiempoTotalDeEjecucion.Minutes, tiempoTotalDeEjecucion.Seconds));
         }
     }
 }

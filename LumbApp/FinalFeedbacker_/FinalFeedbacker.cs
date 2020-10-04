@@ -105,8 +105,9 @@ namespace LumbApp.FinalFeedbacker_ {
                 columnaEmail = new PdfPCell(new Phrase(_datosPracticante.Email, _standardFont));
                 columnaEmail.BorderWidth = 0;
 
-                string fechaString = (_fecha.Year.ToString() + "/" + _fecha.Month.ToString() +
-                    "/" + _fecha.Day.ToString() + " " + _fecha.Hour.ToString() + ":" + _fecha.Minute.ToString());
+                string fechaString = string.Format("{0:D2}/{1:D2}/{2:D2} {3:D2}:{4:D2}",
+                _fecha.Year.ToString(), _fecha.Month.ToString(), _fecha.Day.ToString(),
+                _fecha.Hour.ToString(), _fecha.Minute.ToString());
 
                 columnaFecha = new PdfPCell(new Phrase(fechaString, _standardFont));
                 columnaFecha.BorderWidth = 0;
