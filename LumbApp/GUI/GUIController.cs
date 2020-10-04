@@ -112,6 +112,7 @@ namespace LumbApp.GUI
         //TO DO
         public void MostrarCambioSI(CambioSIEventArgs e)
         { //TO DO
+            e.MostrarCambios();
         }
 
         public void FinalizarSimulacion()
