@@ -1,10 +1,6 @@
-﻿using LumbApp.Conectores.ConectorKinect;
-using LumbApp.Conectores.ConectorSI;
+﻿using LumbApp.Conectores.ConectorSI;
 using LumbApp.Expertos.ExpertoSI.Utils;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace LumbApp.Expertos.ExpertoSI {
     public class ExpertoSI : IExpertoSI{
@@ -50,9 +46,11 @@ namespace LumbApp.Expertos.ExpertoSI {
                 if (sensoresInternos.Conectar())
                     _comunicacionCheckeada = sensoresInternos.CheckearComunicacion();
             } catch {
+                Console.WriteLine("SI: No pude inicializar el Experto en Sensores internos por error con el Arduino");
                 return false;
             }
-            
+
+            Console.WriteLine("SI: Inicializado");
             return _comunicacionCheckeada;
         }
 
@@ -64,6 +62,7 @@ namespace LumbApp.Expertos.ExpertoSI {
             if (_comunicacionCheckeada) {
                 _simulando = true;
                 sensoresInternos.ActivarSensado();
+                Console.WriteLine("SI: Simulación iniciada");
             }
 
             return _simulando;
@@ -77,6 +76,7 @@ namespace LumbApp.Expertos.ExpertoSI {
                 _comunicacionCheckeada = false;
                 sensoresInternos.Desconectar();
             }
+            Console.WriteLine("SI: Finalizado");
         }
 
         public InformeSI TerminarSimulacion () {
@@ -84,7 +84,6 @@ namespace LumbApp.Expertos.ExpertoSI {
                 return new InformeSI(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
             _simulando = false;
-
             sensoresInternos.PausarSensado();
 
             InformeSI informe = new InformeSI(TejidoAdiposo.VecesAtravesada, L2.VecesRozada, L3.VecesArriba, L3.VecesAbajo,
@@ -92,7 +91,7 @@ namespace LumbApp.Expertos.ExpertoSI {
                 Duramadre.VecesAtravesada, VecesCaminoCorrecto, VecesCaminoIncorrecto);
 
             Resetear();
-
+            Console.WriteLine("SI: Simulación terminada");
             return informe;
         }
 
