@@ -124,7 +124,7 @@ namespace LumbApp.FinalFeedbacker_ {
                 doc.Add(Chunk.NEWLINE);
 
                 #region Datos de la practica
-                Chunk chEstadisticas = new Chunk("Información del alumno", fuenteTitulos);
+                Chunk chEstadisticas = new Chunk("Información de la práctica", fuenteTitulos);
                 chEstadisticas.SetBackground(backgroundTitulos);
                 doc.Add(new Paragraph(chEstadisticas));
                 
