@@ -22,14 +22,15 @@ namespace LumbApp.Conectores.ConectorSI {
 
         public bool Conectar () {
             try {
-                mySerialPort = new SerialPort(DetectarArduinoPort());
-
-                mySerialPort.BaudRate = 9600;
-                mySerialPort.Parity = Parity.None;
-                mySerialPort.StopBits = StopBits.One;
-                mySerialPort.DataBits = 8;
-                mySerialPort.Handshake = Handshake.None;
-                mySerialPort.RtsEnable = true;
+                mySerialPort = new SerialPort(DetectarArduinoPort())
+                {
+                    BaudRate = 9600,
+                    Parity = Parity.None,
+                    StopBits = StopBits.One,
+                    DataBits = 8,
+                    Handshake = Handshake.None,
+                    RtsEnable = true
+                };
 
                 mySerialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
 
@@ -83,10 +84,7 @@ namespace LumbApp.Conectores.ConectorSI {
         /// Recibe los datos de cada puerto a traves de  la clase DatosSensadosEventArgs.
         /// </param>
         protected virtual void SiHayDatos (DatosSensadosEventArgs datosDelEvento) {
-            EventHandler<DatosSensadosEventArgs> handler = HayDatos;
-            if (handler != null) {
-                handler(this, datosDelEvento);
-            }
+            HayDatos?.Invoke(this, datosDelEvento);
         }
 
         public virtual void DataReceivedHandler (object sender, SerialDataReceivedEventArgs e) {

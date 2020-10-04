@@ -24,8 +24,8 @@ namespace LumbApp.GUI
         public string Text { get { return GetValue(TextProperty) as string; } set { SetValue(TextProperty, value); } }
         public string Description { get { return GetValue(DescriptionProperty) as string; } set { SetValue(DescriptionProperty, value); } }
         
-        private Regex regexApYN = new Regex("^[a-zA-ZñÑ ]*$");
-        private Regex regexMail = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+        private readonly Regex regexApYN = new Regex("^[a-zA-ZñÑ ]*$");
+        private readonly Regex regexMail = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
         private bool dniValido;
         private bool nombreValido;
         private bool apellidoValido;
@@ -46,11 +46,13 @@ namespace LumbApp.GUI
         /// <returns></returns>
         public DatosPracticante ProcesarDatos()
         {
-            DatosPracticante datosPracticante = new DatosPracticante();
-            datosPracticante.Nombre = Nombre.Text;
-            datosPracticante.Apellido = Apellido.Text;
-            datosPracticante.Dni = Int32.Parse( Dni.Text );
-            datosPracticante.FolderPath = FolderPath.Content.ToString();
+            DatosPracticante datosPracticante = new DatosPracticante
+            {
+                Nombre = Nombre.Text,
+                Apellido = Apellido.Text,
+                Dni = Int32.Parse(Dni.Text),
+                FolderPath = FolderPath.Content.ToString()
+            };
             return datosPracticante;
         }
 

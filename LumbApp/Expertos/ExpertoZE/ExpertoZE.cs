@@ -13,10 +13,8 @@ namespace LumbApp.Expertos.ExpertoZE
         /// </summary>
         public event EventHandler<CambioZEEventArgs> CambioZE;
 
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-
-        private IConectorKinect kinect;
-        private ZonaEsteril zonaEsteril;
+        private readonly IConectorKinect kinect;
+        private readonly ZonaEsteril zonaEsteril;
 
         private Mano manoDerecha;
         private Mano manoIzquierda;

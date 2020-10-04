@@ -4,14 +4,14 @@ using System;
 
 namespace LumbApp.Expertos.ExpertoSI {
     public class ExpertoSI : IExpertoSI{
-        private IConectorSI sensoresInternos;
+        private readonly IConectorSI sensoresInternos;
 
-        private Capa TejidoAdiposo = new Capa();
-        private Vertebra L2 = new Vertebra();
-        private VertebraL3 L3 = new VertebraL3();
-        private VertebraL4 L4 = new VertebraL4();
-        private Vertebra L5 = new Vertebra();
-        private Capa Duramadre = new Capa();
+        private readonly Capa TejidoAdiposo = new Capa();
+        private readonly Vertebra L2 = new Vertebra();
+        private readonly VertebraL3 L3 = new VertebraL3();
+        private readonly VertebraL4 L4 = new VertebraL4();
+        private readonly Vertebra L5 = new Vertebra();
+        private readonly Capa Duramadre = new Capa();
 
         private bool AhoraTejidoAdiposo = false;
         private bool AhoraL2 = false;
@@ -129,10 +129,7 @@ namespace LumbApp.Expertos.ExpertoSI {
         /// Recibe los datos del Regsitro de Estado actual y el anterior a traves de la clase CambioSIEventArgs.
         /// </param>
         protected virtual void HayCambioSI (CambioSIEventArgs datosCambioSI) {
-            EventHandler<CambioSIEventArgs> handler = CambioSI;
-            if (handler != null) {
-                handler(this, datosCambioSI);
-            }
+            CambioSI?.Invoke(this, datosCambioSI);
         }
 
         /// <summary>
