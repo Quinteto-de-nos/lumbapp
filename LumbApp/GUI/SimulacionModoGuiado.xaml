@@ -9,6 +9,32 @@
       d:DesignHeight="800" d:DesignWidth="1420"
       Title="LumbApp">
 
+    <Page.Resources>
+        <!--BUTTONS STYLE-->
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#009960"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#008252"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#8eeecb"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#005c3a"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20*"/>
@@ -251,12 +277,12 @@
                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                  Margin="30,70,10,10"
                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                Background="#009960" Foreground="White"  BorderThickness="0"
+                Foreground="White"  BorderThickness="0"
                 FontSize="26" FontWeight="Regular"
                 Click="FinalizarSimulacion_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="20"/>
+                    <Setter Property="CornerRadius" Value="35"/>
                 </Style>
             </Button.Resources>
             FINALIZAR SIMULACION

@@ -9,7 +9,32 @@
       d:DesignHeight="800" d:DesignWidth="1420"
       Title="LumbApp"
       Loaded="Page_Loaded">
-
+    <Page.Resources>
+        <!--BUTTONS STYLE-->
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#009960"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#008252"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#8eeecb"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#005c3a"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="90*"/>
@@ -172,14 +197,15 @@
         </Border>
         <!--Saltear Preparacion Button -->
         <Button Grid.Row="5" Grid.Column="7" Grid.ColumnSpan="3"
-                 Width="300" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Stretch"
+                 Width="300" Padding="5" 
+                HorizontalAlignment="Center" VerticalAlignment="Stretch"
                HorizontalContentAlignment="Center" 
-                Background="#009960" Foreground="White"  BorderThickness="0"
+                Foreground="White"  BorderThickness="0"
                 FontSize="20" FontWeight="Regular"
           Name="SaltearButton"  Click="SaltearButton_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="20"/>
+                    <Setter Property="CornerRadius" Value="35"/>
                 </Style>
             </Button.Resources>
             SALTEAR PREPARACIÓN
