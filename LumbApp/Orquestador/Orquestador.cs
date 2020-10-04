@@ -45,9 +45,9 @@ namespace LumbApp.Orquestador
 				//Acá debería haber un nuevo mensaje por pantalla que me permita quitar las app, esto es incluso antes de la inicialización, asíq ue no puedo reintentar.
 				throw new Exception("Error al tratar de cargar el archivo de calibracion.");
 			}
-			var conectorKinect = new ConectorKinect();
-			expertoZE = new ExpertoZE(conectorKinect, calibracion);
-			//expertoZE = new ExpertoZEMock(true);
+			//var conectorKinect = new ConectorKinect();
+			//expertoZE = new ExpertoZE(conectorKinect, calibracion);
+			expertoZE = new ExpertoZEMock(true);
 
 			//var conectorSI = new ConectorSI();
 			//expertoSI = new ExpertoSI(conectorSI);
