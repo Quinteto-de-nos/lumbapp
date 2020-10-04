@@ -193,8 +193,7 @@ namespace LumbApp.Expertos.ExpertoZE
         private bool processHand(Joint joint, Mano mano, CambioZEEventArgs eventArgs)
         {
             //Tracking
-            bool cambioTrack = false;
-            cambioTrack = mano.ActualizarTrack(joint.TrackingState == JointTrackingState.Tracked);
+            bool cambioTrack = mano.ActualizarTrack(joint.TrackingState == JointTrackingState.Tracked);
             if (mano.Track == Mano.Tracking.Perdido)
                 return cambioTrack;
 
