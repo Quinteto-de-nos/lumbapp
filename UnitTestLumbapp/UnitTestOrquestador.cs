@@ -197,7 +197,7 @@ namespace UnitTestLumbapp {
         }
 
         [TestMethod]
-        public void TestInformeCorrecto()
+        public async Task TestInformeCorrectoAsync()
         {
             Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
             Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
@@ -210,7 +210,7 @@ namespace UnitTestLumbapp {
             orq.SetExpertoSI(expSI.Object);
             orq.SetExpertoZE(expZE.Object);
 
-            orq.Inicializar();
+            await orq.Inicializar();
 
             DatosPracticante dp = new DatosPracticante();
             dp.Dni = 39879304;
@@ -222,12 +222,12 @@ namespace UnitTestLumbapp {
             orq.IniciarSimulacion();
 
             InformeSI informeSI = new InformeSI(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
-            Mock<IVideo> video = new Mock<IVideo>();
-            InformeZE informeZE = new InformeZE(1, 2, 3, video.Object);
+            InformeZE informeZE = new InformeZE(1, 2, 3, new Mock<IVideo>().Object);
             expSI.Setup(x => x.TerminarSimulacion()).Returns(informeSI);
             expZE.Setup(x => x.TerminarSimulacion()).Returns(informeZE);
+            await Task.Delay(1000); //Para que el tiempo de simulacion no de 0 segundos
 
-            orq.TerminarSimulacion();
+            await orq.TerminarSimulacion();
 
             var arg = new ArgumentCaptor<Informe>();
             gui.Verify(x => x.MostrarResultados(arg.Capture()), Times.Once);
