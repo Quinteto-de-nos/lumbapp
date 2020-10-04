@@ -136,7 +136,7 @@ namespace LumbApp.Orquestador
 				informeSI, informeZE, tiempoTotalDeEjecucion
 				);
 
-			ffb = new FinalFeedbacker((ruta + ".pdf"), datosPracticante, informeFinal.DatosPractica, tiempoFinal);
+			ffb = new FinalFeedbacker(ruta + ".pdf", datosPracticante, informeFinal.DatosPractica, tiempoFinal);
 			informeFinal.SetPdfGenerado(ffb.GenerarPDF());
 			informeZE.Video.Save();
 
