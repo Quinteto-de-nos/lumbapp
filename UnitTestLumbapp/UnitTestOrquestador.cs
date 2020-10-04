@@ -162,7 +162,8 @@ namespace UnitTestLumbapp {
             orq.IniciarSimulacion();
 
             InformeSI informeSI = new InformeSI(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
-            InformeZE informeZE = new InformeZE(1, 2, 3);
+            Mock<IVideo> video = new Mock<IVideo>();
+            InformeZE informeZE = new InformeZE(1, 2, 3, video.Object);
             expSI.Setup(x => x.TerminarSimulacion()).Returns(informeSI);
             expZE.Setup(x => x.TerminarSimulacion()).Returns(informeZE);
 
@@ -196,7 +197,8 @@ namespace UnitTestLumbapp {
             orq.IniciarSimulacion();
 
             InformeSI informeSI = new InformeSI(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
-            InformeZE informeZE = new InformeZE(1, 2, 3);
+            Mock<IVideo> video = new Mock<IVideo>();
+            InformeZE informeZE = new InformeZE(1, 2, 3, video.Object);
             expSI.Setup(x => x.TerminarSimulacion()).Returns(informeSI);
             expZE.Setup(x => x.TerminarSimulacion()).Returns(informeZE);
 
@@ -209,22 +211,22 @@ namespace UnitTestLumbapp {
             Assert.AreEqual(dp.Nombre, informe.Nombre);
             Assert.AreEqual(dp.Apellido, informe.Apellido);
             Assert.AreEqual(dp.FolderPath, informe.FolderPath);
-            Assert.AreEqual(informeZE.ManoDerecha, informe.ManoDerecha);
-            Assert.AreEqual(informeZE.ManoIzquierda, informe.ManoIzquierda);
-            Assert.AreEqual(informeZE.Zona, informe.Zona);
-            Assert.AreEqual(informeSI.TejidoAdiposo, informe.TejidoAdiposo);
-            Assert.AreEqual(informeSI.L5, informe.L5);
-            Assert.AreEqual(informeSI.L4ArribaIzquierda, informe.L4ArribaIzquierda);
-            Assert.AreEqual(informeSI.L4ArribaDerecha, informe.L4ArribaDerecha);
-            Assert.AreEqual(informeSI.L4ArribaCentro, informe.L4ArribaCentro);
-            Assert.AreEqual(informeSI.L4Abajo, informe.L4Abajo);
-            Assert.AreEqual(informeSI.L3Arriba, informe.L3Arriba);
-            Assert.AreEqual(informeSI.L3Abajo, informe.L3Abajo);
-            Assert.AreEqual(informeSI.L2, informe.L2);
-            Assert.AreEqual(informeSI.Duramadre, informe.Duramadre);
-            Assert.AreEqual(informeSI.CaminoIncorrecto, informe.caminoIncorrecto);
-            Assert.AreEqual(informeSI.CaminoCorrecto, informe.caminoCorrecto);
-            Assert.AreNotEqual(TimeSpan.Zero, informe.TiempoTotalDeEjecucion);
+            Assert.AreEqual(informeZE.ManoDerecha, informe.DatosPractica["Contaminaciones Mano Derecha"]);
+            Assert.AreEqual(informeZE.ManoIzquierda, informe.DatosPractica["Contaminaciones Mano Izquierda"]);
+            Assert.AreEqual(informeZE.Zona, informe.DatosPractica["Contaminaciones Zona"]);
+            Assert.AreEqual(informeSI.TejidoAdiposo, informe.DatosPractica["Punciones Tejido Adiposo"]);
+            Assert.AreEqual(informeSI.L5, informe.DatosPractica["Roces L5"]);
+            Assert.AreEqual(informeSI.L4ArribaIzquierda, informe.DatosPractica["Roces L4 Arriba Izquierda"]);
+            Assert.AreEqual(informeSI.L4ArribaDerecha, informe.DatosPractica["Roces L4 Arriba Derecha"]);
+            Assert.AreEqual(informeSI.L4ArribaCentro, informe.DatosPractica["Roces L4 Arriba Centro"]);
+            Assert.AreEqual(informeSI.L4Abajo, informe.DatosPractica["Roces L4 Abajo"]);
+            Assert.AreEqual(informeSI.L3Arriba, informe.DatosPractica["Roces L3 Arriba"]);
+            Assert.AreEqual(informeSI.L3Abajo, informe.DatosPractica["Roces L3 Abajo"]);
+            Assert.AreEqual(informeSI.L2, informe.DatosPractica["Roces L2"]);
+            Assert.AreEqual(informeSI.Duramadre, informe.DatosPractica["Punciones Duramadre"]);
+            Assert.AreEqual(informeSI.CaminoIncorrecto, informe.DatosPractica["Camino Incorrecto"]);
+            Assert.AreEqual(informeSI.CaminoCorrecto, informe.DatosPractica["Camino Correcto"]);
+            Assert.AreNotEqual(TimeSpan.Zero, informe.DatosPractica["Tiempo Total"]);
             Assert.IsTrue(informe.PdfGenerado);
         }
 
