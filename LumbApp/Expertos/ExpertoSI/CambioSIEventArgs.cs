@@ -69,6 +69,14 @@ namespace LumbApp.Expertos.ExpertoSI {
 
             this.CaminoIncorrecto = CaminoIncorrecto;
         }
-        
+
+        public void MostrarCambios () {
+            Console.WriteLine("Tejido Adiposo:  Estado: " + TejidoAdiposo.Estado + "    Veces Atravesada: " + TejidoAdiposo.VecesAtravesada);
+            Console.WriteLine("L2:  Estado: " + L2.Estado + "    Veces Rozada: " + L2.VecesRozada);
+            Console.WriteLine("L3:  Estado: " + L3.Estado + "    Veces Rozada: " + L3.VecesRozada + "   Sector: " + L3.Sector);
+            Console.WriteLine("L4:  Estado: " + L4.Estado + "    Veces Rozada: " + L4.VecesRozada + "   Sector: " + L4.Sector);
+            Console.WriteLine("L5:  Estado: " + L5.Estado + "    Veces Rozada: " + L5.VecesRozada);
+            Console.WriteLine("Duramadre:  Estado: " + Duramadre.Estado + "    Veces: " + Duramadre.VecesAtravesada);
+        }
     }
 }
