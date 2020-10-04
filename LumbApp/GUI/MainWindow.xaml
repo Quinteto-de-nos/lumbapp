@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="LumbApp" Height="800" Width="1420"
         WindowStyle="None" ResizeMode="NoResize"  
-    WindowStartupLocation="CenterScreen" WindowState="Maximized"
+    WindowStartupLocation="CenterScreen" <!--WindowState="Maximized"-->
         Source="SensorsCheck.xaml"
         ShowsNavigationUI="False"
         Loaded="Window_Loaded">
