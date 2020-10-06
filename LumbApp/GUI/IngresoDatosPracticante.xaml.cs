@@ -43,7 +43,11 @@ namespace LumbApp.GUI
         }
 
         private Regex regexApYN = new Regex("^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$");
-        private Regex regexMail = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+        //@ escapa toda la string que sigue, no necesitamos \\ para escribir una \
+        //Este mail acepta letras, numeros, -, _ y . en el nombre
+        //Acepta letras, numeros, _ y . en el dominio
+        //Debe terminar con . y 2 o 3 letras
+        private Regex regexMail = new Regex(@"^[\w\.\-]+@[\w\.]+\.\w{2,3}$");
         private bool dniValido;
         private bool nombreValido;
         private bool apellidoValido;
