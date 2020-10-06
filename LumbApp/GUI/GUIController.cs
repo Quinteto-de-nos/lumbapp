@@ -15,7 +15,8 @@ namespace LumbApp.GUI
         private SimulacionModoGuiado SimulacionModoGuiadoPage { get; set; }
         private ResultadosSimulacion ResultadosSimulacionPage { get; set; }
 
-        public GUIController(MainWindow mainWindow) {
+        public GUIController(MainWindow mainWindow)
+        {
 
             MainWindow = mainWindow;
         }
@@ -36,7 +37,7 @@ namespace LumbApp.GUI
         {
             _orquestador.Inicializar();  //si fallo la primera vez reintento
         }
-        
+
         public void NuevaSimulacion()
         {
             _orquestador.NuevaSimulacion();  //si fallo la primera vez reintento
@@ -74,7 +75,8 @@ namespace LumbApp.GUI
         /// <summary>
         /// Muestra los pasos de preparacion
         /// </summary>
-        private void MostrarPasosPreparacion() {
+        private void MostrarPasosPreparacion()
+        {
             PasosPreparacion pasosPreparacionPage = new PasosPreparacion(this);
             MainWindow.NavigationService.Navigate(pasosPreparacionPage);
         }
@@ -122,7 +124,7 @@ namespace LumbApp.GUI
             MainWindow.NavigationService.Navigate(ResultadosSimulacionPage);
         }
 
-        public void MostrarResultados( Informe informe )
+        public void MostrarResultados(Informe informe)
         {
             ResultadosSimulacionPage.MostrarResultados(informe);
         }
