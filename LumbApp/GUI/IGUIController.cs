@@ -9,7 +9,7 @@ namespace LumbApp.GUI
         void Inicializar();
         void CheckearSensores();
         void MostrarErrorDeConexion(string mensaje);
-        void SolicitarDatosPracticante(string folderPath);
+        void SolicitarDatosPracticante(DatosPracticante folderPath);
         void MostrarCambioZE(CambioZEEventArgs e);
         void MostrarCambioSI(CambioSIEventArgs e);
         void IniciarSimulacionModoEvaluacion();
