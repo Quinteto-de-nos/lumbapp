@@ -42,7 +42,7 @@ namespace LumbApp.GUI
             set { SetValue(DescriptionProperty, value); }
         }
 
-        private Regex regexApYN = new Regex("^[a-zA-ZñÑ ]*$");
+        private Regex regexApYN = new Regex("^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$");
         private Regex regexMail = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
         private bool dniValido;
         private bool nombreValido;
