@@ -166,7 +166,9 @@ namespace LumbApp.GUI
         public void MostrarCambioSI(CambioSIEventArgs e)
         {
             MostrarAlertas(e);
-            EntradasCapasLabel.Content = String.Format("{0} Tejido Adiposo" + Environment.NewLine + "{1} Duramadre", e.TejidoAdiposo.VecesAtravesada, e.Duramadre.VecesAtravesada);
+
+            EntradasCapasLabel.Content = String.Format(
+                "{0} Tejido Adiposo" + Environment.NewLine + "{1} Duramadre", e.TejidoAdiposo.VecesAtravesada, e.Duramadre.VecesAtravesada);
 
             //ATRAVIESA LA PIEL
             if (e.TejidoAdiposo.Estado == Capa.Estados.Atravesando || e.TejidoAdiposo.Estado == Capa.Estados.AtravesandoNuevamente)
@@ -180,7 +182,7 @@ namespace LumbApp.GUI
                 CapaActualLabel.Content = "NINGUNA";
             }
 
-            //ROZA UNA VERTEBRA
+            //ROZANDO L2
             if (e.L2.Estado == Vertebra.Estados.Rozando || e.L2.Estado == Vertebra.Estados.RozandoNuevamente)
             {
                 CapaActualLabel.Content = "LIGAMENTO INTERESPINOSO";
@@ -189,6 +191,7 @@ namespace LumbApp.GUI
                 L2SFrontImage.Source = new BitmapImage(new Uri(_capasFrontPath + "L2 adelante.png", UriKind.Absolute));
             }
 
+            //ROZANDO L3
             if (e.L3.Estado == Vertebra.Estados.Rozando || e.L3.Estado == Vertebra.Estados.RozandoNuevamente)
             {
                 CapaActualLabel.Content = "LIGAMENTO INTERESPINOSO";
@@ -211,7 +214,7 @@ namespace LumbApp.GUI
                 L3SideImage.Source = null;
             }
 
-
+            //ROZANDO L4
             if (e.L4.Estado == Vertebra.Estados.Rozando || e.L4.Estado == Vertebra.Estados.RozandoNuevamente)
             {
                 CapaActualLabel.Content = "LIGAMENTO INTERESPINOSO";
@@ -244,6 +247,15 @@ namespace LumbApp.GUI
             {
                 L4SideImage.Source = null;
                 L4FrontImage.Source = null;
+            }
+
+            //ROZANDO L5
+            if (e.L2.Estado == Vertebra.Estados.Rozando || e.L2.Estado == Vertebra.Estados.RozandoNuevamente)
+            {
+                CapaActualLabel.Content = "LIGAMENTO INTERESPINOSO";
+                RozandoLabel.Content = "L5";
+                L5SideImage.Source = new BitmapImage(new Uri(_capasSidePath + "L5 adelante.png", UriKind.Absolute));
+                L5FrontImage.Source = new BitmapImage(new Uri(_capasFrontPath + "L5 adelante.png", UriKind.Absolute));
             }
 
             //ATRAVIESA LA DURAMADRE
