@@ -8,9 +8,7 @@ using LumbApp.FinalFeedbacker_;
 using LumbApp.GUI;
 using LumbApp.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace LumbApp.Orquestador
@@ -24,13 +22,11 @@ namespace LumbApp.Orquestador
 		private DatosPracticante datosPracticante;
 		private ModoSimulacion modoSeleccionado;
 
-		private IConectorKinect conectorKinect;
-		private IConectorSI conectorSI;
-
 		private DateTime tiempoInicialDeEjecucion;
 		private TimeSpan tiempoTotalDeEjecucion;
 
 		private IFinalFeedbacker ffb;
+		private string ruta;
 
 		/// <summary>
 		/// Constructor del Orquestrador.
@@ -49,19 +45,18 @@ namespace LumbApp.Orquestador
 				//Acá debería haber un nuevo mensaje por pantalla que me permita quitar las app, esto es incluso antes de la inicialización, asíq ue no puedo reintentar.
 				throw new Exception("Error al tratar de cargar el archivo de calibracion.");
 			}
-			//conectorKinect = new ConectorKinect();
+			//var conectorKinect = new ConectorKinect();
 			//expertoZE = new ExpertoZE(conectorKinect, calibracion);
 			expertoZE = new ExpertoZEMock(true);
 
-			//conectorSI = new ConectorSI();
+			//var conectorSI = new ConectorSI();
 			//expertoSI = new ExpertoSI(conectorSI);
 			expertoSI = new ExpertoSIMock(true);
 		}
 
-		public void SetDatosDeSimulacion(Models.DatosPracticante datosPracticante, ModoSimulacion modo)
+		public void SetDatosDeSimulacion(DatosPracticante datosPracticante, ModoSimulacion modo)
 		{
 			this.datosPracticante = datosPracticante;
-		
 			this.modoSeleccionado = modo;
 		}
 
@@ -69,20 +64,18 @@ namespace LumbApp.Orquestador
 		/// IniciarSimulacion: Informa a los expertos que deben inicar el sensado.
 		/// 
 		/// </summary>
-		public void IniciarSimulacion () {
+		public void IniciarSimulacion ()
+		{
+			tiempoInicialDeEjecucion = DateTime.Now;
+			ruta = ObtenerRuta(tiempoInicialDeEjecucion);
 
-			expertoZE.IniciarSimulacion();
-
+			expertoZE.IniciarSimulacion(new Video(ruta + ".mp4"));
 			expertoSI.IniciarSimulacion();
-
 
 			if(modoSeleccionado == ModoSimulacion.ModoGuiado)
 				IGUIController.IniciarSimulacionModoGuiado();
 			else
 				IGUIController.IniciarSimulacionModoEvaluacion();
-
-			tiempoInicialDeEjecucion = DateTime.UtcNow;
-			
 		}
 
 		/// <summary>
@@ -128,14 +121,12 @@ namespace LumbApp.Orquestador
 		/// - Si el informe general se genero y guardo bien, levanta un evento ue es atrapado por la GUI para decirle que todo salio bien.
 		/// </summary>
 		public async Task TerminarSimulacion() { //Funcion llamada por la GUI, devuelve void, respuesta por evento
-
+			Console.WriteLine("Terminando...");
 			InformeZE informeZE = expertoZE.TerminarSimulacion();
 			InformeSI informeSI = expertoSI.TerminarSimulacion();
-			
-			tiempoTotalDeEjecucion = DateTime.UtcNow - tiempoInicialDeEjecucion;
 
 			DateTime tiempoFinal = DateTime.Now;
-			String ruta = ObtenerRuta(tiempoFinal);
+			tiempoTotalDeEjecucion = tiempoFinal - tiempoInicialDeEjecucion;
 
 			Informe informeFinal = new Informe(
 				this.datosPracticante.Nombre,
@@ -145,25 +136,21 @@ namespace LumbApp.Orquestador
 				informeSI, informeZE, tiempoTotalDeEjecucion
 				);
 
-			ffb = new FinalFeedbacker((ruta + ".pdf"), datosPracticante, informeFinal.DatosPractica, tiempoFinal);
-
+			ffb = new FinalFeedbacker(ruta + ".pdf", datosPracticante, informeFinal.DatosPractica, tiempoFinal);
 			informeFinal.SetPdfGenerado(ffb.GenerarPDF());
-
-			// Esta linea guarda el video de la kinect.
-			informeZE.Video.Save(ruta + ".mp4");
+			informeZE.Video.Save();
 
 			IGUIController.MostrarResultados(informeFinal);
 
 			//Informar a GUI con informe con un evento, que pase si el informe se genero bien, y si se guardó  bien (bool, bool)
 		}
 
-        private String ObtenerRuta (DateTime tiempo) {
+        private string ObtenerRuta (DateTime tiempo) {
 			string ruta = datosPracticante.FolderPath;
 			string carpetaAlumno = datosPracticante.Apellido + "_" + datosPracticante.Nombre + "_" + datosPracticante.Dni;
 
-			string nombreArchivos = tiempo.Year.ToString() + "-" + tiempo.Month.ToString() +
-				"-" + tiempo.Day.ToString() + "_" + tiempo.Hour.ToString() + "-" +
-				tiempo.Minute.ToString() + "_" + datosPracticante.Apellido;
+			string nombreArchivos = string.Format("{0:D4}-{1:D2}-{2:D2}_{3:D2}-{4:D2}_{5}",
+				tiempo.Year, tiempo.Month, tiempo.Day, tiempo.Hour.ToString(), tiempo.Minute, datosPracticante.Apellido);
 
 			if (!ruta.Contains(carpetaAlumno)) {
 				ruta += ("\\" + carpetaAlumno);
