@@ -86,8 +86,9 @@ namespace UnitTestLumbapp.Experto_ZE
         {
             Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
             ExpertoZE exp = new ExpertoZE(conn.Object, newCalibracion());
+            Mock<IVideo> video = new Mock<IVideo>();
 
-            bool init = exp.IniciarSimulacion();
+            bool init = exp.IniciarSimulacion(video.Object);
             Assert.AreEqual(false, init);
         }
 
@@ -97,15 +98,13 @@ namespace UnitTestLumbapp.Experto_ZE
         [TestMethod]
         public void IniciarOK()
         {
+            var videoMock = new Mock<IVideo>();
             Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
             ExpertoZE exp = new ExpertoZE(conn.Object, newCalibracion());
             exp.Inicializar();
-            try { 
-                bool init = exp.IniciarSimulacion();
+
+                bool init = exp.IniciarSimulacion(videoMock.Object);
                 Assert.AreEqual(true, init);
-            } catch(System.IO.FileNotFoundException ex){
-                //Problema entre System.Drawing para LumbApp y System.Drawing.Common para UnitTest
-            }
         }
 
         /// <summary>
@@ -142,10 +141,6 @@ namespace UnitTestLumbapp.Experto_ZE
             Assert.AreEqual(0, got.ManoIzquierda);
         }
 
-        /*
-         * Este test normalmente pasaria, pero rompe por la diferencia de System.Drawing 
-         * y System.Drawing.Common
-         * 
         /// <summary>
         /// Si se llama a TerminarSimulacion todo OK, debe devolver un reporte con las cosas que ocurrieron.
         /// Si no ocurrio nada, el reporte estara vacio.
@@ -154,9 +149,10 @@ namespace UnitTestLumbapp.Experto_ZE
         public void TerminarNada()
         {
             Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
+            var videoMock = new Mock<IVideo>();
             ExpertoZE exp = new ExpertoZE(conn.Object, newCalibracion());
             exp.Inicializar();
-            exp.IniciarSimulacion();
+            exp.IniciarSimulacion(videoMock.Object);
 
             var got = exp.TerminarSimulacion();
 
@@ -164,6 +160,5 @@ namespace UnitTestLumbapp.Experto_ZE
             Assert.AreEqual(0, got.ManoDerecha);
             Assert.AreEqual(0, got.ManoIzquierda);
         }
-        */
     }
 }
