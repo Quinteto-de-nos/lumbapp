@@ -222,8 +222,11 @@
     <Compile Include="GUI\MainWindow.xaml.cs" />
     <Compile Include="GUI\ResultadosSimulacion.xaml.cs" />
     <Compile Include="GUI\PasosPreparacion.xaml.cs" />
+    <Compile Include="GUI\SimulacionModoEvaluacion.cs" />
     <Compile Include="GUI\SimulacionModoGuiado.cs" />
     <Compile Include="GUI\SensorsCheck.xaml.cs" />
+    <Compile Include="GUI\WatermarkAdorner.cs" />
+    <Compile Include="GUI\WatermarkService.cs" />
     <Compile Include="Models\DatosPracticante.cs" />
     <Compile Include="GUI\IngresoDatosPracticante.xaml.cs" />
     <Compile Include="Models\Informe.cs" />
@@ -233,6 +236,29 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Conectores\ConectorSI\conector.exe" />
+    <Content Include="FinalFeedbacker\init.txt" />
+    <Content Include="GUI\Imagenes\Capas\Costado\base.png" />
+    <Content Include="GUI\Imagenes\Capas\Costado\duramadre.png" />
+    <Content Include="GUI\Imagenes\Capas\Costado\L2 adelante.png" />
+    <Content Include="GUI\Imagenes\Capas\Costado\L3 abajo.png" />
+    <Content Include="GUI\Imagenes\Capas\Costado\L3 arriba.png" />
+    <Content Include="GUI\Imagenes\Capas\Costado\L4 abajo.png" />
+    <Content Include="GUI\Imagenes\Capas\Costado\L4 arriba centro.png" />
+    <Content Include="GUI\Imagenes\Capas\Costado\L4 arriba derecha.png" />
+    <Content Include="GUI\Imagenes\Capas\Costado\L4 arriba izquierda.png" />
+    <Content Include="GUI\Imagenes\Capas\Costado\L5 adelante.png" />
+    <Content Include="GUI\Imagenes\Capas\Costado\piel_OFF.png" />
+    <Content Include="GUI\Imagenes\Capas\Costado\piel_ON.png" />
+    <Content Include="GUI\Imagenes\Capas\Frente\base.png" />
+    <Content Include="GUI\Imagenes\Capas\Frente\duramadre.png" />
+    <Content Include="GUI\Imagenes\Capas\Frente\L2 adelante.png" />
+    <Content Include="GUI\Imagenes\Capas\Frente\L3 abajo.png" />
+    <Content Include="GUI\Imagenes\Capas\Frente\L3 arriba.png" />
+    <Content Include="GUI\Imagenes\Capas\Frente\L4 abajo.png" />
+    <Content Include="GUI\Imagenes\Capas\Frente\L4 arriba centro.png" />
+    <Content Include="GUI\Imagenes\Capas\Frente\L4 arriba derecha.png" />
+    <Content Include="GUI\Imagenes\Capas\Frente\L4 arriba izquierda.png" />
+    <Content Include="GUI\Imagenes\Capas\Frente\L5 adelante.png" />
     <Content Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada1.png" />
     <Content Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada2.png" />
     <Content Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada3.png" />
@@ -286,6 +312,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="GUI\SimulacionModoEvaluacion.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="GUI\SimulacionModoGuiado.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -301,6 +331,10 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GUI\Fonts\" />
+    <Folder Include="GUI\Imagenes\Vertebras\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>

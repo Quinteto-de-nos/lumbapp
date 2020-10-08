@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,7 +8,11 @@ using System.Threading.Tasks;
 namespace LumbApp.Expertos.ExpertoSI.Utils {
     public class VertebraL3 : Vertebra {
         public  enum Sectores {
+
+            [Display(Name = "Arriba")]
             Arriba,
+
+            [Display(Name = "Abajo")]
             Abajo
         }
 

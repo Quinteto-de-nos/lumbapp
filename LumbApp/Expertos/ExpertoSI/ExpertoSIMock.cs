@@ -79,10 +79,11 @@ namespace LumbApp.Expertos.ExpertoSI {
         public bool IniciarSimulacion () {
             simulando = true;
             sensoresInternos.ActivarSensado();
-            /*
-            if (shouldInit) {
-                //simulateAsync();
-            }*/
+
+            if (shouldInit)
+            {
+                simulateAsync();
+            }
             return shouldInit;
         }
 
@@ -129,14 +130,54 @@ namespace LumbApp.Expertos.ExpertoSI {
             TejidoAdiposo.Atravesar();
             sendEvent();
 
+            await Task.Delay(5000);
+            AhoraL4 = true;
+            L4.RozarSector(VertebraL4.Sectores.Abajo);
+            sendEvent();
+
+            await Task.Delay(5000);
+            AhoraL4 = false;
+            AhoraL3 = true;
+            L3.RozarSector(VertebraL3.Sectores.Abajo);
+            sendEvent();
+
+            await Task.Delay(5000);
+            L4.AbandonarSector(VertebraL4.Sectores.Abajo);
+            AhoraL3 = false;
+            AhoraL4 = true;
+            L4.RozarSector(VertebraL4.Sectores.ArribaIzquierda);
+            sendEvent();
+
+            await Task.Delay(5000);
+            AhoraL4 = false;
+            AhoraL3 = true;
+            L3.AbandonarSector(VertebraL3.Sectores.Abajo);
+            sendEvent();
+
             //Ej: Roza L4-arriba-centro a los 10 segundos
             await Task.Delay(5000);
+            L4.AbandonarSector(VertebraL4.Sectores.ArribaIzquierda);
+            AhoraL3 = false;
+            AhoraL4 = true;
             L4.RozarSector(VertebraL4.Sectores.ArribaCentro);
             sendEvent();
 
             //Ej: Atraviesa la duramadre a los 20 segundos
             await Task.Delay(10000);
+            AhoraL4 = false;
             Duramadre.Atravesar();
+            sendEvent();
+
+            await Task.Delay(10000);
+            Duramadre.Abandonar();
+            sendEvent();
+
+            await Task.Delay(5000);
+            L4.Abandonar();
+            sendEvent();
+
+            await Task.Delay(5000);
+            TejidoAdiposo.Abandonar();
             sendEvent();
 
             // ************** Fin seccion simulacion *************
