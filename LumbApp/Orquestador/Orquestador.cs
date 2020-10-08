@@ -49,9 +49,9 @@ namespace LumbApp.Orquestador
 			expertoZE = new ExpertoZE(conectorKinect, calibracion);
 			//expertoZE = new ExpertoZEMock(true);
 
-			var conectorSI = new ConectorSI();
-			expertoSI = new ExpertoSI(conectorSI);
-			//expertoSI = new ExpertoSIMock(true);
+			//var conectorSI = new ConectorSI();
+			//expertoSI = new ExpertoSI(conectorSI);
+			expertoSI = new ExpertoSIMock(true);
 		}
 
 		public void SetDatosDeSimulacion(DatosPracticante datosPracticante, ModoSimulacion modo)
