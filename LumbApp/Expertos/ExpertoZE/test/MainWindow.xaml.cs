@@ -202,7 +202,7 @@ namespace KinectCoordinateMapping
                 expert.Inicializar();
 
                 conn.SubscribeFramesReady(Sensor_AllFramesReady);
-                expert.IniciarSimulacion();
+                expert.IniciarSimulacion(new Video("./test.mp4"));
             }
         }
 

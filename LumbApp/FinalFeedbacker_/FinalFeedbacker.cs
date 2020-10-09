@@ -11,19 +11,14 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Formatters;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-
 namespace LumbApp.FinalFeedbacker_ {
     public class FinalFeedbacker : IFinalFeedbacker {
         private DatosPracticante _datosPracticante;
         private OrderedDictionary _datosPractica;
-        private String _path;
+        private string _path;
         private DateTime _fecha;
 
-        public FinalFeedbacker (String path, DatosPracticante datosPracticante,
+        public FinalFeedbacker (string path, DatosPracticante datosPracticante,
             OrderedDictionary datosPractica, DateTime fecha) {
 
             if(path==null || path=="" || datosPracticante == null || datosPractica == null || fecha == null)
@@ -39,8 +34,7 @@ namespace LumbApp.FinalFeedbacker_ {
             try {
                 Document doc = new Document(PageSize.A4);
                 // Indicamos donde vamos a guardar el documento
-                PdfWriter writer = PdfWriter.GetInstance(doc,
-                                            new FileStream(_path, FileMode.Create));
+                PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(_path, FileMode.Create));
 
                 // Le colocamos el título y el autor
                 // **Nota: Esto no será visible en el documento
@@ -105,8 +99,9 @@ namespace LumbApp.FinalFeedbacker_ {
                 columnaEmail = new PdfPCell(new Phrase(_datosPracticante.Email, _standardFont));
                 columnaEmail.BorderWidth = 0;
 
-                string fechaString = (_fecha.Year.ToString() + "/" + _fecha.Month.ToString() +
-                    "/" + _fecha.Day.ToString() + " " + _fecha.Hour.ToString() + ":" + _fecha.Minute.ToString());
+                string fechaString = string.Format("{0:D2}/{1:D2}/{2:D2} {3:D2}:{4:D2}",
+                _fecha.Year.ToString(), _fecha.Month.ToString(), _fecha.Day.ToString(),
+                _fecha.Hour.ToString(), _fecha.Minute.ToString());
 
                 columnaFecha = new PdfPCell(new Phrase(fechaString, _standardFont));
                 columnaFecha.BorderWidth = 0;
@@ -167,7 +162,7 @@ namespace LumbApp.FinalFeedbacker_ {
 
                 return true;
             } catch (Exception ex){
-                Debug.WriteLine(ex);
+                Console.WriteLine("FF: no pude crear el PDF final. Error: " + ex);
                 return false;
             }
             

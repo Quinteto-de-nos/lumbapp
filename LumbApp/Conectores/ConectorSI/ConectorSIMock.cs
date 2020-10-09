@@ -19,8 +19,8 @@ namespace LumbApp.Conectores.ConectorSI {
         public bool Conectar () { return shouldInit; }
         public void ActivarSensado () {
             sensando = shouldInit;
-            if (sensando)
-                simulateAsync();
+            //if (sensando)
+            //    simulateAsync();
         }
         public void Desconectar () { }
         public void PausarSensado () { sensando = false; }

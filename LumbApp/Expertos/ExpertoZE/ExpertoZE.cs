@@ -24,7 +24,7 @@ namespace LumbApp.Expertos.ExpertoZE
         private bool simulando;
         private bool inicializado;
 
-        private Video videoWriter;
+        private IVideo videoWriter;
         #endregion
 
         #region Metodos de experto
@@ -84,7 +84,7 @@ namespace LumbApp.Expertos.ExpertoZE
         /// </summary>
         /// <returns>True si se inicializo todo bien y efectivamente comenzo a sensar.
         /// False si esta funcion se llama antes de Inicializar</returns>
-        public bool IniciarSimulacion()
+        public bool IniciarSimulacion(IVideo videoHelper)
         {
             if (!inicializado || zonaEsteril == null)
                 return false;
@@ -92,7 +92,7 @@ namespace LumbApp.Expertos.ExpertoZE
             manoDerecha = new Mano();
             manoIzquierda = new Mano();
             zonaEsteril.Resetear();
-            videoWriter = new Video();
+            videoWriter = videoHelper;
             simulando = true;
             return true;
         }

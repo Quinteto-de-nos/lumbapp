@@ -17,15 +17,37 @@ namespace LumbApp.GUI
         public GUIController _controller { get; set; }
 
         public static DependencyProperty TextProperty = DependencyProperty.Register(
-            "Text", typeof(string), typeof(IngresoDatosPracticante),
-            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
-        public static DependencyProperty DescriptionProperty = DependencyProperty.Register(
-            "Description", typeof(string), typeof(IngresoDatosPracticante), new PropertyMetadata(null));
-        public string Text { get { return GetValue(TextProperty) as string; } set { SetValue(TextProperty, value); } }
-        public string Description { get { return GetValue(DescriptionProperty) as string; } set { SetValue(DescriptionProperty, value); } }
+            "Text",
+            typeof(string),
+            typeof(IngresoDatosPracticante),
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault)
+        );
 
-        private Regex regexApYN = new Regex("^[a-zA-ZñÑ ]*$");
-        private Regex regexMail = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+        public static DependencyProperty DescriptionProperty = DependencyProperty.Register(
+            "Description",
+            typeof(string),
+            typeof(IngresoDatosPracticante),
+            new PropertyMetadata(null)
+        );
+
+        public string Text
+        {
+            get { return GetValue(TextProperty) as string; }
+            set { SetValue(TextProperty, value); }
+        }
+
+        public string Description
+        {
+            get { return GetValue(DescriptionProperty) as string; }
+            set { SetValue(DescriptionProperty, value); }
+        }
+
+        private Regex regexApYN = new Regex("^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$");
+        //@ escapa toda la string que sigue, no necesitamos \\ para escribir una \
+        //Este mail acepta letras, numeros, -, _ y . en el nombre
+        //Acepta letras, numeros, _ y . en el dominio
+        //Debe terminar con . y 2 o 3 letras
+        private Regex regexMail = new Regex(@"^[\w\.\-]+@[\w\.]+\.\w{2,3}$");
         private bool dniValido;
         private bool nombreValido;
         private bool apellidoValido;
@@ -56,6 +78,7 @@ namespace LumbApp.GUI
             datosPracticante.Apellido = Apellido.Text;
             datosPracticante.Dni = Int32.Parse(Dni.Text);
             datosPracticante.FolderPath = FolderPath.Content.ToString();
+            datosPracticante.Email = Mail.Text;
             return datosPracticante;
         }
 
@@ -99,7 +122,7 @@ namespace LumbApp.GUI
 
             try
             {
-                if (((string)Dni.Text).Length > 0)
+                if (Dni.Text.Length > 0)
                     dni = Int32.Parse((String)Dni.Text);
             }
             catch
