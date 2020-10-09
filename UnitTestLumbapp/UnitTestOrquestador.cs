@@ -59,7 +59,7 @@ namespace UnitTestLumbapp {
             orq.SetExpertoZE(expZE.Object);
 
             orq.Inicializar();
-            gui.Verify(x => x.SolicitarDatosPracticante(It.IsAny<string>()), Times.Once) ;
+            gui.Verify(x => x.SolicitarDatosPracticante(It.IsAny<DatosPracticante>()), Times.Once) ;
         }
 
         [TestMethod]
