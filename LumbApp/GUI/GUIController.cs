@@ -120,7 +120,7 @@ namespace LumbApp.GUI
         {
             ResultadosSimulacionPage = new ResultadosSimulacion(this);
             MainWindow.NavigationService.Navigate(ResultadosSimulacionPage);
-            _orquestador.TerminarSimulacion();
+            _ = _orquestador.TerminarSimulacion();
         }
 
         public void MostrarResultados( Informe informe )

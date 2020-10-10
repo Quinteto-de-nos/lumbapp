@@ -1,16 +1,13 @@
 ﻿using LumbApp.Conectores.ConectorSI;
 using LumbApp.Expertos.ExpertoSI.Utils;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LumbApp.Expertos.ExpertoSI {
     public class ExpertoSIMock : IExpertoSI{
-        private IConectorSI sensoresInternos;
+        private readonly IConectorSI sensoresInternos;
         private bool simulando = false;
-        private bool shouldInit;
+        private readonly bool shouldInit;
 
         public Capa TejidoAdiposo = new Capa();
         public Vertebra L2 = new Vertebra();
@@ -47,10 +44,7 @@ namespace LumbApp.Expertos.ExpertoSI {
         }
 
         protected virtual void HayCambioSI (CambioSIEventArgs datosCambioSI) {
-            EventHandler<CambioSIEventArgs> handler = CambioSI;
-            if (handler != null) {
-                handler(this, datosCambioSI);
-            }
+            CambioSI?.Invoke(this, datosCambioSI);
         }
 
         public void HayDatosNuevos (object sender, DatosSensadosEventArgs datosNuevos) {
@@ -81,9 +75,7 @@ namespace LumbApp.Expertos.ExpertoSI {
             sensoresInternos.ActivarSensado();
 
             if (shouldInit)
-            {
-                simulateAsync();
-            }
+                _ = simulateAsync();
             return shouldInit;
         }
 
@@ -104,10 +96,7 @@ namespace LumbApp.Expertos.ExpertoSI {
                 AhoraTejidoAdiposo, AhoraL2, AhoraL3, AhoraL4, AhoraL5, AhoraDuramadre,
                 CaminoIncorrecto);
 
-            EventHandler<CambioSIEventArgs> handler = CambioSI;
-            if (handler != null) {
-                handler(this, datosCambioSI);
-            }
+            CambioSI?.Invoke(this, datosCambioSI);
         }
 
         /// <summary>
