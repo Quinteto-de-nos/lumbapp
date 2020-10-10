@@ -112,11 +112,5 @@ namespace LumbApp.Conectores.ConectorSI
             Console.WriteLine("Finished mocked simulation");
             sensando = false;
         }
-
-        public override bool Equals(object obj)
-        {
-            return obj is ConectorSIMock mock &&
-                   shouldInit == mock.shouldInit;
-        }
     }
 }
