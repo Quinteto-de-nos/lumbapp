@@ -20,7 +20,7 @@ namespace LumbApp.Conectores.ConectorKinect
                 throw new KinectNotFoundException();
 
             TransformSmoothParameters parameters = new TransformSmoothParameters();
-            parameters.Smoothing = 0.3f;
+            parameters.Smoothing = 0.75f;
             parameters.Correction = 0.3f;
             parameters.Prediction = 0.4f;
             parameters.JitterRadius = 0.05f;
