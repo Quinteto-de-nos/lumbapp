@@ -3,8 +3,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using LumbApp.Expertos.ExpertoZE;
 using LumbApp.Conectores.ConectorKinect;
 using Moq;
-using System.Linq;
-using System.Reflection;
 using System.Text.Json;
 
 namespace UnitTestLumbapp.Experto_ZE

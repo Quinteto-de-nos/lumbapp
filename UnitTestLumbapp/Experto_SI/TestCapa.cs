@@ -1,8 +1,5 @@
 ﻿using LumbApp.Expertos.ExpertoSI.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace UnitTestLumbapp.Experto_SI
 {

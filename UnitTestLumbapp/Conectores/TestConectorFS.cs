@@ -1,8 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using LumbApp.Expertos.ExpertoSI;
 using LumbApp.Conectores.ConectorFS;
 using Moq;
 using System.IO.Abstractions;

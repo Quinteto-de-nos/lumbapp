@@ -2,7 +2,6 @@
 using LumbApp.Expertos.ExpertoZE;
 using Microsoft.Kinect;
 using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;

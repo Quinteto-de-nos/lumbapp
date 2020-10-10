@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Media;
-using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;

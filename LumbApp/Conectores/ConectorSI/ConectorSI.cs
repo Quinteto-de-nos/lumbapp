@@ -1,11 +1,6 @@
 ﻿using System;
 using System.IO.Ports;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Management;
-using System.Windows.Documents;
 
 namespace LumbApp.Conectores.ConectorSI
 {

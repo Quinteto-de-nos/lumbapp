@@ -1,7 +1,6 @@
 ﻿using LumbApp.Enums;
 using LumbApp.Models;
 using System;
-using System.Net.Mail;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;

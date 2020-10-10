@@ -1,15 +1,7 @@
-﻿using LumbApp.Expertos.ExpertoSI;
-using LumbApp.Expertos.ExpertoSI.Utils;
-using LumbApp.Expertos.ExpertoZE;
-using System;
+﻿using System;
 using System.IO;
-using System.Linq;
-using System.Media;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Threading;
 
 namespace LumbApp.GUI
 {

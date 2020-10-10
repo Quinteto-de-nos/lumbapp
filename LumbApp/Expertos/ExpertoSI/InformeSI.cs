@@ -1,6 +1,4 @@
-﻿using LumbApp.Expertos.ExpertoSI.Utils;
-
-namespace LumbApp.Expertos.ExpertoSI
+﻿namespace LumbApp.Expertos.ExpertoSI
 {
     public class InformeSI
     {
