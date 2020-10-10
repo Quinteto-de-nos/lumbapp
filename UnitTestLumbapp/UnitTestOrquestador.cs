@@ -133,10 +133,13 @@ namespace UnitTestLumbapp
         {
             Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
             Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
+            Mock<IVideo> videoZE = new Mock<IVideo>();
             Mock<IGUIController> gui = new Mock<IGUIController>();
 
             expSI.Setup(x => x.Inicializar()).Returns(true);
+            expSI.Setup(x => x.TerminarSimulacion()).Returns(new InformeSI(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12));
             expZE.Setup(x => x.Inicializar()).Returns(true);
+            expZE.Setup(x => x.TerminarSimulacion()).Returns(new InformeZE(0,0,0,videoZE.Object));
 
             Orquestador orq = new Orquestador(gui.Object, mockedConectorFS());
             orq.SetExpertoSI(expSI.Object);
