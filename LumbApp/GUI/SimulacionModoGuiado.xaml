@@ -137,8 +137,7 @@
 
         <Image Grid.Row="3" Grid.Column="1" 
                Grid.RowSpan="3" Name="FrontBaseImage"
-               VerticalAlignment="Stretch" HorizontalAlignment="Center" 
-               Source="C:\Users\Lara\source\repos\lumbapp\LumbApp\GUI\Imagenes\Capas\Frente\base.png"
+               VerticalAlignment="Stretch" HorizontalAlignment="Center"
                Margin="50,10,0,20" />
 
         <Image  Name="DuramadreFrontImage"
