@@ -125,7 +125,8 @@ namespace UnitTestLumbapp.Conectores
         }
     }
 
-    public class ExampleClass {
+    public class ExampleClass
+    {
         public int _intExample { get; set; }
         public String _stringExample { get; set; }
         public bool _boolExample { get; set; }

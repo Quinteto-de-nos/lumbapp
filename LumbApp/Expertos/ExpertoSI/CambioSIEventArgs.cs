@@ -5,8 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LumbApp.Expertos.ExpertoSI {
-    public class CambioSIEventArgs : EventArgs {
+namespace LumbApp.Expertos.ExpertoSI
+{
+    public class CambioSIEventArgs : EventArgs
+    {
         /// <summary>
         /// Tejido-Adiposo: posicion 2 - (Arduino posicion 0)
         /// </summary>
@@ -51,7 +53,8 @@ namespace LumbApp.Expertos.ExpertoSI {
 
         public CambioSIEventArgs(Capa tejidoAdiposo, Vertebra L2, VertebraL3 L3, VertebraL4 L4, Vertebra L5, Capa Duramadre,
             bool AhoraTejidoAdiposo, bool AhoraL2, bool AhoraL3, bool AhoraL4, bool AhoraL5, bool AhoraDuramadre,
-            bool CaminoIncorrecto) {
+            bool CaminoIncorrecto)
+        {
 
             this.TejidoAdiposo = tejidoAdiposo;
             this.L2 = L2;
@@ -70,7 +73,8 @@ namespace LumbApp.Expertos.ExpertoSI {
             this.CaminoIncorrecto = CaminoIncorrecto;
         }
 
-        public void MostrarCambios () {
+        public void MostrarCambios()
+        {
             Console.WriteLine("Tejido Adiposo:  Estado: " + TejidoAdiposo.Estado + "    Veces Atravesada: " + TejidoAdiposo.VecesAtravesada);
             Console.WriteLine("L2:  Estado: " + L2.Estado + "    Veces Rozada: " + L2.VecesRozada);
             Console.WriteLine("L3:  Estado: " + L3.Estado + "    Veces Rozada: " + L3.VecesRozada + "   Sector: " + L3.Sector);

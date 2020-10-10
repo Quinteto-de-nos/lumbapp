@@ -85,16 +85,16 @@ namespace KinectCoordinateMapping
         {
             Point pos = e.GetPosition(camera);
             Point empty = new Point();
-            if(screenPoint1 == empty)
+            if (screenPoint1 == empty)
                 screenPoint1 = new Point(pos.X, pos.Y);
-            else if(screenPoint2 == empty)
+            else if (screenPoint2 == empty)
                 screenPoint2 = new Point(pos.X, pos.Y);
             else if (screenPoint3 == empty)
             {
                 screenPoint3 = new Point(pos.X, pos.Y);
                 calcular = true;
             }
-           
+
             Console.WriteLine("Click en " + pos);
         }
         #endregion
@@ -132,9 +132,9 @@ namespace KinectCoordinateMapping
         private SkeletonPoint cruz(SkeletonPoint a, SkeletonPoint b)
         {
             var res = new SkeletonPoint();
-            res.X = a.Y*b.Z - a.Z*b.Y; //a2b3-a3b2
-            res.Y = a.Z*b.X - a.X*b.Z; //a3b1-a1b3
-            res.Z = a.X*b.Y - a.Y*b.X; //a1b2-a2b1
+            res.X = a.Y * b.Z - a.Z * b.Y; //a2b3-a3b2
+            res.Y = a.Z * b.X - a.X * b.Z; //a3b1-a1b3
+            res.Z = a.X * b.Y - a.Y * b.X; //a1b2-a2b1
             return res;
         }
 
@@ -149,7 +149,7 @@ namespace KinectCoordinateMapping
 
         private double modulo(SkeletonPoint a)
         {
-            return Math.Sqrt(Math.Pow(a.X,2) + Math.Pow(a.Y, 2) + Math.Pow(a.Z, 2));
+            return Math.Sqrt(Math.Pow(a.X, 2) + Math.Pow(a.Y, 2) + Math.Pow(a.Z, 2));
         }
 
         private double distToPlane(SkeletonPoint centro, SkeletonPoint right, SkeletonPoint left, SkeletonPoint test)
@@ -260,8 +260,8 @@ namespace KinectCoordinateMapping
                             }
                         }
                     }
-                    
-                }  
+
+                }
             }
 
             // Body
@@ -294,13 +294,13 @@ namespace KinectCoordinateMapping
 
         private Brush setBrush(Mano data)
         {
-            if(data.Track == Mano.Tracking.Perdido)
+            if (data.Track == Mano.Tracking.Perdido)
                 return inferredJointBrush;
             if (data.Estado == Mano.Estados.Fuera || data.Estado == Mano.Estados.Inicial)
                 return trackedJointBrush;
             return inZeBrush;
         }
-        
+
         private void drawJoint(Joint joint, Brush b)
         {
             // 3D coordinates in meters

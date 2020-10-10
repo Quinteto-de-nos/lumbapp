@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 using System.Management;
 using System.Windows.Documents;
 
-namespace LumbApp.Conectores.ConectorSI {
+namespace LumbApp.Conectores.ConectorSI
+{
     public class ConectorSI : IConectorSI
     {
         SerialPort mySerialPort;
@@ -15,13 +16,16 @@ namespace LumbApp.Conectores.ConectorSI {
 
         private string datosLeidos = null;
 
-        public ConectorSI () { 
+        public ConectorSI()
+        {
             sensando = false;
             datosLeidos = null;
         }
 
-        public bool Conectar () {
-            try {
+        public bool Conectar()
+        {
+            try
+            {
                 mySerialPort = new SerialPort(DetectarArduinoPort())
                 {
                     BaudRate = 9600,
@@ -40,37 +44,45 @@ namespace LumbApp.Conectores.ConectorSI {
 
                 return true;
 
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 Console.WriteLine(ex);
                 return false;
             }
 
         }
 
-        private string DetectarArduinoPort () {
+        private string DetectarArduinoPort()
+        {
             ManagementScope connectionScope = new ManagementScope();
             SelectQuery serialQuery = new SelectQuery("SELECT * FROM Win32_SerialPort");
             ManagementObjectSearcher searcher = new ManagementObjectSearcher(connectionScope, serialQuery);
 
-            try {
-                foreach (ManagementObject item in searcher.Get()) {
+            try
+            {
+                foreach (ManagementObject item in searcher.Get())
+                {
                     string desc = item["Description"].ToString();
                     string deviceId = item["DeviceID"].ToString();
 
-                    if (desc.Contains("Dispositivo")) {
+                    if (desc.Contains("Dispositivo"))
+                    {
                         return deviceId;
                     }
                 }
-            } catch (ManagementException e) {
+            }
+            catch (ManagementException e)
+            {
                 Console.WriteLine(e);
             }
 
             return null;
         }
 
-        public void ActivarSensado () { sensando = true; }
-        public void Desconectar () { mySerialPort.Close(); }
-        public void PausarSensado () { sensando = false; }
+        public void ActivarSensado() { sensando = true; }
+        public void Desconectar() { mySerialPort.Close(); }
+        public void PausarSensado() { sensando = false; }
 
         /// <summary>
         /// Evento que le indica al experto que llegaron datos al conector
@@ -83,17 +95,21 @@ namespace LumbApp.Conectores.ConectorSI {
         /// <param name="datosDelEvento">
         /// Recibe los datos de cada puerto a traves de  la clase DatosSensadosEventArgs.
         /// </param>
-        protected virtual void SiHayDatos (DatosSensadosEventArgs datosDelEvento) {
+        protected virtual void SiHayDatos(DatosSensadosEventArgs datosDelEvento)
+        {
             HayDatos?.Invoke(this, datosDelEvento);
         }
 
-        public virtual void DataReceivedHandler (object sender, SerialDataReceivedEventArgs e) {
-            if (sensando) {
+        public virtual void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
+        {
+            if (sensando)
+            {
                 SerialPort sp = (SerialPort)sender;
 
                 datosLeidos = sp.ReadTo("$");
 
-                if (datosLeidos.Length == 12) {
+                if (datosLeidos.Length == 12)
+                {
                     //Cada vez que el conector recibe datos del arduino en medio de una simulación, llama al método SiHayDatos
                     DatosSensadosEventArgs args = new DatosSensadosEventArgs(datosLeidos);
                     SiHayDatos(args);
@@ -102,23 +118,29 @@ namespace LumbApp.Conectores.ConectorSI {
 
         }
 
-        public bool CheckearComunicacion () { //Se puede checkear que todo lo que se reciba sean 0 .... o 1 si usas eso del arduino que dijiste
+        public bool CheckearComunicacion()
+        { //Se puede checkear que todo lo que se reciba sean 0 .... o 1 si usas eso del arduino que dijiste
             String datos;
 
-            try {
-                for (int i = 0; i < 50; i++) {
+            try
+            {
+                for (int i = 0; i < 50; i++)
+                {
 
                     mySerialPort.WriteLine("p");
 
                     datos = mySerialPort.ReadTo("$");
 
-                    if (datos.Contains("1") || datos.Contains("0")) {
+                    if (datos.Contains("1") || datos.Contains("0"))
+                    {
                         return true;
                     }
 
                 }
                 return false;
-            } catch {
+            }
+            catch
+            {
                 return false;
             }
         }

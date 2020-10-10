@@ -103,8 +103,8 @@ namespace UnitTestLumbapp.Experto_ZE
             ExpertoZE exp = new ExpertoZE(conn.Object, newCalibracion());
             exp.Inicializar();
 
-                bool init = exp.IniciarSimulacion(videoMock.Object);
-                Assert.AreEqual(true, init);
+            bool init = exp.IniciarSimulacion(videoMock.Object);
+            Assert.AreEqual(true, init);
         }
 
         /// <summary>

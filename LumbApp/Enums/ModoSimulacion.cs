@@ -19,5 +19,5 @@ namespace LumbApp.Enums
         [Display(Name = "Modo Evaluación")]
         ModoEvaluacion = 1,
     }
-   
+
 }

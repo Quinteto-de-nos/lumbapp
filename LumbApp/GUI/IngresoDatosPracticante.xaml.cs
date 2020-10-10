@@ -75,7 +75,7 @@ namespace LumbApp.GUI
                 Dni = Int32.Parse(Dni.Text),
                 FolderPath = FolderPath.Content.ToString(),
                 Email = Mail.Text
-        };
+            };
             return datosPracticante;
         }
 

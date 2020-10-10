@@ -12,16 +12,19 @@ using System.IO.Abstractions;
 using LumbApp.Conectores.ConectorFS;
 using LumbApp.Models;
 
-namespace UnitTestLumbapp {
+namespace UnitTestLumbapp
+{
     [TestClass]
-    public class UnitTestOrquestador {
+    public class UnitTestOrquestador
+    {
         /// <summary>
         /// Test que prueba el caso de intentar crear un orquestador sin una GUI, generando una exception
         /// </summary>
         [TestMethod]
         [ExpectedException(typeof(Exception),
             "Gui no puede ser null. Necesito un GUIController para crear un Orquestador.")]
-        public void TestConstructorNull () {
+        public void TestConstructorNull()
+        {
             Orquestador orq = new Orquestador(null, null);
         }
 
@@ -59,7 +62,7 @@ namespace UnitTestLumbapp {
             orq.SetExpertoZE(expZE.Object);
 
             orq.Inicializar();
-            gui.Verify(x => x.SolicitarDatosPracticante(It.IsAny<string>()), Times.Once) ;
+            gui.Verify(x => x.SolicitarDatosPracticante(It.IsAny<string>()), Times.Once);
         }
 
         [TestMethod]

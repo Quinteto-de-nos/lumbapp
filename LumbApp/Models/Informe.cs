@@ -17,8 +17,8 @@ namespace LumbApp.Models
         public string FolderPath { get; private set; }
         public OrderedDictionary DatosPractica { get; private set; }
         public bool PdfGenerado { get; private set; }
-        
-        public Informe(string nombre, string apellido, int dni, string folderPath, InformeSI informeSI, 
+
+        public Informe(string nombre, string apellido, int dni, string folderPath, InformeSI informeSI,
             InformeZE informeZE, TimeSpan tiempoTotalDeEjecucion)
         {
             Nombre = nombre;
@@ -31,9 +31,10 @@ namespace LumbApp.Models
 
         public void SetPdfGenerado(bool pdfGenerado) { PdfGenerado = pdfGenerado; }
 
-        private void ArmarDiccionarioOrdenado (InformeSI informeSI, InformeZE informeZE, TimeSpan tiempoTotalDeEjecucion) {
+        private void ArmarDiccionarioOrdenado(InformeSI informeSI, InformeZE informeZE, TimeSpan tiempoTotalDeEjecucion)
+        {
             DatosPractica = new OrderedDictionary();
-            
+
 
             DatosPractica.Add("Contaminaciones Zona", Convert.ToString(informeZE.Zona));
             DatosPractica.Add("Contaminaciones Mano Izquierda", Convert.ToString(informeZE.ManoIzquierda));

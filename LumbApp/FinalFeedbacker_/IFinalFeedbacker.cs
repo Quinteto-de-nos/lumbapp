@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LumbApp.FinalFeedbacker_ {
-    public interface IFinalFeedbacker {
-        bool GenerarPDF ();
+namespace LumbApp.FinalFeedbacker_
+{
+    public interface IFinalFeedbacker
+    {
+        bool GenerarPDF();
     }
 }

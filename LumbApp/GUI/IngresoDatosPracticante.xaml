@@ -213,11 +213,11 @@
                         Foreground="#8a8a8a">DNI</TextBlock>
                 </local:WatermarkService.Watermark>
                 <TextBox.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="25"/>
-                </Style>
-            </TextBox.Resources>
-        </TextBox>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="25"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
         </AdornerDecorator>
 
         <Label Name="ErrorDni" Grid.Row="7"  Grid.Column="2" Grid.ColumnSpan="2"
@@ -240,11 +240,11 @@
                         Foreground="#8a8a8a">Mail</TextBlock>
                 </local:WatermarkService.Watermark>
                 <TextBox.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="25"/>
-                </Style>
-            </TextBox.Resources>
-        </TextBox>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="25"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
         </AdornerDecorator>
         <Label Name="ErrorMail" Grid.Row="9"  Grid.Column="2" Grid.ColumnSpan="2"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
@@ -289,7 +289,8 @@
                     <Setter Property="CornerRadius" Value="25"/>
                 </Style>
             </Button.Resources>
-            SELECCIONAR</Button>
+            SELECCIONAR
+        </Button>
 
         <Border Grid.Row="12"  Grid.Column="2" Grid.ColumnSpan="1" Margin="0,0,10,0"
                 Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
@@ -311,7 +312,7 @@
                     <Setter Property="CornerRadius" Value="25"/>
                 </Style>
             </Button.Resources>
-                INICIAR SIMULACION
+            INICIAR SIMULACION
         </Button>
         <!--<fa:ImageAwesome Grid.Column="2" Grid.ColumnSpan="2"
                          Opacity="0.6"
@@ -321,5 +322,5 @@
                          VerticalAlignment="Top" Grid.RowSpan="2" Grid.Row="1"
                          />-->
     </Grid>
-    
+
 </Page>

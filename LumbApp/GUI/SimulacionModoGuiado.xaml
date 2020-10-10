@@ -89,9 +89,9 @@
                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                Margin="20,0,0,10"
                FontSize="22" FontWeight="DemiBold" Foreground="#595959"></Label>
-        
+
         <!--Imagenes Capas Side-->
-        
+
         <Image  Name="PielSideImage"
                 Grid.Row="3" Grid.Column="0" 
                 Grid.RowSpan="3" 
@@ -175,7 +175,7 @@
  
                VerticalAlignment="Stretch" HorizontalAlignment="Center" 
                 Margin="50,10,0,20"/>
-        
+
         <!--Etiquetas Manos-->
         <Label Grid.Row="1" Grid.Column="2" Name="ManoIzqLabel"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
@@ -193,7 +193,7 @@
                HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
             Derecha
         </Label>
-        
+
         <!--Manos Images-->
         <Image Grid.Row="2" Grid.Column="3" Grid.RowSpan="2" 
                Name="ManoIzquierda" VerticalAlignment="Center"
@@ -206,7 +206,7 @@
                Name="ManoDerecha" 
                VerticalAlignment="Center" HorizontalAlignment="Stretch" 
                Margin="0,10,10,10"/>
-        
+
         <!--Rozando Label -->
         <Border Grid.Row="1" Grid.Column="1" Grid.RowSpan="2"
                 Background="White" Opacity="0.7"
@@ -223,7 +223,7 @@
                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                Margin="0,0,0,10"
                FontSize="22" FontWeight="DemiBold" Foreground="#595959"></Label>
-        
+
         <!--Label de alertas-->
         <Border Name="AlertaLabelBorder"
                 Grid.Row="0" Grid.Column="0" 
@@ -236,7 +236,7 @@
                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                FontSize="24" FontWeight="DemiBold" Foreground="White"></Label>
         </Border>
-        
+
         <!--Label de Salidas de ZE-->
         <Border Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"
                 Background="White" Opacity="0.7"
@@ -247,7 +247,7 @@
                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                FontSize="22" FontWeight="DemiBold" Foreground="#323232"></Label>
         </Border>
-        
+
         <!--Label de Capas Atravesadas-->
         <Label
                Grid.Row="4" Grid.Column="2"

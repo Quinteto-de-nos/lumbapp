@@ -147,7 +147,7 @@
                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                    Margin="0,10,0,0"
                FontSize="22" FontWeight="Regular" Foreground="#595959" Content="3. Segundo lavado de manos o &#10;  desinfección con alcohol gel">
-               </Label>
+            </Label>
         </Border>
         <Image Grid.Column="9" Grid.Row="1"
                 Grid.ColumnSpan="3"
