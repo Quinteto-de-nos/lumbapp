@@ -48,7 +48,7 @@ namespace UnitTestLumbapp
         }
 
         [TestMethod]
-        public void TestInicializarOk()
+        public async Task TestInicializarOk()
         {
             Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
             Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
@@ -61,12 +61,12 @@ namespace UnitTestLumbapp
             orq.SetExpertoSI(expSI.Object);
             orq.SetExpertoZE(expZE.Object);
 
-            orq.Inicializar();
+            await orq.Inicializar();
             gui.Verify(x => x.SolicitarDatosPracticante(It.IsAny<string>()), Times.Once);
         }
 
         [TestMethod]
-        public void TestIniciarSimulaciónModoEvaluacion()
+        public async Task TestIniciarSimulaciónModoEvaluacion()
         {
             Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
             Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
@@ -79,7 +79,7 @@ namespace UnitTestLumbapp
             orq.SetExpertoSI(expSI.Object);
             orq.SetExpertoZE(expZE.Object);
 
-            orq.Inicializar();
+            await orq.Inicializar();
 
             var datos = new DatosPracticante()
             {
@@ -98,7 +98,7 @@ namespace UnitTestLumbapp
         }
 
         [TestMethod]
-        public void TestIniciarSimulaciónModoGuiado()
+        public async Task TestIniciarSimulaciónModoGuiado()
         {
             Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
             Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
@@ -111,7 +111,7 @@ namespace UnitTestLumbapp
             orq.SetExpertoSI(expSI.Object);
             orq.SetExpertoZE(expZE.Object);
 
-            orq.Inicializar();
+            await orq.Inicializar();
             var datos = new DatosPracticante()
             {
                 Dni = 99999999,
@@ -129,7 +129,7 @@ namespace UnitTestLumbapp
         }
 
         [TestMethod]
-        public void TestTerminarSimulacion()
+        public async Task TestTerminarSimulacion()
         {
             Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
             Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
@@ -142,7 +142,7 @@ namespace UnitTestLumbapp
             orq.SetExpertoSI(expSI.Object);
             orq.SetExpertoZE(expZE.Object);
 
-            orq.Inicializar();
+            await orq.Inicializar();
 
             var datos = new DatosPracticante()
             {
@@ -159,13 +159,13 @@ namespace UnitTestLumbapp
             expZE.Verify(x => x.IniciarSimulacion(It.IsAny<IVideo>()), Times.Once);
             gui.Verify(x => x.IniciarSimulacionModoEvaluacion(), Times.Once);
 
-            orq.TerminarSimulacion();
+            await orq.TerminarSimulacion();
             expSI.Verify(x => x.TerminarSimulacion(), Times.Once);
             expZE.Verify(x => x.TerminarSimulacion(), Times.Once);
         }
 
         [TestMethod]
-        public void TestInformeGenerico()
+        public async Task TestInformeGenerico()
         {
             Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
             Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
@@ -178,7 +178,7 @@ namespace UnitTestLumbapp
             orq.SetExpertoSI(expSI.Object);
             orq.SetExpertoZE(expZE.Object);
 
-            orq.Inicializar();
+            await orq.Inicializar();
 
             DatosPracticante dp = new DatosPracticante();
             dp.Dni = 39879304;
@@ -195,7 +195,7 @@ namespace UnitTestLumbapp
             expSI.Setup(x => x.TerminarSimulacion()).Returns(informeSI);
             expZE.Setup(x => x.TerminarSimulacion()).Returns(informeZE);
 
-            orq.TerminarSimulacion();
+            await orq.TerminarSimulacion();
             gui.Verify(x => x.MostrarResultados(It.IsAny<Informe>()), Times.Once);
         }
 
@@ -264,7 +264,7 @@ namespace UnitTestLumbapp
         }
 
         [TestMethod]
-        public void TestInicializarSIErrAsyncInSI()
+        public async Task TestInicializarSIErrAsyncInSI()
         {
             Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
             Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
@@ -277,12 +277,12 @@ namespace UnitTestLumbapp
             orq.SetExpertoSI(expSI.Object);
             orq.SetExpertoZE(expZE.Object);
 
-            orq.Inicializar();
+            await orq.Inicializar();
             gui.Verify(x => x.MostrarErrorDeConexion(It.IsAny<String>()), Times.Once);
         }
 
         [TestMethod]
-        public void TestInicializarSIErrAsyncInZE()
+        public async Task TestInicializarSIErrAsyncInZE()
         {
             Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
             Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
@@ -295,7 +295,7 @@ namespace UnitTestLumbapp
             orq.SetExpertoSI(expSI.Object);
             orq.SetExpertoZE(expZE.Object);
 
-            orq.Inicializar();
+            await orq.Inicializar();
             gui.Verify(x => x.MostrarErrorDeConexion(It.IsAny<String>()), Times.Once);
         }
 
