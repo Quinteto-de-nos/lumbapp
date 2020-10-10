@@ -4,10 +4,11 @@ using LumbApp.Conectores.ConectorSI;
 using LumbApp.Enums;
 using LumbApp.Expertos.ExpertoSI;
 using LumbApp.Expertos.ExpertoZE;
+using LumbApp.FinalFeedbacker_;
 using LumbApp.GUI;
 using LumbApp.Models;
 using System;
-using System.Text.Json;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace LumbApp.Orquestador
@@ -23,6 +24,9 @@ namespace LumbApp.Orquestador
 
 		private DateTime tiempoInicialDeEjecucion;
 		private TimeSpan tiempoTotalDeEjecucion;
+
+		private IFinalFeedbacker ffb;
+		private string ruta;
 
 		/// <summary>
 		/// Constructor del Orquestrador.
@@ -43,11 +47,11 @@ namespace LumbApp.Orquestador
 			}
 			var conectorKinect = new ConectorKinect();
 			expertoZE = new ExpertoZE(conectorKinect, calibracion);
+			//expertoZE = new ExpertoZEMock(true);
 
-			//conectorSI = new ConectorSI();
-			var conectorSI = new ConectorSIMock(true);
+			var conectorSI = new ConectorSI();
 			expertoSI = new ExpertoSI(conectorSI);
-
+			//expertoSI = new ExpertoSIMock(true);
 		}
 
 		public void SetDatosDeSimulacion(DatosPracticante datosPracticante, ModoSimulacion modo)
@@ -60,18 +64,19 @@ namespace LumbApp.Orquestador
 		/// IniciarSimulacion: Informa a los expertos que deben inicar el sensado.
 		/// 
 		/// </summary>
-		public void IniciarSimulacion () {
+		public void IniciarSimulacion ()
+		{
 			Console.WriteLine("Iniciando simulacion en " + modoSeleccionado);
-			expertoZE.IniciarSimulacion();
+			tiempoInicialDeEjecucion = DateTime.Now;
+			ruta = ObtenerRuta(tiempoInicialDeEjecucion);
+
+			expertoZE.IniciarSimulacion(new Video(ruta + ".mp4"));
 			expertoSI.IniciarSimulacion();
 
 			if(modoSeleccionado == ModoSimulacion.ModoGuiado)
 				IGUIController.IniciarSimulacionModoGuiado();
 			else
 				IGUIController.IniciarSimulacionModoEvaluacion();
-
-			tiempoInicialDeEjecucion = DateTime.UtcNow;
-			
 		}
 
 		/// <summary>
@@ -118,51 +123,49 @@ namespace LumbApp.Orquestador
 		/// - Si el informe general se genero y guardo bien, levanta un evento ue es atrapado por la GUI para decirle que todo salio bien.
 		/// </summary>
 		public async Task TerminarSimulacion() { //Funcion llamada por la GUI, devuelve void, respuesta por evento
-												 //ExpertoZE.terminarSimulacion()
 			Console.WriteLine("Terminando simulacion...");
 			InformeZE informeZE = expertoZE.TerminarSimulacion();
 			InformeSI informeSI = expertoSI.TerminarSimulacion();
 
-			tiempoTotalDeEjecucion = DateTime.UtcNow - tiempoInicialDeEjecucion;
-			Console.WriteLine("Tiempo total: "+tiempoTotalDeEjecucion);
+			DateTime tiempoFinal = DateTime.Now;
+			tiempoTotalDeEjecucion = tiempoFinal - tiempoInicialDeEjecucion;
 
-			bool pdfGenerado = true; //Guardar informe en archivo
+			Informe informeFinal = new Informe(
+				this.datosPracticante.Nombre,
+				this.datosPracticante.Apellido,
+				this.datosPracticante.Dni,
+				this.datosPracticante.FolderPath,
+				informeSI, informeZE, tiempoTotalDeEjecucion
+				);
 
-			// Esta linea guarda el video de la kinect. TODO: mover a donde corresponda
-			informeZE.Video.Save("D:\\Leyluchy\\Documents\\LumbApp\\test.mp4");
+			ffb = new FinalFeedbacker(ruta + ".pdf", datosPracticante, informeFinal.DatosPractica, tiempoFinal);
+			informeFinal.SetPdfGenerado(ffb.GenerarPDF());
+			informeZE.Video.Save();
 
-			Informe informeFinal = CrearInformeFinal(informeZE, informeSI, pdfGenerado);
 			IGUIController.MostrarResultados(informeFinal);
 
 			//Informar a GUI con informe con un evento, que pase si el informe se genero bien, y si se guardó  bien (bool, bool)
 		}
 
-        private Informe CrearInformeFinal(InformeZE informeZE, InformeSI informeSI, bool pdfGenerado)
-        {
-			return new Informe(
-				this.datosPracticante.Nombre,
-				this.datosPracticante.Apellido,
-				this.datosPracticante.Dni,
-				this.datosPracticante.FolderPath,
-				this.tiempoTotalDeEjecucion,
-				informeZE.Zona,
-				informeZE.ManoIzquierda,
-				informeZE.ManoDerecha,
-				informeSI.TejidoAdiposo,
-				informeSI.L2,
-				informeSI.L3Arriba,
-				informeSI.L3Abajo,
-				informeSI.L4ArribaIzquierda,
-				informeSI.L4ArribaDerecha,
-				informeSI.L4ArribaCentro,
-				informeSI.L4Abajo,
-				informeSI.L5,
-				informeSI.Duramadre,
-				informeSI.CaminoCorrecto,
-				informeSI.CaminoIncorrecto,
-				pdfGenerado
-				);
-        }
+        private string ObtenerRuta (DateTime tiempo) {
+			string ruta = datosPracticante.FolderPath;
+			string carpetaAlumno = datosPracticante.Apellido + "_" + datosPracticante.Nombre + "_" + datosPracticante.Dni;
+
+			string nombreArchivos = string.Format("{0:D4}-{1:D2}-{2:D2}_{3:D2}-{4:D2}_{5}",
+				tiempo.Year, tiempo.Month, tiempo.Day, tiempo.Hour.ToString(), tiempo.Minute, datosPracticante.Apellido);
+
+			if (!ruta.Contains(carpetaAlumno)) {
+				ruta += ("\\" + carpetaAlumno);
+				if (!Directory.Exists(ruta)) {
+					Console.WriteLine("Creando el directorio: {0}", ruta);
+					Directory.CreateDirectory(ruta);
+				}
+			}
+			ruta += ("\\" + nombreArchivos);
+
+			return ruta;
+		}
+
 
         /// <summary>
         /// CambioSI: atrapa los eventos que indican un cambio en el sensado interno

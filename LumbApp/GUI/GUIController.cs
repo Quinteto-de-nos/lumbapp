@@ -13,6 +13,7 @@ namespace LumbApp.GUI
         private SensorsCheck SensorsCheckPage { get; set; }
         private IngresoDatosPracticante IngresoDatosPracticantePage { get; set; }
         private SimulacionModoGuiado SimulacionModoGuiadoPage { get; set; }
+        private SimulacionModoEvaluacion SimulacionModoEvaluacionPage { get; set; }
         private ResultadosSimulacion ResultadosSimulacionPage { get; set; }
 
         public GUIController(MainWindow mainWindow) {
@@ -101,7 +102,8 @@ namespace LumbApp.GUI
         /// </summary>
         public void IniciarSimulacionModoEvaluacion()
         {
-
+            SimulacionModoEvaluacionPage = new SimulacionModoEvaluacion(this);
+            MainWindow.NavigationService.Navigate(SimulacionModoEvaluacionPage);
         }
 
         public void MostrarCambioZE(CambioZEEventArgs e)
@@ -109,16 +111,16 @@ namespace LumbApp.GUI
             SimulacionModoGuiadoPage.MostrarCambioZE(e);
         }
 
-        //TO DO
-        public void MostrarCambioSI(CambioSIEventArgs e)
-        { //TO DO
+        public void MostrarCambioSI(CambioSIEventArgs datosDelEvento)
+        {
+            SimulacionModoGuiadoPage.MostrarCambioSI(datosDelEvento);
         }
 
         public void FinalizarSimulacion()
         {
-            _ = _orquestador.TerminarSimulacion();
             ResultadosSimulacionPage = new ResultadosSimulacion(this);
             MainWindow.NavigationService.Navigate(ResultadosSimulacionPage);
+            _orquestador.TerminarSimulacion();
         }
 
         public void MostrarResultados( Informe informe )

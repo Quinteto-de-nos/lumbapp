@@ -1,5 +1,8 @@
-﻿using System;
+﻿using LumbApp.Expertos.ExpertoSI;
+using LumbApp.Expertos.ExpertoZE;
+using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,51 +11,47 @@ namespace LumbApp.Models
 {
     public class Informe
     {
-        public int Dni { get; }
-        public string Nombre { get; }
-        public string Apellido { get; }
-        public string FolderPath { get; }
-        public TimeSpan TiempoTotalDeEjecucion { get; }
-        public int Zona { get; }
-        public int ManoIzquierda { get; }
-        public int ManoDerecha { get; }
-        public int TejidoAdiposo { get; }
-        public int L2 { get; }
-        public int L3Arriba { get; }
-        public int L3Abajo { get; }
-        public int L4ArribaIzquierda { get; }
-        public int L4ArribaDerecha { get; }
-        public int L4ArribaCentro { get; }
-        public int L4Abajo { get; }
-        public int L5 { get; }
-        public int Duramadre { get; }
-        public int caminoCorrecto { get; }
-        public int caminoIncorrecto { get; }
-        public bool PdfGenerado { get; }
+        public int Dni { get; private set; }
+        public string Nombre { get; private set; }
+        public string Apellido { get; private set; }
+        public string FolderPath { get; private set; }
+        public OrderedDictionary DatosPractica { get; private set; }
+        public bool PdfGenerado { get; private set; }
         
-        public Informe(string nombre, string apellido, int dni, string folderPath, TimeSpan tiempoTotalDeEjecucion, int zona, int manoIzquierda, int manoDerecha, int tejidoAdiposo, int l2, int l3Arriba, int l3Abajo, int l4ArribaIzquierda, int l4ArribaDerecha, int l4ArribaCentro, int l4Abajo, int l5, int duramadre, int caminoCorrecto, int caminoIncorrecto, bool pdfGenerado)
+        public Informe(string nombre, string apellido, int dni, string folderPath, InformeSI informeSI, 
+            InformeZE informeZE, TimeSpan tiempoTotalDeEjecucion)
         {
             Nombre = nombre;
             Apellido = apellido;
             Dni = dni;
             FolderPath = folderPath;
-            TiempoTotalDeEjecucion = tiempoTotalDeEjecucion;
-            Zona = zona;
-            ManoIzquierda = manoIzquierda;
-            ManoDerecha = manoDerecha;
-            TejidoAdiposo = tejidoAdiposo;
-            L2 = l2;
-            L3Arriba = l3Arriba;
-            L3Abajo = l3Abajo;
-            L4ArribaIzquierda = l4ArribaIzquierda;
-            L4ArribaDerecha = l4ArribaDerecha;
-            L4ArribaCentro = l4ArribaCentro;
-            L4Abajo = l4Abajo;
-            L5 = l5;
-            Duramadre = duramadre;
-            this.caminoCorrecto = caminoCorrecto;
-            this.caminoIncorrecto = caminoIncorrecto;
-            PdfGenerado = pdfGenerado;
+
+            ArmarDiccionarioOrdenado(informeSI, informeZE, tiempoTotalDeEjecucion);
+        }
+
+        public void SetPdfGenerado(bool pdfGenerado) { PdfGenerado = pdfGenerado; }
+
+        private void ArmarDiccionarioOrdenado (InformeSI informeSI, InformeZE informeZE, TimeSpan tiempoTotalDeEjecucion) {
+            DatosPractica = new OrderedDictionary();
+            
+
+            DatosPractica.Add("Contaminaciones Zona", Convert.ToString(informeZE.Zona));
+            DatosPractica.Add("Contaminaciones Mano Izquierda", Convert.ToString(informeZE.ManoIzquierda));
+            DatosPractica.Add("Contaminaciones Mano Derecha", Convert.ToString(informeZE.ManoDerecha));
+            DatosPractica.Add("Punciones Tejido Adiposo", Convert.ToString(informeSI.TejidoAdiposo));
+            DatosPractica.Add("Roces L2", Convert.ToString(informeSI.L2));
+            DatosPractica.Add("Roces L3 Arriba", Convert.ToString(informeSI.L3Arriba));
+            DatosPractica.Add("Roces L3 Abajo", Convert.ToString(informeSI.L3Abajo));
+            DatosPractica.Add("Roces L4 Arriba Izquierda", Convert.ToString(informeSI.L4ArribaIzquierda));
+            DatosPractica.Add("Roces L4 Arriba Derecha", Convert.ToString(informeSI.L4ArribaDerecha));
+            DatosPractica.Add("Roces L4 Arriba Centro", Convert.ToString(informeSI.L4ArribaCentro));
+            DatosPractica.Add("Roces L4 Abajo", Convert.ToString(informeSI.L4Abajo));
+            DatosPractica.Add("Roces L5", Convert.ToString(informeSI.L5));
+            DatosPractica.Add("Punciones Duramadre", Convert.ToString(informeSI.Duramadre));
+            DatosPractica.Add("Camino Correcto", Convert.ToString(informeSI.CaminoCorrecto));
+            DatosPractica.Add("Camino Incorrecto", Convert.ToString(informeSI.CaminoIncorrecto));
+            DatosPractica.Add("Tiempo Total", string.Format("{0:D2}:{1:D2}:{2:D2}",
+                tiempoTotalDeEjecucion.Hours, tiempoTotalDeEjecucion.Minutes, tiempoTotalDeEjecucion.Seconds));
         }
     }
 }

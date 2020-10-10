@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LumbApp.Expertos.ExpertoZE
 {
-    class ExpertoZEMock : IExpertoZE
+    public class ExpertoZEMock : IExpertoZE
     {
         public event EventHandler<CambioZEEventArgs> CambioZE;
 
@@ -29,7 +29,7 @@ namespace LumbApp.Expertos.ExpertoZE
             return shouldInit;
         }
 
-        public bool IniciarSimulacion()
+        public bool IniciarSimulacion(IVideo video)
         {
             SkeletonPoint[] points = {
                 newPoint(0,0,0), newPoint(1,0,0), newPoint(1, 0, 1),  newPoint(0,0,1),
@@ -58,10 +58,10 @@ namespace LumbApp.Expertos.ExpertoZE
         public InformeZE TerminarSimulacion()
         {
             if (!simulando)
-                return new InformeZE(0, 0, 0, new Video());
+                return new InformeZE(0, 0, 0, new Video("test.mp4"));
 
             simulando = false;
-            return new InformeZE(zonaEsteril.Contaminacion, manoDerecha.VecesContamino, manoIzquierda.VecesContamino, new Video());
+            return new InformeZE(zonaEsteril.Contaminacion, manoDerecha.VecesContamino, manoIzquierda.VecesContamino, new Video("test.mp4"));
         }
 
         private async Task simulateAsync()
