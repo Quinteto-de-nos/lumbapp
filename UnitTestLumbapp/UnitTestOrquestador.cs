@@ -25,7 +25,7 @@ namespace UnitTestLumbapp
             "Gui no puede ser null. Necesito un GUIController para crear un Orquestador.")]
         public void TestConstructorNull()
         {
-            Orquestador orq = new Orquestador(null, null);
+            _ = new Orquestador(null, null);
         }
 
         /// <summary>
@@ -37,14 +37,14 @@ namespace UnitTestLumbapp
         public void TestConstructorSinCalibracion()
         {
             Mock<IGUIController> gui = new Mock<IGUIController>();
-            IOrquestador orq = new Orquestador(gui.Object, null);
+            _ = new Orquestador(gui.Object, null);
         }
 
         [TestMethod]
         public void TestConstructorOK()
         {
             Mock<IGUIController> gui = new Mock<IGUIController>();
-            IOrquestador orq = new Orquestador(gui.Object, mockedConectorFS());
+            _ = new Orquestador(gui.Object, mockedConectorFS());
         }
 
         [TestMethod]
@@ -183,11 +183,13 @@ namespace UnitTestLumbapp
 
             await orq.Inicializar();
 
-            DatosPracticante dp = new DatosPracticante();
-            dp.Dni = 39879304;
-            dp.Nombre = "Alexis";
-            dp.Apellido = "Aranda";
-            dp.FolderPath = ".\\folder";
+            DatosPracticante dp = new DatosPracticante
+            {
+                Dni = 39879304,
+                Nombre = "Alexis",
+                Apellido = "Aranda",
+                FolderPath = ".\\folder"
+            };
 
             orq.SetDatosDeSimulacion(dp, LumbApp.Enums.ModoSimulacion.ModoEvaluacion);
             orq.IniciarSimulacion();
@@ -218,11 +220,13 @@ namespace UnitTestLumbapp
 
             await orq.Inicializar();
 
-            DatosPracticante dp = new DatosPracticante();
-            dp.Dni = 39879304;
-            dp.Nombre = "Alexis";
-            dp.Apellido = "Aranda";
-            dp.FolderPath = ".\\folder";
+            DatosPracticante dp = new DatosPracticante
+            {
+                Dni = 39879304,
+                Nombre = "Alexis",
+                Apellido = "Aranda",
+                FolderPath = ".\\folder"
+            };
 
             orq.SetDatosDeSimulacion(dp, LumbApp.Enums.ModoSimulacion.ModoEvaluacion);
             orq.IniciarSimulacion();

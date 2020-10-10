@@ -73,9 +73,9 @@ namespace LumbApp.GUI
                 ((TextBox)control).TextChanged += Control_GotKeyboardFocus;
             }
 
-            if (d is ItemsControl && !(d is ComboBox))
+            if (d is ItemsControl control1 && !(d is ComboBox))
             {
-                ItemsControl i = (ItemsControl)d;
+                ItemsControl i = control1;
 
                 // for Items property  
                 i.ItemContainerGenerator.ItemsChanged += ItemsChanged;

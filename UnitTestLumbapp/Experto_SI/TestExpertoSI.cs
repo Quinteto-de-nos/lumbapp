@@ -29,7 +29,7 @@ namespace UnitTestLumbapp.Experto_SI
         public void TestConstructorOK()
         {
             Mock<IConectorSI> conn = new Mock<IConectorSI>();
-            ExpertoSI exp = new ExpertoSI(conn.Object);
+            _ = new ExpertoSI(conn.Object);
         }
 
         /// <summary>

@@ -21,7 +21,7 @@ namespace LumbApp.GUI
         public GUIController _controller { get; set; }
 
         //Path General de Carpeta de Imagenes
-        private static string _imagesFolderPath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\GUI\\Imagenes\\";
+        private static readonly string _imagesFolderPath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\GUI\\Imagenes\\";
 
 
         public SimulacionModoEvaluacion(GUIController gui)

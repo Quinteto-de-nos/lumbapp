@@ -113,37 +113,45 @@ namespace KinectCoordinateMapping
 
         private SkeletonPoint mas(SkeletonPoint a, SkeletonPoint b)
         {
-            var res = new SkeletonPoint();
-            res.X = a.X + b.X;
-            res.Y = a.Y + b.Y;
-            res.Z = a.Z + b.Z;
+            var res = new SkeletonPoint
+            {
+                X = a.X + b.X,
+                Y = a.Y + b.Y,
+                Z = a.Z + b.Z
+            };
             return res;
         }
 
         private SkeletonPoint menos(SkeletonPoint a, SkeletonPoint b)
         {
-            var res = new SkeletonPoint();
-            res.X = a.X - b.X;
-            res.Y = a.Y - b.Y;
-            res.Z = a.Z - b.Z;
+            var res = new SkeletonPoint
+            {
+                X = a.X - b.X,
+                Y = a.Y - b.Y,
+                Z = a.Z - b.Z
+            };
             return res;
         }
 
         private SkeletonPoint cruz(SkeletonPoint a, SkeletonPoint b)
         {
-            var res = new SkeletonPoint();
-            res.X = a.Y * b.Z - a.Z * b.Y; //a2b3-a3b2
-            res.Y = a.Z * b.X - a.X * b.Z; //a3b1-a1b3
-            res.Z = a.X * b.Y - a.Y * b.X; //a1b2-a2b1
+            var res = new SkeletonPoint
+            {
+                X = a.Y * b.Z - a.Z * b.Y, //a2b3-a3b2
+                Y = a.Z * b.X - a.X * b.Z, //a3b1-a1b3
+                Z = a.X * b.Y - a.Y * b.X //a1b2-a2b1
+            };
             return res;
         }
 
         private SkeletonPoint por(float a, SkeletonPoint b)
         {
-            var res = new SkeletonPoint();
-            res.X = a * b.X;
-            res.Y = a * b.Y;
-            res.Z = a * b.Z;
+            var res = new SkeletonPoint
+            {
+                X = a * b.X,
+                Y = a * b.Y,
+                Z = a * b.Z
+            };
             return res;
         }
 
@@ -314,9 +322,11 @@ namespace KinectCoordinateMapping
         private void draw2DPoint(ColorImagePoint colorPoint, Brush b)
         {
             // 2D coordinates in pixels
-            Point point = new Point();
-            point.X = colorPoint.X;
-            point.Y = colorPoint.Y;
+            Point point = new Point
+            {
+                X = colorPoint.X,
+                Y = colorPoint.Y
+            };
 
             drawPoint(b, point);
         }

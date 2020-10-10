@@ -26,19 +26,19 @@ namespace LumbApp.GUI
         int timeLeft { get; set; }
 
         //Path General de Carpeta de Imagenes
-        private static string _imagesFolderPath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\GUI\\Imagenes\\";
+        private static readonly string _imagesFolderPath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\GUI\\Imagenes\\";
 
         //Paths de manos
-        private static string _manoPerdidaSubPath = "Manos\\NoTraqueando\\";
-        private static string _manoTrackeadaSubPath = "Manos\\Traqueando\\";
-        private static string _manoFueraInicialPath = "mano-fuera-inicial.png";
-        private static string _manoFueraPath = "mano-fuera.png";
-        private static string _manoDentroPath = "mano-dentro.png";
-        private static string _manoContaminadaPath = "mano-contaminadaX.png";
+        private static readonly string _manoPerdidaSubPath = "Manos\\NoTraqueando\\";
+        private static readonly string _manoTrackeadaSubPath = "Manos\\Traqueando\\";
+        private static readonly string _manoFueraInicialPath = "mano-fuera-inicial.png";
+        private static readonly string _manoFueraPath = "mano-fuera.png";
+        private static readonly string _manoDentroPath = "mano-dentro.png";
+        private static readonly string _manoContaminadaPath = "mano-contaminadaX.png";
 
         //Paths de capas
-        private static string _capasFrontPath = _imagesFolderPath + "Capas\\Frente\\";
-        private static string _capasSidePath = _imagesFolderPath + "Capas\\Costado\\";
+        private static readonly string _capasFrontPath = _imagesFolderPath + "Capas\\Frente\\";
+        private static readonly string _capasSidePath = _imagesFolderPath + "Capas\\Costado\\";
 
         //Colores
         private static Brush[] coloresContaminando { get; set; }

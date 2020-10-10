@@ -32,10 +32,12 @@ namespace LumbApp.GUI
         {
             this.IsHitTestVisible = false;
 
-            this.contentPresenter = new ContentPresenter();
-            this.contentPresenter.Content = watermark;
-            this.contentPresenter.Opacity = 0.5;
-            this.contentPresenter.Margin = new Thickness(Control.Margin.Left + Control.Padding.Left, Control.Margin.Top + Control.Padding.Top, 0, 0);
+            this.contentPresenter = new ContentPresenter
+            {
+                Content = watermark,
+                Opacity = 0.5,
+                Margin = new Thickness(Control.Margin.Left + Control.Padding.Left, Control.Margin.Top + Control.Padding.Top, 0, 0)
+            };
             this.VerticalAlignment = VerticalAlignment.Center;
             this.contentPresenter.VerticalAlignment = VerticalAlignment.Center;
 

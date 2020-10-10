@@ -15,10 +15,10 @@ namespace LumbApp.FinalFeedbacker_
 {
     public class FinalFeedbacker : IFinalFeedbacker
     {
-        private DatosPracticante _datosPracticante;
-        private OrderedDictionary _datosPractica;
-        private string _path;
-        private DateTime _fecha;
+        private readonly DatosPracticante _datosPracticante;
+        private readonly OrderedDictionary _datosPractica;
+        private readonly string _path;
+        private readonly DateTime _fecha;
 
         public FinalFeedbacker(string path, DatosPracticante datosPracticante,
             OrderedDictionary datosPractica, DateTime fecha)
