@@ -31,11 +31,13 @@ namespace LumbApp.Conectores.ConectorFS
         {
             String stringToBeSaved = JsonSerializer.Serialize<T>(objectToBeSavedAsJson);
             Console.WriteLine("FS: Objeto a ser salvado: " + stringToBeSaved);
-            try {
+            try
+            {
                 _fileSystem.File.WriteAllText(path, stringToBeSaved);
-                Console.WriteLine("FS: Archivo salvado correctamente en: "+path);
+                Console.WriteLine("FS: Archivo salvado correctamente en: " + path);
                 return true;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 Console.WriteLine("FS: Exception: " + e.Message);
                 return false;
@@ -57,7 +59,7 @@ namespace LumbApp.Conectores.ConectorFS
                 Console.WriteLine("FS: Archivo levantado correctamente: " + jsonStringToRead);
                 return JsonSerializer.Deserialize<T>(jsonStringToRead);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine("FS: Exception: " + e.Message);
                 return default;
