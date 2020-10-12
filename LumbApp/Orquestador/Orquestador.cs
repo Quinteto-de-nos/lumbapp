@@ -46,12 +46,12 @@ namespace LumbApp.Orquestador
 				throw new Exception("Error al tratar de cargar el archivo de calibracion.");
 			}
 			var conectorKinect = new ConectorKinect();
-			expertoZE = new ExpertoZE(conectorKinect, calibracion);
-			//expertoZE = new ExpertoZEMock(true);
+			//expertoZE = new ExpertoZE(conectorKinect, calibracion);
+			expertoZE = new ExpertoZEMock(true);
 
 			var conectorSI = new ConectorSI();
-			expertoSI = new ExpertoSI(conectorSI);
-			//expertoSI = new ExpertoSIMock(true);
+			//expertoSI = new ExpertoSI(conectorSI);
+			expertoSI = new ExpertoSIMock(true);
 		}
 
 		public void SetDatosDeSimulacion(DatosPracticante datosPracticante, ModoSimulacion modo)
@@ -140,12 +140,11 @@ namespace LumbApp.Orquestador
 			informeFinal.SetPdfGenerado(ffb.GenerarPDF());
 			informeZE.Video.Save();
 
-			IGUIController.MostrarResultados(informeFinal);
-
 			//Informar a GUI con informe con un evento, que pase si el informe se genero bien, y si se guardó  bien (bool, bool)
+			IGUIController.MostrarResultados(informeFinal);
 		}
 
-        private string ObtenerRuta (DateTime tiempo) {
+		private string ObtenerRuta (DateTime tiempo) {
 			string ruta = datosPracticante.FolderPath;
 			string carpetaAlumno = datosPracticante.Apellido + "_" + datosPracticante.Nombre + "_" + datosPracticante.Dni;
 
