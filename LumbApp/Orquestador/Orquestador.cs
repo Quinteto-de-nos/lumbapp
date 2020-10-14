@@ -105,8 +105,11 @@ namespace LumbApp.Orquestador
                     throw new Exception("No se pudieron detectar correctamente los sensores internos.");
 
                 //Mostrar pantalla de ingreso de datos, le mandamos el path por default donde se guarda la practica
-                IGUIController.SolicitarDatosPracticante("C:\\Desktop");
-
+                var datos = new DatosPracticante()
+                {
+                    FolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+                };
+                IGUIController.SolicitarDatosPracticante(datos);
             }
             catch (Exception ex)
             {
@@ -122,7 +125,7 @@ namespace LumbApp.Orquestador
 
         public async Task NuevaSimulacion()
         { //Funcion llamada por la GUI, devuelve void, respuesta por evento
-            IGUIController.SolicitarDatosPracticante(datosPracticante.FolderPath);
+            IGUIController.SolicitarDatosPracticante(datosPracticante);
         }
 
         /// <summary>

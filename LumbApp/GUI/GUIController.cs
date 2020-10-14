@@ -56,9 +56,9 @@ namespace LumbApp.GUI
         /// <summary>
         /// Lo llama el orquestador si finalizo bien la inicializacion de los sensores para mostrar el 'login' del practicante
         /// </summary>
-        public void SolicitarDatosPracticante(string folderPath)
+        public void SolicitarDatosPracticante(DatosPracticante datosPrevios)
         {
-            IngresoDatosPracticantePage = new IngresoDatosPracticante(this, folderPath);
+            IngresoDatosPracticantePage = new IngresoDatosPracticante(this, datosPrevios);
             MainWindow.NavigationService.Navigate(IngresoDatosPracticantePage);
         }
 

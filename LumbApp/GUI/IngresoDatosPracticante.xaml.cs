@@ -52,13 +52,18 @@ namespace LumbApp.GUI
         private bool apellidoValido;
         private bool mailValido;
 
-        public IngresoDatosPracticante(GUIController guiController, string savefolderPath)
+        public IngresoDatosPracticante(GUIController guiController, DatosPracticante datosPrevios)
         {
             InitializeComponent();
             _controller = guiController;
             IniciarSimulacion.IsEnabled = false;
             mailValido = true;
-            FolderPath.Content = savefolderPath;
+
+            Nombre.Text = datosPrevios.Nombre;
+            Apellido.Text = datosPrevios.Apellido;
+            Dni.Text = datosPrevios.Dni.ToString();
+            Mail.Text = datosPrevios.Email;
+            FolderPath.Content = datosPrevios.FolderPath;
         }
 
         /// <summary>
