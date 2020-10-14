@@ -1,27 +1,25 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
-using LumbApp.Expertos.ExpertoSI;
-using LumbApp.Expertos.ExpertoZE;
 using LumbApp.Models;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-namespace LumbApp.FinalFeedbacker_ {
-    public class FinalFeedbacker : IFinalFeedbacker {
-        private DatosPracticante _datosPracticante;
-        private OrderedDictionary _datosPractica;
-        private string _path;
-        private DateTime _fecha;
 
-        public FinalFeedbacker (string path, DatosPracticante datosPracticante,
-            OrderedDictionary datosPractica, DateTime fecha) {
+namespace LumbApp.FinalFeedbacker_
+{
+    public class FinalFeedbacker : IFinalFeedbacker
+    {
+        private readonly DatosPracticante _datosPracticante;
+        private readonly OrderedDictionary _datosPractica;
+        private readonly string _path;
+        private readonly DateTime _fecha;
 
-            if(path==null || path=="" || datosPracticante == null || datosPractica == null || fecha == null)
+        public FinalFeedbacker(string path, DatosPracticante datosPracticante,
+            OrderedDictionary datosPractica, DateTime fecha)
+        {
+
+            if (path == null || path == "" || datosPracticante == null || datosPractica == null || fecha == null)
                 throw new Exception("Los datos de entrada no peden ser nulos, los necesito para crear el informe en PDF.");
 
             this._path = path;
@@ -30,8 +28,10 @@ namespace LumbApp.FinalFeedbacker_ {
             this._fecha = fecha;
         }
 
-        public bool GenerarPDF () {
-            try {
+        public bool GenerarPDF()
+        {
+            try
+            {
                 Document doc = new Document(PageSize.A4);
                 // Indicamos donde vamos a guardar el documento
                 PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(_path, FileMode.Create));
@@ -45,7 +45,7 @@ namespace LumbApp.FinalFeedbacker_ {
                 doc.Open();
 
                 Font _standardFont = new Font(Font.FontFamily.HELVETICA, 8, Font.NORMAL, BaseColor.BLACK);
-                
+
                 Font fuenteTitulos = new Font(Font.FontFamily.COURIER, 12, Font.BOLD, BaseColor.GREEN);
                 fuenteTitulos.SetColor(0, 126, 93);
                 BaseColor backgroundTitulos = new BaseColor(186, 232, 210);
@@ -122,7 +122,7 @@ namespace LumbApp.FinalFeedbacker_ {
                 Chunk chEstadisticas = new Chunk("Información de la práctica", fuenteTitulos);
                 chEstadisticas.SetBackground(backgroundTitulos);
                 doc.Add(new Paragraph(chEstadisticas));
-                
+
                 // Creamos una tabla que contendrá los datos de la practica
                 PdfPTable tblDatosPractica = new PdfPTable(2);
                 tblDatosPractica.WidthPercentage = 100;
@@ -140,7 +140,7 @@ namespace LumbApp.FinalFeedbacker_ {
                 tblDatosPractica.AddCell(columnaDescripcion);
                 tblDatosPractica.AddCell(columnaCantidad);
 
-                foreach(DictionaryEntry de in _datosPractica)
+                foreach (DictionaryEntry de in _datosPractica)
                 {
                     columnaDescripcion = new PdfPCell(new Phrase(de.Key.ToString(), _standardFont));
                     columnaDescripcion.BorderWidth = 0;
@@ -161,11 +161,13 @@ namespace LumbApp.FinalFeedbacker_ {
                 writer.Close();
 
                 return true;
-            } catch (Exception ex){
+            }
+            catch (Exception ex)
+            {
                 Console.WriteLine("FF: no pude crear el PDF final. Error: " + ex);
                 return false;
             }
-            
+
         }
     }
 }

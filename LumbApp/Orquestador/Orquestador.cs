@@ -70,6 +70,7 @@ namespace LumbApp.Orquestador
         /// </summary>
         public void IniciarSimulacion()
         {
+            Console.WriteLine("Iniciando simulacion en " + modoSeleccionado);
             tiempoInicialDeEjecucion = DateTime.Now;
             ruta = ObtenerRuta(tiempoInicialDeEjecucion);
 
@@ -90,7 +91,7 @@ namespace LumbApp.Orquestador
         /// <returns></returns>
         public async Task Inicializar()
         {
-
+            Console.WriteLine("Inicializando...");
             try
             {
                 //INICIALIZAR EXPERTO ZE
@@ -116,6 +117,7 @@ namespace LumbApp.Orquestador
                 if (ex.Message.Contains("sensores"))
                     expertoSI.CambioSI -= CambioSI;
 
+                Console.WriteLine("Error de inicializacion: " + ex);
                 IGUIController.MostrarErrorDeConexion(ex.Message);
             }
 
@@ -133,7 +135,7 @@ namespace LumbApp.Orquestador
         /// </summary>
         public async Task TerminarSimulacion()
         { //Funcion llamada por la GUI, devuelve void, respuesta por evento
-            Console.WriteLine("Terminando...");
+            Console.WriteLine("Terminando simulacion...");
             InformeZE informeZE = expertoZE.TerminarSimulacion();
             InformeSI informeSI = expertoSI.TerminarSimulacion();
 

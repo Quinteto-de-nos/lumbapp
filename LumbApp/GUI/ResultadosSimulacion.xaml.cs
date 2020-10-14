@@ -27,10 +27,10 @@ namespace LumbApp.GUI
 
         public void MostrarResultados(Informe informe)
         {
-            NombrePracticante.Content = 
+            NombrePracticante.Content =
                 String.Format(
                     "{0}, {1}" + Environment.NewLine +
-                    "Path: {2}", informe.Apellido, informe.Nombre,informe.FolderPath);
+                    "Path: {2}", informe.Apellido, informe.Nombre, informe.FolderPath);
 
             DniPracticante.Content = "DNI: " + informe.Dni.ToString();
 
@@ -39,7 +39,7 @@ namespace LumbApp.GUI
 
             foreach (DictionaryEntry dato in informe.DatosPractica)
             {
-                if(i <= halfPoint)
+                if (i <= halfPoint)
                 {
                     ReporteItemTitulo1.Content += String.Format("{0}" + Environment.NewLine, dato.Key);
                     ReporteItemValor1.Content += String.Format("{0}" + Environment.NewLine, dato.Value);

@@ -1,7 +1,7 @@
-﻿using LumbApp.Expertos.ExpertoSI.Utils;
-
-namespace LumbApp.Expertos.ExpertoSI {
-    public class InformeSI {
+﻿namespace LumbApp.Expertos.ExpertoSI
+{
+    public class InformeSI
+    {
 
         public int TejidoAdiposo { get; private set; }
         public int L2 { get; private set; }
@@ -23,9 +23,10 @@ namespace LumbApp.Expertos.ExpertoSI {
         /// Cantidad de veces que se logro llegar a la duramadre sin sensar ningun error.
         /// </summary>
         public int CaminoIncorrecto;
-        
-        public InformeSI(int TejidoAdiposo, int L2, int L3Arriba, int L3Abajo, int L4ArribaIzquierda, int L4ArribaDerecha, 
-            int L4ArribaCentro, int L4Abajo, int L5, int Duramadre, int CaminoCorrecto, int CaminoIncorrecto) {
+
+        public InformeSI(int TejidoAdiposo, int L2, int L3Arriba, int L3Abajo, int L4ArribaIzquierda, int L4ArribaDerecha,
+            int L4ArribaCentro, int L4Abajo, int L5, int Duramadre, int CaminoCorrecto, int CaminoIncorrecto)
+        {
 
             this.TejidoAdiposo = TejidoAdiposo;
             this.L2 = L2;
