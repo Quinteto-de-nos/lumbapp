@@ -1,19 +1,19 @@
 ﻿using LumbApp.Expertos.ExpertoSI.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace UnitTestLumbapp.Experto_SI {
+namespace UnitTestLumbapp.Experto_SI
+{
     [TestClass]
-    public class TestVertebra {
+    public class TestVertebra
+    {
         /// <summary>
         /// La Vertebra debe cambiar de estado con Rozar() y Abandonar().
         /// Los estados son Inicial, Rozando, Abandonada y RozandoNuevamente e incrementar el contador de veces rozada
         /// cuando hay un cambio de Inicial a Rozando o de Abandonada a RozandoNuevamente.
         /// </summary>
         [TestMethod]
-        public void TestEstadosYVecesVertebra () {
+        public void TestEstadosYVecesVertebra()
+        {
             Vertebra vertebra = new Vertebra();
             bool cambio;
 
@@ -75,7 +75,8 @@ namespace UnitTestLumbapp.Experto_SI {
         /// cuando hay un cambio de Inicial a Rozando o de Abandonada a RozandoNuevamente.
         /// </summary>
         [TestMethod]
-        public void TestEstadosYVecesVertebraL3 () {
+        public void TestEstadosYVecesVertebraL3()
+        {
             VertebraL3 vertebra = new VertebraL3();
             bool cambio;
 
@@ -137,7 +138,8 @@ namespace UnitTestLumbapp.Experto_SI {
         }
 
         [TestMethod]
-        public void TestSectoresYVecesVertebraL3 () {
+        public void TestSectoresYVecesVertebraL3()
+        {
             VertebraL3 vertebra = new VertebraL3();
 
             Assert.AreEqual(VertebraL3.Estados.Inicial, vertebra.Estado);
@@ -204,7 +206,8 @@ namespace UnitTestLumbapp.Experto_SI {
         /// cuando hay un cambio de Inicial a Rozando o de Abandonada a RozandoNuevamente.
         /// </summary>
         [TestMethod]
-        public void TestEstadosYVecesVertebraL4 () {
+        public void TestEstadosYVecesVertebraL4()
+        {
             VertebraL4 vertebra = new VertebraL4();
             bool cambio;
 
@@ -283,7 +286,8 @@ namespace UnitTestLumbapp.Experto_SI {
         }
 
         [TestMethod]
-        public void TestSectoresYVecesVertebraL4 () {
+        public void TestSectoresYVecesVertebraL4()
+        {
             VertebraL4 vertebra = new VertebraL4();
 
             Assert.AreEqual(VertebraL4.Estados.Inicial, vertebra.Estado);

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Media;
-using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -15,8 +14,8 @@ namespace LumbApp.GUI
     public partial class PasosPreparacion : Page
     {
         public GUIController _controller { get; set; }
-        private static string _imagesFolderPath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\GUI\\Imagenes\\Preparacion\\";
-        private DispatcherTimer timer;
+        private static readonly string _imagesFolderPath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\GUI\\Imagenes\\Preparacion\\";
+        private readonly DispatcherTimer timer;
         private int timeLeft { get; set; }
 
         public PasosPreparacion(GUIController gui)
@@ -24,8 +23,10 @@ namespace LumbApp.GUI
             InitializeComponent();
             _controller = gui;
             timeLeft = 30;
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1);
+            timer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(1)
+            };
             timer.Tick += timer_Tick;
             timer.Start();
 

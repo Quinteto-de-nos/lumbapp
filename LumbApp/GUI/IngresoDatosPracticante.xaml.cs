@@ -1,7 +1,6 @@
 ﻿using LumbApp.Enums;
 using LumbApp.Models;
 using System;
-using System.Net.Mail;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -42,12 +41,12 @@ namespace LumbApp.GUI
             set { SetValue(DescriptionProperty, value); }
         }
 
-        private Regex regexApYN = new Regex("^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$");
+        private readonly Regex regexApYN = new Regex("^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$");
         //@ escapa toda la string que sigue, no necesitamos \\ para escribir una \
         //Este mail acepta letras, numeros, -, _ y . en el nombre
         //Acepta letras, numeros, _ y . en el dominio
         //Debe terminar con . y 2 o 3 letras
-        private Regex regexMail = new Regex(@"^[\w\.\-]+@[\w\.]+\.\w{2,3}$");
+        private readonly Regex regexMail = new Regex(@"^[\w\.\-]+@[\w\.]+\.\w{2,3}$");
         private bool dniValido;
         private bool nombreValido;
         private bool apellidoValido;
@@ -68,12 +67,14 @@ namespace LumbApp.GUI
         /// <returns></returns>
         public DatosPracticante ProcesarDatos()
         {
-            DatosPracticante datosPracticante = new DatosPracticante();
-            datosPracticante.Nombre = Nombre.Text;
-            datosPracticante.Apellido = Apellido.Text;
-            datosPracticante.Dni = Int32.Parse(Dni.Text);
-            datosPracticante.FolderPath = FolderPath.Content.ToString();
-            datosPracticante.Email = Mail.Text;
+            DatosPracticante datosPracticante = new DatosPracticante
+            {
+                Nombre = Nombre.Text,
+                Apellido = Apellido.Text,
+                Dni = Int32.Parse(Dni.Text),
+                FolderPath = FolderPath.Content.ToString(),
+                Email = Mail.Text
+            };
             return datosPracticante;
         }
 

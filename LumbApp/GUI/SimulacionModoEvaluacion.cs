@@ -1,15 +1,7 @@
-﻿using LumbApp.Expertos.ExpertoSI;
-using LumbApp.Expertos.ExpertoSI.Utils;
-using LumbApp.Expertos.ExpertoZE;
-using System;
+﻿using System;
 using System.IO;
-using System.Linq;
-using System.Media;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Threading;
 
 namespace LumbApp.GUI
 {
@@ -21,9 +13,9 @@ namespace LumbApp.GUI
         public GUIController _controller { get; set; }
 
         //Path General de Carpeta de Imagenes
-        private static string _imagesFolderPath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\GUI\\Imagenes\\";
+        private static readonly string _imagesFolderPath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\GUI\\Imagenes\\";
 
-       
+
         public SimulacionModoEvaluacion(GUIController gui)
         {
             InitializeComponent();

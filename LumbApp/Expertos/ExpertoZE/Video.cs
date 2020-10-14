@@ -12,8 +12,8 @@ namespace LumbApp.Expertos.ExpertoZE
         //private List<BitmapData> frames;
         private const int width = 640;
         private const int height = 480;
-        private VideoFileWriter writer;
-        private Bitmap bitmap;
+        private readonly VideoFileWriter writer;
+        private readonly Bitmap bitmap;
 
         public Video(string path)
         {

@@ -12,17 +12,20 @@ using System.IO.Abstractions;
 using LumbApp.Conectores.ConectorFS;
 using LumbApp.Models;
 
-namespace UnitTestLumbapp {
+namespace UnitTestLumbapp
+{
     [TestClass]
-    public class UnitTestOrquestador {
+    public class UnitTestOrquestador
+    {
         /// <summary>
         /// Test que prueba el caso de intentar crear un orquestador sin una GUI, generando una exception
         /// </summary>
         [TestMethod]
         [ExpectedException(typeof(Exception),
             "Gui no puede ser null. Necesito un GUIController para crear un Orquestador.")]
-        public void TestConstructorNull () {
-            Orquestador orq = new Orquestador(null, null);
+        public void TestConstructorNull()
+        {
+            _ = new Orquestador(null, null);
         }
 
         /// <summary>
@@ -34,18 +37,18 @@ namespace UnitTestLumbapp {
         public void TestConstructorSinCalibracion()
         {
             Mock<IGUIController> gui = new Mock<IGUIController>();
-            IOrquestador orq = new Orquestador(gui.Object, null);
+            _ = new Orquestador(gui.Object, null);
         }
 
         [TestMethod]
         public void TestConstructorOK()
         {
             Mock<IGUIController> gui = new Mock<IGUIController>();
-            IOrquestador orq = new Orquestador(gui.Object, mockedConectorFS());
+            _ = new Orquestador(gui.Object, mockedConectorFS());
         }
 
         [TestMethod]
-        public void TestInicializarOk()
+        public async Task TestInicializarOk()
         {
             Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
             Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
@@ -58,12 +61,12 @@ namespace UnitTestLumbapp {
             orq.SetExpertoSI(expSI.Object);
             orq.SetExpertoZE(expZE.Object);
 
-            orq.Inicializar();
-            gui.Verify(x => x.SolicitarDatosPracticante(It.IsAny<string>()), Times.Once) ;
+            await orq.Inicializar();
+            gui.Verify(x => x.SolicitarDatosPracticante(It.IsAny<string>()), Times.Once);
         }
 
         [TestMethod]
-        public void TestIniciarSimulaciónModoEvaluacion()
+        public async Task TestIniciarSimulaciónModoEvaluacion()
         {
             Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
             Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
@@ -76,7 +79,7 @@ namespace UnitTestLumbapp {
             orq.SetExpertoSI(expSI.Object);
             orq.SetExpertoZE(expZE.Object);
 
-            orq.Inicializar();
+            await orq.Inicializar();
 
             var datos = new DatosPracticante()
             {
@@ -95,7 +98,7 @@ namespace UnitTestLumbapp {
         }
 
         [TestMethod]
-        public void TestIniciarSimulaciónModoGuiado()
+        public async Task TestIniciarSimulaciónModoGuiado()
         {
             Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
             Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
@@ -108,7 +111,7 @@ namespace UnitTestLumbapp {
             orq.SetExpertoSI(expSI.Object);
             orq.SetExpertoZE(expZE.Object);
 
-            orq.Inicializar();
+            await orq.Inicializar();
             var datos = new DatosPracticante()
             {
                 Dni = 99999999,
@@ -126,20 +129,23 @@ namespace UnitTestLumbapp {
         }
 
         [TestMethod]
-        public void TestTerminarSimulacion()
+        public async Task TestTerminarSimulacion()
         {
             Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
             Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
+            Mock<IVideo> videoZE = new Mock<IVideo>();
             Mock<IGUIController> gui = new Mock<IGUIController>();
 
             expSI.Setup(x => x.Inicializar()).Returns(true);
+            expSI.Setup(x => x.TerminarSimulacion()).Returns(new InformeSI(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12));
             expZE.Setup(x => x.Inicializar()).Returns(true);
+            expZE.Setup(x => x.TerminarSimulacion()).Returns(new InformeZE(0,0,0,videoZE.Object));
 
             Orquestador orq = new Orquestador(gui.Object, mockedConectorFS());
             orq.SetExpertoSI(expSI.Object);
             orq.SetExpertoZE(expZE.Object);
 
-            orq.Inicializar();
+            await orq.Inicializar();
 
             var datos = new DatosPracticante()
             {
@@ -156,13 +162,13 @@ namespace UnitTestLumbapp {
             expZE.Verify(x => x.IniciarSimulacion(It.IsAny<IVideo>()), Times.Once);
             gui.Verify(x => x.IniciarSimulacionModoEvaluacion(), Times.Once);
 
-            orq.TerminarSimulacion();
+            await orq.TerminarSimulacion();
             expSI.Verify(x => x.TerminarSimulacion(), Times.Once);
             expZE.Verify(x => x.TerminarSimulacion(), Times.Once);
         }
 
         [TestMethod]
-        public void TestInformeGenerico()
+        public async Task TestInformeGenerico()
         {
             Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
             Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
@@ -175,13 +181,15 @@ namespace UnitTestLumbapp {
             orq.SetExpertoSI(expSI.Object);
             orq.SetExpertoZE(expZE.Object);
 
-            orq.Inicializar();
+            await orq.Inicializar();
 
-            DatosPracticante dp = new DatosPracticante();
-            dp.Dni = 39879304;
-            dp.Nombre = "Alexis";
-            dp.Apellido = "Aranda";
-            dp.FolderPath = ".\\folder";
+            DatosPracticante dp = new DatosPracticante
+            {
+                Dni = 39879304,
+                Nombre = "Alexis",
+                Apellido = "Aranda",
+                FolderPath = ".\\folder"
+            };
 
             orq.SetDatosDeSimulacion(dp, LumbApp.Enums.ModoSimulacion.ModoEvaluacion);
             orq.IniciarSimulacion();
@@ -192,7 +200,7 @@ namespace UnitTestLumbapp {
             expSI.Setup(x => x.TerminarSimulacion()).Returns(informeSI);
             expZE.Setup(x => x.TerminarSimulacion()).Returns(informeZE);
 
-            orq.TerminarSimulacion();
+            await orq.TerminarSimulacion();
             gui.Verify(x => x.MostrarResultados(It.IsAny<Informe>()), Times.Once);
         }
 
@@ -212,11 +220,13 @@ namespace UnitTestLumbapp {
 
             await orq.Inicializar();
 
-            DatosPracticante dp = new DatosPracticante();
-            dp.Dni = 39879304;
-            dp.Nombre = "Alexis";
-            dp.Apellido = "Aranda";
-            dp.FolderPath = ".\\folder";
+            DatosPracticante dp = new DatosPracticante
+            {
+                Dni = 39879304,
+                Nombre = "Alexis",
+                Apellido = "Aranda",
+                FolderPath = ".\\folder"
+            };
 
             orq.SetDatosDeSimulacion(dp, LumbApp.Enums.ModoSimulacion.ModoEvaluacion);
             orq.IniciarSimulacion();
@@ -261,7 +271,7 @@ namespace UnitTestLumbapp {
         }
 
         [TestMethod]
-        public void TestInicializarSIErrAsyncInSI()
+        public async Task TestInicializarSIErrAsyncInSI()
         {
             Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
             Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
@@ -274,12 +284,12 @@ namespace UnitTestLumbapp {
             orq.SetExpertoSI(expSI.Object);
             orq.SetExpertoZE(expZE.Object);
 
-            orq.Inicializar();
+            await orq.Inicializar();
             gui.Verify(x => x.MostrarErrorDeConexion(It.IsAny<String>()), Times.Once);
         }
 
         [TestMethod]
-        public void TestInicializarSIErrAsyncInZE()
+        public async Task TestInicializarSIErrAsyncInZE()
         {
             Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
             Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
@@ -292,7 +302,7 @@ namespace UnitTestLumbapp {
             orq.SetExpertoSI(expSI.Object);
             orq.SetExpertoZE(expZE.Object);
 
-            orq.Inicializar();
+            await orq.Inicializar();
             gui.Verify(x => x.MostrarErrorDeConexion(It.IsAny<String>()), Times.Once);
         }
 

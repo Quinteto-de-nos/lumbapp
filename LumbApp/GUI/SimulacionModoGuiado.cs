@@ -26,19 +26,19 @@ namespace LumbApp.GUI
         int timeLeft { get; set; }
 
         //Path General de Carpeta de Imagenes
-        private static string _imagesFolderPath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\GUI\\Imagenes\\";
+        private static readonly string _imagesFolderPath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\GUI\\Imagenes\\";
 
         //Paths de manos
-        private static string _manoPerdidaSubPath = "Manos\\NoTraqueando\\";
-        private static string _manoTrackeadaSubPath = "Manos\\Traqueando\\";
-        private static string _manoFueraInicialPath = "mano-fuera-inicial.png";
-        private static string _manoFueraPath = "mano-fuera.png";
-        private static string _manoDentroPath = "mano-dentro.png";
-        private static string _manoContaminadaPath = "mano-contaminadaX.png";
+        private static readonly string _manoPerdidaSubPath = "Manos\\NoTraqueando\\";
+        private static readonly string _manoTrackeadaSubPath = "Manos\\Traqueando\\";
+        private static readonly string _manoFueraInicialPath = "mano-fuera-inicial.png";
+        private static readonly string _manoFueraPath = "mano-fuera.png";
+        private static readonly string _manoDentroPath = "mano-dentro.png";
+        private static readonly string _manoContaminadaPath = "mano-contaminadaX.png";
 
         //Paths de capas
-        private static string _capasFrontPath = _imagesFolderPath + "Capas\\Frente\\";
-        private static string _capasSidePath = _imagesFolderPath + "Capas\\Costado\\";
+        private static readonly string _capasFrontPath = _imagesFolderPath + "Capas\\Frente\\";
+        private static readonly string _capasSidePath = _imagesFolderPath + "Capas\\Costado\\";
 
         //Colores
         private static Brush[] coloresContaminando { get; set; }
@@ -61,20 +61,20 @@ namespace LumbApp.GUI
 
             //inicializo imagenes de capas
             PielSideImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "Capas\\Costado\\piel_OFF.png", UriKind.Absolute));
-            SideBaseImage.Source = new BitmapImage( new Uri(_imagesFolderPath + "Capas\\Costado\\base.png", UriKind.Absolute));
+            SideBaseImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "Capas\\Costado\\base.png", UriKind.Absolute));
             FrontBaseImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "Capas\\Frente\\base.png", UriKind.Absolute));
 
             //inicializo colores
             brushConverter = new BrushConverter();
             white = (Brush)brushConverter.ConvertFrom("#ffffff");
             black = (Brush)brushConverter.ConvertFrom("#323232");
-            green= (Brush)brushConverter.ConvertFrom("#a7f192");
+            green = (Brush)brushConverter.ConvertFrom("#a7f192");
             darkred = (Brush)brushConverter.ConvertFrom("#bc100c");
             string[] colores = { "#dcf192", "#f1ef92", "#f1d792", "#f1b392", "#f19292", "#f3817e", "#ff6161" };
             coloresContaminando = new Brush[colores.Count()];
-            for(int i =0; i< colores.Count() ;i++)
+            for (int i = 0; i < colores.Count(); i++)
             {
-                coloresContaminando[i]= (Brush)brushConverter.ConvertFrom(colores[i]);
+                coloresContaminando[i] = (Brush)brushConverter.ConvertFrom(colores[i]);
             }
 
             //inicializo los labels de las manos
@@ -94,7 +94,7 @@ namespace LumbApp.GUI
             ManosImageConfig config = GetNuevaConfiguracionImagenMano(e.ManoIzquierda.Track, e.ManoIzquierda.Estado, e.ManoIzquierda.VecesContamino);
 
             ImageSource nuevaImagen = new BitmapImage(
-               new Uri(_imagesFolderPath +config.TrackingPath +config.EstadoPath, UriKind.Absolute));
+               new Uri(_imagesFolderPath + config.TrackingPath + config.EstadoPath, UriKind.Absolute));
             ManoIzquierda.Source = nuevaImagen;
             ManoIzqLabel.Background = config.LabelColor;
             ManoIzqLabel.Foreground = config.FontColor;
@@ -111,7 +111,7 @@ namespace LumbApp.GUI
             ManoDerLabel.Content = config.Texto;
 
             //Alerta sonido
-            if(e.ContaminadoAhora)
+            if (e.ContaminadoAhora)
                 SystemSounds.Exclamation.Play();
 
             SalidasZELabel.Content = String.Format("Se contamino la Zona Estéril {0} Veces", e.VecesContaminado);
@@ -149,7 +149,7 @@ namespace LumbApp.GUI
                     {
                         int nroContaminacion = (nroIngreso > 7 ? 7 : nroIngreso);
                         config.EstadoPath = _manoContaminadaPath.Replace("X", nroContaminacion.ToString()); ;
-                        config.LabelColor = coloresContaminando[nroContaminacion-1];
+                        config.LabelColor = coloresContaminando[nroContaminacion - 1];
                         config.FontColor = black;
                         config.Texto = "Contaminando";
                         break;
@@ -173,12 +173,12 @@ namespace LumbApp.GUI
             //ATRAVIESA LA PIEL
             if (e.TejidoAdiposo.Estado == Capa.Estados.Atravesando || e.TejidoAdiposo.Estado == Capa.Estados.AtravesandoNuevamente)
             {
-                PielSideImage.Source = new BitmapImage(new Uri( _capasSidePath + "piel_ON.png", UriKind.Absolute));
+                PielSideImage.Source = new BitmapImage(new Uri(_capasSidePath + "piel_ON.png", UriKind.Absolute));
                 CapaActualLabel.Content = "TEJIDO ADIPOSO";
             }
             else
             {
-                PielSideImage.Source = new BitmapImage(new Uri( _capasSidePath + "piel_OFF.png", UriKind.Absolute));
+                PielSideImage.Source = new BitmapImage(new Uri(_capasSidePath + "piel_OFF.png", UriKind.Absolute));
                 CapaActualLabel.Content = "NINGUNA";
             }
 
@@ -187,7 +187,7 @@ namespace LumbApp.GUI
             {
                 CapaActualLabel.Content = "LIGAMENTO INTERESPINOSO";
                 RozandoLabel.Content = "L2";
-                L2SideImage.Source = new BitmapImage(new Uri(_capasSidePath + "L2 adelante.png", UriKind.Absolute)); 
+                L2SideImage.Source = new BitmapImage(new Uri(_capasSidePath + "L2 adelante.png", UriKind.Absolute));
                 L2SFrontImage.Source = new BitmapImage(new Uri(_capasFrontPath + "L2 adelante.png", UriKind.Absolute));
             }
 
@@ -208,7 +208,7 @@ namespace LumbApp.GUI
                     L3SideImage.Source = new BitmapImage(new Uri(_capasSidePath + "L3 arriba.png", UriKind.Absolute));
                 }
             }
-            else 
+            else
             {
                 L3FrontImage.Source = null;
                 L3SideImage.Source = null;
@@ -274,17 +274,17 @@ namespace LumbApp.GUI
 
         private void MostrarAlertas(CambioSIEventArgs e)
         {
-            if((e.L3RozandoAhora && e.L3.Sector == VertebraL3.Sectores.Arriba) ||
+            if ((e.L3RozandoAhora && e.L3.Sector == VertebraL3.Sectores.Arriba) ||
                (e.L4RozandoAhora && e.L4.Sector == VertebraL4.Sectores.Abajo) ||
                 e.L2RozandoAhora || e.L5RozandoAhora)
             {
                 AlertaLabel.Content = "Hey!! mira donde estas pinchando!";
-                AlertaLabelBorder.Opacity=0.7;
+                AlertaLabelBorder.Opacity = 0.7;
                 SystemSounds.Exclamation.Play();
                 StartAlertTimer();
             }
-            else if (e.L4RozandoAhora && 
-                e.L4.Sector != VertebraL4.Sectores.Abajo && 
+            else if (e.L4RozandoAhora &&
+                e.L4.Sector != VertebraL4.Sectores.Abajo &&
                 e.L4.Sector != VertebraL4.Sectores.ArribaCentro)
             {
                 AlertaLabel.Content = "Casi casi!";
@@ -334,7 +334,7 @@ namespace LumbApp.GUI
 
     }
 
-     public class ManosImageConfig
+    public class ManosImageConfig
     {
         public Brush LabelColor { get; set; }
         public Brush FontColor { get; set; }

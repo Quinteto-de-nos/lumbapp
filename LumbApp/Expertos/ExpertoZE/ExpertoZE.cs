@@ -13,10 +13,8 @@ namespace LumbApp.Expertos.ExpertoZE
         /// </summary>
         public event EventHandler<CambioZEEventArgs> CambioZE;
 
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-
-        private IConectorKinect kinect;
-        private ZonaEsteril zonaEsteril;
+        private readonly IConectorKinect kinect;
+        private readonly ZonaEsteril zonaEsteril;
 
         private Mano manoDerecha;
         private Mano manoIzquierda;
@@ -70,11 +68,12 @@ namespace LumbApp.Expertos.ExpertoZE
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "No pude inicializar el Experto en Zona Esteril por error con la Kinect");
+                Console.WriteLine("ZE: No pude inicializar el Experto en Zona Esteril por error con la Kinect. Error: " + ex);
                 inicializado = false;
                 return false;
             }
             inicializado = true;
+            Console.WriteLine("ZE: Inicializado");
             return true;
         }
 
@@ -87,13 +86,17 @@ namespace LumbApp.Expertos.ExpertoZE
         public bool IniciarSimulacion(IVideo videoHelper)
         {
             if (!inicializado || zonaEsteril == null)
+            {
+                Console.WriteLine("ZE: No pude iniciar la simulación. Inicialice primero");
                 return false;
+            }
 
             manoDerecha = new Mano();
             manoIzquierda = new Mano();
             zonaEsteril.Resetear();
             videoWriter = videoHelper;
             simulando = true;
+            Console.WriteLine("ZE: Simulación iniciada");
             return true;
         }
 
@@ -108,7 +111,7 @@ namespace LumbApp.Expertos.ExpertoZE
             if (!simulando)
                 return new InformeZE(0, 0, 0, videoWriter);
 
-            Console.WriteLine("Terminando simulacion ZE");
+            Console.WriteLine("ZE: Simulación terminada");
             simulando = false;
             return new InformeZE(zonaEsteril.Contaminacion, manoDerecha.VecesContamino, manoIzquierda.VecesContamino, videoWriter);
         }
@@ -120,6 +123,7 @@ namespace LumbApp.Expertos.ExpertoZE
         {
             kinect.Desconectar();
             simulando = false;
+            Console.WriteLine("ZE: Finalizado");
         }
         #endregion
 
@@ -189,8 +193,7 @@ namespace LumbApp.Expertos.ExpertoZE
         private bool processHand(Joint joint, Mano mano, CambioZEEventArgs eventArgs)
         {
             //Tracking
-            bool cambioTrack = false;
-            cambioTrack = mano.ActualizarTrack(joint.TrackingState == JointTrackingState.Tracked);
+            bool cambioTrack = mano.ActualizarTrack(joint.TrackingState == JointTrackingState.Tracked);
             if (mano.Track == Mano.Tracking.Perdido)
                 return cambioTrack;
 

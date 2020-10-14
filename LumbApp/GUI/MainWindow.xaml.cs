@@ -15,7 +15,7 @@ namespace LumbApp.GUI
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
-        {      
+        {
             GUIController gui = new GUIController(this);
             gui.Inicializar();
         }

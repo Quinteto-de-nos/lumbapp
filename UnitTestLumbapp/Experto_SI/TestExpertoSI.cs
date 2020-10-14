@@ -8,7 +8,8 @@ using LumbApp.Expertos.ExpertoSI.Utils;
 namespace UnitTestLumbapp.Experto_SI
 {
     [TestClass]
-    public class TestExpertoSI {
+    public class TestExpertoSI
+    {
 
         /// <summary>
         /// Si el constructor de Experto SI se llama con null, debe tirar excepcion.
@@ -16,7 +17,7 @@ namespace UnitTestLumbapp.Experto_SI
         [TestMethod]
         [ExpectedException(typeof(Exception),
             "Sensores no puede ser null. Necesito un conector a los sensores para crear un experto en sensores internos")]
-        public void TestConstructorNull ()
+        public void TestConstructorNull()
         {
             new ExpertoSI(null);
         }
@@ -25,16 +26,18 @@ namespace UnitTestLumbapp.Experto_SI
         /// Si el constructor del Experto SI se llama con un conector, el resultado es OK.
         /// </summary>
         [TestMethod]
-        public void TestConstructorOK () {
+        public void TestConstructorOK()
+        {
             Mock<IConectorSI> conn = new Mock<IConectorSI>();
-            ExpertoSI exp = new ExpertoSI(conn.Object);
+            _ = new ExpertoSI(conn.Object);
         }
 
         /// <summary>
         /// Si en Inicializar pasa todo OK debe devolver true.
         /// </summary>
         [TestMethod]
-        public void TestInicializarOK () {
+        public void TestInicializarOK()
+        {
             Mock<IConectorSI> conn = new Mock<IConectorSI>();
             conn.Setup(x => x.Conectar()).Returns(true);
             conn.Setup(x => x.CheckearComunicacion()).Returns(true);
@@ -49,7 +52,8 @@ namespace UnitTestLumbapp.Experto_SI
         /// retornar false.
         /// </summary>
         [TestMethod]
-        public void TestInicializarConectarErr () {
+        public void TestInicializarConectarErr()
+        {
             Mock<IConectorSI> conn = new Mock<IConectorSI>();
             conn.Setup(x => x.Conectar()).Throws(new Exception());
             ExpertoSI exp = new ExpertoSI(conn.Object);
@@ -63,7 +67,8 @@ namespace UnitTestLumbapp.Experto_SI
         /// la inicializacion debe retornar false.
         /// </summary>
         [TestMethod]
-        public void TestInicializarCheckeoErr () {
+        public void TestInicializarCheckeoErr()
+        {
             Mock<IConectorSI> conn = new Mock<IConectorSI>();
             conn.Setup(x => x.CheckearComunicacion()).Returns(false);
             ExpertoSI exp = new ExpertoSI(conn.Object);
@@ -76,7 +81,8 @@ namespace UnitTestLumbapp.Experto_SI
         /// Si IniciarSimulacion se llama antes de Inicializar, debe devolver false.
         /// </summary>
         [TestMethod]
-        public void IniciarTooSoon () {
+        public void IniciarTooSoon()
+        {
             Mock<IConectorSI> conn = new Mock<IConectorSI>();
 
             ExpertoSI exp = new ExpertoSI(conn.Object);
@@ -89,7 +95,8 @@ namespace UnitTestLumbapp.Experto_SI
         /// Si IniciarSimulacion esta OK debe devolver true
         /// </summary>
         [TestMethod]
-        public void IniciarOK () {
+        public void IniciarOK()
+        {
             Mock<IConectorSI> conn = new Mock<IConectorSI>();
             conn.Setup(x => x.Conectar()).Returns(true);
             conn.Setup(x => x.CheckearComunicacion()).Returns(true);
@@ -105,7 +112,8 @@ namespace UnitTestLumbapp.Experto_SI
         /// Si se llama a TerminarSimulacion antes de Inicializar debe devolver un reporte vacio
         /// </summary>
         [TestMethod]
-        public void TerminarTooSoon1 () {
+        public void TerminarTooSoon1()
+        {
             Mock<IConectorSI> conn = new Mock<IConectorSI>();
             ExpertoSI exp = new ExpertoSI(conn.Object);
 
@@ -113,7 +121,7 @@ namespace UnitTestLumbapp.Experto_SI
 
             Assert.AreEqual(0, informe.TejidoAdiposo);
             Assert.AreEqual(0, informe.L2);
-            
+
             Assert.AreEqual(0, informe.L3Arriba);
             Assert.AreEqual(0, informe.L3Abajo);
 
@@ -131,7 +139,8 @@ namespace UnitTestLumbapp.Experto_SI
         /// vacio.
         /// </summary>
         [TestMethod]
-        public void TerminarTooSoon2 () {
+        public void TerminarTooSoon2()
+        {
             Mock<IConectorSI> conn = new Mock<IConectorSI>();
             conn.Setup(x => x.CheckearComunicacion()).Returns(true);
 
@@ -160,10 +169,11 @@ namespace UnitTestLumbapp.Experto_SI
         /// Si no ocurrio nada, el reporte estara vacio.
         /// </summary>
         [TestMethod]
-        public void TerminarOkEnCeros () {
+        public void TerminarOkEnCeros()
+        {
             Mock<IConectorSI> conn = new Mock<IConectorSI>();
             conn.Setup(x => x.CheckearComunicacion()).Returns(true);
-            
+
             ExpertoSI exp = new ExpertoSI(conn.Object);
             exp.Inicializar();
             exp.IniciarSimulacion();
@@ -189,7 +199,8 @@ namespace UnitTestLumbapp.Experto_SI
         /// Si se llama a TerminarSimulacion todo OK, debe devolver un reporte con las cosas que ocurrieron.
         /// </summary>
         [TestMethod]
-        public void TerminarOk () {
+        public void TerminarOk()
+        {
             Mock<IConectorSI> conn = new Mock<IConectorSI>();
             conn.Setup(x => x.Conectar()).Returns(true);
             conn.Setup(x => x.CheckearComunicacion()).Returns(true);

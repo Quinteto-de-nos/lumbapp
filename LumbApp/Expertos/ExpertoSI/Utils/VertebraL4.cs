@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace LumbApp.Expertos.ExpertoSI.Utils {
-    public class VertebraL4 : Vertebra {
-        public enum Sectores {
+namespace LumbApp.Expertos.ExpertoSI.Utils
+{
+    public class VertebraL4 : Vertebra
+    {
+        public enum Sectores
+        {
 
             [Display(Name = "ArribaIzquierda")]
             ArribaIzquierda,
@@ -29,7 +27,8 @@ namespace LumbApp.Expertos.ExpertoSI.Utils {
         public int VecesArribaCentro { get; private set; }
         public int VecesAbajo { get; private set; }
 
-        public VertebraL4 () : base() {
+        public VertebraL4() : base()
+        {
             VecesArribaIzquierda = 0;
             VecesArribaDerecha = 0;
             VecesArribaCentro = 0;
@@ -41,12 +40,15 @@ namespace LumbApp.Expertos.ExpertoSI.Utils {
         /// Setea al sector de la vertebra que esta siendo rozado.
         /// </summary>
         /// <returns>Si hubo cambio de estado retorna true.</returns>
-        public bool RozarSector (Sectores sector) {
-            
-            if (Rozar()) {
+        public bool RozarSector(Sectores sector)
+        {
+
+            if (Rozar())
+            {
                 this.Sector = sector;
 
-                switch (Sector) {
+                switch (Sector)
+                {
                     case Sectores.ArribaIzquierda:
                         VecesArribaIzquierda++;
                         break;
@@ -66,13 +68,15 @@ namespace LumbApp.Expertos.ExpertoSI.Utils {
             return false;
         }
 
-        public bool AbandonarSector (Sectores sector) {
+        public bool AbandonarSector(Sectores sector)
+        {
             if (this.Sector == sector)
                 return base.Abandonar();
             return false;
         }
 
-        public new void Resetear () {
+        public new void Resetear()
+        {
             VecesArribaIzquierda = 0;
             VecesArribaDerecha = 0;
             VecesArribaCentro = 0;
