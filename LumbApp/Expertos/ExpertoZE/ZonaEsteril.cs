@@ -20,6 +20,10 @@ namespace LumbApp.Expertos.ExpertoZE
                 {4,7,5}, //Cara 5
                 {0,1,3} //Cara 6
             };
+        /// <summary>
+        /// Medido en metros. Positivo agranda la ZE esa distancia hacia todos los lados. Negativo la reduce
+        /// </summary>
+        private const double delta = 0.1;
 
         /// <summary>
         /// Cantidad de veces que fue contaminada, no importa por que mano.
@@ -59,7 +63,7 @@ namespace LumbApp.Expertos.ExpertoZE
                     cal.zonaEsteril[caras[i, 1]],
                     cal.zonaEsteril[caras[i, 2]],
                     pos);
-                result &= dist > 0;
+                result &= dist > -delta; //Por como esta calculado da positivo hacia adentro, invierto el delta para que sea intuitivo
             }
 
             return result;
