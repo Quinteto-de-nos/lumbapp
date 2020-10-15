@@ -15,19 +15,22 @@ namespace LumbApp.Orquestador
 {
     public class Orquestador : IOrquestador
     {
+        #region Variables
         public IGUIController IGUIController { get; set; }
 
         private IExpertoZE expertoZE;
         private IExpertoSI expertoSI;
+        private IFinalFeedbacker ffb;
+        private IConectorFS fileSystem;
+        private string ruta;
 
         private DatosPracticante datosPracticante;
         private ModoSimulacion modoSeleccionado;
 
         private DateTime tiempoInicialDeEjecucion;
         private TimeSpan tiempoTotalDeEjecucion;
+        #endregion
 
-        private IFinalFeedbacker ffb;
-        private string ruta;
 
         /// <summary>
         /// Constructor del Orquestrador.
@@ -37,27 +40,17 @@ namespace LumbApp.Orquestador
         {
             if (gui == null)
                 throw new Exception("Gui no puede ser null. Necesito un GUIController para crear un Orquestador.");
+            
             IGUIController = gui;
-            Calibracion calibracion;
-            try
-            {
-                calibracion = conectorFS.LevantarArchivoDeTextoComoObjeto<Calibracion>("./zonaEsteril.json");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                //Acá debería haber un nuevo mensaje por pantalla que me permita quitar las app, esto es incluso antes de la inicialización, asíq ue no puedo reintentar.
-                throw new Exception("Error al tratar de cargar el archivo de calibracion.");
-            }
-            var conectorKinect = new ConectorKinect();
-            expertoZE = new ExpertoZE(conectorKinect, calibracion);
-            //expertoZE = new ExpertoZEMock(true);
-
-            var conectorSI = new ConectorSI();
-            expertoSI = new ExpertoSI(conectorSI);
-            //expertoSI = new ExpertoSIMock(true);
+            fileSystem = conectorFS;
         }
 
+        #region ABM simulacion
+        /// <summary>
+        /// Lo llama GUI Controller cuando el usuario termina de ingresar sus datos
+        /// </summary>
+        /// <param name="datosPracticante"></param>
+        /// <param name="modo">Modo de simulacion</param>
         public void SetDatosDeSimulacion(DatosPracticante datosPracticante, ModoSimulacion modo)
         {
             this.datosPracticante = datosPracticante;
@@ -66,7 +59,6 @@ namespace LumbApp.Orquestador
 
         /// <summary>
         /// IniciarSimulacion: Informa a los expertos que deben inicar el sensado.
-        /// 
         /// </summary>
         public void IniciarSimulacion()
         {
@@ -84,9 +76,9 @@ namespace LumbApp.Orquestador
         }
 
         /// <summary>
-        /// Inicializar: Se encarga de mandar a inicializar los expertos y pedir la pantalla de ingreso de datos.
-        /// - Si algun experto no pudo inicializar correctamente, envía a la GUI un mensaje de error.
-        /// - Sucede al abrir la aplicación. La GUI muestra un gif "checkeando sensores" y nos manda a inicializar.
+        /// Manda a inicializar los expertos y pide la pantalla de ingreso de datos.
+        /// Si algun experto no pudo inicializar correctamente, envía a la GUI un mensaje de error.
+        /// Lo llama la GUI mientras muestra "checkeando sensores" al iniciar la app
         /// </summary>
         /// <returns></returns>
         public async Task Inicializar()
@@ -95,11 +87,31 @@ namespace LumbApp.Orquestador
             try
             {
                 //INICIALIZAR EXPERTO ZE
+                Calibracion calibracion;
+                try
+                {
+                    calibracion = fileSystem.LevantarArchivoDeTextoComoObjeto<Calibracion>("./zonaEsteril.json");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    //Acá debería haber un nuevo mensaje por pantalla que me permita quitar las app, esto es incluso antes de la inicialización, asíq ue no puedo reintentar.
+                    throw new Exception("Error al tratar de cargar el archivo de calibracion.");
+                }
+
+                var conectorKinect = new ConectorKinect();
+                expertoZE = new ExpertoZE(conectorKinect, calibracion);
+                //expertoZE = new ExpertoZEMock(true);
+
                 expertoZE.CambioZE += CambioZE; //suscripción al evento CambioZE
                 if (!expertoZE.Inicializar())
                     throw new Exception("No se pudo detectar correctamente la kinect.");
 
                 //INICIALIZAR EXPERTO SI
+                //var conectorSI = new ConectorSI();
+                //expertoSI = new ExpertoSI(conectorSI);
+                expertoSI = new ExpertoSIMock(true);
+
                 expertoSI.CambioSI += CambioSI; //suscripción al evento CambioSI
                 if (!expertoSI.Inicializar())
                     throw new Exception("No se pudieron detectar correctamente los sensores internos.");
@@ -113,9 +125,11 @@ namespace LumbApp.Orquestador
             }
             catch (Exception ex)
             {
-                expertoZE.CambioZE -= CambioZE;
-                if (ex.Message.Contains("sensores"))
-                    expertoSI.CambioSI -= CambioSI;
+                //expertoZE.CambioZE -= CambioZE;
+                //if (ex.Message.Contains("sensores"))
+                //expertoSI.CambioSI -= CambioSI;
+                expertoZE = null;
+                expertoSI = null;
 
                 Console.WriteLine("Error de inicializacion: " + ex);
                 IGUIController.MostrarErrorDeConexion(ex.Message);
@@ -123,8 +137,13 @@ namespace LumbApp.Orquestador
 
         }
 
+        /// <summary>
+        /// Lo llama GUI Controller cuando termino una simulacion y el usuario pide comenzar otra.
+        /// Redirige a la pantalla de ingreso de datos.
+        /// </summary>
+        /// <returns></returns>
         public async Task NuevaSimulacion()
-        { //Funcion llamada por la GUI, devuelve void, respuesta por evento
+        {
             IGUIController.SolicitarDatosPracticante(datosPracticante);
         }
 
@@ -134,7 +153,7 @@ namespace LumbApp.Orquestador
         /// - Si el informe general se genero y guardo bien, levanta un evento ue es atrapado por la GUI para decirle que todo salio bien.
         /// </summary>
         public async Task TerminarSimulacion()
-        { //Funcion llamada por la GUI, devuelve void, respuesta por evento
+        {
             Console.WriteLine("Terminando simulacion...");
             InformeZE informeZE = expertoZE.TerminarSimulacion();
             InformeSI informeSI = expertoSI.TerminarSimulacion();
@@ -158,7 +177,14 @@ namespace LumbApp.Orquestador
 
             //Informar a GUI con informe con un evento, que pase si el informe se genero bien, y si se guardó  bien (bool, bool)
         }
+        #endregion
 
+        #region Cosas de simulacion
+        /// <summary>
+        /// Crea la ruta donde guardar los datos de la practica a partir del tiempo de inicio y los datos del practicante.
+        /// </summary>
+        /// <param name="tiempo">Tiempo en que se inicia la simulacion, para incluir en el nombre de la carpeta</param>
+        /// <returns></returns>
         private string ObtenerRuta(DateTime tiempo)
         {
             string ruta = datosPracticante.FolderPath;
@@ -181,7 +207,6 @@ namespace LumbApp.Orquestador
             return ruta;
         }
 
-
         /// <summary>
         /// CambioSI: atrapa los eventos que indican un cambio en el sensado interno
         /// - En MODO GUIADO, informa los cambios a la GUI para que esta pueda mostrarlos
@@ -196,26 +221,38 @@ namespace LumbApp.Orquestador
                 IGUIController.MostrarCambioSI(datosDelEvento);
         }
 
+        /// <summary>
+        /// Responde a los eventos de cambio en la zona esteril. En modo guiado pasa el cambio
+        /// al front, en modo evaluacion lo ignora.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CambioZE(object sender, CambioZEEventArgs e)
         {
             //comunicar los cambios a la GUI levantando un evento
             if (modoSeleccionado == ModoSimulacion.ModoGuiado)
                 IGUIController.MostrarCambioZE(e);
         }
+        #endregion
 
-        public IExpertoSI GetExpertoSI()
-        {
-            return expertoSI;
-        }
+        #region Metodos de test
+        /// <summary>
+        /// Funcion de test para mockear el experto SI
+        /// </summary>
+        /// <param name="exp"></param>
         public void SetExpertoSI(IExpertoSI exp)
         {
             this.expertoSI = exp;
         }
 
+        /// <summary>
+        /// Funcion de test para mockear el experto ZE
+        /// </summary>
+        /// <param name="exp"></param>
         public void SetExpertoZE(IExpertoZE exp)
         {
             this.expertoZE = exp;
         }
-
+        #endregion
     }
 }
