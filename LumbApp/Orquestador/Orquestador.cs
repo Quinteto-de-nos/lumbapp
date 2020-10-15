@@ -40,7 +40,7 @@ namespace LumbApp.Orquestador
         {
             if (gui == null)
                 throw new Exception("Gui no puede ser null. Necesito un GUIController para crear un Orquestador.");
-            
+
             IGUIController = gui;
             fileSystem = conectorFS;
         }
@@ -86,7 +86,7 @@ namespace LumbApp.Orquestador
             Console.WriteLine("Inicializando...");
             try
             {
-                //INICIALIZAR EXPERTO ZE
+                #region Inicializar ZE
                 Calibracion calibracion;
                 try
                 {
@@ -95,8 +95,8 @@ namespace LumbApp.Orquestador
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
-                    //Acá debería haber un nuevo mensaje por pantalla que me permita quitar las app, esto es incluso antes de la inicialización, asíq ue no puedo reintentar.
-                    throw new Exception("Error al tratar de cargar el archivo de calibracion.");
+                    //Mejoro el mensaje para el usuario
+                    throw new Exception("Error al tratar de cargar el archivo de calibracion. Por favor, calibre el sistema antes de usarlo.");
                 }
 
                 var conectorKinect = new ConectorKinect();
@@ -105,16 +105,18 @@ namespace LumbApp.Orquestador
 
                 expertoZE.CambioZE += CambioZE; //suscripción al evento CambioZE
                 if (!expertoZE.Inicializar())
-                    throw new Exception("No se pudo detectar correctamente la kinect.");
+                    throw new Exception("No se pudo detectar correctamente la kinect. Asegúrese de que esté conectada e intente nuevamente.");
+                #endregion
 
-                //INICIALIZAR EXPERTO SI
+                #region Inicializar SI
                 //var conectorSI = new ConectorSI();
                 //expertoSI = new ExpertoSI(conectorSI);
                 expertoSI = new ExpertoSIMock(true);
 
                 expertoSI.CambioSI += CambioSI; //suscripción al evento CambioSI
                 if (!expertoSI.Inicializar())
-                    throw new Exception("No se pudieron detectar correctamente los sensores internos.");
+                    throw new Exception("No se pudieron detectar correctamente los sensores internos. Asegúrese de que el simulador esté conectado e intente nuevamente");
+                #endregion
 
                 //Mostrar pantalla de ingreso de datos, le mandamos el path por default donde se guarda la practica
                 var datos = new DatosPracticante()
@@ -125,16 +127,13 @@ namespace LumbApp.Orquestador
             }
             catch (Exception ex)
             {
-                //expertoZE.CambioZE -= CambioZE;
-                //if (ex.Message.Contains("sensores"))
-                //expertoSI.CambioSI -= CambioSI;
+                //Descarto lo que se habia creado. Cuando lo agarre el garbage collector, se desuscribe solo
                 expertoZE = null;
                 expertoSI = null;
 
                 Console.WriteLine("Error de inicializacion: " + ex);
                 IGUIController.MostrarErrorDeConexion(ex.Message);
             }
-
         }
 
         /// <summary>
