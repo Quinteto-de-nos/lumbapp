@@ -34,6 +34,10 @@ namespace LumbApp.GUI
             _ = _orquestador.Inicializar();
         }
 
+        /// <summary>
+        /// Si falla el check de sensores y el usuario da reintentar, se llama a esta funcion
+        /// para volver a inicializar
+        /// </summary>
         public void CheckearSensores()
         {
             _ = _orquestador.Inicializar();  //si fallo la primera vez reintento
@@ -41,7 +45,7 @@ namespace LumbApp.GUI
 
         public void NuevaSimulacion()
         {
-            _ = _orquestador.NuevaSimulacion();  //si fallo la primera vez reintento
+            _ = _orquestador.NuevaSimulacion();
         }
 
         /// <summary>
