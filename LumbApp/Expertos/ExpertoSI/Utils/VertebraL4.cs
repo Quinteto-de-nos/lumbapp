@@ -9,16 +9,16 @@ namespace LumbApp.Expertos.ExpertoSI.Utils {
     public class VertebraL4 : Vertebra {
         public enum Sectores {
 
-            [Display(Name = "ArribaIzquierda")]
+            [Display(Name = "L4 arriba izquierda")]
             ArribaIzquierda,
 
-            [Display(Name = "ArribaDerecha")]
+            [Display(Name = "L4 arriba derecha")]
             ArribaDerecha,
 
-            [Display(Name = "ArribaCentro")]
+            [Display(Name = "L4 arriba centro")]
             ArribaCentro,
 
-            [Display(Name = "Abajo")]
+            [Display(Name = "L4 abajo")]
             Abajo
         }
 

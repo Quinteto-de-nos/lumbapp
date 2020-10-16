@@ -79,7 +79,7 @@
         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="13"
                VerticalAlignment="Center" HorizontalAlignment="Center"
                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-               FontSize="35" FontWeight="Regular" Foreground="White">Recuerde seguir los protocolos de Seguridad</Label>
+               FontSize="35" FontWeight="Regular" Foreground="White">Recorda seguir los protocolos de seguridad</Label>
         <Border Grid.Column="1" Grid.Row="1"
                 Grid.ColumnSpan="3"
                 Background="White" Opacity="0.5"
@@ -90,7 +90,7 @@
                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                FontSize="22" FontWeight="Regular" Foreground="#595959">
                 <Viewbox StretchDirection="Both">
-                    <TextBlock Padding="70,10,70,0" Text="1. Lavado de manos"></TextBlock>
+                    <TextBlock Padding="70,10,70,0" Text="1. Lavate las manos"></TextBlock>
                 </Viewbox>
             </Label>
         </Border>
@@ -109,7 +109,7 @@
                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                FontSize="22" FontWeight="Regular" Foreground="#595959">
                 <Viewbox StretchDirection="Both">
-                    <TextBlock Padding="70,10,70,0" Text="2. Colocación de cofia,&#10;  barbijo y antiparras"></TextBlock>
+                    <TextBlock Padding="40,10,40,0" Text="2. Colocate la cofia, el barbijo&#10;       y el protector ocular"></TextBlock>
                 </Viewbox>
             </Label>
         </Border>
@@ -159,7 +159,7 @@
                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                FontSize="22" FontWeight="Regular" Foreground="#595959">
                 <Viewbox StretchDirection="Both">
-                    <TextBlock Padding="40,10,40,0" Text="5. Colocación de los guantes estériles"></TextBlock>
+                    <TextBlock Padding="40,10,40,0" Text="5. Colocate los guantes estériles"></TextBlock>
                 </Viewbox>
             </Label>
         </Border>
@@ -177,7 +177,7 @@
                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                FontSize="22" FontWeight="Regular" Foreground="#595959">
                 <Viewbox StretchDirection="Both">
-                    <TextBlock Padding="40,10,40,0" Text="4. Colocación del camisolín"></TextBlock>
+                    <TextBlock Padding="40,10,40,0" Text="4. Colocate el camisolín"></TextBlock>
                 </Viewbox>
             </Label>
         </Border>
@@ -206,14 +206,14 @@
                 HorizontalAlignment="Center" VerticalAlignment="Stretch"
                HorizontalContentAlignment="Center" 
                 Foreground="White"  BorderThickness="0"
-                FontSize="20" FontWeight="Regular"
+                FontSize="26" FontWeight="Regular"
           Name="SaltearButton"  Click="SaltearButton_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="35"/>
                 </Style>
             </Button.Resources>
-            SALTEAR PREPARACIÓN
+            ESTOY LISTO
         </Button>
     </Grid>
 </Page>

@@ -85,7 +85,7 @@
             Margin="0,0,0,0"
             FontSize="40" FontWeight="DemiBold" 
             Foreground="#595959">
-            Simulación en Curso</Label>
+            Simulación en curso</Label>
 
         <!-- Boton de Finalizar -->
         <Button Grid.Row="3" Grid.Column="0" Name="FinalizarSimulacion" 

@@ -9,10 +9,10 @@ namespace LumbApp.Expertos.ExpertoSI.Utils {
     public class VertebraL3 : Vertebra {
         public  enum Sectores {
 
-            [Display(Name = "Arriba")]
+            [Display(Name = "L3 arriba")]
             Arriba,
 
-            [Display(Name = "Abajo")]
+            [Display(Name = "L3 abajo")]
             Abajo
         }
 

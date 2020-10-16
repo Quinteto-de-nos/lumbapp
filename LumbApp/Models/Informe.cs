@@ -35,22 +35,22 @@ namespace LumbApp.Models
             DatosPractica = new OrderedDictionary();
             
 
-            DatosPractica.Add("Contaminaciones Zona", Convert.ToString(informeZE.Zona));
-            DatosPractica.Add("Contaminaciones Mano Izquierda", Convert.ToString(informeZE.ManoIzquierda));
-            DatosPractica.Add("Contaminaciones Mano Derecha", Convert.ToString(informeZE.ManoDerecha));
-            DatosPractica.Add("Punciones Tejido Adiposo", Convert.ToString(informeSI.TejidoAdiposo));
-            DatosPractica.Add("Roces L2", Convert.ToString(informeSI.L2));
-            DatosPractica.Add("Roces L3 Arriba", Convert.ToString(informeSI.L3Arriba));
-            DatosPractica.Add("Roces L3 Abajo", Convert.ToString(informeSI.L3Abajo));
-            DatosPractica.Add("Roces L4 Arriba Izquierda", Convert.ToString(informeSI.L4ArribaIzquierda));
-            DatosPractica.Add("Roces L4 Arriba Derecha", Convert.ToString(informeSI.L4ArribaDerecha));
-            DatosPractica.Add("Roces L4 Arriba Centro", Convert.ToString(informeSI.L4ArribaCentro));
-            DatosPractica.Add("Roces L4 Abajo", Convert.ToString(informeSI.L4Abajo));
-            DatosPractica.Add("Roces L5", Convert.ToString(informeSI.L5));
-            DatosPractica.Add("Punciones Duramadre", Convert.ToString(informeSI.Duramadre));
-            DatosPractica.Add("Camino Correcto", Convert.ToString(informeSI.CaminoCorrecto));
-            DatosPractica.Add("Camino Incorrecto", Convert.ToString(informeSI.CaminoIncorrecto));
-            DatosPractica.Add("Tiempo Total", string.Format("{0:D2}:{1:D2}:{2:D2}",
+            DatosPractica.Add("Contaminaciones totales", Convert.ToString(informeZE.Zona));
+            DatosPractica.Add("Contaminaciones por mano izquierda", Convert.ToString(informeZE.ManoIzquierda));
+            DatosPractica.Add("Contaminaciones por mano derecha", Convert.ToString(informeZE.ManoDerecha));
+            DatosPractica.Add("Punciones tejido adiposo", Convert.ToString(informeSI.TejidoAdiposo));
+            DatosPractica.Add("Roces sobre L2", Convert.ToString(informeSI.L2));
+            DatosPractica.Add("Roces sobre L3 arriba", Convert.ToString(informeSI.L3Arriba));
+            DatosPractica.Add("Roces sobre L3 abajo", Convert.ToString(informeSI.L3Abajo));
+            DatosPractica.Add("Roces sobre L4 arriba izquierda", Convert.ToString(informeSI.L4ArribaIzquierda));
+            DatosPractica.Add("Roces sobre L4 arriba derecha", Convert.ToString(informeSI.L4ArribaDerecha));
+            DatosPractica.Add("Roces sobre L4 arriba centro", Convert.ToString(informeSI.L4ArribaCentro));
+            DatosPractica.Add("Roces sobre L4 abajo", Convert.ToString(informeSI.L4Abajo));
+            DatosPractica.Add("Roces sobre L5", Convert.ToString(informeSI.L5));
+            DatosPractica.Add("Punciones duramadre", Convert.ToString(informeSI.Duramadre));
+            DatosPractica.Add("Caminos correctos", Convert.ToString(informeSI.CaminoCorrecto));
+            DatosPractica.Add("Caminos incorrectos", Convert.ToString(informeSI.CaminoIncorrecto));
+            DatosPractica.Add("Tiempo total", string.Format("{0:D2}:{1:D2}:{2:D2}",
                 tiempoTotalDeEjecucion.Hours, tiempoTotalDeEjecucion.Minutes, tiempoTotalDeEjecucion.Seconds));
         }
     }
