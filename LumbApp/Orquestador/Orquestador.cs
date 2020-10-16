@@ -84,40 +84,43 @@ namespace LumbApp.Orquestador
         public async Task Inicializar()
         {
             Console.WriteLine("Inicializando...");
+
             try
             {
-                #region Inicializar ZE
-                Calibracion calibracion;
-                try
+                await Task.Run(() =>
                 {
-                    calibracion = fileSystem.LevantarArchivoDeTextoComoObjeto<Calibracion>("./zonaEsteril.json");
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    //Mejoro el mensaje para el usuario
-                    throw new Exception("Error al tratar de cargar el archivo de calibracion. Por favor, calibre el sistema antes de usarlo.");
-                }
+                    #region Inicializar ZE
+                    Calibracion calibracion;
+                    try
+                    {
+                        calibracion = fileSystem.LevantarArchivoDeTextoComoObjeto<Calibracion>("./zonaEsteril.json");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        //Mejoro el mensaje para el usuario
+                        throw new Exception("Error al tratar de cargar el archivo de calibracion. Por favor, calibre el sistema antes de usarlo.");
+                    }
 
-                var conectorKinect = new ConectorKinect();
-                expertoZE = new ExpertoZE(conectorKinect, calibracion);
-                //expertoZE = new ExpertoZEMock(true);
+                    var conectorKinect = new ConectorKinect();
+                    expertoZE = new ExpertoZE(conectorKinect, calibracion);
+                    //expertoZE = new ExpertoZEMock(true);
 
-                expertoZE.CambioZE += CambioZE; //suscripción al evento CambioZE
-                if (!expertoZE.Inicializar())
-                    throw new Exception("No se pudo detectar correctamente la kinect. Asegúrese de que esté conectada e intente nuevamente.");
-                #endregion
+                    expertoZE.CambioZE += CambioZE; //suscripción al evento CambioZE
+                    if (!expertoZE.Inicializar())
+                        throw new Exception("No se pudo detectar correctamente la kinect. Asegúrese de que esté conectada e intente nuevamente.");
+                    #endregion
 
-                #region Inicializar SI
-                //var conectorSI = new ConectorSI();
-                //expertoSI = new ExpertoSI(conectorSI);
-                expertoSI = new ExpertoSIMock(true);
+                    #region Inicializar SI
+                    //var conectorSI = new ConectorSI();
+                    //expertoSI = new ExpertoSI(conectorSI);
+                    expertoSI = new ExpertoSIMock(true);
 
-                expertoSI.CambioSI += CambioSI; //suscripción al evento CambioSI
-                if (!expertoSI.Inicializar())
-                    throw new Exception("No se pudieron detectar correctamente los sensores internos. Asegúrese de que el simulador esté conectado e intente nuevamente");
-                #endregion
-
+                    expertoSI.CambioSI += CambioSI; //suscripción al evento CambioSI
+                    if (!expertoSI.Inicializar())
+                        throw new Exception("No se pudieron detectar correctamente los sensores internos. Asegúrese de que el simulador esté conectado e intente nuevamente");
+                    #endregion
+                });
                 //Mostrar pantalla de ingreso de datos, le mandamos el path por default donde se guarda la practica
                 var datos = new DatosPracticante()
                 {
@@ -134,6 +137,7 @@ namespace LumbApp.Orquestador
                 Console.WriteLine("Error de inicializacion: " + ex);
                 IGUIController.MostrarErrorDeConexion(ex.Message);
             }
+
         }
 
         /// <summary>
