@@ -3,8 +3,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using LumbApp.Expertos.ExpertoZE;
 using LumbApp.Conectores.ConectorKinect;
 using Moq;
-using System.Linq;
-using System.Reflection;
 using System.Text.Json;
 
 namespace UnitTestLumbapp.Experto_ZE
@@ -20,7 +18,7 @@ namespace UnitTestLumbapp.Experto_ZE
             "Kinect no puede ser null. Necesito un conector a una kinect para crear un experto en zona esteril")]
         public void TestConstructorNull()
         {
-            ExpertoZE exp = new ExpertoZE(null, null);
+            _ = new ExpertoZE(null, null);
         }
 
         /// <summary>
@@ -31,7 +29,7 @@ namespace UnitTestLumbapp.Experto_ZE
         public void TestConstructorCalNull()
         {
             Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
-            ExpertoZE exp = new ExpertoZE(conn.Object, null);
+            _ = new ExpertoZE(conn.Object, null);
         }
 
         /// <summary>
@@ -41,7 +39,7 @@ namespace UnitTestLumbapp.Experto_ZE
         public void TestConstructorOK()
         {
             Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
-            ExpertoZE exp = new ExpertoZE(conn.Object, newCalibracion());
+            _ = new ExpertoZE(conn.Object, newCalibracion());
         }
 
         private Calibracion newCalibracion()
@@ -103,8 +101,8 @@ namespace UnitTestLumbapp.Experto_ZE
             ExpertoZE exp = new ExpertoZE(conn.Object, newCalibracion());
             exp.Inicializar();
 
-                bool init = exp.IniciarSimulacion(videoMock.Object);
-                Assert.AreEqual(true, init);
+            bool init = exp.IniciarSimulacion(videoMock.Object);
+            Assert.AreEqual(true, init);
         }
 
         /// <summary>

@@ -1,8 +1,5 @@
 ﻿using Microsoft.Kinect;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LumbApp.Expertos.ExpertoZE
@@ -11,7 +8,7 @@ namespace LumbApp.Expertos.ExpertoZE
     {
         public event EventHandler<CambioZEEventArgs> CambioZE;
 
-        private bool shouldInit;
+        private readonly bool shouldInit;
         private bool simulando;
         private ZonaEsteril zonaEsteril;
         private Mano manoDerecha;
@@ -40,16 +37,18 @@ namespace LumbApp.Expertos.ExpertoZE
             manoIzquierda = new Mano();
 
             if (shouldInit)
-                simulateAsync();
+                _ = simulateAsync();
             return shouldInit;
         }
 
         private SkeletonPoint newPoint(float x, float y, float z)
         {
-            SkeletonPoint p = new SkeletonPoint();
-            p.X = x;
-            p.Y = y;
-            p.Z = z;
+            SkeletonPoint p = new SkeletonPoint
+            {
+                X = x,
+                Y = y,
+                Z = z
+            };
             return p;
         }
 
@@ -111,18 +110,22 @@ namespace LumbApp.Expertos.ExpertoZE
             await Task.Delay(2000);
             manoIzquierda.Entrar();
             zonaEsteril.Contaminar();
-            var args = new CambioZEEventArgs(manoDerecha, manoIzquierda);
-            args.VecesContaminado = zonaEsteril.Contaminacion;
-            args.ContaminadoAhora = true;
+            var args = new CambioZEEventArgs(manoDerecha, manoIzquierda)
+            {
+                VecesContaminado = zonaEsteril.Contaminacion,
+                ContaminadoAhora = true
+            };
             CambioZE.Invoke(this, args);
 
             //Ej: der entra y contamina a los 30 segundos (sendEvent no marca el contaminando ahora)
             await Task.Delay(2000);
             manoDerecha.Entrar();
             zonaEsteril.Contaminar();
-            args = new CambioZEEventArgs(manoDerecha, manoIzquierda);
-            args.VecesContaminado = zonaEsteril.Contaminacion;
-            args.ContaminadoAhora = true;
+            args = new CambioZEEventArgs(manoDerecha, manoIzquierda)
+            {
+                VecesContaminado = zonaEsteril.Contaminacion,
+                ContaminadoAhora = true
+            };
             CambioZE.Invoke(this, args);
 
             // ************** Fin seccion simulacion *************
@@ -135,8 +138,10 @@ namespace LumbApp.Expertos.ExpertoZE
 
         private void sendEvent()
         {
-            var args = new CambioZEEventArgs(manoDerecha, manoIzquierda);
-            args.VecesContaminado = zonaEsteril.Contaminacion;
+            var args = new CambioZEEventArgs(manoDerecha, manoIzquierda)
+            {
+                VecesContaminado = zonaEsteril.Contaminacion
+            };
             CambioZE.Invoke(this, args);
         }
     }

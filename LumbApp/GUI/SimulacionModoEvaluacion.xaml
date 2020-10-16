@@ -68,7 +68,7 @@
                 Width="600"
                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                 CornerRadius="40"/>
-        
+
         <!--Spinner-->
         <fa:ImageAwesome Name="SpinerIcon" 
                          Grid.Column="0" Grid.Row="1" 

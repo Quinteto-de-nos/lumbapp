@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace LumbApp.Expertos.ExpertoSI.Utils {
-    public class VertebraL3 : Vertebra {
-        public  enum Sectores {
+namespace LumbApp.Expertos.ExpertoSI.Utils
+{
+    public class VertebraL3 : Vertebra
+    {
+        public enum Sectores
+        {
 
             [Display(Name = "L3 arriba")]
             Arriba,
@@ -21,7 +19,8 @@ namespace LumbApp.Expertos.ExpertoSI.Utils {
         public int VecesArriba { get; private set; }
         public int VecesAbajo { get; private set; }
 
-        public VertebraL3() : base() {
+        public VertebraL3() : base()
+        {
             VecesArriba = 0;
             VecesAbajo = 0;
         }
@@ -30,12 +29,15 @@ namespace LumbApp.Expertos.ExpertoSI.Utils {
         /// Setea al sector de la vertebra que esta siendo rozado.
         /// </summary>
         /// <returns>Si hubo cambio de estado retorna true.</returns>
-        public bool RozarSector(Sectores sector) {
-            
-            if (Rozar()) {
+        public bool RozarSector(Sectores sector)
+        {
+
+            if (Rozar())
+            {
                 this.Sector = sector;
 
-                switch (Sector) {
+                switch (Sector)
+                {
                     case Sectores.Arriba:
                         VecesArriba++;
                         break;
@@ -49,13 +51,15 @@ namespace LumbApp.Expertos.ExpertoSI.Utils {
             return false;
         }
 
-        public bool AbandonarSector (Sectores sector) {
+        public bool AbandonarSector(Sectores sector)
+        {
             if (this.Sector == sector)
                 return base.Abandonar();
             return false;
         }
 
-        public new void Resetear () {
+        public new void Resetear()
+        {
             VecesArriba = 0;
             VecesAbajo = 0;
             base.Resetear();

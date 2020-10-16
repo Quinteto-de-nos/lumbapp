@@ -36,7 +36,7 @@ namespace UnitTestLumbapp.Experto_ZE
         [TestMethod]
         public void TestDentroZEFija()
         {
-            SkeletonPoint[] points = { 
+            SkeletonPoint[] points = {
                 newPoint(0,0,0), newPoint(0,0,1), newPoint(1, 0, 1),  newPoint(1,0,0),
                 newPoint(0,1,0), newPoint(0,1,1), newPoint(1, 1, 1),  newPoint(1,1,0)};
             Calibracion cal = new Calibracion(points);

@@ -19,15 +19,19 @@ namespace LumbApp.Conectores.ConectorKinect
             if (_sensor == null)
                 throw new KinectNotFoundException();
 
+            TransformSmoothParameters parameters = new TransformSmoothParameters();
+            parameters.Smoothing = 0.75f;
+            parameters.Correction = 0.3f;
+            parameters.Prediction = 0.4f;
+            parameters.JitterRadius = 0.05f;
+            parameters.MaxDeviationRadius = 0.05f;
+
             _sensor.DepthStream.Enable();
             _sensor.ColorStream.Enable();
-            _sensor.SkeletonStream.Enable();
+            _sensor.SkeletonStream.Enable(parameters);
             _sensor.SkeletonStream.TrackingMode = SkeletonTrackingMode.Seated;
 
             _sensor.Start();
-
-            Console.WriteLine("Color format: " + _sensor.ColorStream.Format);
-
         }
 
         /// <summary>
