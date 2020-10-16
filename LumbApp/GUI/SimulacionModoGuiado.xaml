@@ -91,7 +91,7 @@
             VerticalAlignment="Center" HorizontalAlignment="Center"
                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                Margin="20,0,0,10"
-               FontSize="22" FontWeight="DemiBold" Foreground="#595959"></Label>
+               FontSize="22" FontWeight="DemiBold" Foreground="#595959">NINGUNA</Label>
 
         <!--Imagenes Capas Side-->
 
@@ -179,6 +179,7 @@
                Name="ManoIzqLabel"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                Foreground="#323232" Background="AliceBlue"
+               Opacity="0.7"
                Margin="10,30,10,10"
                FontSize="26" FontWeight="DemiBold"
                HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
@@ -189,6 +190,7 @@
                Name="ManoDerLabel"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                Foreground="#323232" Background="AliceBlue"
+               Opacity="0.7"
                Margin="10,30,30,10"
                FontSize="26" FontWeight="DemiBold"
                HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
@@ -226,7 +228,7 @@
             VerticalAlignment="Center" HorizontalAlignment="Center"
                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                Margin="0,0,0,10"
-               FontSize="22" FontWeight="DemiBold" Foreground="#595959"></Label>
+               FontSize="22" FontWeight="DemiBold" Foreground="#595959">NINGUNA</Label>
                
         
         

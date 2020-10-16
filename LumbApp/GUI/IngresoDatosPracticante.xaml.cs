@@ -61,7 +61,8 @@ namespace LumbApp.GUI
 
             Nombre.Text = datosPrevios.Nombre;
             Apellido.Text = datosPrevios.Apellido;
-            Dni.Text = datosPrevios.Dni.ToString();
+            if(datosPrevios.Dni != 0)
+                Dni.Text = datosPrevios.Dni.ToString();
             Mail.Text = datosPrevios.Email;
             FolderPath.Content = datosPrevios.FolderPath;
         }
