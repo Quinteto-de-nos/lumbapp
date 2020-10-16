@@ -130,7 +130,7 @@ namespace LumbApp.Expertos.ExpertoZE
             //Termina simulacion
             await Task.Delay(5000);
             Console.WriteLine("Finished mocked simulation");
-            simulando = false;
+            //simulando = false;
         }
 
         private void sendEvent()
