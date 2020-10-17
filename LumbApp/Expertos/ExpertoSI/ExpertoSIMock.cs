@@ -7,6 +7,7 @@ namespace LumbApp.Expertos.ExpertoSI
 {
     public class ExpertoSIMock : IExpertoSI
     {
+        #region Variables
         private readonly IConectorSI sensoresInternos;
         private bool simulando = false;
         private readonly bool shouldInit;
@@ -33,8 +34,10 @@ namespace LumbApp.Expertos.ExpertoSI
         private CambioSIEventArgs args;
 
         public event EventHandler<CambioSIEventArgs> CambioSI;
+        #endregion
 
-        public ExpertoSIMock(bool shouldInit)
+        #region Métodos del experto
+        public ExpertoSIMock (bool shouldInit)
         {
             this.shouldInit = shouldInit;
             sensoresInternos = new ConectorSIMock(shouldInit);
@@ -46,7 +49,29 @@ namespace LumbApp.Expertos.ExpertoSI
 
             return sensoresInternos.CheckearComunicacion();
         }
+        public bool IniciarSimulacion () {
+            simulando = true;
+            sensoresInternos.ActivarSensado();
 
+            if (shouldInit)
+                _ = simulateAsync();
+            return shouldInit;
+        }
+
+        public InformeSI TerminarSimulacion () {
+
+            if (!simulando)
+                return new InformeSI(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+            simulando = false;
+            return new InformeSI(TejidoAdiposo.VecesAtravesada, L2.VecesRozada, L3.VecesArriba, L3.VecesAbajo,
+                L4.VecesArribaIzquierda, L4.VecesArribaDerecha, L4.VecesArribaCentro, L4.VecesAbajo, L5.VecesRozada,
+                Duramadre.VecesAtravesada, VecesCaminoCorrecto, VecesCaminoIncorrecto);
+        }
+        public void Finalizar () { }
+        #endregion
+
+        #region Métodos de procesamiento
         protected virtual void HayCambioSI(CambioSIEventArgs datosCambioSI)
         {
             CambioSI?.Invoke(this, datosCambioSI);
@@ -68,7 +93,6 @@ namespace LumbApp.Expertos.ExpertoSI
                 }
             }
         }
-
         public void ResetearAhora()
         {
             AhoraTejidoAdiposo = false;
@@ -78,30 +102,6 @@ namespace LumbApp.Expertos.ExpertoSI
             AhoraL5 = false;
             AhoraDuramadre = false;
         }
-
-        public bool IniciarSimulacion()
-        {
-            simulando = true;
-            sensoresInternos.ActivarSensado();
-
-            if (shouldInit)
-                _ = simulateAsync();
-            return shouldInit;
-        }
-
-        public InformeSI TerminarSimulacion()
-        {
-
-            if (!simulando)
-                return new InformeSI(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-
-            simulando = false;
-            return new InformeSI(TejidoAdiposo.VecesAtravesada, L2.VecesRozada, L3.VecesArriba, L3.VecesAbajo,
-                L4.VecesArribaIzquierda, L4.VecesArribaDerecha, L4.VecesArribaCentro, L4.VecesAbajo, L5.VecesRozada,
-                Duramadre.VecesAtravesada, VecesCaminoCorrecto, VecesCaminoIncorrecto);
-        }
-        public void Finalizar() { }
-
         private void sendEvent()
         {
             var datosCambioSI = new CambioSIEventArgs(TejidoAdiposo, L2, L3, L4, L5, Duramadre,
@@ -363,5 +363,6 @@ namespace LumbApp.Expertos.ExpertoSI
 
             return Cambio;
         }
+        #endregion
     }
 }

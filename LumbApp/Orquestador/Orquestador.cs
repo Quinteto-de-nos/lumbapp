@@ -26,8 +26,10 @@ namespace LumbApp.Orquestador
         private DateTime tiempoInicialDeEjecucion;
         private TimeSpan tiempoTotalDeEjecucion;
 
-        private IFinalFeedbacker ffb;
+        private IFinalFeedbacker _ffb;
         private string ruta;
+
+        private bool _inicializacionOk = false;
 
         /// <summary>
         /// Constructor del Orquestrador.
@@ -65,35 +67,14 @@ namespace LumbApp.Orquestador
         }
 
         /// <summary>
-        /// IniciarSimulacion: Informa a los expertos que deben inicar el sensado.
-        /// 
-        /// </summary>
-        public void IniciarSimulacion()
-        {
-            Console.WriteLine("Iniciando simulacion en " + modoSeleccionado);
-            tiempoInicialDeEjecucion = DateTime.Now;
-            ruta = ObtenerRuta(tiempoInicialDeEjecucion);
-
-            expertoZE.IniciarSimulacion(new Video(ruta + ".mp4"));
-            expertoSI.IniciarSimulacion();
-
-            if (modoSeleccionado == ModoSimulacion.ModoGuiado)
-                IGUIController.IniciarSimulacionModoGuiado();
-            else
-                IGUIController.IniciarSimulacionModoEvaluacion();
-        }
-
-        /// <summary>
         /// Inicializar: Se encarga de mandar a inicializar los expertos y pedir la pantalla de ingreso de datos.
         /// - Si algun experto no pudo inicializar correctamente, envía a la GUI un mensaje de error.
         /// - Sucede al abrir la aplicación. La GUI muestra un gif "checkeando sensores" y nos manda a inicializar.
         /// </summary>
         /// <returns></returns>
-        public async Task Inicializar()
-        {
+        public async Task Inicializar () {
             Console.WriteLine("Inicializando...");
-            try
-            {
+            try {
                 //INICIALIZAR EXPERTO ZE
                 expertoZE.CambioZE += CambioZE; //suscripción al evento CambioZE
                 if (!expertoZE.Inicializar())
@@ -109,18 +90,38 @@ namespace LumbApp.Orquestador
                 {
                     FolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
                 };
+
+                _inicializacionOk = true;
                 IGUIController.SolicitarDatosPracticante(datos);
-            }
-            catch (Exception ex)
-            {
+
+            } catch (Exception ex) {
                 expertoZE.CambioZE -= CambioZE;
                 if (ex.Message.Contains("sensores"))
                     expertoSI.CambioSI -= CambioSI;
 
                 Console.WriteLine("Error de inicializacion: " + ex);
+                _inicializacionOk = false;
                 IGUIController.MostrarErrorDeConexion(ex.Message);
             }
 
+        }
+
+        /// <summary>
+        /// IniciarSimulacion: Informa a los expertos que deben inicar el sensado.
+        /// </summary>
+        public void IniciarSimulacion()
+        {
+            Console.WriteLine("Iniciando simulacion en " + modoSeleccionado);
+            tiempoInicialDeEjecucion = DateTime.Now;
+            ruta = ObtenerRuta(tiempoInicialDeEjecucion);
+
+            expertoZE.IniciarSimulacion(new Video(ruta + ".mp4"));
+            expertoSI.IniciarSimulacion();
+
+            if (modoSeleccionado == ModoSimulacion.ModoGuiado)
+                IGUIController.IniciarSimulacionModoGuiado();
+            else
+                IGUIController.IniciarSimulacionModoEvaluacion();
         }
 
         public async Task NuevaSimulacion()
@@ -150,8 +151,8 @@ namespace LumbApp.Orquestador
                 informeSI, informeZE, tiempoTotalDeEjecucion
                 );
 
-            ffb = new FinalFeedbacker(ruta + ".pdf", datosPracticante, informeFinal.DatosPractica, tiempoFinal);
-            informeFinal.SetPdfGenerado(ffb.GenerarPDF());
+            _ffb = new FinalFeedbacker(ruta + ".pdf", datosPracticante, informeFinal.DatosPractica, tiempoFinal);
+            informeFinal.SetPdfGenerado(_ffb.GenerarPDF());
             informeZE.Video.Save();
 
             IGUIController.MostrarResultados(informeFinal);
@@ -180,7 +181,6 @@ namespace LumbApp.Orquestador
 
             return ruta;
         }
-
 
         /// <summary>
         /// CambioSI: atrapa los eventos que indican un cambio en el sensado interno
@@ -217,5 +217,20 @@ namespace LumbApp.Orquestador
             this.expertoZE = exp;
         }
 
+        /// <summary>
+        /// Finalizar: Se encarga de mandar a finalizar los expertos.
+        /// - Si algun experto no pudo inicializar correctamente, lanza una excepción.
+        /// - Sucede al cerrar la aplicación.
+        /// </summary>
+        public void Finalizar ()
+        {
+            Console.WriteLine("Finalizando...");
+            if (!_inicializacionOk)
+                throw new Exception("No se ha realizado la inicialización.");
+
+            expertoZE.Finalizar();
+            expertoSI.Finalizar();
+            _inicializacionOk = false;
+        }
     }
 }

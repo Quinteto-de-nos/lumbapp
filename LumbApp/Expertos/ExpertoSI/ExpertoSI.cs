@@ -6,6 +6,7 @@ namespace LumbApp.Expertos.ExpertoSI
 {
     public class ExpertoSI : IExpertoSI
     {
+        #region Variables
         private readonly IConectorSI sensoresInternos;
 
         private readonly Capa TejidoAdiposo = new Capa();
@@ -29,10 +30,16 @@ namespace LumbApp.Expertos.ExpertoSI
         private bool _comunicacionCheckeada = false;
 
         private bool CaminoIncorrecto = false;
-
+        
         CambioSIEventArgs args;
+        /// <summary>
+        /// Evento que le indica al orquestador cuando se produce un cambio en el estado de algun elemento sensado.
+        /// </summary>
+        public event EventHandler<CambioSIEventArgs> CambioSI;
+        #endregion
 
-        public ExpertoSI(IConectorSI sensoresInternos)
+        #region Métodos del experto
+        public ExpertoSI (IConectorSI sensoresInternos)
         {
             if (sensoresInternos == null)
                 throw new Exception("Sensores no puede ser null. Necesito un conector a los sensores para crear un experto en sensores internos");
@@ -64,7 +71,7 @@ namespace LumbApp.Expertos.ExpertoSI
         /// <summary>
         /// Inicia el sensado interno.
         /// </summary>
-        /// <returns></returns>
+        /// <returns> Retorna true si la comunicación con el arduino fue correctamete checkeada </returns>
         public bool IniciarSimulacion()
         {
             if (_comunicacionCheckeada)
@@ -106,7 +113,9 @@ namespace LumbApp.Expertos.ExpertoSI
             Console.WriteLine("SI: Simulación terminada");
             return informe;
         }
+        #endregion
 
+        #region Métodos de procesamiento
         /// <summary>
         /// Vuelve Capas, Vertebras y estadisticas al estado inicial.
         /// </summary>
@@ -129,11 +138,6 @@ namespace LumbApp.Expertos.ExpertoSI
             AhoraL5 = false;
             AhoraDuramadre = false;
         }
-
-        /// <summary>
-        /// Evento que le indica al orquestador cuando se produce un cambio en el estado de algun elemento sensado.
-        /// </summary>
-        public event EventHandler<CambioSIEventArgs> CambioSI;
 
         /// <summary>
         /// Método que levanta el  evento CambioSI.
@@ -348,7 +352,9 @@ namespace LumbApp.Expertos.ExpertoSI
 
             return Cambio;
         }
+        #endregion
 
+        #region Geters para tests
         /*Declaro los siguientes get para realizar los tests del expertoSI*/
         public Capa GetTejidoAdiposo() { return TejidoAdiposo; }
         public Vertebra GetL2() { return L2; }
@@ -356,5 +362,6 @@ namespace LumbApp.Expertos.ExpertoSI
         public VertebraL4 GetL4() { return L4; }
         public Vertebra GetL5() { return L5; }
         public Capa GetDuramadre() { return Duramadre; }
+        #endregion
     }
 }
