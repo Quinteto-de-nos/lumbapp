@@ -53,7 +53,7 @@
     <RootNamespace>LumbApp</RootNamespace>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>LumbApp.GUI.MainWindow</StartupObject>
+    <StartupObject>KinectCoordinateMapping.MainWindow</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <Prefer32Bit>false</Prefer32Bit>
