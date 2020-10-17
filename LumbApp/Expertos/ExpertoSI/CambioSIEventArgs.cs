@@ -69,6 +69,11 @@ namespace LumbApp.Expertos.ExpertoSI
             this.CaminoIncorrecto = CaminoIncorrecto;
         }
 
+        public object Shallowcopy()
+        {
+            return this.MemberwiseClone();
+        }
+
         public void MostrarCambios()
         {
             Console.WriteLine("Tejido Adiposo:  Estado: " + TejidoAdiposo.Estado + "    Veces Atravesada: " + TejidoAdiposo.VecesAtravesada);
