@@ -57,7 +57,7 @@ namespace LumbApp.Expertos.ExpertoSI
                 return false;
             }
 
-            Console.WriteLine("SI: Inicializado");
+            Console.WriteLine("SI: Inicializado. Check de comuncacion dio " + _comunicacionCheckeada);
             return _comunicacionCheckeada;
         }
 

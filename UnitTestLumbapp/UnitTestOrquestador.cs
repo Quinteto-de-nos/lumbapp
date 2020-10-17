@@ -29,11 +29,11 @@ namespace UnitTestLumbapp
         }
 
         /// <summary>
-        /// Test que prueba el caso de intentar crear un orquestador con GUI, pero incapaz de levantar un objeto calibración, generando una exception
+        /// Test que prueba el caso de intentar crear un orquestador con GUI, pero incapaz de levantar un objeto calibración, generando una excepcion
         /// </summary>
         [TestMethod]
         [ExpectedException(typeof(Exception),
-            "Error al tratar de cargar el archivo de calibracion.")]
+            "ConectorFS no puede ser null. Necesito un ConectorFS para crear un Orquestador.")]
         public void TestConstructorSinCalibracion()
         {
             Mock<IGUIController> gui = new Mock<IGUIController>();
@@ -50,19 +50,36 @@ namespace UnitTestLumbapp
         [TestMethod]
         public async Task TestInicializarOk()
         {
-            Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
-            Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
+            var conSI = new Mock<IConectorSI>();
+            conSI.SetReturnsDefault<bool>(true);
+            var conZE = new Mock<IConectorKinect>();
+            var gui = new Mock<IGUIController>();
 
-            expSI.Setup(x => x.Inicializar()).Returns(true);
-            expZE.Setup(x => x.Inicializar()).Returns(true);
-
-            Mock<IGUIController> gui = new Mock<IGUIController>();
             Orquestador orq = new Orquestador(gui.Object, mockedConectorFS());
-            orq.SetExpertoSI(expSI.Object);
-            orq.SetExpertoZE(expZE.Object);
+            orq.SetConectorSI(conSI.Object);
+            orq.SetConectorZE(conZE.Object);
 
             await orq.Inicializar();
-            gui.Verify(x => x.SolicitarDatosPracticante(It.IsAny<DatosPracticante>()), Times.Once) ;
+            gui.Verify(x => x.SolicitarDatosPracticante(It.IsAny<DatosPracticante>()), Times.Once);
+        }
+
+        /// <summary>
+        /// Test que prueba el caso de intentar crear un orquestador con GUI, pero incapaz de levantar un objeto calibración.
+        /// No tira una excepcion, eso se posterga para cuando se llame a Inicializar.
+        /// </summary>
+        [TestMethod]
+        public async Task TestInicializarSinCalibracion()
+        {
+            var gui = new Mock<IGUIController>();
+            var conFS = new Mock<IConectorFS>();
+            conFS.Setup(x => x.LevantarArchivoDeTextoComoObjeto<It.IsAnyType>(It.IsAny<string>())).Throws(new Exception());
+            var orq = new Orquestador(gui.Object, conFS.Object);
+            await orq.Inicializar();
+            gui.Verify(x => x.MostrarErrorDeConexion(
+                It.Is<string>(
+                    x => x.Equals("Error al tratar de cargar el archivo de calibracion. Por favor, calibre el sistema antes de usarlo."
+                ))),
+                Times.Once);
         }
 
         [TestMethod]
@@ -76,10 +93,9 @@ namespace UnitTestLumbapp
             expZE.Setup(x => x.Inicializar()).Returns(true);
 
             Orquestador orq = new Orquestador(gui.Object, mockedConectorFS());
+            await orq.Inicializar();
             orq.SetExpertoSI(expSI.Object);
             orq.SetExpertoZE(expZE.Object);
-
-            await orq.Inicializar();
 
             var datos = new DatosPracticante()
             {
@@ -108,10 +124,10 @@ namespace UnitTestLumbapp
             expZE.Setup(x => x.Inicializar()).Returns(true);
 
             Orquestador orq = new Orquestador(gui.Object, mockedConectorFS());
+            await orq.Inicializar();
             orq.SetExpertoSI(expSI.Object);
             orq.SetExpertoZE(expZE.Object);
 
-            await orq.Inicializar();
             var datos = new DatosPracticante()
             {
                 Dni = 99999999,
@@ -139,13 +155,12 @@ namespace UnitTestLumbapp
             expSI.Setup(x => x.Inicializar()).Returns(true);
             expSI.Setup(x => x.TerminarSimulacion()).Returns(new InformeSI(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12));
             expZE.Setup(x => x.Inicializar()).Returns(true);
-            expZE.Setup(x => x.TerminarSimulacion()).Returns(new InformeZE(0,0,0,videoZE.Object));
+            expZE.Setup(x => x.TerminarSimulacion()).Returns(new InformeZE(0, 0, 0, videoZE.Object));
 
             Orquestador orq = new Orquestador(gui.Object, mockedConectorFS());
+            await orq.Inicializar();
             orq.SetExpertoSI(expSI.Object);
             orq.SetExpertoZE(expZE.Object);
-
-            await orq.Inicializar();
 
             var datos = new DatosPracticante()
             {
@@ -178,10 +193,9 @@ namespace UnitTestLumbapp
             expZE.Setup(x => x.Inicializar()).Returns(true);
 
             Orquestador orq = new Orquestador(gui.Object, mockedConectorFS());
+            await orq.Inicializar();
             orq.SetExpertoSI(expSI.Object);
             orq.SetExpertoZE(expZE.Object);
-
-            await orq.Inicializar();
 
             DatosPracticante dp = new DatosPracticante
             {
@@ -215,10 +229,10 @@ namespace UnitTestLumbapp
             expZE.Setup(x => x.Inicializar()).Returns(true);
 
             Orquestador orq = new Orquestador(gui.Object, mockedConectorFS());
+            await orq.Inicializar();
+
             orq.SetExpertoSI(expSI.Object);
             orq.SetExpertoZE(expZE.Object);
-
-            await orq.Inicializar();
 
             DatosPracticante dp = new DatosPracticante
             {

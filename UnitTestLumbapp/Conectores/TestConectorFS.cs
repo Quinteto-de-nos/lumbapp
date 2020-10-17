@@ -112,6 +112,7 @@ namespace UnitTestLumbapp.Conectores
         /// Test que verifica el levantado de un objeto cuando falla la deserialización o el levantado de archivo
         /// </summary>
         [TestMethod]
+        [ExpectedException(typeof(Exception))]
         public void TestLevantadoDeObjetoLanzaException()
         {
             Mock<IFileSystem> filesystem = new Mock<IFileSystem>();

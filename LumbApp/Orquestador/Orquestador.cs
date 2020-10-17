@@ -19,7 +19,9 @@ namespace LumbApp.Orquestador
         public IGUIController IGUIController { get; set; }
 
         private IExpertoZE expertoZE;
+        private IConectorKinect conectorKinect;
         private IExpertoSI expertoSI;
+        private IConectorSI conectorArduino;
         private IFinalFeedbacker ffb;
         private IConectorFS fileSystem;
         private string ruta;
@@ -40,9 +42,14 @@ namespace LumbApp.Orquestador
         {
             if (gui == null)
                 throw new Exception("Gui no puede ser null. Necesito un GUIController para crear un Orquestador.");
-
             IGUIController = gui;
+
+            if (conectorFS == null)
+                throw new Exception("ConectorFS no puede ser null. Necesito un ConectorFS para crear un Orquestador.");
             fileSystem = conectorFS;
+
+            conectorKinect = new ConectorKinect();
+            conectorArduino = new ConectorSI();
         }
 
         #region ABM simulacion
@@ -102,7 +109,6 @@ namespace LumbApp.Orquestador
                         throw new Exception("Error al tratar de cargar el archivo de calibracion. Por favor, calibre el sistema antes de usarlo.");
                     }
 
-                    var conectorKinect = new ConectorKinect();
                     expertoZE = new ExpertoZE(conectorKinect, calibracion);
                     //expertoZE = new ExpertoZEMock(true);
 
@@ -112,9 +118,8 @@ namespace LumbApp.Orquestador
                     #endregion
 
                     #region Inicializar SI
-                    //var conectorSI = new ConectorSI();
-                    //expertoSI = new ExpertoSI(conectorSI);
-                    expertoSI = new ExpertoSIMock(true);
+                    expertoSI = new ExpertoSI(conectorArduino);
+                    //expertoSI = new ExpertoSIMock(true);
 
                     expertoSI.CambioSI += CambioSI; //suscripción al evento CambioSI
                     if (!expertoSI.Inicializar())
@@ -255,6 +260,15 @@ namespace LumbApp.Orquestador
         public void SetExpertoZE(IExpertoZE exp)
         {
             this.expertoZE = exp;
+        }
+
+        public void SetConectorZE(IConectorKinect con)
+        {
+            this.conectorKinect = con;
+        }
+        public void SetConectorSI(IConectorSI con)
+        {
+            this.conectorArduino = con;
         }
         #endregion
     }
