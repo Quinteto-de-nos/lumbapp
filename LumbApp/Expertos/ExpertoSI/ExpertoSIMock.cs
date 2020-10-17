@@ -187,7 +187,7 @@ namespace LumbApp.Expertos.ExpertoSI
             //Termina simulacion
             await Task.Delay(5000);
             Console.WriteLine("Finished mocked simulation");
-            simulando = false;
+            //simulando = false;
         }
 
         /// <summary>
