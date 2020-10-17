@@ -150,7 +150,7 @@ namespace LumbApp.Orquestador
         /// Redirige a la pantalla de ingreso de datos.
         /// </summary>
         /// <returns></returns>
-        public async Task NuevaSimulacion()
+        public void NuevaSimulacion()
         {
             IGUIController.SolicitarDatosPracticante(datosPracticante);
         }
@@ -162,28 +162,31 @@ namespace LumbApp.Orquestador
         /// </summary>
         public async Task TerminarSimulacion()
         {
-            Console.WriteLine("Terminando simulacion...");
-            InformeZE informeZE = expertoZE.TerminarSimulacion();
-            InformeSI informeSI = expertoSI.TerminarSimulacion();
+            var task = Task<Informe>.Run(() =>
+            {
+                Console.WriteLine("Terminando simulacion...");
+                InformeZE informeZE = expertoZE.TerminarSimulacion();
+                InformeSI informeSI = expertoSI.TerminarSimulacion();
 
-            DateTime tiempoFinal = DateTime.Now;
-            tiempoTotalDeEjecucion = tiempoFinal - tiempoInicialDeEjecucion;
+                DateTime tiempoFinal = DateTime.Now;
+                tiempoTotalDeEjecucion = tiempoFinal - tiempoInicialDeEjecucion;
 
-            Informe informeFinal = new Informe(
-                this.datosPracticante.Nombre,
-                this.datosPracticante.Apellido,
-                this.datosPracticante.Dni,
-                this.datosPracticante.FolderPath,
-                informeSI, informeZE, tiempoTotalDeEjecucion
-                );
+                Informe informeFinal = new Informe(
+                    this.datosPracticante.Nombre,
+                    this.datosPracticante.Apellido,
+                    this.datosPracticante.Dni,
+                    this.datosPracticante.FolderPath,
+                    informeSI, informeZE, tiempoTotalDeEjecucion
+                    );
 
-            ffb = new FinalFeedbacker(ruta + ".pdf", datosPracticante, informeFinal.DatosPractica, tiempoFinal);
-            informeFinal.SetPdfGenerado(ffb.GenerarPDF());
-            informeZE.Video.Save();
+                ffb = new FinalFeedbacker(ruta + ".pdf", datosPracticante, informeFinal.DatosPractica, tiempoFinal);
+                informeFinal.SetPdfGenerado(ffb.GenerarPDF());
+                informeZE.Video.Save();
+                return informeFinal;
+            });
 
-            IGUIController.MostrarResultados(informeFinal);
-
-            //Informar a GUI con informe con un evento, que pase si el informe se genero bien, y si se guardó  bien (bool, bool)
+            var informe = await task;
+            IGUIController.MostrarResultados(informe);
         }
         #endregion
 

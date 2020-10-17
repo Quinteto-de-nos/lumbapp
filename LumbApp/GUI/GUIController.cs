@@ -45,7 +45,7 @@ namespace LumbApp.GUI
 
         public void NuevaSimulacion()
         {
-            _ = _orquestador.NuevaSimulacion();
+            _orquestador.NuevaSimulacion();
         }
 
         /// <summary>
