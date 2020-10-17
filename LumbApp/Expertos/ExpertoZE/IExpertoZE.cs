@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LumbApp.Expertos.ExpertoZE
 {
@@ -10,7 +6,7 @@ namespace LumbApp.Expertos.ExpertoZE
     {
         event EventHandler<CambioZEEventArgs> CambioZE;
         bool Inicializar();
-        bool IniciarSimulacion();
+        bool IniciarSimulacion(IVideo videoHelper);
         InformeZE TerminarSimulacion();
         void Finalizar();
     }

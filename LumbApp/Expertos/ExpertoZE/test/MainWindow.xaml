@@ -4,7 +4,7 @@
         Title="Kinect Coordinate Mapping" Height="600" Width="800"
         Loaded="Window_Loaded" Unloaded="Window_Unloaded">
     <Grid>
-        <Image Name="camera" Width="640" Height="480" />
+        <Image Name="camera" Width="640" Height="480" MouseLeftButtonDown="Left_Down"/>
         <Canvas Name="canvas" Width="640" Height="480" />
     </Grid>
 </Window>

@@ -1,22 +1,10 @@
-﻿using LumbApp;
-using LumbApp.Conectores.ConectorKinect;
-using LumbApp.Expertos.ExpertoZE;
-using LumbApp.Orquestador;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using System.IO;
+using System.Media;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
+using System.Windows.Threading;
 
 namespace LumbApp.GUI
 {
@@ -26,11 +14,45 @@ namespace LumbApp.GUI
     public partial class PasosPreparacion : Page
     {
         public GUIController _controller { get; set; }
+        private static readonly string _imagesFolderPath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\GUI\\Imagenes\\Preparacion\\";
+        private readonly DispatcherTimer timer;
+        private int timeLeft { get; set; }
 
         public PasosPreparacion(GUIController gui)
         {
             InitializeComponent();
             _controller = gui;
+            timeLeft = 30;
+            timer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(1)
+            };
+            timer.Tick += timer_Tick;
+            timer.Start();
+
+            //seteo imagenes
+            HandWashingImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "handwashing.png", UriKind.Absolute));
+            CapImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "cap.png", UriKind.Absolute));
+            FacemaskImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "facemask.png", UriKind.Absolute));
+            EyeProtectionImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "eye-protection.png", UriKind.Absolute));
+            AlcoholGelImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "alcohol-gel.png", UriKind.Absolute));
+            GownImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "gown.png", UriKind.Absolute));
+            RubberGlovesImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "rubber-gloves.png", UriKind.Absolute));
+        }
+
+        void timer_Tick(object sender, EventArgs e)
+        {
+            if (timeLeft > 0)
+            {
+                timeLeft -= 1;
+                LabelTimer.Content = timeLeft;
+            }
+            else
+            {
+                timer.Stop();
+                SystemSounds.Exclamation.Play();
+                _controller.FinPreparacion();
+            }
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -40,6 +62,7 @@ namespace LumbApp.GUI
 
         private void SaltearButton_Click(object sender, RoutedEventArgs e)
         {
+            timer.Stop();
             _controller.FinPreparacion();
         }
 

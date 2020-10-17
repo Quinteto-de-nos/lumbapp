@@ -1,28 +1,23 @@
-﻿
-using KinectCoordinateMapping;
-using LumbApp.Enums;
-using LumbApp.Orquestador;
+﻿using LumbApp.Enums;
 using LumbApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
 using LumbApp.Expertos.ExpertoZE;
+using LumbApp.Conectores.ConectorFS;
+using LumbApp.Expertos.ExpertoSI;
 
 namespace LumbApp.GUI
 {
-    public class GUIController
+    public class GUIController : IGUIController
     {
         private Orquestador.Orquestador _orquestador { get; set; }
         private MainWindow MainWindow { get; set; }
         private SensorsCheck SensorsCheckPage { get; set; }
         private IngresoDatosPracticante IngresoDatosPracticantePage { get; set; }
         private SimulacionModoGuiado SimulacionModoGuiadoPage { get; set; }
-        private Mano _manoIzquierda { get; set; }
-        private Mano _manoDerecha { get; set; }
+        private SimulacionModoEvaluacion SimulacionModoEvaluacionPage { get; set; }
+        private ResultadosSimulacion ResultadosSimulacionPage { get; set; }
 
-        public GUIController(MainWindow mainWindow) {
+        public GUIController(MainWindow mainWindow)
+        {
 
             MainWindow = mainWindow;
         }
@@ -35,13 +30,18 @@ namespace LumbApp.GUI
             SensorsCheckPage = new SensorsCheck(this);
             MainWindow.NavigationService.Navigate(SensorsCheckPage);
             SensorsCheckPage.MostrarCheckeandoSensores();
-            _orquestador = new Orquestador.Orquestador(this);
-            _orquestador.Inicializar();
+            _orquestador = new Orquestador.Orquestador(this, new ConectorFS());
+            _ = _orquestador.Inicializar();
         }
 
         public void CheckearSensores()
         {
-            _orquestador.Inicializar();  //si fallo la primera vez reintento
+            _ = _orquestador.Inicializar();  //si fallo la primera vez reintento
+        }
+
+        public void NuevaSimulacion()
+        {
+            _ = _orquestador.NuevaSimulacion();  //si fallo la primera vez reintento
         }
 
         /// <summary>
@@ -56,9 +56,9 @@ namespace LumbApp.GUI
         /// <summary>
         /// Lo llama el orquestador si finalizo bien la inicializacion de los sensores para mostrar el 'login' del practicante
         /// </summary>
-        public void SolicitarDatosPracticante()
+        public void SolicitarDatosPracticante(DatosPracticante datosPrevios)
         {
-            IngresoDatosPracticantePage = new IngresoDatosPracticante(this);
+            IngresoDatosPracticantePage = new IngresoDatosPracticante(this, datosPrevios);
             MainWindow.NavigationService.Navigate(IngresoDatosPracticantePage);
         }
 
@@ -76,7 +76,8 @@ namespace LumbApp.GUI
         /// <summary>
         /// Muestra los pasos de preparacion
         /// </summary>
-        private void MostrarPasosPreparacion() {
+        private void MostrarPasosPreparacion()
+        {
             PasosPreparacion pasosPreparacionPage = new PasosPreparacion(this);
             MainWindow.NavigationService.Navigate(pasosPreparacionPage);
         }
@@ -103,62 +104,30 @@ namespace LumbApp.GUI
         /// </summary>
         public void IniciarSimulacionModoEvaluacion()
         {
-
+            SimulacionModoEvaluacionPage = new SimulacionModoEvaluacion(this);
+            MainWindow.NavigationService.Navigate(SimulacionModoEvaluacionPage);
         }
 
         public void MostrarCambioZE(CambioZEEventArgs e)
         {
-            CheckearCambioTracking(_manoIzquierda.Track, e.ManoIzquierda.Track, true);
-            CheckearCambioTracking(_manoDerecha.Track, e.ManoDerecha.Track, false);
-
-            if (e.ContaminadoAhora)
-            {
-                ChequearSiEntro(_manoIzquierda.Estado, e.ManoIzquierda.Estado, e.ManoIzquierda.VecesContamino, true);
-                ChequearSiEntro(_manoDerecha.Estado, e.ManoDerecha.Estado, e.ManoDerecha.VecesContamino, false);
-            }
-            else
-            {
-                ChequearSiSalio(_manoIzquierda.Estado, e.ManoIzquierda.Estado, true);
-                ChequearSiSalio(_manoIzquierda.Estado, e.ManoIzquierda.Estado, false);
-            }
+            SimulacionModoGuiadoPage.MostrarCambioZE(e);
         }
 
-        private void CheckearCambioTracking(Mano.Tracking oldTrack, Mano.Tracking track, bool esIzquierda)
+        public void MostrarCambioSI(CambioSIEventArgs datosDelEvento)
         {
-            if( oldTrack != track )
-            {
-                if ( track == Mano.Tracking.Perdido )
-                    SimulacionModoGuiadoPage.MostrarPerdidaTrackeo(esIzquierda);
-                else
-                    SimulacionModoGuiadoPage.MostrarVuelveTrackeo(esIzquierda);
-            }
-        }
-
-        private void ChequearSiSalio(Mano.Estados oldState, Mano.Estados state, bool esIzquierda)
-        {
-            if(oldState != state)
-            {
-                if (state == Mano.Estados.Trabajando)
-                    SimulacionModoGuiadoPage.MostrarPrimerIngresoZE(esIzquierda);
-                if (state == Mano.Estados.Fuera)
-                    SimulacionModoGuiadoPage.MostrarSalidaDeZE(esIzquierda);
-            }
-        }
-        private void ChequearSiEntro(Mano.Estados oldState, Mano.Estados state, int vecesContamino, bool esIzquierda)
-        {
-            if (state == Mano.Estados.Contaminando && oldState == Mano.Estados.Fuera)
-                SimulacionModoGuiadoPage.MostrarIngresoContaminadoZE(esIzquierda, vecesContamino);
+            SimulacionModoGuiadoPage.MostrarCambioSI(datosDelEvento);
         }
 
         public void FinalizarSimulacion()
         {
-            _orquestador.TerminarSimulacion();
-            //mostrar_procesado_resultados();
+            ResultadosSimulacionPage = new ResultadosSimulacion(this);
+            MainWindow.NavigationService.Navigate(ResultadosSimulacionPage);
+            _ = _orquestador.TerminarSimulacion();
         }
 
-        public void MostrarResultados( Informe informe)
+        public void MostrarResultados(Informe informe)
         {
-
+            ResultadosSimulacionPage.MostrarResultados(informe);
         }
 
     }
