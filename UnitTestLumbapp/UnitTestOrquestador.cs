@@ -320,25 +320,35 @@ namespace UnitTestLumbapp
             orq.SetExpertoZE(expZE.Object);
 
             await orq.Inicializar();
+            
             Assert.AreEqual(orq.inicializacionOk, true);
             orq.Finalizar();
+            expSI.Verify(x => x.Finalizar(), Times.Once);
+            expZE.Verify(x => x.Finalizar(), Times.Once);
             Assert.AreEqual(orq.inicializacionOk, false);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception),
-            "No se ha realizado la inicialización.")]
+
         public void TestFinalizarTooSoon () {
+            Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
+            Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
+
+            expSI.Setup(x => x.Inicializar()).Returns(false);
+            expZE.Setup(x => x.Inicializar()).Returns(true);
+
             Mock<IGUIController> gui = new Mock<IGUIController>();
             Orquestador orq = new Orquestador(gui.Object, mockedConectorFS());
+            orq.SetExpertoSI(expSI.Object);
+            orq.SetExpertoZE(expZE.Object);
 
-            Assert.AreEqual(orq.inicializacionOk, false);
             orq.Finalizar();
+            expSI.Verify(x => x.Finalizar(), Times.Never);
+            expZE.Verify(x => x.Finalizar(), Times.Never);
+            Assert.AreEqual(orq.inicializacionOk, false);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception),
-            "No se ha realizado la inicialización.")]
         public async Task TestFinalizarInicializacionFallida () {
             Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
             Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
@@ -352,8 +362,11 @@ namespace UnitTestLumbapp
             orq.SetExpertoZE(expZE.Object);
 
             await orq.Inicializar();
-            Assert.AreEqual(orq.inicializacionOk, false);
+
             orq.Finalizar();
+            expSI.Verify(x => x.Finalizar(), Times.Never);
+            expZE.Verify(x => x.Finalizar(), Times.Never);
+            Assert.AreEqual(orq.inicializacionOk, false);
         }
 
         private ConectorFS mockedConectorFS()

@@ -225,12 +225,11 @@ namespace LumbApp.Orquestador
         public void Finalizar ()
         {
             Console.WriteLine("Finalizando...");
-            if (!inicializacionOk)
-                throw new Exception("No se ha realizado la inicialización.");
-
-            expertoZE.Finalizar();
-            expertoSI.Finalizar();
-            inicializacionOk = false;
+            if (inicializacionOk) {
+                expertoZE.Finalizar();
+                expertoSI.Finalizar();
+                inicializacionOk = false;
+            }
         }
     }
 }
