@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="17.5" version="17.5" Modules="simple" RootPath="." Language="en" Id="{F13A17B7-5FB9-421C-8122-1BDD7D2D5CC7}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="17.5" version="17.5" Modules="simple" RootPath="." Language="en" Id="{EEA3E121-F320-4E55-A915-5F59494B162C}">
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_Accord.Video.FFMPEG.dll" Value="..\LumbApp\packages\Accord.Video.FFMPEG.3.8.0\lib\net462"/>
@@ -8,6 +8,8 @@
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_BouncyCastle.Crypto.dll" Value="..\LumbApp\packages\BouncyCastle.1.8.6.1\lib"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_Castle.Core.dll" Value="..\LumbApp\packages\Castle.Core.4.4.1\lib\net45"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_FontAwesome.WPF.dll" Value="..\LumbApp\packages\FontAwesome.WPF.4.7.0.9\lib\net40"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_LumbAppDesktop.exe" Value="..\LumbApp\bin\Debug"/>
+    <ROW Property="AI_PROPPATH_DIR_PERBUILD_LumbAppDesktop.exe.config" Value="..\LumbApp\bin\Debug"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_Microsoft.Bcl.AsyncInterfaces.dll" Value="..\LumbApp\packages\Microsoft.Bcl.AsyncInterfaces.1.1.1\lib\net461"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_Microsoft.Kinect.dll" Value="..\..\..\..\..\..\..\Program Files\Microsoft SDKs\Kinect\v1.8\Assemblies"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_Moq.dll" Value="..\LumbApp\packages\Moq.4.14.6\lib\net45"/>
@@ -23,8 +25,6 @@
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_System.Text.Json.dll" Value="..\LumbApp\packages\System.Text.Json.4.7.2\lib\net461"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_System.Threading.Tasks.Extensions.dll" Value="..\LumbApp\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_System.ValueTuple.dll" Value="..\LumbApp\packages\System.ValueTuple.4.5.0\lib\net47"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_WindowsApplication.exe" Value="..\LumbApp\bin\Release"/>
-    <ROW Property="AI_PROPPATH_DIR_PERBUILD_WindowsApplication.exe.config" Value="..\LumbApp\bin\Release"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_Xabe.FFmpeg.dll" Value="..\LumbApp\packages\Xabe.FFmpeg.4.3.1\lib\netstandard2.0"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_ZedGraph.dll" Value="..\LumbApp\packages\ZedGraph.5.1.7\lib\net35-Client"/>
     <ROW Property="AI_PROPPATH_DIR_PERBUILD_itextsharp.dll" Value="..\LumbApp\packages\iTextSharp.5.5.13.2\lib"/>
@@ -34,6 +34,8 @@
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_BouncyCastle.Crypto.dll" Value="BouncyCastle.Crypto.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Castle.Core.dll" Value="Castle.Core.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_FontAwesome.WPF.dll" Value="FontAwesome.WPF.dll"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_LumbAppDesktop.exe" Value="LumbApp Desktop.exe"/>
+    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_LumbAppDesktop.exe.config" Value="LumbApp Desktop.exe.config"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Microsoft.Bcl.AsyncInterfaces.dll" Value="Microsoft.Bcl.AsyncInterfaces.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Microsoft.Kinect.dll" Value="Microsoft.Kinect.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Moq.dll" Value="Moq.dll"/>
@@ -49,26 +51,24 @@
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_System.Text.Json.dll" Value="System.Text.Json.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_System.Threading.Tasks.Extensions.dll" Value="System.Threading.Tasks.Extensions.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_System.ValueTuple.dll" Value="System.ValueTuple.dll"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_WindowsApplication.exe" Value="LumbApp Desktop.exe"/>
-    <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_WindowsApplication.exe.config" Value="LumbApp Desktop.exe.config"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_Xabe.FFmpeg.dll" Value="Xabe.FFmpeg.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_ZedGraph.dll" Value="ZedGraph.dll"/>
     <ROW Property="AI_PROPPATH_FILENAME_PERBUILD_itextsharp.dll" Value="itextsharp.dll"/>
     <ROW Property="ALLUSERS" Value="1"/>
-    <ROW Property="ARPCOMMENTS" Value="Instalador para la aplicación de escritorio de LumbApp [|ProductName]." ValueLocId="*"/>
-    <ROW Property="ARPCONTACT" Value="some-mail@mailcompany.com"/>
-    <ROW Property="ARPHELPLINK" Value="genericlink.com/help"/>
+    <ROW Property="ARPCOMMENTS" Value="Instalador de LumbApp Desktop y Calibrador de LumbApp[|ProductName]." ValueLocId="*"/>
+    <ROW Property="ARPCONTACT" Value="lumbapp@mail.company.com"/>
+    <ROW Property="ARPHELPLINK" Value="lumbapp.example/help"/>
     <ROW Property="ARPHELPTELEPHONE" Value="02374692382"/>
-    <ROW Property="ARPPRODUCTICON" Value="letter_l_12664.exe" Type="8"/>
-    <ROW Property="ARPURLINFOABOUT" Value="genericlink.com/suport"/>
-    <ROW Property="ARPURLUPDATEINFO" Value="genericlink.com/update"/>
+    <ROW Property="ARPPRODUCTICON" Value="AI_PROPPATH_FILENAME_PERBUILD_LumbAppDesktop.exe" Type="8"/>
+    <ROW Property="ARPURLINFOABOUT" Value="lumbapp.example/support"/>
+    <ROW Property="ARPURLUPDATEINFO" Value="lumbapp.example/update"/>
     <ROW Property="Manufacturer" Value="LumbApp"/>
-    <ROW Property="ProductCode" Value="1033:{6D314001-748B-4501-841F-C4925880D021} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{E8F2A310-2DE9-43C6-81FA-013706925843} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="LumbApp Desktop"/>
     <ROW Property="ProductVersion" Value="0.0.1" Type="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
-    <ROW Property="UpgradeCode" Value="{CCAB9C1D-AF6F-4E07-A14E-3DA4ACE319EB}"/>
+    <ROW Property="UpgradeCode" Value="{177AD815-D507-4226-AAFD-BA2AD26C0856}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
     <ROW Property="WindowsType9XDisplay" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
     <ROW Property="WindowsTypeNT40" MultiBuildValue="DefaultBuild:Windows NT 4.0" ValueLocId="-"/>
@@ -85,18 +85,20 @@
     <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
-    <ROW Component="APPDIR" ComponentId="{491C273E-FA17-4EA3-B03B-CDA31D61A7D2}" Directory_="APPDIR" Attributes="0"/>
-    <ROW Component="LumbApp_PrimaryOutput" ComponentId="{E67C927C-204C-4AF5-BB10-8A1B69CDBFC5}" Directory_="LumbApp_Dir" Attributes="0" KeyPath="WindowsApplication.exe"/>
-    <ROW Component="LumbApp_References" ComponentId="{2DE832F3-1055-4734-8262-16910E6BF473}" Directory_="LumbApp_Dir" Attributes="0" KeyPath="ZedGraph.dll"/>
-    <ROW Component="ProductInformation" ComponentId="{BD26E899-F15E-4F98-B376-29A353E4950E}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
+    <ROW Component="APPDIR" ComponentId="{8D8E36AA-7F68-4C20-94B3-F05FC4EAAFBF}" Directory_="APPDIR" Attributes="0"/>
+    <ROW Component="CalibradordeLumbApp.exe" ComponentId="{0074A36F-71E5-48A4-A9AD-523DB53E6298}" Directory_="LumbApp_Dir" Attributes="0" KeyPath="CalibradordeLumbApp.exe"/>
+    <ROW Component="CalibradordeLumbApp.exe.config" ComponentId="{E5CC86D4-1A23-4C3B-AF00-2E194991814B}" Directory_="LumbApp_Dir" Attributes="0" KeyPath="CalibradordeLumbApp.exe.config" Type="0"/>
+    <ROW Component="LumbApp_PrimaryOutput" ComponentId="{49CB8A39-30F4-472E-B3A0-2E4527D7331C}" Directory_="LumbApp_Dir" Attributes="0" KeyPath="LumbAppDesktop.exe"/>
+    <ROW Component="LumbApp_References" ComponentId="{D67693A8-C379-4E38-90EB-9DB9818F3BBC}" Directory_="LumbApp_Dir" Attributes="0" KeyPath="ZedGraph.dll"/>
+    <ROW Component="ProductInformation" ComponentId="{4A1F5FC8-ABB6-4F40-884E-A26DDDD14BAD}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
     <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0"/>
     <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
-    <ROW File="WindowsApplication.exe" Component_="LumbApp_PrimaryOutput" FileName="WINDOW~2.EXE|[|AI_PROPPATH_FILENAME_PERBUILD_WindowsApplication.exe]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_WindowsApplication.exe&gt;" SelfReg="false" DigSign="true"/>
-    <ROW File="WindowsApplication.exe.config" Component_="LumbApp_PrimaryOutput" FileName="WINDOW~2.CON|[|AI_PROPPATH_FILENAME_PERBUILD_WindowsApplication.exe.config]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_WindowsApplication.exe.config&gt;" SelfReg="false"/>
+    <ROW File="LumbAppDesktop.exe" Component_="LumbApp_PrimaryOutput" FileName="LUMBAP~2.EXE|[|AI_PROPPATH_FILENAME_PERBUILD_LumbAppDesktop.exe]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_LumbAppDesktop.exe&gt;" SelfReg="false" DigSign="true"/>
+    <ROW File="LumbAppDesktop.exe.config" Component_="LumbApp_PrimaryOutput" FileName="LUMBAP~2.CON|[|AI_PROPPATH_FILENAME_PERBUILD_LumbAppDesktop.exe.config]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_LumbAppDesktop.exe.config&gt;" SelfReg="false"/>
     <ROW File="Accord.dll" Component_="LumbApp_References" FileName="[|AI_PROPPATH_FILENAME_PERBUILD_Accord.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Accord.dll&gt;" SelfReg="false"/>
     <ROW File="Accord.Video.dll" Component_="LumbApp_References" FileName="ACCORD~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_Accord.Video.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Accord.Video.dll&gt;" SelfReg="false"/>
     <ROW File="Accord.Video.FFMPEG.dll" Component_="LumbApp_References" FileName="ACCORD~3.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_Accord.Video.FFMPEG.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Accord.Video.FFMPEG.dll&gt;" SelfReg="false"/>
@@ -121,6 +123,11 @@
     <ROW File="System.ValueTuple.dll" Component_="LumbApp_References" FileName="SYSTE~11.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_System.ValueTuple.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_System.ValueTuple.dll&gt;" SelfReg="false"/>
     <ROW File="Xabe.FFmpeg.dll" Component_="LumbApp_References" FileName="XABEFF~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_Xabe.FFmpeg.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Xabe.FFmpeg.dll&gt;" SelfReg="false"/>
     <ROW File="ZedGraph.dll" Component_="LumbApp_References" FileName="[|AI_PROPPATH_FILENAME_PERBUILD_ZedGraph.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_ZedGraph.dll&gt;" SelfReg="false"/>
+    <ROW File="CalibradordeLumbApp.exe" Component_="CalibradordeLumbApp.exe" FileName="CALIBR~1.EXE|Calibrador de LumbApp.exe" Attributes="0" SourcePath="..\LumbApp\Expertos\ExpertoZE\test\binaries\Calibrador de LumbApp.exe" SelfReg="false" DigSign="true"/>
+    <ROW File="CalibradordeLumbApp.exe.config" Component_="CalibradordeLumbApp.exe.config" FileName="CALIBR~1.CON|Calibrador de LumbApp.exe.config" Attributes="0" SourcePath="..\LumbApp\Expertos\ExpertoZE\test\binaries\Calibrador de LumbApp.exe.config" SelfReg="false"/>
+    <ROW File="letter_l_12664.ico" Component_="CalibradordeLumbApp.exe.config" FileName="LETTER~1.ICO|letter_l_12664.ico" Attributes="0" SourcePath="..\LumbApp\letter_l_12664.ico" SelfReg="false"/>
+    <ROW File="LetterHicon_34758.ico" Component_="CalibradordeLumbApp.exe.config" FileName="LETTER~2.ICO|Letter-H-icon_34758.ico" Attributes="0" SourcePath="..\LumbApp\Letter-H-icon_34758.ico" SelfReg="false"/>
+    <ROW File="README.txt" Component_="CalibradordeLumbApp.exe.config" FileName="README.txt" Attributes="0" SourcePath="..\LumbApp\README.txt" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.AppPathsComponent">
     <ROW Name="AI_APPPATH_PERBUILD_Accord.Video.FFMPEG.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_Accord.Video.FFMPEG.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_Accord.Video.FFMPEG.dll]" Type="2" Content="0"/>
@@ -129,6 +136,8 @@
     <ROW Name="AI_APPPATH_PERBUILD_BouncyCastle.Crypto.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_BouncyCastle.Crypto.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_BouncyCastle.Crypto.dll]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_Castle.Core.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_Castle.Core.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_Castle.Core.dll]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_FontAwesome.WPF.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_FontAwesome.WPF.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_FontAwesome.WPF.dll]" Type="2" Content="0"/>
+    <ROW Name="AI_APPPATH_PERBUILD_LumbAppDesktop.exe" Path="[|AI_PROPPATH_DIR_PERBUILD_LumbAppDesktop.exe]\[|AI_PROPPATH_FILENAME_PERBUILD_LumbAppDesktop.exe]" Type="2" Content="0"/>
+    <ROW Name="AI_APPPATH_PERBUILD_LumbAppDesktop.exe.config" Path="[|AI_PROPPATH_DIR_PERBUILD_LumbAppDesktop.exe.config]\[|AI_PROPPATH_FILENAME_PERBUILD_LumbAppDesktop.exe.config]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_Microsoft.Bcl.AsyncInterfaces.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_Microsoft.Bcl.AsyncInterfaces.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_Microsoft.Bcl.AsyncInterfaces.dll]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_Microsoft.Kinect.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_Microsoft.Kinect.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_Microsoft.Kinect.dll]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_Moq.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_Moq.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_Moq.dll]" Type="2" Content="0"/>
@@ -144,8 +153,6 @@
     <ROW Name="AI_APPPATH_PERBUILD_System.Text.Json.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_System.Text.Json.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_System.Text.Json.dll]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_System.Threading.Tasks.Extensions.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_System.Threading.Tasks.Extensions.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_System.Threading.Tasks.Extensions.dll]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_System.ValueTuple.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_System.ValueTuple.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_System.ValueTuple.dll]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_WindowsApplication.exe" Path="[|AI_PROPPATH_DIR_PERBUILD_WindowsApplication.exe]\[|AI_PROPPATH_FILENAME_PERBUILD_WindowsApplication.exe]" Type="2" Content="0"/>
-    <ROW Name="AI_APPPATH_PERBUILD_WindowsApplication.exe.config" Path="[|AI_PROPPATH_DIR_PERBUILD_WindowsApplication.exe.config]\[|AI_PROPPATH_FILENAME_PERBUILD_WindowsApplication.exe.config]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_Xabe.FFmpeg.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_Xabe.FFmpeg.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_Xabe.FFmpeg.dll]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_ZedGraph.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_ZedGraph.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_ZedGraph.dll]" Type="2" Content="0"/>
     <ROW Name="AI_APPPATH_PERBUILD_itextsharp.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_itextsharp.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_itextsharp.dll]" Type="2" Content="0"/>
@@ -214,6 +221,7 @@
     <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
     <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
     <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
+    <ROW Action="AI_SetArpReadmeFile" Type="51" Source="ARPREADME" Target="[#README.txt]"/>
     <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]"/>
     <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
@@ -223,9 +231,12 @@
     <ROW Feature_="MainFeature" Component_="ProductInformation"/>
     <ROW Feature_="MainFeature" Component_="LumbApp_PrimaryOutput"/>
     <ROW Feature_="MainFeature" Component_="LumbApp_References"/>
+    <ROW Feature_="MainFeature" Component_="CalibradordeLumbApp.exe"/>
+    <ROW Feature_="MainFeature" Component_="CalibradordeLumbApp.exe.config"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
-    <ROW Name="letter_l_12664.exe" SourcePath="..\LumbApp\letter_l_12664.ico" Index="0"/>
+    <ROW Name="AI_PROPPATH_FILENAME_PERBUILD_LumbAppDesktop.exe" SourcePath="..\LumbApp\letter_l_12664.ico" Index="0"/>
+    <ROW Name="CalibradordeLumbApp.exe" SourcePath="..\LumbApp\Letter-H-icon_34758.ico" Index="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
     <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
@@ -234,6 +245,7 @@
     <ROW Action="AI_PREPARE_UPGRADE" Condition="AI_UPGRADE=&quot;No&quot; AND (Not Installed)" Sequence="1399"/>
     <ROW Action="AI_ResolveKnownFolders" Sequence="52"/>
     <ROW Action="AI_EnableDebugLog" Sequence="51"/>
+    <ROW Action="AI_SetArpReadmeFile" Condition="NOT Installed" Sequence="1001"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstallUISequenceComponent">
     <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
@@ -252,7 +264,8 @@
     <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
-    <ROW Shortcut="LumbAppDesktop" Directory_="DesktopFolder" Name="LUMBAP~1|LumbApp Desktop" Component_="LumbApp_PrimaryOutput" Target="[#WindowsApplication.exe]" Description="Aplicación de escritorio para LumbnApp" Hotkey="0" Icon_="letter_l_12664.exe" IconIndex="0" ShowCmd="1" WkDir="LumbApp_Dir"/>
+    <ROW Shortcut="CalibradordeLumbApp" Directory_="DesktopFolder" Name="CALIBR~1|Calibrador de LumbApp" Component_="CalibradordeLumbApp.exe" Target="[#CalibradordeLumbApp.exe]" Description="Calibrador de Kinect para LumbApp" Hotkey="0" Icon_="CalibradordeLumbApp.exe" IconIndex="0" ShowCmd="1" WkDir="LumbApp_Dir"/>
+    <ROW Shortcut="LumbAppDesktop" Directory_="DesktopFolder" Name="LUMBAP~1|LumbApp Desktop" Component_="LumbApp_PrimaryOutput" Target="[#LumbAppDesktop.exe]" Description="Aplicación de escritorio para LumbApp" Hotkey="0" Icon_="AI_PROPPATH_FILENAME_PERBUILD_LumbAppDesktop.exe" IconIndex="0" ShowCmd="1" WkDir="LumbApp_Dir"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
     <ATTRIBUTE name="UsedTheme" value="classic"/>
@@ -262,8 +275,8 @@
     <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.VsProjectComponent">
-    <ROW ProjectId="{e0c5519e-0ad1-47fb-aaf4-fada209a5689}" ProjectName="LumbApp" OutputGroup="PrimaryOutput" OutputFile="WindowsApplication.exe"/>
-    <ROW ProjectId="{e0c5519e-0ad1-47fb-aaf4-fada209a5689}" ProjectName="LumbApp" OutputGroup="PrimaryOutput" OutputFile="WindowsApplication.exe.config"/>
+    <ROW ProjectId="{e0c5519e-0ad1-47fb-aaf4-fada209a5689}" ProjectName="LumbApp" OutputGroup="PrimaryOutput" OutputFile="LumbAppDesktop.exe" OutputFileShortcut="LumbAppDesktop"/>
+    <ROW ProjectId="{e0c5519e-0ad1-47fb-aaf4-fada209a5689}" ProjectName="LumbApp" OutputGroup="PrimaryOutput" OutputFile="LumbAppDesktop.exe.config"/>
     <ROW ProjectId="{e0c5519e-0ad1-47fb-aaf4-fada209a5689}" ProjectName="LumbApp" OutputGroup="References" OutputFile="Accord.dll"/>
     <ROW ProjectId="{e0c5519e-0ad1-47fb-aaf4-fada209a5689}" ProjectName="LumbApp" OutputGroup="References" OutputFile="Accord.Video.dll"/>
     <ROW ProjectId="{e0c5519e-0ad1-47fb-aaf4-fada209a5689}" ProjectName="LumbApp" OutputGroup="References" OutputFile="Accord.Video.FFMPEG.dll"/>
