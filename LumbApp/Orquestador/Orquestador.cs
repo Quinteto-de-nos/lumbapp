@@ -29,7 +29,7 @@ namespace LumbApp.Orquestador
         private IFinalFeedbacker _ffb;
         private string ruta;
 
-        private bool _inicializacionOk = false;
+        public bool inicializacionOk = false;
 
         /// <summary>
         /// Constructor del Orquestrador.
@@ -91,7 +91,7 @@ namespace LumbApp.Orquestador
                     FolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
                 };
 
-                _inicializacionOk = true;
+                inicializacionOk = true;
                 IGUIController.SolicitarDatosPracticante(datos);
 
             } catch (Exception ex) {
@@ -100,7 +100,7 @@ namespace LumbApp.Orquestador
                     expertoSI.CambioSI -= CambioSI;
 
                 Console.WriteLine("Error de inicializacion: " + ex);
-                _inicializacionOk = false;
+                inicializacionOk = false;
                 IGUIController.MostrarErrorDeConexion(ex.Message);
             }
 
@@ -225,12 +225,12 @@ namespace LumbApp.Orquestador
         public void Finalizar ()
         {
             Console.WriteLine("Finalizando...");
-            if (!_inicializacionOk)
+            if (!inicializacionOk)
                 throw new Exception("No se ha realizado la inicialización.");
 
             expertoZE.Finalizar();
             expertoSI.Finalizar();
-            _inicializacionOk = false;
+            inicializacionOk = false;
         }
     }
 }
