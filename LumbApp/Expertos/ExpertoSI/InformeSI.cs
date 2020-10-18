@@ -2,7 +2,7 @@
 {
     public class InformeSI
     {
-
+        #region Variables
         public int TejidoAdiposo { get; private set; }
         public int L2 { get; private set; }
         public int L3Arriba { get; private set; }
@@ -23,8 +23,9 @@
         /// Cantidad de veces que se logro llegar a la duramadre sin sensar ningun error.
         /// </summary>
         public int CaminoIncorrecto;
+        #endregion
 
-        public InformeSI(int TejidoAdiposo, int L2, int L3Arriba, int L3Abajo, int L4ArribaIzquierda, int L4ArribaDerecha,
+        public InformeSI (int TejidoAdiposo, int L2, int L3Arriba, int L3Abajo, int L4ArribaIzquierda, int L4ArribaDerecha,
             int L4ArribaCentro, int L4Abajo, int L5, int Duramadre, int CaminoCorrecto, int CaminoIncorrecto)
         {
 

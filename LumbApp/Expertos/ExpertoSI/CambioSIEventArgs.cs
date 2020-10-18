@@ -5,6 +5,7 @@ namespace LumbApp.Expertos.ExpertoSI
 {
     public class CambioSIEventArgs : EventArgs
     {
+        #region Variables
         /// <summary>
         /// Tejido-Adiposo: posicion 2 - (Arduino posicion 0)
         /// </summary>
@@ -46,8 +47,9 @@ namespace LumbApp.Expertos.ExpertoSI
         public bool DuramadreAtravezandoAhora { get; set; }
 
         public bool CaminoIncorrecto { get; private set; }
+        #endregion
 
-        public CambioSIEventArgs(Capa tejidoAdiposo, Vertebra L2, VertebraL3 L3, VertebraL4 L4, Vertebra L5, Capa Duramadre,
+        public CambioSIEventArgs (Capa tejidoAdiposo, Vertebra L2, VertebraL3 L3, VertebraL4 L4, Vertebra L5, Capa Duramadre,
             bool AhoraTejidoAdiposo, bool AhoraL2, bool AhoraL3, bool AhoraL4, bool AhoraL5, bool AhoraDuramadre,
             bool CaminoIncorrecto)
         {

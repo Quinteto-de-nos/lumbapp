@@ -162,8 +162,14 @@ namespace LumbApp.GUI
         #endregion
 
         #region Cambio en Vertebras
-
-        public void MostrarCambioSI(CambioSIEventArgs e)
+        CambioSIEventArgs e;
+        public void MostrarCambioSI(CambioSIEventArgs datos)
+        { 
+            datos.MostrarCambios();
+            e = datos;
+            this.Dispatcher.Invoke(HandlerLoqueSea);
+        }
+        private void HandlerLoqueSea()
         {
             MostrarAlertas(e);
 
@@ -189,6 +195,11 @@ namespace LumbApp.GUI
                 RozandoLabel.Content = "L2";
                 L2SideImage.Source = new BitmapImage(new Uri(_capasSidePath + "L2 adelante.png", UriKind.Absolute));
                 L2SFrontImage.Source = new BitmapImage(new Uri(_capasFrontPath + "L2 adelante.png", UriKind.Absolute));
+            }
+            else
+            {
+                L2SFrontImage.Source = null;
+                L2SideImage.Source = null;
             }
 
             //ROZANDO L3
@@ -250,7 +261,7 @@ namespace LumbApp.GUI
             }
 
             //ROZANDO L5
-            if (e.L2.Estado == Vertebra.Estados.Rozando || e.L2.Estado == Vertebra.Estados.RozandoNuevamente)
+            if (e.L5.Estado == Vertebra.Estados.Rozando || e.L5.Estado == Vertebra.Estados.RozandoNuevamente)
             {
                 CapaActualLabel.Content = "LIGAMENTO INTERESPINOSO";
                 RozandoLabel.Content = "L5";
