@@ -255,6 +255,11 @@ namespace LumbApp.GUI
                 L5SideImage.Source = new BitmapImage(new Uri(_capasSidePath + "L5 adelante.png", UriKind.Absolute));
                 L5FrontImage.Source = new BitmapImage(new Uri(_capasFrontPath + "L5 adelante.png", UriKind.Absolute));
             }
+            else
+            {
+                L5SideImage.Source = null;
+                L5FrontImage.Source = null;
+            }
 
             //ATRAVIESA LA DURAMADRE
             if (e.Duramadre.Estado == Capa.Estados.Atravesando || e.Duramadre.Estado == Capa.Estados.AtravesandoNuevamente)
