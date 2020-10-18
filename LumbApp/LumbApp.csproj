@@ -5,7 +5,7 @@
     <ProjectGuid>{E0C5519E-0AD1-47FB-AAF4-FADA209A5689}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
-    <AssemblyName>WindowsApplication</AssemblyName>
+    <AssemblyName>LumbApp Desktop</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -181,6 +181,7 @@
     <None Include=".vs\slnx.sqlite" />
     <None Include=".vs\VSWorkspaceState.json" />
     <None Include="app.config" />
+    <None Include="Expertos\ExpertoZE\test\binaries\Calibrador de LumbApp.exe.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -236,6 +237,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Conectores\ConectorSI\conector.exe" />
+    <Content Include="Expertos\ExpertoZE\test\binaries\Calibrador de LumbApp.exe" />
     <Content Include="GUI\Imagenes\Capas\Costado\base.png" />
     <Content Include="GUI\Imagenes\Capas\Costado\duramadre.png" />
     <Content Include="GUI\Imagenes\Capas\Costado\L2 adelante.png" />
