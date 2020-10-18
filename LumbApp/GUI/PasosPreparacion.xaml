@@ -109,7 +109,7 @@
                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                FontSize="22" FontWeight="Regular" Foreground="#595959">
                 <Viewbox StretchDirection="Both">
-                    <TextBlock Padding="40,10,40,0" Text="2. Colocate la cofia, el barbijo&#10;       y el protector ocular"></TextBlock>
+                    <TextBlock TextAlignment="Center"  Padding="40,10,40,0" Text="2. Colocate la cofia, el barbijo&#10;y el protector ocular"></TextBlock>
                 </Viewbox>
             </Label>
         </Border>
@@ -141,7 +141,7 @@
                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                FontSize="22" FontWeight="Regular" Foreground="#595959">
                 <Viewbox StretchDirection="Both">
-                    <TextBlock Padding="30,10,30,0" Text="3. Segundo lavado de manos o &#10;  desinfección con alcohol gel"></TextBlock>
+                    <TextBlock TextAlignment="Center"  Padding="30,10,30,0" Text="3. Segundo lavado de manos o&#10;desinfección con alcohol gel"></TextBlock>
                 </Viewbox>
             </Label>
         </Border>
@@ -159,7 +159,7 @@
                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                FontSize="22" FontWeight="Regular" Foreground="#595959">
                 <Viewbox StretchDirection="Both">
-                    <TextBlock Padding="40,10,40,0" Text="5. Colocate los guantes estériles"></TextBlock>
+                    <TextBlock TextAlignment="Center"  Padding="20,10,20,0" Text="5. Colocate los guante estériles"></TextBlock>
                 </Viewbox>
             </Label>
         </Border>
@@ -177,7 +177,7 @@
                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                FontSize="22" FontWeight="Regular" Foreground="#595959">
                 <Viewbox StretchDirection="Both">
-                    <TextBlock Padding="40,10,40,0" Text="4. Colocate el camisolín"></TextBlock>
+                    <TextBlock Padding="42,10,42,0" Text="4. Colocate el camisolín"></TextBlock>
                 </Viewbox>
             </Label>
         </Border>
