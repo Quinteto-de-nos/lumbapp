@@ -35,8 +35,6 @@ namespace LumbApp.Conectores.ConectorSI
 
                 mySerialPort.Open();
 
-                mySerialPort.Open();
-
                 return true;
 
             }

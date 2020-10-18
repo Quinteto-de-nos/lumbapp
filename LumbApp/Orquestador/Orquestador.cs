@@ -17,6 +17,7 @@ namespace LumbApp.Orquestador
     {
         #region Variables
         public IGUIController IGUIController { get; set; }
+        public bool inicializacionOk = false;
 
         private IExpertoZE expertoZE;
         private IConectorKinect conectorKinect;
@@ -32,7 +33,6 @@ namespace LumbApp.Orquestador
         private DateTime tiempoInicialDeEjecucion;
         private TimeSpan tiempoTotalDeEjecucion;
         #endregion
-
 
         /// <summary>
         /// Constructor del Orquestrador.
@@ -108,11 +108,14 @@ namespace LumbApp.Orquestador
                         throw new Exception("No se pudieron detectar correctamente los sensores internos. Asegúrese de que el simulador esté conectado e intente nuevamente");
                     #endregion
                 });
+
                 //Mostrar pantalla de ingreso de datos, le mandamos el path por default donde se guarda la practica
                 var datos = new DatosPracticante()
                 {
                     FolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
                 };
+
+                inicializacionOk = true;
                 IGUIController.SolicitarDatosPracticante(datos);
             }
             catch (Exception ex)
@@ -122,6 +125,7 @@ namespace LumbApp.Orquestador
                 expertoSI = null;
 
                 Console.WriteLine("Error de inicializacion: " + ex);
+                inicializacionOk = false;
                 IGUIController.MostrarErrorDeConexion(ex.Message);
             }
 
@@ -187,6 +191,22 @@ namespace LumbApp.Orquestador
 
             var informe = await task;
             IGUIController.MostrarResultados(informe);
+        }
+
+        /// <summary>
+        /// Finalizar: Se encarga de mandar a finalizar los expertos.
+        /// - Si algun experto no pudo inicializar correctamente, lanza una excepción.
+        /// - Sucede al cerrar la aplicación.
+        /// </summary>
+        public void Finalizar()
+        {
+            Console.WriteLine("Finalizando...");
+            if (inicializacionOk)
+            {
+                expertoZE.Finalizar();
+                expertoSI.Finalizar();
+                inicializacionOk = false;
+            }
         }
         #endregion
 
