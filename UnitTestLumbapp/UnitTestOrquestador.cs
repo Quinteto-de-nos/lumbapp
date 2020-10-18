@@ -321,7 +321,12 @@ namespace UnitTestLumbapp
         }
 
         [TestMethod]
-        public async Task TestFinalizarOK () {
+        public async Task TestFinalizarOK() {
+            //Mocks
+            var conSI = new Mock<IConectorSI>();
+            conSI.SetReturnsDefault<bool>(true);
+            var conZE = new Mock<IConectorKinect>();
+
             Mock<IExpertoSI> expSI = new Mock<IExpertoSI>();
             Mock<IExpertoZE> expZE = new Mock<IExpertoZE>();
 
@@ -329,14 +334,22 @@ namespace UnitTestLumbapp
             expZE.Setup(x => x.Inicializar()).Returns(true);
 
             Mock<IGUIController> gui = new Mock<IGUIController>();
+
+            //Creo orquestador
             Orquestador orq = new Orquestador(gui.Object, mockedConectorFS());
+
+            //Me aseguro que inicialice bien
+            orq.SetConectorSI(conSI.Object);
+            orq.SetConectorZE(conZE.Object);
+            await orq.Inicializar();
+
+            //Mockeo expertos para vigilar llamadas
             orq.SetExpertoSI(expSI.Object);
             orq.SetExpertoZE(expZE.Object);
 
-            await orq.Inicializar();
-            
-            Assert.AreEqual(orq.inicializacionOk, true);
             orq.Finalizar();
+
+            //Test
             expSI.Verify(x => x.Finalizar(), Times.Once);
             expZE.Verify(x => x.Finalizar(), Times.Once);
             Assert.AreEqual(orq.inicializacionOk, false);
