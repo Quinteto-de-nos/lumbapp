@@ -22,7 +22,7 @@ namespace LumbApp.Orquestador
         private IConectorKinect conectorKinect;
         private IExpertoSI expertoSI;
         private IConectorSI conectorArduino;
-        private IFinalFeedbacker ffb;
+        private IFinalFeedbacker _ffb;
         private IConectorFS fileSystem;
         private string ruta;
 
@@ -62,24 +62,6 @@ namespace LumbApp.Orquestador
         {
             this.datosPracticante = datosPracticante;
             this.modoSeleccionado = modo;
-        }
-
-        /// <summary>
-        /// IniciarSimulacion: Informa a los expertos que deben inicar el sensado.
-        /// </summary>
-        public void IniciarSimulacion()
-        {
-            Console.WriteLine("Iniciando simulacion en " + modoSeleccionado);
-            tiempoInicialDeEjecucion = DateTime.Now;
-            ruta = ObtenerRuta(tiempoInicialDeEjecucion);
-
-            expertoZE.IniciarSimulacion(new Video(ruta + ".mp4"));
-            expertoSI.IniciarSimulacion();
-
-            if (modoSeleccionado == ModoSimulacion.ModoGuiado)
-                IGUIController.IniciarSimulacionModoGuiado();
-            else
-                IGUIController.IniciarSimulacionModoEvaluacion();
         }
 
         /// <summary>
@@ -146,6 +128,24 @@ namespace LumbApp.Orquestador
         }
 
         /// <summary>
+        /// IniciarSimulacion: Informa a los expertos que deben inicar el sensado.
+        /// </summary>
+        public void IniciarSimulacion()
+        {
+            Console.WriteLine("Iniciando simulacion en " + modoSeleccionado);
+            tiempoInicialDeEjecucion = DateTime.Now;
+            ruta = ObtenerRuta(tiempoInicialDeEjecucion);
+
+            expertoZE.IniciarSimulacion(new Video(ruta + ".mp4"));
+            expertoSI.IniciarSimulacion();
+
+            if (modoSeleccionado == ModoSimulacion.ModoGuiado)
+                IGUIController.IniciarSimulacionModoGuiado();
+            else
+                IGUIController.IniciarSimulacionModoEvaluacion();
+        }
+
+        /// <summary>
         /// Lo llama GUI Controller cuando termino una simulacion y el usuario pide comenzar otra.
         /// Redirige a la pantalla de ingreso de datos.
         /// </summary>
@@ -179,8 +179,8 @@ namespace LumbApp.Orquestador
                     informeSI, informeZE, tiempoTotalDeEjecucion
                     );
 
-                ffb = new FinalFeedbacker(ruta + ".pdf", datosPracticante, informeFinal.DatosPractica, tiempoFinal);
-                informeFinal.SetPdfGenerado(ffb.GenerarPDF());
+                _ffb = new FinalFeedbacker(ruta + ".pdf", datosPracticante, informeFinal.DatosPractica, tiempoFinal);
+                informeFinal.SetPdfGenerado(_ffb.GenerarPDF());
                 informeZE.Video.Save();
                 return informeFinal;
             });
