@@ -143,7 +143,8 @@ namespace LumbApp.Expertos.ExpertoSI
         /// </param>
         protected virtual void HayCambioSI(CambioSIEventArgs datosCambioSI)
         {
-            CambioSI?.Invoke(this, datosCambioSI);
+            EventHandler<CambioSIEventArgs> handler = CambioSI;
+            handler?.Invoke(this, datosCambioSI);
         }
 
         /// <summary>
