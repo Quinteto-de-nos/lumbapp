@@ -30,7 +30,7 @@ namespace LumbApp.GUI
             NombrePracticante.Content =
                 String.Format(
                     "{0}, {1}" + Environment.NewLine +
-                    "Path: {2}", informe.Apellido, informe.Nombre, informe.FolderPath);
+                    "Resultados de la práctica en {2}", informe.Apellido, informe.Nombre,informe.FolderPath);
 
             DniPracticante.Content = "DNI: " + informe.Dni.ToString();
 

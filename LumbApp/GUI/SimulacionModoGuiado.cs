@@ -1,4 +1,6 @@
-﻿using LumbApp.Expertos.ExpertoSI;
+﻿using Accord;
+using LumbApp.Enums;
+using LumbApp.Expertos.ExpertoSI;
 using LumbApp.Expertos.ExpertoSI.Utils;
 using LumbApp.Expertos.ExpertoZE;
 using System;
@@ -45,7 +47,9 @@ namespace LumbApp.GUI
         private BrushConverter brushConverter { get; set; }
         private Brush white { get; set; }
         private Brush black { get; set; }
-        private Brush green { get; set; }
+        private Brush lightred { get; set; }
+        private Brush lightyellow { get; set; }
+        private Brush lightgreen { get; set; }
         private Brush darkred { get; set; }
 
         public SimulacionModoGuiado(GUIController gui)
@@ -68,8 +72,10 @@ namespace LumbApp.GUI
             brushConverter = new BrushConverter();
             white = (Brush)brushConverter.ConvertFrom("#ffffff");
             black = (Brush)brushConverter.ConvertFrom("#323232");
-            green = (Brush)brushConverter.ConvertFrom("#a7f192");
+            lightgreen= (Brush)brushConverter.ConvertFrom("#a7f192");
             darkred = (Brush)brushConverter.ConvertFrom("#bc100c");
+            lightred = (Brush)brushConverter.ConvertFrom("#ff6161");
+            lightyellow = (Brush)brushConverter.ConvertFrom("#ecf192");
             string[] colores = { "#dcf192", "#f1ef92", "#f1d792", "#f1b392", "#f19292", "#f3817e", "#ff6161" };
             coloresContaminando = new Brush[colores.Count()];
             for (int i = 0; i < colores.Count(); i++)
@@ -114,7 +120,6 @@ namespace LumbApp.GUI
             if (e.ContaminadoAhora)
                 SystemSounds.Exclamation.Play();
 
-            SalidasZELabel.Content = String.Format("Se contamino la Zona Estéril {0} Veces", e.VecesContaminado);
         }
 
         public ManosImageConfig GetNuevaConfiguracionImagenMano(Mano.Tracking track, Mano.Estados estado, int nroIngreso)
@@ -135,7 +140,7 @@ namespace LumbApp.GUI
                     break;
                 case Mano.Estados.Trabajando:
                     config.EstadoPath = _manoDentroPath;
-                    config.LabelColor = green;
+                    config.LabelColor = lightgreen;
                     config.FontColor = black;
                     config.Texto = "Trabajando";
                     break;
@@ -173,9 +178,6 @@ namespace LumbApp.GUI
         {
             MostrarAlertas(e);
 
-            EntradasCapasLabel.Content = String.Format(
-                "{0} Tejido Adiposo" + Environment.NewLine + "{1} Duramadre", e.TejidoAdiposo.VecesAtravesada, e.Duramadre.VecesAtravesada);
-
             //ATRAVIESA LA PIEL
             if (e.TejidoAdiposo.Estado == Capa.Estados.Atravesando || e.TejidoAdiposo.Estado == Capa.Estados.AtravesandoNuevamente)
             {
@@ -188,12 +190,14 @@ namespace LumbApp.GUI
                 CapaActualLabel.Content = "NINGUNA";
             }
 
+            RozandoLabel.Content = "NINGUNA";
+            RozandoBackgroundLabel.Background = white;
             //ROZANDO L2
             if (e.L2.Estado == Vertebra.Estados.Rozando || e.L2.Estado == Vertebra.Estados.RozandoNuevamente)
             {
-                CapaActualLabel.Content = "LIGAMENTO INTERESPINOSO";
                 RozandoLabel.Content = "L2";
-                L2SideImage.Source = new BitmapImage(new Uri(_capasSidePath + "L2 adelante.png", UriKind.Absolute));
+                RozandoBackgroundLabel.Background = lightred;
+                L2SideImage.Source = new BitmapImage(new Uri(_capasSidePath + "L2 adelante.png", UriKind.Absolute)); 
                 L2SFrontImage.Source = new BitmapImage(new Uri(_capasFrontPath + "L2 adelante.png", UriKind.Absolute));
             }
             else
@@ -205,21 +209,14 @@ namespace LumbApp.GUI
             //ROZANDO L3
             if (e.L3.Estado == Vertebra.Estados.Rozando || e.L3.Estado == Vertebra.Estados.RozandoNuevamente)
             {
-                CapaActualLabel.Content = "LIGAMENTO INTERESPINOSO";
-                if ((e.L3.Sector == VertebraL3.Sectores.Abajo))
-                {
-                    RozandoLabel.Content = "Parte Inferior de L3";
-                    L3FrontImage.Source = new BitmapImage(new Uri(_capasFrontPath + "L3 abajo.png", UriKind.Absolute));
-                    L3SideImage.Source = new BitmapImage(new Uri(_capasSidePath + "L3 abajo.png", UriKind.Absolute));
-                }
-                else
-                {
-                    RozandoLabel.Content = "Parte Inferior de L3";
-                    L3FrontImage.Source = new BitmapImage(new Uri(_capasFrontPath + "L3 arriba.png", UriKind.Absolute));
-                    L3SideImage.Source = new BitmapImage(new Uri(_capasSidePath + "L3 arriba.png", UriKind.Absolute));
-                }
+                RozandoBackgroundLabel.Background = lightred;
+                RozandoLabel.Content = "L3";
+                L3FrontImage.Source = new BitmapImage(new Uri(_capasFrontPath + 
+                    BaseEnumManager<VertebraL3.Sectores>.GetDisplayName(e.L3.Sector) + ".png", UriKind.Absolute));
+                L3SideImage.Source = new BitmapImage(new Uri(_capasSidePath + 
+                    BaseEnumManager<VertebraL3.Sectores>.GetDisplayName(e.L3.Sector) + ".png", UriKind.Absolute));
             }
-            else
+            else 
             {
                 L3FrontImage.Source = null;
                 L3SideImage.Source = null;
@@ -228,30 +225,20 @@ namespace LumbApp.GUI
             //ROZANDO L4
             if (e.L4.Estado == Vertebra.Estados.Rozando || e.L4.Estado == Vertebra.Estados.RozandoNuevamente)
             {
-                CapaActualLabel.Content = "LIGAMENTO INTERESPINOSO";
+                L4SideImage.Source = new BitmapImage(new Uri(_capasSidePath +
+                    BaseEnumManager<VertebraL3.Sectores>.GetDisplayName(e.L4.Sector) + ".png", UriKind.Absolute));
+                L4FrontImage.Source = new BitmapImage(new Uri(_capasFrontPath +
+                    BaseEnumManager<VertebraL3.Sectores>.GetDisplayName(e.L4.Sector) + ".png", UriKind.Absolute));
+                RozandoLabel.Content = "L4";
 
-                switch (e.L4.Sector)
+                if (e.L4.Sector == VertebraL4.Sectores.ArribaCentro)
+                    RozandoBackgroundLabel.Background = lightgreen;
+                else
                 {
-                    case VertebraL4.Sectores.Abajo:
-                        RozandoLabel.Content = "Parte Inferior de L4";
-                        L4SideImage.Source = new BitmapImage(new Uri(_capasSidePath + "L4 abajo.png", UriKind.Absolute));
-                        L4FrontImage.Source = new BitmapImage(new Uri(_capasFrontPath + "L4 abajo.png", UriKind.Absolute));
-                        break;
-                    case VertebraL4.Sectores.ArribaIzquierda:
-                        RozandoLabel.Content = "Parte Arriba Izquierda de L4";
-                        L4SideImage.Source = new BitmapImage(new Uri(_capasSidePath + "L4 arriba izquierda.png", UriKind.Absolute));
-                        L4FrontImage.Source = new BitmapImage(new Uri(_capasFrontPath + "L4 arriba izquierda.png", UriKind.Absolute));
-                        break;
-                    case VertebraL4.Sectores.ArribaCentro:
-                        RozandoLabel.Content = "Parte Arriba Centro de L4";
-                        L4SideImage.Source = new BitmapImage(new Uri(_capasSidePath + "L4 arriba centro.png", UriKind.Absolute));
-                        L4FrontImage.Source = new BitmapImage(new Uri(_capasFrontPath + "L4 arriba centro.png", UriKind.Absolute));
-                        break;
-                    case VertebraL4.Sectores.ArribaDerecha:
-                        RozandoLabel.Content = "Parte Arriba Derecha de L4";
-                        L4SideImage.Source = new BitmapImage(new Uri(_capasSidePath + "L4 arriba derecha.png", UriKind.Absolute));
-                        L4FrontImage.Source = new BitmapImage(new Uri(_capasFrontPath + "L4 arriba derecha.png", UriKind.Absolute));
-                        break;
+                    if (e.L4.Sector == VertebraL4.Sectores.Abajo)
+                        RozandoBackgroundLabel.Background = lightred;
+                    else
+                        RozandoBackgroundLabel.Background = lightyellow;
                 }
             }
             else
@@ -263,16 +250,22 @@ namespace LumbApp.GUI
             //ROZANDO L5
             if (e.L5.Estado == Vertebra.Estados.Rozando || e.L5.Estado == Vertebra.Estados.RozandoNuevamente)
             {
-                CapaActualLabel.Content = "LIGAMENTO INTERESPINOSO";
                 RozandoLabel.Content = "L5";
+                RozandoBackgroundLabel.Background = lightred;
                 L5SideImage.Source = new BitmapImage(new Uri(_capasSidePath + "L5 adelante.png", UriKind.Absolute));
                 L5FrontImage.Source = new BitmapImage(new Uri(_capasFrontPath + "L5 adelante.png", UriKind.Absolute));
+            }
+            else
+            {
+                L5SideImage.Source = null;
+                L5FrontImage.Source = null;
             }
 
             //ATRAVIESA LA DURAMADRE
             if (e.Duramadre.Estado == Capa.Estados.Atravesando || e.Duramadre.Estado == Capa.Estados.AtravesandoNuevamente)
             {
                 CapaActualLabel.Content = "DURAMADRE";
+                RozandoBackgroundLabel.Background = white;
                 DuramadreSideImage.Source = new BitmapImage(new Uri(_capasSidePath + "duramadre.png", UriKind.Absolute));
                 DuramadreFrontImage.Source = new BitmapImage(new Uri(_capasFrontPath + "duramadre.png", UriKind.Absolute));
             }
@@ -289,55 +282,22 @@ namespace LumbApp.GUI
                (e.L4RozandoAhora && e.L4.Sector == VertebraL4.Sectores.Abajo) ||
                 e.L2RozandoAhora || e.L5RozandoAhora)
             {
-                AlertaLabel.Content = "Hey!! mira donde estas pinchando!";
-                AlertaLabelBorder.Opacity = 0.7;
                 SystemSounds.Exclamation.Play();
-                StartAlertTimer();
             }
             else if (e.L4RozandoAhora &&
                 e.L4.Sector != VertebraL4.Sectores.Abajo &&
                 e.L4.Sector != VertebraL4.Sectores.ArribaCentro)
             {
-                AlertaLabel.Content = "Casi casi!";
-                AlertaLabelBorder.Opacity = 0.7;
-                SystemSounds.Exclamation.Play();
-                StartAlertTimer();
+               SystemSounds.Exclamation.Play();
             }
 
         }
 
-        private void StartAlertTimer()
-        {
-            timeLeft = 5;
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += alertTimerTick;
-            timer.Start();
-        }
-
-        private void StopAlertTimer()
-        {
-            AlertaLabel.Content = "";
-            AlertaLabelBorder.Opacity = 0;
-            timer.Stop();
-        }
-
-        private void alertTimerTick(object sender, EventArgs e)
-        {
-            if (timeLeft > 0)
-                timeLeft -= 1;
-            else
-            {
-                StopAlertTimer();
-            }
-        }
         #endregion
 
         #region Finalizar Simulacion
         private void FinalizarSimulacion_Click(object sender, RoutedEventArgs e)
         {
-            if (timer != null)
-                StopAlertTimer();
             _controller.FinalizarSimulacion();
         }
 

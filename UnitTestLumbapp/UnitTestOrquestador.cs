@@ -249,24 +249,24 @@ namespace UnitTestLumbapp
             Assert.AreEqual(dp.Apellido, informe.Apellido);
             Assert.AreEqual(dp.FolderPath, informe.FolderPath);
 
-            Assert.AreEqual(informeZE.ManoDerecha.ToString(), informe.DatosPractica["Contaminaciones Mano Derecha"]);
-            Assert.AreEqual(informeZE.ManoIzquierda.ToString(), informe.DatosPractica["Contaminaciones Mano Izquierda"]);
-            Assert.AreEqual(informeZE.Zona.ToString(), informe.DatosPractica["Contaminaciones Zona"]);
+            Assert.AreEqual(informeZE.ManoDerecha.ToString(), informe.DatosPractica["Contaminaciones por mano derecha"]);
+            Assert.AreEqual(informeZE.ManoIzquierda.ToString(), informe.DatosPractica["Contaminaciones por mano izquierda"]);
+            Assert.AreEqual(informeZE.Zona.ToString(), informe.DatosPractica["Contaminaciones totales"]);
 
-            Assert.AreEqual(informeSI.TejidoAdiposo.ToString(), informe.DatosPractica["Punciones Tejido Adiposo"]);
+            Assert.AreEqual(informeSI.TejidoAdiposo.ToString(), informe.DatosPractica["Punciones tejido adiposo"]);
             Assert.AreEqual(informeSI.L5.ToString(), informe.DatosPractica["Roces L5"]);
-            Assert.AreEqual(informeSI.L4ArribaIzquierda.ToString(), informe.DatosPractica["Roces L4 Arriba Izquierda"]);
-            Assert.AreEqual(informeSI.L4ArribaDerecha.ToString(), informe.DatosPractica["Roces L4 Arriba Derecha"]);
-            Assert.AreEqual(informeSI.L4ArribaCentro.ToString(), informe.DatosPractica["Roces L4 Arriba Centro"]);
-            Assert.AreEqual(informeSI.L4Abajo.ToString(), informe.DatosPractica["Roces L4 Abajo"]);
-            Assert.AreEqual(informeSI.L3Arriba.ToString(), informe.DatosPractica["Roces L3 Arriba"]);
-            Assert.AreEqual(informeSI.L3Abajo.ToString(), informe.DatosPractica["Roces L3 Abajo"]);
+            Assert.AreEqual(informeSI.L4ArribaIzquierda.ToString(), informe.DatosPractica["Roces L4 arriba izquierda"]);
+            Assert.AreEqual(informeSI.L4ArribaDerecha.ToString(), informe.DatosPractica["Roces L4 arriba derecha"]);
+            Assert.AreEqual(informeSI.L4ArribaCentro.ToString(), informe.DatosPractica["Roces L4 arriba centro"]);
+            Assert.AreEqual(informeSI.L4Abajo.ToString(), informe.DatosPractica["Roces L4 abajo"]);
+            Assert.AreEqual(informeSI.L3Arriba.ToString(), informe.DatosPractica["Roces L3 arriba"]);
+            Assert.AreEqual(informeSI.L3Abajo.ToString(), informe.DatosPractica["Roces L3 abajo"]);
             Assert.AreEqual(informeSI.L2.ToString(), informe.DatosPractica["Roces L2"]);
-            Assert.AreEqual(informeSI.Duramadre.ToString(), informe.DatosPractica["Punciones Duramadre"]);
-            Assert.AreEqual(informeSI.CaminoIncorrecto.ToString(), informe.DatosPractica["Camino Incorrecto"]);
-            Assert.AreEqual(informeSI.CaminoCorrecto.ToString(), informe.DatosPractica["Camino Correcto"]);
+            Assert.AreEqual(informeSI.Duramadre.ToString(), informe.DatosPractica["Punciones duramadre"]);
+            Assert.AreEqual(informeSI.CaminoIncorrecto.ToString(), informe.DatosPractica["Caminos incorrectos"]);
+            Assert.AreEqual(informeSI.CaminoCorrecto.ToString(), informe.DatosPractica["Caminos correctos"]);
 
-            Assert.AreNotEqual(TimeSpan.Zero.ToString(), informe.DatosPractica["Tiempo Total"]);
+            Assert.AreNotEqual(TimeSpan.Zero.ToString(), informe.DatosPractica["Tiempo total"]);
             Assert.IsTrue(informe.PdfGenerado);
         }
 

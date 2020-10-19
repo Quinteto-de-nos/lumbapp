@@ -155,10 +155,9 @@ namespace LumbApp.Orquestador
             informeFinal.SetPdfGenerado(_ffb.GenerarPDF());
             informeZE.Video.Save();
 
-            IGUIController.MostrarResultados(informeFinal);
-
-            //Informar a GUI con informe con un evento, que pase si el informe se genero bien, y si se guardó  bien (bool, bool)
-        }
+			//Informar a GUI con informe con un evento, que pase si el informe se genero bien, y si se guardó  bien (bool, bool)
+			IGUIController.MostrarResultados(informeFinal);
+		}
 
         private string ObtenerRuta(DateTime tiempo)
         {
