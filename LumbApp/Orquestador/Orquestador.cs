@@ -52,12 +52,12 @@ namespace LumbApp.Orquestador
                 throw new Exception("Error al tratar de cargar el archivo de calibracion.");
             }
             var conectorKinect = new ConectorKinect();
-            expertoZE = new ExpertoZE(conectorKinect, calibracion);
-            //expertoZE = new ExpertoZEMock(true);
+            //expertoZE = new ExpertoZE(conectorKinect, calibracion);
+            expertoZE = new ExpertoZEMock(true);
 
             var conectorSI = new ConectorSI();
-            expertoSI = new ExpertoSI(conectorSI);
-            //expertoSI = new ExpertoSIMock(true);
+            //expertoSI = new ExpertoSI(conectorSI);
+            expertoSI = new ExpertoSIMock(true);
         }
 
         public void SetDatosDeSimulacion(DatosPracticante datosPracticante, ModoSimulacion modo)

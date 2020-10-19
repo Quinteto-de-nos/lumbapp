@@ -125,6 +125,11 @@ namespace LumbApp.GUI
             _ = _orquestador.TerminarSimulacion();
         }
 
+        public void Finalizar()
+        {
+            _orquestador.Finalizar();
+        }
+
         public void MostrarResultados(Informe informe)
         {
             ResultadosSimulacionPage.MostrarResultados(informe);
