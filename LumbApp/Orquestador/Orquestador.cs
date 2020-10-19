@@ -166,7 +166,7 @@ namespace LumbApp.Orquestador
         /// </summary>
         public async Task TerminarSimulacion()
         {
-            var task = Task<Informe>.Run(() =>
+            var task = Task.Run(() =>
             {
                 Console.WriteLine("Terminando simulacion...");
                 InformeZE informeZE = expertoZE.TerminarSimulacion();
