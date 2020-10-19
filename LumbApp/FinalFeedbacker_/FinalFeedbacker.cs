@@ -74,7 +74,7 @@ namespace LumbApp.FinalFeedbacker_ {
                 tblDatosAlumno.WidthPercentage = 100;
                 tblDatosAlumno.DefaultCell.Border = Rectangle.NO_BORDER;
                 tblDatosAlumno.DefaultCell.HorizontalAlignment = Element.ALIGN_LEFT;
-                tblDatosAlumno.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                //tblDatosAlumno.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
                 tblDatosAlumno.DefaultCell.MinimumHeight = 50f;
                 tblDatosAlumno.SpacingBefore = 10f;
                 tblDatosAlumno.SpacingAfter = 10f;
@@ -83,7 +83,7 @@ namespace LumbApp.FinalFeedbacker_ {
                 // Configuramos el título de las columnas de la tabla
                 PdfPCell columna1 = new PdfPCell(new Phrase("Nombre del\nalumno", _fuenteCaractAlumno));
                 columna1.Border = Rectangle.NO_BORDER;
-                columna1.BorderWidthBottom = 0.75f;
+                //columna1.BorderWidthBottom = 0.75f;
                 columna1.BorderWidthTop = 0.75f;
                 columna1.VerticalAlignment = Element.ALIGN_MIDDLE;
                 tblDatosAlumno.AddCell(columna1);
@@ -91,7 +91,7 @@ namespace LumbApp.FinalFeedbacker_ {
                 PdfPCell columna2 = new PdfPCell(new Phrase((_datosPracticante.Nombre + " " + _datosPracticante.Apellido),
                     _fuenteEstandar));
                 columna2.Border = Rectangle.NO_BORDER;
-                columna2.BorderWidthBottom = 0.75f;
+                //columna2.BorderWidthBottom = 0.75f;
                 columna2.BorderWidthTop = 0.75f;
                 columna2.VerticalAlignment = Element.ALIGN_MIDDLE;
                 tblDatosAlumno.AddCell(columna2);
@@ -99,14 +99,14 @@ namespace LumbApp.FinalFeedbacker_ {
                 #region DNI
                 PdfPCell columna3 = new PdfPCell(new Phrase("DNI del alumno", _fuenteCaractAlumno));
                 columna3.Border = Rectangle.NO_BORDER;
-                columna3.BorderWidthBottom = 0.75f;
+                //columna3.BorderWidthBottom = 0.75f;
                 columna3.BorderWidthTop = 0.75f;
                 columna3.VerticalAlignment = Element.ALIGN_MIDDLE;
                 tblDatosAlumno.AddCell(columna3);
 
                 PdfPCell columna4 = new PdfPCell(new Phrase(_datosPracticante.Dni.ToString(), _fuenteEstandar));
                 columna4.Border = Rectangle.NO_BORDER;
-                columna4.BorderWidthBottom = 0.75f;
+                //columna4.BorderWidthBottom = 0.75f;
                 columna4.BorderWidthTop = 0.75f;
                 columna4.VerticalAlignment = Element.ALIGN_MIDDLE;
                 tblDatosAlumno.AddCell(columna4);
