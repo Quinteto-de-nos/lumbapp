@@ -9,6 +9,6 @@
         WindowStartupLocation="CenterScreen" WindowState="Maximized"
         Source="SensorsCheck.xaml"
         ShowsNavigationUI="False"
-        Loaded="Window_Loaded">
+        Loaded="Window_Loaded" Closed="MainWindow_Closed">
     <!--WindowStyle="None" ResizeMode="NoResize"-->
 </NavigationWindow>
