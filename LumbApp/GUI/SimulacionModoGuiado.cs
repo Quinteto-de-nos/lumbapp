@@ -95,15 +95,33 @@ namespace LumbApp.GUI
         }
 
         #region Cambios en Manos
+        /// <summary>
+        /// Muestra los cambios de la zona esteril por pantalla.
+        /// Se puede llamar desde cualquier thread. Esta funcion se encarga de despacharlo 
+        /// al thread principal donde se ejecuta la GUI
+        /// </summary>
+        /// <param name="e"></param>
         public void MostrarCambioZE(CambioZEEventArgs e)
         {
-            this.cambiosZE = e;
+            //Guardo los datos para poder agarrarlos desde el main thread
+            //Si se esta usando, espero a que se libere antes de sobrescribirlo
+            lock (this.cambiosZE)
+            {
+                this.cambiosZE = e;
+            }
             this.Dispatcher.Invoke(handlerZE);
         }
         private void handlerZE()
         {
+            //Levanto los datos que guardo el otro thread y los copio para poder liberarlo rapido
+            //Si se esta usando, espero a que se libere
+            CambioZEEventArgs e;
+            lock (this.cambiosZE)
+            {
+                e = this.cambiosZE.Shallowcopy();
+            }
+
             //ManoIzquierda
-            var e = cambiosZE;
             ManosImageConfig config = GetNuevaConfiguracionImagenMano(e.ManoIzquierda.Track, e.ManoIzquierda.Estado, e.ManoIzquierda.VecesContamino);
 
             ImageSource nuevaImagen = new BitmapImage(
