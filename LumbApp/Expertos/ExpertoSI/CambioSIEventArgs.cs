@@ -71,6 +71,16 @@ namespace LumbApp.Expertos.ExpertoSI
             this.CaminoIncorrecto = CaminoIncorrecto;
         }
 
+        public CambioSIEventArgs()
+        {
+            this.TejidoAdiposo = new Capa();
+            this.L2 = new Vertebra();
+            this.L3 = new VertebraL3();
+            this.L4 = new VertebraL4();
+            this.L5 = new Vertebra();
+            this.Duramadre = new Capa();
+        }
+
         public void MostrarCambios()
         {
             Console.WriteLine("Tejido Adiposo:  Estado: " + TejidoAdiposo.Estado + "    Veces Atravesada: " + TejidoAdiposo.VecesAtravesada);

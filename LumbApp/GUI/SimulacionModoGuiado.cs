@@ -23,8 +23,6 @@ namespace LumbApp.GUI
         public GUIController _controller { get; set; }
 
         //para alertas
-        private DispatcherTimer timer;
-        int timeLeft { get; set; }
         private CambioSIEventArgs cambiosSI;
         private CambioZEEventArgs cambiosZE;
 
@@ -91,7 +89,10 @@ namespace LumbApp.GUI
             ManoDerLabel.Background = colorLabel;
             ManoDerLabel.Content = "Inicial";
 
+            //Inicializo otros objetos
             _controller = gui;
+            cambiosSI = new CambioSIEventArgs();
+            cambiosZE = new CambioZEEventArgs();
         }
 
         #region Cambios en Manos

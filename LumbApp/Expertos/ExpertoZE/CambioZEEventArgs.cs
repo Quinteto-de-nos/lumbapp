@@ -27,6 +27,12 @@ namespace LumbApp.Expertos.ExpertoZE
             ManoIzquierda = izquierda;
         }
 
+        public CambioZEEventArgs()
+        {
+            ManoDerecha = new Mano();
+            ManoIzquierda = new Mano();
+        }
+
         //Clona el objeto con todos sus datos
         public CambioZEEventArgs Shallowcopy()
         {
