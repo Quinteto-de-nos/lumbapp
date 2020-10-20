@@ -66,13 +66,19 @@ namespace KinectCoordinateMapping
             leftHand = notTrackedJointBrush;
             rightHand = notTrackedJointBrush;
 
-            conn = new ConectorKinect();
-            expert = new ExpertoZE(conn);
-            // expert.CambioZE += CambioZE; //No hace falta para la calibracion
-            expert.Inicializar();
+            try
+            {
+                conn = new ConectorKinect();
+                expert = new ExpertoZE(conn);
+                expert.Inicializar();
 
-            conn.SubscribeFramesReady(Sensor_AllFramesReady);
-            //expert.IniciarSimulacion();
+                conn.SubscribeFramesReady(Sensor_AllFramesReady);
+            }
+            catch (Exception except)
+            {
+                Console.WriteLine("No me pude conectar a la Kinect. Error: " + except.Message);
+            }
+
         }
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)

@@ -34,7 +34,7 @@ namespace LumbApp.Expertos.ExpertoZE
         public ZonaEsteril(Calibracion cal)
         {
             if (cal == null || cal.zonaEsteril == null || cal.zonaEsteril.Length < 8)
-                throw new Exception("Datos de calibracion mal formados.");
+                throw new Exception("Los datos de calibracion se encuentran mal formados. Por favor, recalibre el sistema.");
             this.cal = cal;
         }
 

@@ -53,17 +53,10 @@ namespace LumbApp.Conectores.ConectorFS
         public T LevantarArchivoDeTextoComoObjeto<T>(string path)
         {
             Console.WriteLine("FS: Levantando archivo de: " + path);
-            try
-            {
-                String jsonStringToRead = _fileSystem.File.ReadAllText(path);
-                Console.WriteLine("FS: Archivo levantado correctamente: " + jsonStringToRead);
-                return JsonSerializer.Deserialize<T>(jsonStringToRead);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("FS: Exception: " + e.Message);
-                return default;
-            }
+
+            string jsonStringToRead = _fileSystem.File.ReadAllText(path);
+            Console.WriteLine("FS: Archivo levantado correctamente: " + jsonStringToRead);
+            return JsonSerializer.Deserialize<T>(jsonStringToRead);
         }
     }
 }

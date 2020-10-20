@@ -15,21 +15,24 @@ namespace LumbApp.Orquestador
 {
     public class Orquestador : IOrquestador
     {
+        #region Variables
         public IGUIController IGUIController { get; set; }
+        public bool inicializacionOk = false;
 
         private IExpertoZE expertoZE;
+        private IConectorKinect conectorKinect;
         private IExpertoSI expertoSI;
+        private IConectorSI conectorArduino;
+        private IFinalFeedbacker _ffb;
+        private IConectorFS fileSystem;
+        private string ruta;
 
         private DatosPracticante datosPracticante;
         private ModoSimulacion modoSeleccionado;
 
         private DateTime tiempoInicialDeEjecucion;
         private TimeSpan tiempoTotalDeEjecucion;
-
-        private IFinalFeedbacker _ffb;
-        private string ruta;
-
-        public bool inicializacionOk = false;
+        #endregion
 
         /// <summary>
         /// Constructor del Orquestrador.
@@ -40,26 +43,21 @@ namespace LumbApp.Orquestador
             if (gui == null)
                 throw new Exception("Gui no puede ser null. Necesito un GUIController para crear un Orquestador.");
             IGUIController = gui;
-            Calibracion calibracion;
-            try
-            {
-                calibracion = conectorFS.LevantarArchivoDeTextoComoObjeto<Calibracion>("./zonaEsteril.json");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                //Acá debería haber un nuevo mensaje por pantalla que me permita quitar las app, esto es incluso antes de la inicialización, asíq ue no puedo reintentar.
-                throw new Exception("Error al tratar de cargar el archivo de calibracion.");
-            }
-            var conectorKinect = new ConectorKinect();
-            expertoZE = new ExpertoZE(conectorKinect, calibracion);
-            //expertoZE = new ExpertoZEMock(true);
 
-            var conectorSI = new ConectorSI();
-            expertoSI = new ExpertoSI(conectorSI);
-            //expertoSI = new ExpertoSIMock(true);
+            if (conectorFS == null)
+                throw new Exception("ConectorFS no puede ser null. Necesito un ConectorFS para crear un Orquestador.");
+            fileSystem = conectorFS;
+
+            conectorKinect = new ConectorKinect();
+            conectorArduino = new ConectorSI();
         }
 
+        #region ABM simulacion
+        /// <summary>
+        /// Lo llama GUI Controller cuando el usuario termina de ingresar sus datos
+        /// </summary>
+        /// <param name="datosPracticante"></param>
+        /// <param name="modo">Modo de simulacion</param>
         public void SetDatosDeSimulacion(DatosPracticante datosPracticante, ModoSimulacion modo)
         {
             this.datosPracticante = datosPracticante;
@@ -67,23 +65,49 @@ namespace LumbApp.Orquestador
         }
 
         /// <summary>
-        /// Inicializar: Se encarga de mandar a inicializar los expertos y pedir la pantalla de ingreso de datos.
-        /// - Si algun experto no pudo inicializar correctamente, envía a la GUI un mensaje de error.
-        /// - Sucede al abrir la aplicación. La GUI muestra un gif "checkeando sensores" y nos manda a inicializar.
+        /// Manda a inicializar los expertos y pide la pantalla de ingreso de datos.
+        /// Si algun experto no pudo inicializar correctamente, envía a la GUI un mensaje de error.
+        /// Lo llama la GUI mientras muestra "checkeando sensores" al iniciar la app
         /// </summary>
         /// <returns></returns>
-        public async Task Inicializar () {
+        public async Task Inicializar()
+        {
             Console.WriteLine("Inicializando...");
-            try {
-                //INICIALIZAR EXPERTO ZE
-                expertoZE.CambioZE += CambioZE; //suscripción al evento CambioZE
-                if (!expertoZE.Inicializar())
-                    throw new Exception("No se pudo detectar correctamente la kinect.");
 
-                //INICIALIZAR EXPERTO SI
-                expertoSI.CambioSI += CambioSI; //suscripción al evento CambioSI
-                if (!expertoSI.Inicializar())
-                    throw new Exception("No se pudieron detectar correctamente los sensores internos.");
+            try
+            {
+                await Task.Run(() =>
+                {
+                    #region Inicializar ZE
+                    Calibracion calibracion;
+                    try
+                    {
+                        calibracion = fileSystem.LevantarArchivoDeTextoComoObjeto<Calibracion>("./zonaEsteril.json");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        //Mejoro el mensaje para el usuario
+                        throw new Exception("Error al tratar de cargar el archivo de calibracion. Por favor, calibre el sistema antes de usarlo.");
+                    }
+
+                    expertoZE = new ExpertoZE(conectorKinect, calibracion);
+                    //expertoZE = new ExpertoZEMock(true);
+
+                    expertoZE.CambioZE += CambioZE; //suscripción al evento CambioZE
+                    if (!expertoZE.Inicializar())
+                        throw new Exception("No se pudo detectar correctamente la kinect. Asegúrese de que esté conectada e intente nuevamente.");
+                    #endregion
+
+                    #region Inicializar SI
+                    expertoSI = new ExpertoSI(conectorArduino);
+                    //expertoSI = new ExpertoSIMock(true);
+
+                    expertoSI.CambioSI += CambioSI; //suscripción al evento CambioSI
+                    if (!expertoSI.Inicializar())
+                        throw new Exception("No se pudieron detectar correctamente los sensores internos. Asegúrese de que el simulador esté conectado e intente nuevamente");
+                    #endregion
+                });
 
                 //Mostrar pantalla de ingreso de datos, le mandamos el path por default donde se guarda la practica
                 var datos = new DatosPracticante()
@@ -93,11 +117,12 @@ namespace LumbApp.Orquestador
 
                 inicializacionOk = true;
                 IGUIController.SolicitarDatosPracticante(datos);
-
-            } catch (Exception ex) {
-                expertoZE.CambioZE -= CambioZE;
-                if (ex.Message.Contains("sensores"))
-                    expertoSI.CambioSI -= CambioSI;
+            }
+            catch (Exception ex)
+            {
+                //Descarto lo que se habia creado. Cuando lo agarre el garbage collector, se desuscribe solo
+                expertoZE = null;
+                expertoSI = null;
 
                 Console.WriteLine("Error de inicializacion: " + ex);
                 inicializacionOk = false;
@@ -124,8 +149,13 @@ namespace LumbApp.Orquestador
                 IGUIController.IniciarSimulacionModoEvaluacion();
         }
 
-        public async Task NuevaSimulacion()
-        { //Funcion llamada por la GUI, devuelve void, respuesta por evento
+        /// <summary>
+        /// Lo llama GUI Controller cuando termino una simulacion y el usuario pide comenzar otra.
+        /// Redirige a la pantalla de ingreso de datos.
+        /// </summary>
+        /// <returns></returns>
+        public void NuevaSimulacion()
+        {
             IGUIController.SolicitarDatosPracticante(datosPracticante);
         }
 
@@ -135,30 +165,57 @@ namespace LumbApp.Orquestador
         /// - Si el informe general se genero y guardo bien, levanta un evento ue es atrapado por la GUI para decirle que todo salio bien.
         /// </summary>
         public async Task TerminarSimulacion()
-        { //Funcion llamada por la GUI, devuelve void, respuesta por evento
-            Console.WriteLine("Terminando simulacion...");
-            InformeZE informeZE = expertoZE.TerminarSimulacion();
-            InformeSI informeSI = expertoSI.TerminarSimulacion();
+        {
+            var task = Task.Run(() =>
+            {
+                Console.WriteLine("Terminando simulacion...");
+                InformeZE informeZE = expertoZE.TerminarSimulacion();
+                InformeSI informeSI = expertoSI.TerminarSimulacion();
 
-            DateTime tiempoFinal = DateTime.Now;
-            tiempoTotalDeEjecucion = tiempoFinal - tiempoInicialDeEjecucion;
+                DateTime tiempoFinal = DateTime.Now;
+                tiempoTotalDeEjecucion = tiempoFinal - tiempoInicialDeEjecucion;
 
-            Informe informeFinal = new Informe(
-                this.datosPracticante.Nombre,
-                this.datosPracticante.Apellido,
-                this.datosPracticante.Dni,
-                this.datosPracticante.FolderPath,
-                informeSI, informeZE, tiempoTotalDeEjecucion
-                );
+                Informe informeFinal = new Informe(
+                    this.datosPracticante.Nombre,
+                    this.datosPracticante.Apellido,
+                    this.datosPracticante.Dni,
+                    this.datosPracticante.FolderPath,
+                    informeSI, informeZE, tiempoTotalDeEjecucion
+                    );
 
-            _ffb = new FinalFeedbacker(ruta + ".pdf", datosPracticante, informeFinal.DatosPractica, tiempoFinal);
-            informeFinal.SetPdfGenerado(_ffb.GenerarPDF());
-            informeZE.Video.Save();
+                _ffb = new FinalFeedbacker(ruta + ".pdf", datosPracticante, informeFinal.DatosPractica, tiempoFinal);
+                informeFinal.SetPdfGenerado(_ffb.GenerarPDF());
+                informeZE.Video.Save();
+                return informeFinal;
+            });
 
-			//Informar a GUI con informe con un evento, que pase si el informe se genero bien, y si se guardó  bien (bool, bool)
-			IGUIController.MostrarResultados(informeFinal);
-		}
+            var informe = await task;
+            IGUIController.MostrarResultados(informe);
+        }
 
+        /// <summary>
+        /// Finalizar: Se encarga de mandar a finalizar los expertos.
+        /// - Si algun experto no pudo inicializar correctamente, lanza una excepción.
+        /// - Sucede al cerrar la aplicación.
+        /// </summary>
+        public void Finalizar()
+        {
+            Console.WriteLine("Finalizando...");
+            if (inicializacionOk)
+            {
+                expertoZE.Finalizar();
+                expertoSI.Finalizar();
+                inicializacionOk = false;
+            }
+        }
+        #endregion
+
+        #region Cosas de simulacion
+        /// <summary>
+        /// Crea la ruta donde guardar los datos de la practica a partir del tiempo de inicio y los datos del practicante.
+        /// </summary>
+        /// <param name="tiempo">Tiempo en que se inicia la simulacion, para incluir en el nombre de la carpeta</param>
+        /// <returns></returns>
         private string ObtenerRuta(DateTime tiempo)
         {
             string ruta = datosPracticante.FolderPath;
@@ -195,40 +252,47 @@ namespace LumbApp.Orquestador
                 IGUIController.MostrarCambioSI(datosDelEvento);
         }
 
+        /// <summary>
+        /// Responde a los eventos de cambio en la zona esteril. En modo guiado pasa el cambio
+        /// al front, en modo evaluacion lo ignora.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CambioZE(object sender, CambioZEEventArgs e)
         {
             //comunicar los cambios a la GUI levantando un evento
             if (modoSeleccionado == ModoSimulacion.ModoGuiado)
                 IGUIController.MostrarCambioZE(e);
         }
+        #endregion
 
-        public IExpertoSI GetExpertoSI()
-        {
-            return expertoSI;
-        }
+        #region Metodos de test
+        /// <summary>
+        /// Funcion de test para mockear el experto SI
+        /// </summary>
+        /// <param name="exp"></param>
         public void SetExpertoSI(IExpertoSI exp)
         {
             this.expertoSI = exp;
         }
 
+        /// <summary>
+        /// Funcion de test para mockear el experto ZE
+        /// </summary>
+        /// <param name="exp"></param>
         public void SetExpertoZE(IExpertoZE exp)
         {
             this.expertoZE = exp;
         }
 
-        /// <summary>
-        /// Finalizar: Se encarga de mandar a finalizar los expertos.
-        /// - Si algun experto no pudo inicializar correctamente, lanza una excepción.
-        /// - Sucede al cerrar la aplicación.
-        /// </summary>
-        public void Finalizar ()
+        public void SetConectorZE(IConectorKinect con)
         {
-            Console.WriteLine("Finalizando...");
-            if (inicializacionOk) {
-                expertoZE.Finalizar();
-                expertoSI.Finalizar();
-                inicializacionOk = false;
-            }
+            this.conectorKinect = con;
         }
+        public void SetConectorSI(IConectorSI con)
+        {
+            this.conectorArduino = con;
+        }
+        #endregion
     }
 }

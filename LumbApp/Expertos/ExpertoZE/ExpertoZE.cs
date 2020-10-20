@@ -39,6 +39,7 @@ namespace LumbApp.Expertos.ExpertoZE
             this.kinect = kinect;
 
             zonaEsteril = new ZonaEsteril(calibracion); //Puede tirar una excepcion si calibracion esta mal formado
+            Console.WriteLine("ZE: Experto creado");
         }
 
         #region Exclusivo de calibracion
