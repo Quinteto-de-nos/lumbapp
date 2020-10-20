@@ -109,6 +109,8 @@ namespace LumbApp.GUI
             {
                 this.cambiosZE = e;
             }
+
+            //Delego al main thread
             this.Dispatcher.Invoke(handlerZE);
         }
         private void handlerZE()
@@ -192,18 +194,41 @@ namespace LumbApp.GUI
         #endregion
 
         #region Cambio en Vertebras
+        /// <summary>
+        /// Muestra los cambios de los sensores internos por pantalla.
+        /// Se puede llamar desde cualquier thread. Esta funcion se encarga de despacharlo 
+        /// al thread principal donde se ejecuta la GUI
+        /// </summary>
+        /// <param name="datos"></param>
         public void MostrarCambioSI(CambioSIEventArgs datos)
         {
+            //Muestro datos por consola
             datos.MostrarCambios();
-            cambiosSI = datos;
+
+            //Guardo los datos para poder agarrarlos desde el main thread
+            //Si se esta usando, espero a que se libere antes de sobrescribirlo
+            lock (this.cambiosSI)
+            {
+                this.cambiosSI = datos;
+            }
+
+            //Delego al main thread
             this.Dispatcher.Invoke(handlerSI);
         }
         private void handlerSI()
         {
-            MostrarAlertas(cambiosSI);
+            //Levanto los datos que guardo el otro thread y los copio para poder liberarlo rapido
+            //Si se esta usando, espero a que se libere
+            CambioSIEventArgs e;
+            lock (this.cambiosSI)
+            {
+                e = this.cambiosSI.Shallowcopy();
+            }
+
+            MostrarAlertas(e);
 
             //ATRAVIESA LA PIEL
-            if (cambiosSI.TejidoAdiposo.Estado == Capa.Estados.Atravesando || cambiosSI.TejidoAdiposo.Estado == Capa.Estados.AtravesandoNuevamente)
+            if (e.TejidoAdiposo.Estado == Capa.Estados.Atravesando || e.TejidoAdiposo.Estado == Capa.Estados.AtravesandoNuevamente)
             {
                 PielSideImage.Source = new BitmapImage(new Uri(_capasSidePath + "piel_ON.png", UriKind.Absolute));
                 CapaActualLabel.Content = "TEJIDO ADIPOSO";
@@ -217,7 +242,7 @@ namespace LumbApp.GUI
             RozandoLabel.Content = "NINGUNA";
             RozandoBackgroundLabel.Background = white;
             //ROZANDO L2
-            if (cambiosSI.L2.Estado == Vertebra.Estados.Rozando || cambiosSI.L2.Estado == Vertebra.Estados.RozandoNuevamente)
+            if (e.L2.Estado == Vertebra.Estados.Rozando || e.L2.Estado == Vertebra.Estados.RozandoNuevamente)
             {
                 RozandoLabel.Content = "L2";
                 RozandoBackgroundLabel.Background = lightred;
@@ -231,14 +256,14 @@ namespace LumbApp.GUI
             }
 
             //ROZANDO L3
-            if (cambiosSI.L3.Estado == Vertebra.Estados.Rozando || cambiosSI.L3.Estado == Vertebra.Estados.RozandoNuevamente)
+            if (e.L3.Estado == Vertebra.Estados.Rozando || e.L3.Estado == Vertebra.Estados.RozandoNuevamente)
             {
                 RozandoBackgroundLabel.Background = lightred;
                 RozandoLabel.Content = "L3";
                 L3FrontImage.Source = new BitmapImage(new Uri(_capasFrontPath +
-                    BaseEnumManager<VertebraL3.Sectores>.GetDisplayName(cambiosSI.L3.Sector) + ".png", UriKind.Absolute));
+                    BaseEnumManager<VertebraL3.Sectores>.GetDisplayName(e.L3.Sector) + ".png", UriKind.Absolute));
                 L3SideImage.Source = new BitmapImage(new Uri(_capasSidePath +
-                    BaseEnumManager<VertebraL3.Sectores>.GetDisplayName(cambiosSI.L3.Sector) + ".png", UriKind.Absolute));
+                    BaseEnumManager<VertebraL3.Sectores>.GetDisplayName(e.L3.Sector) + ".png", UriKind.Absolute));
             }
             else
             {
@@ -247,19 +272,19 @@ namespace LumbApp.GUI
             }
 
             //ROZANDO L4
-            if (cambiosSI.L4.Estado == Vertebra.Estados.Rozando || cambiosSI.L4.Estado == Vertebra.Estados.RozandoNuevamente)
+            if (e.L4.Estado == Vertebra.Estados.Rozando || e.L4.Estado == Vertebra.Estados.RozandoNuevamente)
             {
                 L4SideImage.Source = new BitmapImage(new Uri(_capasSidePath +
-                    BaseEnumManager<VertebraL3.Sectores>.GetDisplayName(cambiosSI.L4.Sector) + ".png", UriKind.Absolute));
+                    BaseEnumManager<VertebraL3.Sectores>.GetDisplayName(e.L4.Sector) + ".png", UriKind.Absolute));
                 L4FrontImage.Source = new BitmapImage(new Uri(_capasFrontPath +
-                    BaseEnumManager<VertebraL3.Sectores>.GetDisplayName(cambiosSI.L4.Sector) + ".png", UriKind.Absolute));
+                    BaseEnumManager<VertebraL3.Sectores>.GetDisplayName(e.L4.Sector) + ".png", UriKind.Absolute));
                 RozandoLabel.Content = "L4";
 
-                if (cambiosSI.L4.Sector == VertebraL4.Sectores.ArribaCentro)
+                if (e.L4.Sector == VertebraL4.Sectores.ArribaCentro)
                     RozandoBackgroundLabel.Background = lightgreen;
                 else
                 {
-                    if (cambiosSI.L4.Sector == VertebraL4.Sectores.Abajo)
+                    if (e.L4.Sector == VertebraL4.Sectores.Abajo)
                         RozandoBackgroundLabel.Background = lightred;
                     else
                         RozandoBackgroundLabel.Background = lightyellow;
@@ -272,7 +297,7 @@ namespace LumbApp.GUI
             }
 
             //ROZANDO L5
-            if (cambiosSI.L5.Estado == Vertebra.Estados.Rozando || cambiosSI.L5.Estado == Vertebra.Estados.RozandoNuevamente)
+            if (e.L5.Estado == Vertebra.Estados.Rozando || e.L5.Estado == Vertebra.Estados.RozandoNuevamente)
             {
                 RozandoLabel.Content = "L5";
                 RozandoBackgroundLabel.Background = lightred;
@@ -286,7 +311,7 @@ namespace LumbApp.GUI
             }
 
             //ATRAVIESA LA DURAMADRE
-            if (cambiosSI.Duramadre.Estado == Capa.Estados.Atravesando || cambiosSI.Duramadre.Estado == Capa.Estados.AtravesandoNuevamente)
+            if (e.Duramadre.Estado == Capa.Estados.Atravesando || e.Duramadre.Estado == Capa.Estados.AtravesandoNuevamente)
             {
                 CapaActualLabel.Content = "DURAMADRE";
                 RozandoBackgroundLabel.Background = white;

@@ -80,5 +80,11 @@ namespace LumbApp.Expertos.ExpertoSI
             Console.WriteLine("L5:  Estado: " + L5.Estado + "    Veces Rozada: " + L5.VecesRozada);
             Console.WriteLine("Duramadre:  Estado: " + Duramadre.Estado + "    Veces: " + Duramadre.VecesAtravesada);
         }
+
+        //Clona el objeto con todos sus datos
+        public CambioSIEventArgs Shallowcopy()
+        {
+            return (CambioSIEventArgs)this.MemberwiseClone();
+        }
     }
 }
