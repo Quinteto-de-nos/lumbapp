@@ -74,7 +74,32 @@ namespace LumbApp.Conectores.ConectorSI
         }
 
         public void ActivarSensado() { sensando = true; }
-        public void Desconectar() { mySerialPort.Close(); }
+        public void Desconectar() {
+            
+            string datos;
+            try
+            {
+                for (int i = 0; i < 50; i++)
+                {
+
+                    mySerialPort.WriteLine("a");
+
+                    datos = mySerialPort.ReadTo("$");
+
+                    if (datos.Contains("88"))
+                    {
+                        break;
+                    }
+
+                }
+                
+            }
+            catch
+            {
+                Console.WriteLine("No se apagó el arduino");
+            }
+            mySerialPort.Close();
+        }
         public void PausarSensado() { sensando = false; }
 
         /// <summary>
