@@ -9,15 +9,21 @@ namespace LumbApp.GUI
     /// </summary>
     public partial class MainWindow : NavigationWindow
     {
+        GUIController _gui { get; set; }
         public MainWindow()
         {
             InitializeComponent();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
-        {      
-            GUIController gui = new GUIController(this);
-            gui.Inicializar();
+        {
+            _gui = new GUIController(this);
+            _gui.Inicializar();
+        }
+
+        void MainWindow_Closed(object sender, EventArgs e)
+        {
+            _gui.Finalizar();
         }
 
         [STAThread]

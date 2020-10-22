@@ -1,8 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using LumbApp.Expertos.ExpertoSI;
 using LumbApp.Conectores.ConectorFS;
 using Moq;
 using System.IO.Abstractions;
@@ -115,6 +112,7 @@ namespace UnitTestLumbapp.Conectores
         /// Test que verifica el levantado de un objeto cuando falla la deserialización o el levantado de archivo
         /// </summary>
         [TestMethod]
+        [ExpectedException(typeof(Exception))]
         public void TestLevantadoDeObjetoLanzaException()
         {
             Mock<IFileSystem> filesystem = new Mock<IFileSystem>();
@@ -125,7 +123,8 @@ namespace UnitTestLumbapp.Conectores
         }
     }
 
-    public class ExampleClass {
+    public class ExampleClass
+    {
         public int _intExample { get; set; }
         public String _stringExample { get; set; }
         public bool _boolExample { get; set; }

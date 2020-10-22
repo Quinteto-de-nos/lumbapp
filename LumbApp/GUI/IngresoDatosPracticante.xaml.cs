@@ -1,7 +1,6 @@
 ﻿using LumbApp.Enums;
 using LumbApp.Models;
 using System;
-using System.Net.Mail;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,27 +16,55 @@ namespace LumbApp.GUI
         public GUIController _controller { get; set; }
 
         public static DependencyProperty TextProperty = DependencyProperty.Register(
-            "Text", typeof(string), typeof(IngresoDatosPracticante), 
-            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+            "Text",
+            typeof(string),
+            typeof(IngresoDatosPracticante),
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault)
+        );
+
         public static DependencyProperty DescriptionProperty = DependencyProperty.Register(
-            "Description", typeof(string), typeof(IngresoDatosPracticante), new PropertyMetadata(null));
-        public string Text { get { return GetValue(TextProperty) as string; } set { SetValue(TextProperty, value); } }
-        public string Description { get { return GetValue(DescriptionProperty) as string; } set { SetValue(DescriptionProperty, value); } }
-        
-        private Regex regexApYN = new Regex("^[a-zA-ZñÑ ]*$");
-        private Regex regexMail = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+            "Description",
+            typeof(string),
+            typeof(IngresoDatosPracticante),
+            new PropertyMetadata(null)
+        );
+
+        public string Text
+        {
+            get { return GetValue(TextProperty) as string; }
+            set { SetValue(TextProperty, value); }
+        }
+
+        public string Description
+        {
+            get { return GetValue(DescriptionProperty) as string; }
+            set { SetValue(DescriptionProperty, value); }
+        }
+
+        private readonly Regex regexApYN = new Regex("^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]*$");
+        //@ escapa toda la string que sigue, no necesitamos \\ para escribir una \
+        //Este mail acepta letras, numeros, -, _ y . en el nombre
+        //Acepta letras, numeros, _ y . en el dominio
+        //Debe terminar con . y 2 o 3 letras
+        private readonly Regex regexMail = new Regex(@"^[\w\.\-]+@[\w\.]+\.\w{2,3}$");
         private bool dniValido;
         private bool nombreValido;
         private bool apellidoValido;
         private bool mailValido;
 
-        public IngresoDatosPracticante(GUIController guiController,string savefolderPath)
+        public IngresoDatosPracticante(GUIController guiController, DatosPracticante datosPrevios)
         {
             InitializeComponent();
             _controller = guiController;
             IniciarSimulacion.IsEnabled = false;
             mailValido = true;
-            FolderPath.Content = savefolderPath;
+
+            Nombre.Text = datosPrevios.Nombre;
+            Apellido.Text = datosPrevios.Apellido;
+            if(datosPrevios.Dni != 0)
+                Dni.Text = datosPrevios.Dni.ToString();
+            Mail.Text = datosPrevios.Email;
+            FolderPath.Content = datosPrevios.FolderPath;
         }
 
         /// <summary>
@@ -46,11 +73,14 @@ namespace LumbApp.GUI
         /// <returns></returns>
         public DatosPracticante ProcesarDatos()
         {
-            DatosPracticante datosPracticante = new DatosPracticante();
-            datosPracticante.Nombre = Nombre.Text;
-            datosPracticante.Apellido = Apellido.Text;
-            datosPracticante.Dni = Int32.Parse( Dni.Text );
-            datosPracticante.FolderPath = FolderPath.Content.ToString();
+            DatosPracticante datosPracticante = new DatosPracticante
+            {
+                Nombre = Nombre.Text,
+                Apellido = Apellido.Text,
+                Dni = Int32.Parse(Dni.Text),
+                FolderPath = FolderPath.Content.ToString(),
+                Email = Mail.Text
+            };
             return datosPracticante;
         }
 
@@ -90,11 +120,11 @@ namespace LumbApp.GUI
             const int min = 1000000;
             const int max = 999999999;
             string errMsg = "Ingrese un número válido entre " + min + " y " + max;
-            int dni=0;
+            int dni = 0;
 
             try
             {
-                if (((string)Dni.Text).Length > 0)
+                if (Dni.Text.Length > 0)
                     dni = Int32.Parse((String)Dni.Text);
             }
             catch
@@ -149,7 +179,7 @@ namespace LumbApp.GUI
 
         private void ValidarMail(object sender, TextChangedEventArgs e)
         {
-            if(Mail.Text.Length == 0 || (Mail.Text.Length > 0 && regexMail.IsMatch(Mail.Text)))
+            if (Mail.Text.Length == 0 || (Mail.Text.Length > 0 && regexMail.IsMatch(Mail.Text)))
             {
                 mailValido = true;
                 ErrorMail.Content = "";

@@ -8,32 +8,50 @@
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="1420"
       Title="LumbApp">
-
+    <Page.Resources>
+        <!--BUTTONS STYLE-->
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#009960"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#008252"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#8eeecb"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#005c3a"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
     <Grid Background="#e3efff">
         <Grid.RowDefinitions>
-            <RowDefinition Height="35*" />
-            <RowDefinition MinHeight="84"/>
-            <RowDefinition Height="25*" />
-            <RowDefinition Height="30*" />
-            <RowDefinition Height="30*" />
-            <RowDefinition Height="30*" />
-            <RowDefinition Height="30*" />
-            <RowDefinition Height="30*" />
-            <RowDefinition Height="30*" />
-            <RowDefinition Height="30*" />
-            <RowDefinition Height="30*" />
-            <RowDefinition Height="30*" />
-            <RowDefinition Height="25*"/>
-            <RowDefinition Height="30*"/>
-            <RowDefinition Height="35*"/>
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="70*" />
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="150*" />
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="10*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="80"/>
             <ColumnDefinition />
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="80"/>
         </Grid.ColumnDefinitions>
         <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                   Grid.RowSpan="24" Grid.ColumnSpan="3">
+                   Grid.RowSpan="24" Grid.ColumnSpan="5">
             <Rectangle.Fill>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1" >
                     <GradientStop Color="#009960" Offset="0" />
@@ -41,125 +59,84 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
+        <!--DATOS DEL PRACTICANTE-->
         <Border Grid.Column="1" Grid.Row="1"  
-                Grid.ColumnSpan="1" Grid.RowSpan="11"
+                Grid.ColumnSpan="2"
                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                 Background="White" Opacity="0.5"
-                
                 CornerRadius="40"/>
         <Label  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
-                VerticalAlignment="Bottom" HorizontalAlignment="Center" 
+                VerticalAlignment="Top" HorizontalAlignment="Center" 
                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                FontSize="28" FontWeight="Regular"  Foreground="Black"
-                >RESULTADOS DE SIMULACION</Label>
+                FontSize="26" FontWeight="DemiBold"  Foreground="Black"
+                Margin="0,15,0,0"
+                >Datos del practicante</Label>
+        <Label  Name="NombrePracticante"
+            Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                Margin="100,0,0,50"
+                FontSize="22" FontWeight="Regular"  Foreground="Black"
+                ></Label>
+        <Label  Name="DniPracticante"
+            Grid.Row="1" Grid.Column="2"
+                VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                Margin="100,0,0,70"
+                FontSize="22" FontWeight="Regular"  Foreground="Black"
+                ></Label>
         <!--RESULTADOS-->
-        <Label  Grid.Row="3" Grid.Column="1"
-                VerticalAlignment="Stretch" HorizontalAlignment="Left"
+        <Border Grid.Column="1" Grid.Row="3"  
+                Grid.ColumnSpan="2"
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                Background="White" Opacity="0.5"
+                CornerRadius="40"/>
+        <Label  Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
+                VerticalAlignment="Top" HorizontalAlignment="Center" 
                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                Margin="40,0,0,0"
-                FontSize="25" FontWeight="Regular"  Foreground="Black"
-                >Cantidad de contaminaciones de la zona estéril</Label>
-        <Label  Grid.Row="4" Grid.Column="1"
-                VerticalAlignment="Stretch" HorizontalAlignment="Left"
+                FontSize="26" FontWeight="DemiBold"  Foreground="Black"
+                Margin="0,20,0,0"
+                >Datos de la práctica</Label>
+        <!--RESULTADOS COLUMNA 1-->
+        <Label  Name="ReporteItemTitulo1"
+            Grid.Row="3" Grid.Column="1"
+                VerticalAlignment="Bottom" HorizontalAlignment="Left"
                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                Margin="40,0,0,0"
-                FontSize="25" FontWeight="Regular"  Foreground="Black"
-                >Cantidad de punciones en el tejido adiposo</Label>
-        <Label  Grid.Row="5" Grid.Column="1"
-                VerticalAlignment="Stretch" HorizontalAlignment="Left"
+                Margin="60,0,0,15"
+                FontSize="22" FontWeight="Regular"  Foreground="Black"
+                ></Label>
+        <Label  Name="ReporteItemValor1"
+                Grid.Row="3" Grid.Column="1"
+                VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                VerticalContentAlignment="Center" HorizontalContentAlignment="Right"
+                Margin="0,0,60,15"
+                FontSize="22" FontWeight="Regular"  Foreground="Black"
+                ></Label>
+        <!--RESULTADOS COLUMNA 2-->
+        <Label  Name="ReporteItemTitulo2"
+            Grid.Row="3" Grid.Column="2"
+                VerticalAlignment="Bottom" HorizontalAlignment="Left"
                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                Margin="40,0,0,0"
-                FontSize="25" FontWeight="Regular"  Foreground="Black"
-                >Cantidad de punciones en la dura madre</Label>
-        <Label  Grid.Row="6" Grid.Column="1"
-                VerticalAlignment="Stretch" HorizontalAlignment="Left"
-                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                Margin="40,0,0,0"
-                FontSize="25" FontWeight="Regular"  Foreground="Black"
-                >Cantidad de roces sobre L2</Label>
-        <Label  Grid.Row="7" Grid.Column="1"
-                VerticalAlignment="Stretch" HorizontalAlignment="Left"
-                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                Margin="40,0,0,0"
-                FontSize="25" FontWeight="Regular"  Foreground="Black"
-                >Cantidad de roces sobre L3</Label>
-        <Label  Grid.Row="8" Grid.Column="1"
-                VerticalAlignment="Stretch" HorizontalAlignment="Left"
-                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                Margin="40,0,0,0"
-                FontSize="25" FontWeight="Regular"  Foreground="Black"
-                >Cantidad de roces sobre L4</Label>
-        <Label  Grid.Row="9" Grid.Column="1"
-                VerticalAlignment="Stretch" HorizontalAlignment="Left"
-                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                Margin="40,0,0,0"
-                FontSize="25" FontWeight="Regular"  Foreground="Black"
-                >Cantidad de roces sobre L5</Label>
-        <Label  Grid.Row="10" Grid.Column="1"
-                VerticalAlignment="Stretch" HorizontalAlignment="Left"
-                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                Margin="40,0,0,0"
-                FontSize="25" FontWeight="Regular"  Foreground="Black"
-                >Tiempo total de la práctica</Label>
-        <!--VARIABLES-->
-        <Label  Grid.Row="3" Grid.Column="1"
-                VerticalAlignment="Center" HorizontalAlignment="Right"
-                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                Margin="0,0,40,0"
-                FontSize="25" FontWeight="Regular"  Foreground="Black"
-                >2</Label>
-        <Label  Grid.Row="4" Grid.Column="1"
-                VerticalAlignment="Center" HorizontalAlignment="Right"
-                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                Margin="0,0,40,0"
-                FontSize="25" FontWeight="Regular"  Foreground="Black"
-                >2</Label>
-        <Label  Grid.Row="5" Grid.Column="1"
-                VerticalAlignment="Center" HorizontalAlignment="Right"
-                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                 Margin="0,0,40,0"
-                FontSize="25" FontWeight="Regular"  Foreground="Black"
-                >1</Label>
-        <Label  Grid.Row="6" Grid.Column="1"
-                VerticalAlignment="Center" HorizontalAlignment="Right"
-                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                Margin="0,0,40,0"
-                FontSize="25" FontWeight="Regular"  Foreground="Black"
-                >0</Label>
-        <Label  Grid.Row="7" Grid.Column="1"
-                VerticalAlignment="Center" HorizontalAlignment="Right"
-                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                Margin="0,0,40,0"
-                FontSize="25" FontWeight="Regular"  Foreground="Black"
-                >1</Label>
-        <Label  Grid.Row="8" Grid.Column="1"
-                VerticalAlignment="Center" HorizontalAlignment="Right"
-                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                Margin="0,0,40,0"
-                FontSize="25" FontWeight="Regular"  Foreground="Black"
-                >2</Label>
-        <Label  Grid.Row="9" Grid.Column="1"
-                VerticalAlignment="Center" HorizontalAlignment="Right"
-                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                Margin="0,0,40,0"
-                FontSize="25" FontWeight="Regular"  Foreground="Black"
-                >0</Label>
-        <Label  Grid.Row="10" Grid.Column="1"
-                VerticalAlignment="Center" HorizontalAlignment="Right"
-                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                 Margin="0,0,40,0"
-                FontSize="25" FontWeight="Regular"  Foreground="Black"
-                >00:10:25</Label>
-        <!--BUTTON-->
-        <Button Grid.Row="13" Grid.Column="1" Grid.ColumnSpan="2"
+                Margin="60,0,0,15"
+                FontSize="22" FontWeight="Regular"  Foreground="Black"
+                ></Label>
+        <Label  Name="ReporteItemValor2"
+                Grid.Row="3" Grid.Column="2"
+                VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                VerticalContentAlignment="Center" HorizontalContentAlignment="Right"
+                Margin="0,0,60,15"
+                FontSize="22" FontWeight="Regular"  Foreground="Black"
+                ></Label>
+        <!--BOTON NUEVA SIMULACION-->
+        <Button Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"
                  Width="320" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Stretch"
                 HorizontalContentAlignment="Center" 
-                Background="#009960" Foreground="White"  BorderThickness="0"
+                Foreground="White"  BorderThickness="0"
                 FontSize="20" FontWeight="Regular"
           Name="NuevaSimulacion" Click="NuevaSimulacion_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="20"/>
+                    <Setter Property="CornerRadius" Value="25"/>
                 </Style>
             </Button.Resources>
             NUEVA SIMULACION

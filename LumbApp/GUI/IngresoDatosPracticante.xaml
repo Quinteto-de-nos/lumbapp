@@ -9,25 +9,8 @@
       d:DesignHeight="800" d:DesignWidth="1420"
      
       Title="LumbApp">
-    <!--<Page.Resources>
-        <local:DatosPracticante x:Key="Ods"/>
-        <ControlTemplate x:Key="ValidationTemplate">
-            <DockPanel>
-                <TextBlock Foreground="Red" FontSize="20" FontWeight="Bold" Margin="0,0,10,0">!</TextBlock>
-                <AdornedElementPlaceholder/>
-            </DockPanel>
-        </ControlTemplate>
-        <Style x:Key="TextBoxInError" TargetType="{x:Type TextBox}">
-            <Style.Triggers>
-                <Trigger Property="Validation.HasError" Value="true">
-                    <Setter Property="ToolTip"
-                         Value="{Binding RelativeSource={x:Static RelativeSource.Self},
-                              Path=(Validation.Errors)[0].ErrorContent}"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </Page.Resources>-->
     <Page.Resources>
+        <!--COMBO BOX STYLE-->
         <Style x:Key="ComboBoxStyle" TargetType="{x:Type ComboBox}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -41,10 +24,10 @@
                                                 <ColumnDefinition Width="10*" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
-                                            <Border x:Name="Border"  Grid.ColumnSpan="2" CornerRadius="10" 
+                                            <Border x:Name="Border"  Grid.ColumnSpan="2" CornerRadius="25" 
                                                     Background="#009960" BorderBrush="Transparent" BorderThickness="1" />
-                                            <Border Grid.Column="0" CornerRadius="10,0,0,10"  Margin="1"
-                                                    Background="White"  BorderBrush="Green" BorderThickness="0,0,0,0" />
+                                            <Border Grid.Column="0" CornerRadius="25,0,0,25"  Margin="1"
+                                                    Background="White"  BorderBrush="#009960" BorderThickness="2,2,2,2" />
                                             <Path x:Name="Arrow" Grid.Column="2"  Fill="White" HorizontalAlignment="Center" VerticalAlignment="Center" Data="M 0 0 L 4 4 L 8 0 Z"/>
                                         </Grid>
                                         <ControlTemplate.Triggers>
@@ -78,39 +61,65 @@
             <Style.Triggers>
             </Style.Triggers>
         </Style>
+        <Style TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="False">
+                    <Setter Property="Background" Value="#f2f2f2"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!--BUTTONS STYLE-->
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#009960"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#008252"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#8eeecb"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#005c3a"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Page.Resources>
     <Grid Background="#08cc83">
         <Grid.RowDefinitions>
-            <RowDefinition Height="20*"/>
-            <RowDefinition Height="50*"/>
-            <RowDefinition Height="25*" />
-            <RowDefinition Height="22*" />
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="80*" />
             <RowDefinition Height="30*" />
-            <RowDefinition Height="20*" />
-            <RowDefinition Height="22*" />
+            <RowDefinition Height="18*" />
             <RowDefinition Height="30*" />
-            <RowDefinition Height="20*" />
+            <RowDefinition Height="18*" />
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="18*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="18*"/>
+            <RowDefinition Height="30*"/>
             <RowDefinition Height="22*"/>
-            <RowDefinition Height="30*"/>
-            <RowDefinition Height="20*"/>
-            <RowDefinition Height="22*"/>
-            <RowDefinition Height="30*"/>
-            <RowDefinition Height="20*"/>
-            <RowDefinition Height="30*"/>
-            <RowDefinition Height="20*"/>
             <RowDefinition Height="30*"/>
             <RowDefinition Height="10*"/>
-            <RowDefinition Height="35*"/>
             <RowDefinition Height="30*"/>
-            <RowDefinition Height="50*"/>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="40*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300*"/>
-            <ColumnDefinition Width="40*"/>
-            <ColumnDefinition Width="200*"/>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition Width="40*"/>
-            <ColumnDefinition Width="300*"/>
+            <ColumnDefinition Width="350*"/>
+            <ColumnDefinition Width="30*"/>
+            <ColumnDefinition Width="180*"/>
+            <ColumnDefinition Width="90*"/>
+            <ColumnDefinition Width="30*"/>
+            <ColumnDefinition Width="350*"/>
         </Grid.ColumnDefinitions>
         <Rectangle Grid.Column="0" Grid.Row="0"
                    Grid.RowSpan="24" Grid.ColumnSpan="6">
@@ -128,172 +137,189 @@
             </Rectangle.Fill>
 
         </Rectangle>
-        <Border Grid.Column="1" Grid.Row="2"   Grid.ColumnSpan="4"
-                Background="White" Opacity="0.5"
-                Grid.RowSpan="19"
+        <Border Grid.Column="1" Grid.Row="1"   Grid.ColumnSpan="4"
+                Background="White" Opacity="0.75"
+                Grid.RowSpan="15"
                 CornerRadius="40"/>
 
-        <!--Nombre-->
-        <Label Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2"
+        <Label Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
-               FontSize="14" FontWeight="Thin" 
-               Foreground="#595959">Nombre</Label>
+                HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+               FontSize="34" FontWeight="Bold" 
+               Foreground="#595959">Login</Label>
 
-        <TextBox Name="Nombre"  TextChanged="ValidarNombre"
-                Grid.Row="4"  Grid.Column="2" Grid.ColumnSpan="2" 
-                FontSize="14" BorderThickness="0"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-                Padding="20,0,0,0" VerticalContentAlignment="Center">
-            <TextBox.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="10"/>
-                </Style>
-            </TextBox.Resources>
-        </TextBox>
-        <Label Name="ErrorNombre" Grid.Row="5"  Grid.Column="2" Grid.ColumnSpan="2"
+        <!--Nombre-->
+        <AdornerDecorator Grid.Row="2"  Grid.Column="2" 
+                          Grid.ColumnSpan="2" >
+            <TextBox Name="Nombre"  TextChanged="ValidarNombre"
+                    FontSize="18" FontWeight="DemiBold"
+                    BorderThickness="0"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                    Padding="20,0,0,0" VerticalContentAlignment="Center">
+                <local:WatermarkService.Watermark>
+                    <TextBlock
+                        FontSize="18" FontWeight="DemiBold"
+                        Foreground="#8a8a8a">Nombre</TextBlock>
+                </local:WatermarkService.Watermark>
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="25"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+        </AdornerDecorator>
+        <Label Name="ErrorNombre" Grid.Row="3"  Grid.Column="2" Grid.ColumnSpan="2"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                VerticalContentAlignment="Top" HorizontalContentAlignment="Left"
                FontSize="12" Foreground="Red"></Label>
 
         <!--Apellido-->
-        <Label Grid.Row="6"  Grid.Column="2" Grid.ColumnSpan="2"
-               VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-               HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
-               FontSize="14" FontWeight="Thin" 
-               Foreground="#595959">Apellido</Label>
-        <TextBox Name="Apellido" TextChanged="ValidarApellido"
-                Grid.Row="7"  Grid.Column="2" Grid.ColumnSpan="2"
-                FontSize="14"  BorderThickness="0"
+        <AdornerDecorator Grid.Row="4"  Grid.Column="2" 
+                          Grid.ColumnSpan="2" >
+            <TextBox Name="Apellido" TextChanged="ValidarApellido"
+                FontSize="18"  FontWeight="DemiBold"
+                 BorderThickness="0"
                  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                  Padding="20,0,0,0" VerticalContentAlignment="Center">
-            <TextBox.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="10"/>
-                </Style>
-            </TextBox.Resources>
-        </TextBox>
-        <Label Name="ErrorApellido" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="2"
+                <local:WatermarkService.Watermark>
+                    <TextBlock
+                        FontSize="18" FontWeight="DemiBold"
+                        Foreground="#8a8a8a">Apellido</TextBlock>
+                </local:WatermarkService.Watermark>
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="25"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+        </AdornerDecorator>
+        <Label Name="ErrorApellido" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                HorizontalContentAlignment="Left" VerticalContentAlignment="Top" 
                FontSize="12" Foreground="Red"></Label>
 
         <!--Dni-->
-        <Label Grid.Row="9"  Grid.Column="2" Grid.ColumnSpan="2"
-               VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-               HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
-               FontSize="14" FontWeight="Thin" 
-               Foreground="#595959">Dni</Label>
-        <TextBox  Name="Dni"  TextChanged="ValidarDni"
-                 Grid.Row="10"  Grid.Column="2" Grid.ColumnSpan="2"
-                 FontSize="14"   BorderThickness="0"
+        <AdornerDecorator Grid.Row="6"  Grid.Column="2" 
+                          Grid.ColumnSpan="2" >
+            <TextBox  Name="Dni"  TextChanged="ValidarDni"
+                 FontSize="18"  FontWeight="DemiBold"
+                  BorderThickness="0"
                   VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                   Padding="20,0,0,0" 
                   VerticalContentAlignment="Center" HorizontalContentAlignment="Left" >
-            <TextBox.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="10"/>
-                </Style>
-            </TextBox.Resources>
-        </TextBox>
+                <local:WatermarkService.Watermark>
+                    <TextBlock
+                        FontSize="18" FontWeight="DemiBold"
+                        Foreground="#8a8a8a">DNI</TextBlock>
+                </local:WatermarkService.Watermark>
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="25"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+        </AdornerDecorator>
 
-        <Label Name="ErrorDni" Grid.Row="11"  Grid.Column="2" Grid.ColumnSpan="2"
+        <Label Name="ErrorDni" Grid.Row="7"  Grid.Column="2" Grid.ColumnSpan="2"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                VerticalContentAlignment="Top" HorizontalContentAlignment="Left"
                FontSize="12" Foreground="Red"></Label>
 
         <!--Mail-->
-        <Label Grid.Row="12"  Grid.Column="2" Grid.ColumnSpan="2"
-               VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-               HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
-               FontSize="14" FontWeight="Thin" 
-               Foreground="#595959">Mail</Label>
-        <TextBox  Name="Mail"  TextChanged="ValidarMail"
-                 Grid.Row="13" Grid.Column="2" Grid.ColumnSpan="2"
-                  FontSize="14" BorderThickness="0"
+        <AdornerDecorator Grid.Row="8"  Grid.Column="2" 
+                          Grid.ColumnSpan="2" >
+            <TextBox  Name="Mail"  TextChanged="ValidarMail"
+                  FontSize="18" FontWeight="DemiBold"
+                  BorderThickness="0"
                   VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                   Padding="20,0,0,0" 
                   VerticalContentAlignment="Center" HorizontalContentAlignment="Left">
-            <TextBox.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="10"/>
-                </Style>
-            </TextBox.Resources>
-        </TextBox>
-
-        <Label Name="ErrorMail" Grid.Row="14"  Grid.Column="2" Grid.ColumnSpan="2"
+                <local:WatermarkService.Watermark>
+                    <TextBlock
+                        FontSize="18" FontWeight="DemiBold"
+                        Foreground="#8a8a8a">Mail</TextBlock>
+                </local:WatermarkService.Watermark>
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="25"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+        </AdornerDecorator>
+        <Label Name="ErrorMail" Grid.Row="9"  Grid.Column="2" Grid.ColumnSpan="2"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                VerticalContentAlignment="Top" HorizontalContentAlignment="Left"
                FontSize="12" Foreground="Red"></Label>
 
-        <ComboBox Name="ComboModo" Grid.Row="15" Grid.Column="2" Grid.ColumnSpan="2"
-                  SelectedIndex="0" FontSize="14"
+        <ComboBox Name="ComboModo" Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="2"
+                  SelectedIndex="0" FontSize="18"
                   VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                   VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                   FontWeight="Regular" Style="{StaticResource ComboBoxStyle}">
             <ComboBoxItem Name="ModoGuiado"
-                FontSize="16" 
+                FontSize="18" 
                           VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Foreground="Black">MODO GUIADO</TextBlock>
+                    <TextBlock Foreground="#595959" FontWeight="DemiBold">MODO GUIADO</TextBlock>
                 </StackPanel>
             </ComboBoxItem>
             <ComboBoxItem Name="ModoEvaluacion"
-                FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+                FontSize="18" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Foreground="Black">MODO EVALUACION</TextBlock>
+                    <TextBlock Foreground="#595959" FontWeight="DemiBold">MODO EVALUACION</TextBlock>
                 </StackPanel>
             </ComboBoxItem>
         </ComboBox>
 
-        <Label Grid.Row="16"  Grid.Column="2" Grid.ColumnSpan="2"
+        <Label Grid.Row="11"  Grid.Column="2" Grid.ColumnSpan="2"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                VerticalContentAlignment="Bottom" HorizontalContentAlignment="Left"
-               FontSize="12" Foreground="Black">
+               FontSize="12" Foreground="#595959">
             Los resultados de la práctica se guardarán en...</Label>
 
-        <Button Grid.Row="17" Grid.Column="3" Grid.ColumnSpan="1"
+        <Button Grid.Row="12" Grid.Column="3" Grid.ColumnSpan="1"
                 DockPanel.Dock="Right" 
                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                 Click="BrowseFolder" 
                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                Background="#009960" Foreground="White"  BorderThickness="0"
-                FontSize="14" FontWeight="Regular">
+                Foreground="White"  BorderThickness="0"
+                FontSize="18" FontWeight="Regular">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="20"/>
+                    <Setter Property="CornerRadius" Value="25"/>
                 </Style>
             </Button.Resources>
-            SELECCIONAR</Button>
+            CAMBIAR</Button>
 
-        <Border Grid.Row="17"  Grid.Column="2" Grid.ColumnSpan="1" Margin="0,0,10,0"
+        <Border Grid.Row="12"  Grid.Column="2" Grid.ColumnSpan="1" Margin="0,0,10,0"
                 Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
             <Label Name="FolderPath" 
                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                    VerticalContentAlignment="Center" HorizontalContentAlignment="Left"
-                   FontSize="14" Foreground="Black" FontWeight="DemiBold"
+                   FontSize="18" Foreground="#595959" FontWeight="DemiBold"
                    Margin="10,0">C:/</Label>
         </Border>
-        <Button Grid.Row="19" Grid.Column="2" Grid.ColumnSpan="2"
-                 Width="320" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Stretch"
+        <Button Grid.Row="14" Grid.Column="2" Grid.ColumnSpan="2"
+                 Padding="5" 
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                HorizontalContentAlignment="Center" 
-                Background="#009960" Foreground="White"  BorderThickness="0"
-                FontSize="20" FontWeight="Regular"
+               Foreground="White"  BorderThickness="0"
+                FontSize="24" FontWeight="Regular"
           Name="IniciarSimulacion" Click="IniciarSimulacion_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="20"/>
+                    <Setter Property="CornerRadius" Value="25"/>
                 </Style>
             </Button.Resources>
-                INICIAR SIMULACION
+            INICIAR SIMULACION
         </Button>
-        <fa:ImageAwesome Grid.Column="2" Grid.ColumnSpan="2"
+        <!--<fa:ImageAwesome Grid.Column="2" Grid.ColumnSpan="2"
                          Opacity="0.6"
                          Icon="UserCircle" Foreground="#009960" 
                          
                          Height="90" Width="90" 
                          VerticalAlignment="Top" Grid.RowSpan="2" Grid.Row="1"
-                         />
+                         />-->
     </Grid>
-    
+
 </Page>

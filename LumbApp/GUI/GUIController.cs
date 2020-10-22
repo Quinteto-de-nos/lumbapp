@@ -13,9 +13,11 @@ namespace LumbApp.GUI
         private SensorsCheck SensorsCheckPage { get; set; }
         private IngresoDatosPracticante IngresoDatosPracticantePage { get; set; }
         private SimulacionModoGuiado SimulacionModoGuiadoPage { get; set; }
+        private SimulacionModoEvaluacion SimulacionModoEvaluacionPage { get; set; }
         private ResultadosSimulacion ResultadosSimulacionPage { get; set; }
 
-        public GUIController(MainWindow mainWindow) {
+        public GUIController(MainWindow mainWindow)
+        {
 
             MainWindow = mainWindow;
         }
@@ -29,17 +31,21 @@ namespace LumbApp.GUI
             MainWindow.NavigationService.Navigate(SensorsCheckPage);
             SensorsCheckPage.MostrarCheckeandoSensores();
             _orquestador = new Orquestador.Orquestador(this, new ConectorFS());
-            _orquestador.Inicializar();
+            _ = _orquestador.Inicializar();
         }
 
+        /// <summary>
+        /// Si falla el check de sensores y el usuario da reintentar, se llama a esta funcion
+        /// para volver a inicializar
+        /// </summary>
         public void CheckearSensores()
         {
-            _orquestador.Inicializar();  //si fallo la primera vez reintento
+            _ = _orquestador.Inicializar();  //si fallo la primera vez reintento
         }
-        
+
         public void NuevaSimulacion()
         {
-            _orquestador.NuevaSimulacion();  //si fallo la primera vez reintento
+            _orquestador.NuevaSimulacion();
         }
 
         /// <summary>
@@ -54,9 +60,9 @@ namespace LumbApp.GUI
         /// <summary>
         /// Lo llama el orquestador si finalizo bien la inicializacion de los sensores para mostrar el 'login' del practicante
         /// </summary>
-        public void SolicitarDatosPracticante(string folderPath)
+        public void SolicitarDatosPracticante(DatosPracticante datosPrevios)
         {
-            IngresoDatosPracticantePage = new IngresoDatosPracticante(this,folderPath);
+            IngresoDatosPracticantePage = new IngresoDatosPracticante(this, datosPrevios);
             MainWindow.NavigationService.Navigate(IngresoDatosPracticantePage);
         }
 
@@ -74,7 +80,8 @@ namespace LumbApp.GUI
         /// <summary>
         /// Muestra los pasos de preparacion
         /// </summary>
-        private void MostrarPasosPreparacion() {
+        private void MostrarPasosPreparacion()
+        {
             PasosPreparacion pasosPreparacionPage = new PasosPreparacion(this);
             MainWindow.NavigationService.Navigate(pasosPreparacionPage);
         }
@@ -101,7 +108,8 @@ namespace LumbApp.GUI
         /// </summary>
         public void IniciarSimulacionModoEvaluacion()
         {
-
+            SimulacionModoEvaluacionPage = new SimulacionModoEvaluacion(this);
+            MainWindow.NavigationService.Navigate(SimulacionModoEvaluacionPage);
         }
 
         public void MostrarCambioZE(CambioZEEventArgs e)
@@ -109,20 +117,24 @@ namespace LumbApp.GUI
             SimulacionModoGuiadoPage.MostrarCambioZE(e);
         }
 
-        //TO DO
-        public void MostrarCambioSI(CambioSIEventArgs e)
-        { //TO DO
-            e.MostrarCambios();
+        public void MostrarCambioSI(CambioSIEventArgs datosDelEvento)
+        {
+            SimulacionModoGuiadoPage.MostrarCambioSI(datosDelEvento);
         }
 
         public void FinalizarSimulacion()
         {
-            _orquestador.TerminarSimulacion();
             ResultadosSimulacionPage = new ResultadosSimulacion(this);
             MainWindow.NavigationService.Navigate(ResultadosSimulacionPage);
+            _ = _orquestador.TerminarSimulacion();
         }
 
-        public void MostrarResultados( Informe informe )
+        public void Finalizar()
+        {
+            _orquestador.Finalizar();
+        }
+
+        public void MostrarResultados(Informe informe)
         {
             ResultadosSimulacionPage.MostrarResultados(informe);
         }

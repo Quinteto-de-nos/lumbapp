@@ -1,18 +1,18 @@
 ﻿using LumbApp.Expertos.ExpertoSI.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace UnitTestLumbapp.Experto_SI {
+namespace UnitTestLumbapp.Experto_SI
+{
     [TestClass]
-    public class TestCapa {
+    public class TestCapa
+    {
         /// <summary>
         /// La Capa debe cambiar de estado con Atavesar() y Abandonar().
         /// Los estados son Inicial, Atravesando, Abanonada y AtravesandoNuevamente.
         /// </summary>
         [TestMethod]
-        public void TestEstadoCapa () {
+        public void TestEstadoCapa()
+        {
             Capa capa = new Capa();
             bool cambio;
 

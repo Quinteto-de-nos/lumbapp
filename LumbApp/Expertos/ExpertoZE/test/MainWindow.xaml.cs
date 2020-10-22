@@ -2,7 +2,6 @@
 using LumbApp.Expertos.ExpertoZE;
 using Microsoft.Kinect;
 using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -67,13 +66,19 @@ namespace KinectCoordinateMapping
             leftHand = notTrackedJointBrush;
             rightHand = notTrackedJointBrush;
 
-            conn = new ConectorKinect();
-            expert = new ExpertoZE(conn);
-            // expert.CambioZE += CambioZE; //No hace falta para la calibracion
-            expert.Inicializar();
+            try
+            {
+                conn = new ConectorKinect();
+                expert = new ExpertoZE(conn);
+                expert.Inicializar();
 
-            conn.SubscribeFramesReady(Sensor_AllFramesReady);
-            //expert.IniciarSimulacion();
+                conn.SubscribeFramesReady(Sensor_AllFramesReady);
+            }
+            catch (Exception except)
+            {
+                Console.WriteLine("No me pude conectar a la Kinect. Error: " + except.Message);
+            }
+
         }
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)
@@ -85,16 +90,16 @@ namespace KinectCoordinateMapping
         {
             Point pos = e.GetPosition(camera);
             Point empty = new Point();
-            if(screenPoint1 == empty)
+            if (screenPoint1 == empty)
                 screenPoint1 = new Point(pos.X, pos.Y);
-            else if(screenPoint2 == empty)
+            else if (screenPoint2 == empty)
                 screenPoint2 = new Point(pos.X, pos.Y);
             else if (screenPoint3 == empty)
             {
                 screenPoint3 = new Point(pos.X, pos.Y);
                 calcular = true;
             }
-           
+
             Console.WriteLine("Click en " + pos);
         }
         #endregion
@@ -113,43 +118,51 @@ namespace KinectCoordinateMapping
 
         private SkeletonPoint mas(SkeletonPoint a, SkeletonPoint b)
         {
-            var res = new SkeletonPoint();
-            res.X = a.X + b.X;
-            res.Y = a.Y + b.Y;
-            res.Z = a.Z + b.Z;
+            var res = new SkeletonPoint
+            {
+                X = a.X + b.X,
+                Y = a.Y + b.Y,
+                Z = a.Z + b.Z
+            };
             return res;
         }
 
         private SkeletonPoint menos(SkeletonPoint a, SkeletonPoint b)
         {
-            var res = new SkeletonPoint();
-            res.X = a.X - b.X;
-            res.Y = a.Y - b.Y;
-            res.Z = a.Z - b.Z;
+            var res = new SkeletonPoint
+            {
+                X = a.X - b.X,
+                Y = a.Y - b.Y,
+                Z = a.Z - b.Z
+            };
             return res;
         }
 
         private SkeletonPoint cruz(SkeletonPoint a, SkeletonPoint b)
         {
-            var res = new SkeletonPoint();
-            res.X = a.Y*b.Z - a.Z*b.Y; //a2b3-a3b2
-            res.Y = a.Z*b.X - a.X*b.Z; //a3b1-a1b3
-            res.Z = a.X*b.Y - a.Y*b.X; //a1b2-a2b1
+            var res = new SkeletonPoint
+            {
+                X = a.Y * b.Z - a.Z * b.Y, //a2b3-a3b2
+                Y = a.Z * b.X - a.X * b.Z, //a3b1-a1b3
+                Z = a.X * b.Y - a.Y * b.X //a1b2-a2b1
+            };
             return res;
         }
 
         private SkeletonPoint por(float a, SkeletonPoint b)
         {
-            var res = new SkeletonPoint();
-            res.X = a * b.X;
-            res.Y = a * b.Y;
-            res.Z = a * b.Z;
+            var res = new SkeletonPoint
+            {
+                X = a * b.X,
+                Y = a * b.Y,
+                Z = a * b.Z
+            };
             return res;
         }
 
         private double modulo(SkeletonPoint a)
         {
-            return Math.Sqrt(Math.Pow(a.X,2) + Math.Pow(a.Y, 2) + Math.Pow(a.Z, 2));
+            return Math.Sqrt(Math.Pow(a.X, 2) + Math.Pow(a.Y, 2) + Math.Pow(a.Z, 2));
         }
 
         private double distToPlane(SkeletonPoint centro, SkeletonPoint right, SkeletonPoint left, SkeletonPoint test)
@@ -202,7 +215,7 @@ namespace KinectCoordinateMapping
                 expert.Inicializar();
 
                 conn.SubscribeFramesReady(Sensor_AllFramesReady);
-                expert.IniciarSimulacion();
+                expert.IniciarSimulacion(new Video("./test.mp4"));
             }
         }
 
@@ -260,8 +273,8 @@ namespace KinectCoordinateMapping
                             }
                         }
                     }
-                    
-                }  
+
+                }
             }
 
             // Body
@@ -294,13 +307,13 @@ namespace KinectCoordinateMapping
 
         private Brush setBrush(Mano data)
         {
-            if(data.Track == Mano.Tracking.Perdido)
+            if (data.Track == Mano.Tracking.Perdido)
                 return inferredJointBrush;
             if (data.Estado == Mano.Estados.Fuera || data.Estado == Mano.Estados.Inicial)
                 return trackedJointBrush;
             return inZeBrush;
         }
-        
+
         private void drawJoint(Joint joint, Brush b)
         {
             // 3D coordinates in meters
@@ -314,9 +327,11 @@ namespace KinectCoordinateMapping
         private void draw2DPoint(ColorImagePoint colorPoint, Brush b)
         {
             // 2D coordinates in pixels
-            Point point = new Point();
-            point.X = colorPoint.X;
-            point.Y = colorPoint.Y;
+            Point point = new Point
+            {
+                X = colorPoint.X,
+                Y = colorPoint.Y
+            };
 
             drawPoint(b, point);
         }

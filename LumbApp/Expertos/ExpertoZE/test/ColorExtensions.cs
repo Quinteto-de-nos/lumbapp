@@ -1,9 +1,5 @@
-﻿using System;
-using System.Windows.Media;
-using Microsoft.Kinect;
-using System.IO;
+﻿using Microsoft.Kinect;
 using System.Windows.Media.Imaging;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows;
 

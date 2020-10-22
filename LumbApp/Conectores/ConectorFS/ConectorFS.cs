@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.IO.Abstractions;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace LumbApp.Conectores.ConectorFS
 {
@@ -35,14 +30,16 @@ namespace LumbApp.Conectores.ConectorFS
         public bool GuardarObjectoComoArchivoDeTexto<T>(string path, T objectToBeSavedAsJson)
         {
             String stringToBeSaved = JsonSerializer.Serialize<T>(objectToBeSavedAsJson);
-            Console.WriteLine("Objeto a ser salvado: " + stringToBeSaved);
-            try {
-                _fileSystem.File.WriteAllText(path, stringToBeSaved);
-                Console.WriteLine("Archivo salvado correctamente en: "+path);
-                return true;
-            }catch(Exception e)
+            Console.WriteLine("FS: Objeto a ser salvado: " + stringToBeSaved);
+            try
             {
-                Console.WriteLine("Exception: " + e.Message);
+                _fileSystem.File.WriteAllText(path, stringToBeSaved);
+                Console.WriteLine("FS: Archivo salvado correctamente en: " + path);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("FS: Exception: " + e.Message);
                 return false;
             }
         }
@@ -55,18 +52,11 @@ namespace LumbApp.Conectores.ConectorFS
         /// <returns>El objeto deserializado</returns>
         public T LevantarArchivoDeTextoComoObjeto<T>(string path)
         {
-            Console.WriteLine("Levantando archivo de: " + path);
-            try
-            {
-                String jsonStringToRead = _fileSystem.File.ReadAllText(path);
-                Console.WriteLine("Archivo levantado correctamente: " + jsonStringToRead);
-                return JsonSerializer.Deserialize<T>(jsonStringToRead);
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine("Exception: " + e.Message);
-                return default;
-            }
+            Console.WriteLine("FS: Levantando archivo de: " + path);
+
+            string jsonStringToRead = _fileSystem.File.ReadAllText(path);
+            Console.WriteLine("FS: Archivo levantado correctamente: " + jsonStringToRead);
+            return JsonSerializer.Deserialize<T>(jsonStringToRead);
         }
     }
 }

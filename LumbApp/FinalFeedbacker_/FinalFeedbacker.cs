@@ -4,20 +4,22 @@ using LumbApp.Models;
 using System;
 using System.Collections;
 using System.Collections.Specialized;
-using System.Diagnostics;
 using System.IO;
 
-namespace LumbApp.FinalFeedbacker_ {
-    public class FinalFeedbacker : IFinalFeedbacker {
-        private DatosPracticante _datosPracticante;
-        private OrderedDictionary _datosPractica;
-        private String _path;
-        private DateTime _fecha;
+namespace LumbApp.FinalFeedbacker_
+{
+    public class FinalFeedbacker : IFinalFeedbacker
+    {
+        private readonly DatosPracticante _datosPracticante;
+        private readonly OrderedDictionary _datosPractica;
+        private readonly string _path;
+        private readonly DateTime _fecha;
 
-        public FinalFeedbacker (String path, DatosPracticante datosPracticante,
-            OrderedDictionary datosPractica, DateTime fecha) {
+        public FinalFeedbacker(string path, DatosPracticante datosPracticante,
+            OrderedDictionary datosPractica, DateTime fecha)
+        {
 
-            if(path==null || path=="" || datosPracticante == null || datosPractica == null || fecha == null)
+            if (path == null || path == "" || datosPracticante == null || datosPractica == null || fecha == null)
                 throw new Exception("Los datos de entrada no peden ser nulos, los necesito para crear el informe en PDF.");
 
             this._path = path;
@@ -26,12 +28,13 @@ namespace LumbApp.FinalFeedbacker_ {
             this._fecha = fecha;
         }
 
-        public bool GenerarPDF () {
-            try {
+        public bool GenerarPDF()
+        {
+            try
+            {
                 Document doc = new Document(PageSize.A4);
                 // Indicamos donde vamos a guardar el documento
-                PdfWriter writer = PdfWriter.GetInstance(doc,
-                                            new FileStream(_path, FileMode.Create));
+                PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(_path, FileMode.Create));
 
                 // Le colocamos el título y el autor
                 // **Nota: Esto no será visible en el documento
@@ -140,8 +143,9 @@ namespace LumbApp.FinalFeedbacker_ {
                 columna3.SpaceCharRatio = 10f;
                 tblDatosAlumno.AddCell(columna3);
 
-                string fechaString = (_fecha.Year.ToString() + "/" + _fecha.Month.ToString() +
-                    "/" + _fecha.Day.ToString() + " " + _fecha.Hour.ToString() + ":" + _fecha.Minute.ToString());
+                string fechaString = string.Format("{0:D2}/{1:D2}/{2:D2} {3:D2}:{4:D2}",
+                _fecha.Year.ToString(), _fecha.Month.ToString(), _fecha.Day.ToString(),
+                _fecha.Hour.ToString(), _fecha.Minute.ToString());
 
                 columna4 = new PdfPCell(new Phrase(fechaString, _fuenteEstandar));
                 columna4.Border = Rectangle.NO_BORDER;
@@ -161,7 +165,7 @@ namespace LumbApp.FinalFeedbacker_ {
                 Chunk chEstadisticas = new Chunk(stringEstadisticas, _fuenteSubtitulos);
                 chEstadisticas.SetBackground(backgroundTitulos);
                 doc.Add(new Paragraph(chEstadisticas));
-                
+
                 // Creamos una tabla que contendrá los datos de la practica
                 PdfPTable tblEstadísticas = new PdfPTable(2);
                 tblEstadísticas.WidthPercentage = 100;
@@ -205,12 +209,13 @@ namespace LumbApp.FinalFeedbacker_ {
                 writer.Close();
 
                 return true;
-            } catch (Exception ex){
-                Console.WriteLine(ex);
-                Console.WriteLine("no se pudo generar el pdf");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("FF: no pude crear el PDF final. Error: " + ex);
                 return false;
             }
-            
+
         }
     }
 }

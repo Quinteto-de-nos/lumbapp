@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace LumbApp.Enums
 {
@@ -19,5 +15,5 @@ namespace LumbApp.Enums
         [Display(Name = "Modo Evaluación")]
         ModoEvaluacion = 1,
     }
-   
+
 }

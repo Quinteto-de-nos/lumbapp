@@ -3,8 +3,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using LumbApp.Expertos.ExpertoZE;
 using LumbApp.Conectores.ConectorKinect;
 using Moq;
-using System.Linq;
-using System.Reflection;
 using System.Text.Json;
 
 namespace UnitTestLumbapp.Experto_ZE
@@ -20,7 +18,7 @@ namespace UnitTestLumbapp.Experto_ZE
             "Kinect no puede ser null. Necesito un conector a una kinect para crear un experto en zona esteril")]
         public void TestConstructorNull()
         {
-            ExpertoZE exp = new ExpertoZE(null, null);
+            _ = new ExpertoZE(null, null);
         }
 
         /// <summary>
@@ -31,7 +29,7 @@ namespace UnitTestLumbapp.Experto_ZE
         public void TestConstructorCalNull()
         {
             Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
-            ExpertoZE exp = new ExpertoZE(conn.Object, null);
+            _ = new ExpertoZE(conn.Object, null);
         }
 
         /// <summary>
@@ -41,7 +39,7 @@ namespace UnitTestLumbapp.Experto_ZE
         public void TestConstructorOK()
         {
             Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
-            ExpertoZE exp = new ExpertoZE(conn.Object, newCalibracion());
+            _ = new ExpertoZE(conn.Object, newCalibracion());
         }
 
         private Calibracion newCalibracion()
@@ -86,8 +84,9 @@ namespace UnitTestLumbapp.Experto_ZE
         {
             Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
             ExpertoZE exp = new ExpertoZE(conn.Object, newCalibracion());
+            Mock<IVideo> video = new Mock<IVideo>();
 
-            bool init = exp.IniciarSimulacion();
+            bool init = exp.IniciarSimulacion(video.Object);
             Assert.AreEqual(false, init);
         }
 
@@ -97,15 +96,13 @@ namespace UnitTestLumbapp.Experto_ZE
         [TestMethod]
         public void IniciarOK()
         {
+            var videoMock = new Mock<IVideo>();
             Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
             ExpertoZE exp = new ExpertoZE(conn.Object, newCalibracion());
             exp.Inicializar();
-            try { 
-                bool init = exp.IniciarSimulacion();
-                Assert.AreEqual(true, init);
-            } catch(System.IO.FileNotFoundException ex){
-                //Problema entre System.Drawing para LumbApp y System.Drawing.Common para UnitTest
-            }
+
+            bool init = exp.IniciarSimulacion(videoMock.Object);
+            Assert.AreEqual(true, init);
         }
 
         /// <summary>
@@ -142,10 +139,6 @@ namespace UnitTestLumbapp.Experto_ZE
             Assert.AreEqual(0, got.ManoIzquierda);
         }
 
-        /*
-         * Este test normalmente pasaria, pero rompe por la diferencia de System.Drawing 
-         * y System.Drawing.Common
-         * 
         /// <summary>
         /// Si se llama a TerminarSimulacion todo OK, debe devolver un reporte con las cosas que ocurrieron.
         /// Si no ocurrio nada, el reporte estara vacio.
@@ -154,9 +147,10 @@ namespace UnitTestLumbapp.Experto_ZE
         public void TerminarNada()
         {
             Mock<IConectorKinect> conn = new Mock<IConectorKinect>();
+            var videoMock = new Mock<IVideo>();
             ExpertoZE exp = new ExpertoZE(conn.Object, newCalibracion());
             exp.Inicializar();
-            exp.IniciarSimulacion();
+            exp.IniciarSimulacion(videoMock.Object);
 
             var got = exp.TerminarSimulacion();
 
@@ -164,6 +158,5 @@ namespace UnitTestLumbapp.Experto_ZE
             Assert.AreEqual(0, got.ManoDerecha);
             Assert.AreEqual(0, got.ManoIzquierda);
         }
-        */
     }
 }

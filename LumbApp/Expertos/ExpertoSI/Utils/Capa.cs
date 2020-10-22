@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LumbApp.Expertos.ExpertoSI.Utils {
-    public class Capa {
-        public enum Estados {
+﻿namespace LumbApp.Expertos.ExpertoSI.Utils
+{
+    public class Capa
+    {
+        public enum Estados
+        {
             /// <summary>
             /// Inicial indica que, desde que comenzo la simulacion, la capa todavia no fue atravesada.
             /// Es decir, la aguja no la toco.
@@ -35,7 +32,8 @@ namespace LumbApp.Expertos.ExpertoSI.Utils {
         public Estados Estado { get; private set; }
         public int VecesAtravesada { get; private set; }
 
-        public Capa () {
+        public Capa()
+        {
             Estado = Estados.Inicial;
             VecesAtravesada = 0;
         }
@@ -45,8 +43,10 @@ namespace LumbApp.Expertos.ExpertoSI.Utils {
         /// o AtravesandoNuevamente.
         /// </summary>
         /// <returns>Si hubo cambio de estado retorna true.</returns>
-        public bool Atravesar () {
-            switch (Estado) {
+        public bool Atravesar()
+        {
+            switch (Estado)
+            {
                 case Estados.Inicial:
                     Estado = Estados.Atravesando;
                     VecesAtravesada++;
@@ -64,14 +64,16 @@ namespace LumbApp.Expertos.ExpertoSI.Utils {
         /// pasa a Abandonada.
         /// </summary>
         /// <returns>Si hubo cambio de estado retorna true.</returns>
-        public bool Abandonar () {
+        public bool Abandonar()
+        {
             if (Estado == Estados.Inicial || Estado == Estados.Abandonada)
                 return false;
             Estado = Estados.Abandonada;
             return true;
         }
 
-        public void Resetear () {
+        public void Resetear()
+        {
             Estado = Estados.Inicial;
             VecesAtravesada = 0;
         }
