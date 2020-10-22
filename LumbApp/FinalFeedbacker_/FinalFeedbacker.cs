@@ -62,7 +62,7 @@ namespace LumbApp.FinalFeedbacker_
                 _fuenteCaractAlumno.SetColor(0, 126, 93);
                 #endregion
 
-                //Agragamos el logo de LumbApp
+                #region Logo
                 // Creamos la imagen y le ajustamos el tamaño
                 var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..");
                 path = Path.Combine(path, @"..\Images\logo.png");
@@ -72,6 +72,7 @@ namespace LumbApp.FinalFeedbacker_
                 logo.SetAbsolutePosition(500,750);
                 //logo.Alignment = Element.ALIGN_RIGHT;
                 doc.Add(logo);
+                #endregion
 
                 // Escribimos el encabezamiento en el documento
                 Paragraph titulo = new Paragraph("INFORME FINAL DE LA PRÁCTICA", _fuenteTitulo);

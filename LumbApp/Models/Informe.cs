@@ -46,10 +46,9 @@ namespace LumbApp.Models
                 { "Punciones duramadre", Convert.ToString(informeSI.Duramadre) },
                 { "Caminos correctos", Convert.ToString(informeSI.CaminoCorrecto) },
                 { "Caminos incorrectos", Convert.ToString(informeSI.CaminoIncorrecto) },
-                {
-                    "Tiempo total",
-                    string.Format("{0:D2}:{1:D2}:{2:D2}",
-                tiempoTotalDeEjecucion.Hours, tiempoTotalDeEjecucion.Minutes, tiempoTotalDeEjecucion.Seconds)
+                { 
+                    "Tiempo total", 
+                    string.Format("{0:D2}:{1:D2}", tiempoTotalDeEjecucion.Minutes, tiempoTotalDeEjecucion.Seconds)
                 }
             };
         }
