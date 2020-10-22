@@ -59,10 +59,21 @@ namespace LumbApp.FinalFeedbacker_ {
                 _fuenteCaractAlumno.SetColor(0, 126, 93);
                 #endregion
 
-                // Escribimos el encabezamiento en el documento
+                //Agragamos el logo de LumbApp
+                // Creamos la imagen y le ajustamos el tamaño
+                var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..");
+                path = Path.Combine(path, @"..\Images\logo.png");
+                
+                Image logo = Image.GetInstance(path);
+                logo.ScaleToFit(100, 100F);
+                logo.SetAbsolutePosition(500,750);
+                //logo.Alignment = Element.ALIGN_RIGHT;
+                doc.Add(logo);
 
-                doc.Add(new Paragraph("INFORME FINAL DE LA PRÁCTICA", _fuenteTitulo));
-                doc.Add(Chunk.NEWLINE);
+                // Escribimos el encabezamiento en el documento
+                Paragraph titulo = new Paragraph("INFORME FINAL DE LA PRÁCTICA", _fuenteTitulo);
+                titulo.SpacingAfter = 20f;
+                doc.Add(titulo);
 
                 #region Datos del alumno
                 Chunk chInfoAlumno = new Chunk("Información del alumno", _fuenteSubtitulos);
@@ -74,7 +85,6 @@ namespace LumbApp.FinalFeedbacker_ {
                 tblDatosAlumno.WidthPercentage = 100;
                 tblDatosAlumno.DefaultCell.Border = Rectangle.NO_BORDER;
                 tblDatosAlumno.DefaultCell.HorizontalAlignment = Element.ALIGN_LEFT;
-                //tblDatosAlumno.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
                 tblDatosAlumno.DefaultCell.MinimumHeight = 50f;
                 tblDatosAlumno.SpacingBefore = 10f;
                 tblDatosAlumno.SpacingAfter = 10f;
@@ -117,6 +127,7 @@ namespace LumbApp.FinalFeedbacker_ {
                 columna1.BorderWidthBottom = 0.75f;
                 //columna1.BorderWidthTop = 0.75f;
                 columna1.VerticalAlignment = Element.ALIGN_MIDDLE;
+                columna1.SpaceCharRatio = 10f;
                 tblDatosAlumno.AddCell(columna1);
 
                 columna2 = new PdfPCell(new Phrase(_datosPracticante.Email, _fuenteEstandar));
@@ -124,14 +135,15 @@ namespace LumbApp.FinalFeedbacker_ {
                 columna2.BorderWidthBottom = 0.75f;
                 //columna2.BorderWidthTop = 0.75f;
                 columna2.VerticalAlignment = Element.ALIGN_MIDDLE;
+                columna2.SpaceCharRatio = 10f;
                 tblDatosAlumno.AddCell(columna2);
                 #endregion
                 #region Fecha
                 columna3 = new PdfPCell(new Phrase("Fecha", _fuenteCaractAlumno));
                 columna3.Border = Rectangle.NO_BORDER;
                 columna3.BorderWidthBottom = 0.75f;
-                //columna3.BorderWidthTop = 0.75f;
                 columna3.VerticalAlignment = Element.ALIGN_MIDDLE;
+                columna3.SpaceCharRatio = 10f;
                 tblDatosAlumno.AddCell(columna3);
 
                 string fechaString = (_fecha.Year.ToString() + "/" + _fecha.Month.ToString() +
@@ -140,8 +152,8 @@ namespace LumbApp.FinalFeedbacker_ {
                 columna4 = new PdfPCell(new Phrase(fechaString, _fuenteEstandar));
                 columna4.Border = Rectangle.NO_BORDER;
                 columna4.BorderWidthBottom = 0.75f;
-                //columna4.BorderWidthTop = 0.75f;
                 columna4.VerticalAlignment = Element.ALIGN_MIDDLE;
+                columna4.SpaceCharRatio = 10f;
                 tblDatosAlumno.AddCell(columna4);
                 #endregion
 
@@ -151,34 +163,42 @@ namespace LumbApp.FinalFeedbacker_ {
                 doc.Add(Chunk.NEWLINE); // Espacio
 
                 #region Datos de la practica
-                Chunk chEstadisticas = new Chunk("Información de la práctica", _fuenteSubtitulos);
+                string stringEstadisticas = "Estadísticas                                                     ";
+                Chunk chEstadisticas = new Chunk(stringEstadisticas, _fuenteSubtitulos);
                 chEstadisticas.SetBackground(backgroundTitulos);
                 doc.Add(new Paragraph(chEstadisticas));
                 
                 // Creamos una tabla que contendrá los datos de la practica
                 PdfPTable tblDatosPractica = new PdfPTable(2);
                 tblDatosPractica.WidthPercentage = 100;
+                tblDatosPractica.SpacingBefore = 10f;
 
                 // Configuramos el título de las columnas de la tabla
                 PdfPCell columnaDescripcion = new PdfPCell(new Phrase("Descripción", _fuenteEstandar));
-                columnaDescripcion.BorderWidth = 0;
-                columnaDescripcion.BorderWidthBottom = 0.75f;
+                //columnaDescripcion.BorderWidth = 0;
+                //columnaDescripcion.BorderWidthTop = 0.75f;
 
                 PdfPCell columnaCantidad = new PdfPCell(new Phrase("Cantidad", _fuenteEstandar));
-                columnaCantidad.BorderWidth = 0;
-                columnaCantidad.BorderWidthBottom = 0.75f;
+                //columnaCantidad.BorderWidth = 0;
+                //columnaCantidad.BorderWidthBottom = 0.75f;
+                //columnaCantidad.HorizontalAlignment = Element.ALIGN_RIGHT;
 
                 // Añadimos las celdas a la tabla
-                tblDatosPractica.AddCell(columnaDescripcion);
-                tblDatosPractica.AddCell(columnaCantidad);
+                //tblDatosPractica.AddCell(columnaDescripcion);
+                //tblDatosPractica.AddCell(columnaCantidad);
 
                 foreach(DictionaryEntry de in _datosPractica)
                 {
                     columnaDescripcion = new PdfPCell(new Phrase(de.Key.ToString(), _fuenteEstandar));
                     columnaDescripcion.BorderWidth = 0;
+                    columnaDescripcion.BorderWidthBottom = 0.75f;
+                    columnaDescripcion.BorderColor = BaseColor.DARK_GRAY;
 
                     columnaCantidad = new PdfPCell(new Phrase(de.Value.ToString(), _fuenteEstandar));
                     columnaCantidad.BorderWidth = 0;
+                    columnaCantidad.BorderWidthBottom = 0.75f;
+                    columnaCantidad.HorizontalAlignment = Element.ALIGN_RIGHT;
+                    columnaCantidad.BorderColor = BaseColor.DARK_GRAY;
 
                     // Añadimos las celdas a la tabla
                     tblDatosPractica.AddCell(columnaDescripcion);
@@ -194,7 +214,8 @@ namespace LumbApp.FinalFeedbacker_ {
 
                 return true;
             } catch (Exception ex){
-                Debug.WriteLine(ex);
+                Console.WriteLine(ex);
+                Console.WriteLine("no se pudo generar el pdf");
                 return false;
             }
             
