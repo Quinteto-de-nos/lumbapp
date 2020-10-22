@@ -93,7 +93,6 @@ namespace LumbApp.FinalFeedbacker_ {
                 // Configuramos el título de las columnas de la tabla
                 PdfPCell columna1 = new PdfPCell(new Phrase("Nombre del\nalumno", _fuenteCaractAlumno));
                 columna1.Border = Rectangle.NO_BORDER;
-                //columna1.BorderWidthBottom = 0.75f;
                 columna1.BorderWidthTop = 0.75f;
                 columna1.VerticalAlignment = Element.ALIGN_MIDDLE;
                 tblDatosAlumno.AddCell(columna1);
@@ -101,7 +100,6 @@ namespace LumbApp.FinalFeedbacker_ {
                 PdfPCell columna2 = new PdfPCell(new Phrase((_datosPracticante.Nombre + " " + _datosPracticante.Apellido),
                     _fuenteEstandar));
                 columna2.Border = Rectangle.NO_BORDER;
-                //columna2.BorderWidthBottom = 0.75f;
                 columna2.BorderWidthTop = 0.75f;
                 columna2.VerticalAlignment = Element.ALIGN_MIDDLE;
                 tblDatosAlumno.AddCell(columna2);
@@ -109,14 +107,12 @@ namespace LumbApp.FinalFeedbacker_ {
                 #region DNI
                 PdfPCell columna3 = new PdfPCell(new Phrase("DNI del alumno", _fuenteCaractAlumno));
                 columna3.Border = Rectangle.NO_BORDER;
-                //columna3.BorderWidthBottom = 0.75f;
                 columna3.BorderWidthTop = 0.75f;
                 columna3.VerticalAlignment = Element.ALIGN_MIDDLE;
                 tblDatosAlumno.AddCell(columna3);
 
                 PdfPCell columna4 = new PdfPCell(new Phrase(_datosPracticante.Dni.ToString(), _fuenteEstandar));
                 columna4.Border = Rectangle.NO_BORDER;
-                //columna4.BorderWidthBottom = 0.75f;
                 columna4.BorderWidthTop = 0.75f;
                 columna4.VerticalAlignment = Element.ALIGN_MIDDLE;
                 tblDatosAlumno.AddCell(columna4);
@@ -125,7 +121,6 @@ namespace LumbApp.FinalFeedbacker_ {
                 columna1 = new PdfPCell(new Phrase("E-mail", _fuenteCaractAlumno));
                 columna1.Border = Rectangle.NO_BORDER;
                 columna1.BorderWidthBottom = 0.75f;
-                //columna1.BorderWidthTop = 0.75f;
                 columna1.VerticalAlignment = Element.ALIGN_MIDDLE;
                 columna1.SpaceCharRatio = 10f;
                 tblDatosAlumno.AddCell(columna1);
@@ -133,7 +128,6 @@ namespace LumbApp.FinalFeedbacker_ {
                 columna2 = new PdfPCell(new Phrase(_datosPracticante.Email, _fuenteEstandar));
                 columna2.Border = Rectangle.NO_BORDER;
                 columna2.BorderWidthBottom = 0.75f;
-                //columna2.BorderWidthTop = 0.75f;
                 columna2.VerticalAlignment = Element.ALIGN_MIDDLE;
                 columna2.SpaceCharRatio = 10f;
                 tblDatosAlumno.AddCell(columna2);
@@ -169,24 +163,14 @@ namespace LumbApp.FinalFeedbacker_ {
                 doc.Add(new Paragraph(chEstadisticas));
                 
                 // Creamos una tabla que contendrá los datos de la practica
-                PdfPTable tblDatosPractica = new PdfPTable(2);
-                tblDatosPractica.WidthPercentage = 100;
-                tblDatosPractica.SpacingBefore = 10f;
+                PdfPTable tblEstadísticas = new PdfPTable(2);
+                tblEstadísticas.WidthPercentage = 100;
+                tblEstadísticas.SpacingBefore = 10f;
 
                 // Configuramos el título de las columnas de la tabla
                 PdfPCell columnaDescripcion = new PdfPCell(new Phrase("Descripción", _fuenteEstandar));
-                //columnaDescripcion.BorderWidth = 0;
-                //columnaDescripcion.BorderWidthTop = 0.75f;
-
                 PdfPCell columnaCantidad = new PdfPCell(new Phrase("Cantidad", _fuenteEstandar));
-                //columnaCantidad.BorderWidth = 0;
-                //columnaCantidad.BorderWidthBottom = 0.75f;
-                //columnaCantidad.HorizontalAlignment = Element.ALIGN_RIGHT;
-
-                // Añadimos las celdas a la tabla
-                //tblDatosPractica.AddCell(columnaDescripcion);
-                //tblDatosPractica.AddCell(columnaCantidad);
-
+                int i = 1;
                 foreach(DictionaryEntry de in _datosPractica)
                 {
                     columnaDescripcion = new PdfPCell(new Phrase(de.Key.ToString(), _fuenteEstandar));
@@ -200,12 +184,20 @@ namespace LumbApp.FinalFeedbacker_ {
                     columnaCantidad.HorizontalAlignment = Element.ALIGN_RIGHT;
                     columnaCantidad.BorderColor = BaseColor.DARK_GRAY;
 
+                    if (i == 1) {
+                        columnaDescripcion.BorderWidthTop = 0.75f;
+                        columnaDescripcion.BorderColor = BaseColor.DARK_GRAY;
+                        columnaCantidad.BorderWidthTop = 0.75f;
+                        columnaCantidad.BorderColor = BaseColor.DARK_GRAY;
+                    }
+
                     // Añadimos las celdas a la tabla
-                    tblDatosPractica.AddCell(columnaDescripcion);
-                    tblDatosPractica.AddCell(columnaCantidad);
+                    tblEstadísticas.AddCell(columnaDescripcion);
+                    tblEstadísticas.AddCell(columnaCantidad);
+                    i++;
                 }
 
-                doc.Add(tblDatosPractica);
+                doc.Add(tblEstadísticas);
 
                 #endregion
 
