@@ -53,6 +53,7 @@ namespace LumbApp.GUI
 
         public SimulacionModoGuiado(GUIController gui)
         {
+            Console.WriteLine("Sym Window inicio en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             InitializeComponent();
 
             //inicializo imagenes de manos
@@ -104,6 +105,7 @@ namespace LumbApp.GUI
         /// <param name="e"></param>
         public void MostrarCambioZE(CambioZEEventArgs e)
         {
+            Console.WriteLine("Sym Window recibio ZE en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             //Guardo los datos para poder agarrarlos desde el main thread
             //Si se esta usando, espero a que se libere antes de sobrescribirlo
             lock (this.cambiosZE)
@@ -116,6 +118,7 @@ namespace LumbApp.GUI
         }
         private void handlerZE()
         {
+            Console.WriteLine("Sym Window handleo ZE en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             //Levanto los datos que guardo el otro thread y los copio para poder liberarlo rapido
             //Si se esta usando, espero a que se libere
             CambioZEEventArgs e;
@@ -203,6 +206,7 @@ namespace LumbApp.GUI
         /// <param name="datos"></param>
         public void MostrarCambioSI(CambioSIEventArgs datos)
         {
+            Console.WriteLine("Sym Window recibio SI en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             //Muestro datos por consola
             datos.MostrarCambios();
 
@@ -218,6 +222,7 @@ namespace LumbApp.GUI
         }
         private void handlerSI()
         {
+            Console.WriteLine("Sym Window handleo SI en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             //Levanto los datos que guardo el otro thread y los copio para poder liberarlo rapido
             //Si se esta usando, espero a que se libere
             CambioSIEventArgs e;

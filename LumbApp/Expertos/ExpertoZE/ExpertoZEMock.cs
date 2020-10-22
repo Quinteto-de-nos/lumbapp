@@ -16,6 +16,7 @@ namespace LumbApp.Expertos.ExpertoZE
 
         public ExpertoZEMock(bool shouldInit)
         {
+            Console.WriteLine("ZE Mock inicio en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             this.shouldInit = shouldInit;
         }
 
@@ -23,11 +24,13 @@ namespace LumbApp.Expertos.ExpertoZE
 
         public bool Inicializar()
         {
+            Console.WriteLine("ZE Mock inicializo en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             return shouldInit;
         }
 
         public bool IniciarSimulacion(IVideo video)
         {
+            Console.WriteLine("ZE Mock inicio simulacion en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             SkeletonPoint[] points = {
                 newPoint(0,0,0), newPoint(1,0,0), newPoint(1, 0, 1),  newPoint(0,0,1),
                 newPoint(0,1,0), newPoint(1,1,0), newPoint(1, 1, 1),  newPoint(0,1,1)};
@@ -54,6 +57,7 @@ namespace LumbApp.Expertos.ExpertoZE
 
         public InformeZE TerminarSimulacion()
         {
+            Console.WriteLine("ZE Mock termino simulacion en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             if (!simulando)
                 return new InformeZE(0, 0, 0, new Video("test.mp4"));
 
@@ -63,6 +67,7 @@ namespace LumbApp.Expertos.ExpertoZE
 
         private async Task simulateAsync()
         {
+            Console.WriteLine("ZE Mock esta simulando async en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             //Arranca simulacion
             simulando = true;
 
@@ -138,6 +143,7 @@ namespace LumbApp.Expertos.ExpertoZE
 
         private void sendEvent()
         {
+            Console.WriteLine("ZE Mock proceso cambios en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             var args = new CambioZEEventArgs(manoDerecha, manoIzquierda)
             {
                 VecesContaminado = zonaEsteril.Contaminacion

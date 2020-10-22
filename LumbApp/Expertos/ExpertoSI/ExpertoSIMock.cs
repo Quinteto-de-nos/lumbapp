@@ -39,6 +39,7 @@ namespace LumbApp.Expertos.ExpertoSI
         #region Métodos del experto
         public ExpertoSIMock (bool shouldInit)
         {
+            Console.WriteLine("SI Mock inicio en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             this.shouldInit = shouldInit;
             sensoresInternos = new ConectorSIMock(shouldInit);
         }
@@ -81,6 +82,7 @@ namespace LumbApp.Expertos.ExpertoSI
         {
             if (simulando)
             {
+                Console.WriteLine("SI Mock proceso cambios en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
                 if (RealizarAcciones(datosNuevos.datosSensados))
                 {
                     args = new CambioSIEventArgs(TejidoAdiposo, L2, L3, L4, L5, Duramadre,
@@ -122,6 +124,7 @@ namespace LumbApp.Expertos.ExpertoSI
         /// <returns></returns>
         private async Task simulateAsync()
         {
+            Console.WriteLine("SI Mock esta simulando async en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             //Arranca simulacion
             simulando = true;
 

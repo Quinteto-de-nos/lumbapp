@@ -40,6 +40,7 @@ namespace LumbApp.Orquestador
         /// </summary>
         public Orquestador(IGUIController gui, IConectorFS conectorFS)
         {
+            Console.WriteLine("Orquestador inicio en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             if (gui == null)
                 throw new Exception("Gui no puede ser null. Necesito un GUIController para crear un Orquestador.");
             IGUIController = gui;
@@ -78,6 +79,7 @@ namespace LumbApp.Orquestador
             {
                 await Task.Run(() =>
                 {
+                    Console.WriteLine("Orquestador inicializo en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
                     #region Inicializar ZE
                     Calibracion calibracion;
                     try
@@ -91,8 +93,8 @@ namespace LumbApp.Orquestador
                         throw new Exception("Error al tratar de cargar el archivo de calibracion. Por favor, calibre el sistema antes de usarlo.");
                     }
 
-                    expertoZE = new ExpertoZE(conectorKinect, calibracion);
-                    //expertoZE = new ExpertoZEMock(true);
+                    //expertoZE = new ExpertoZE(conectorKinect, calibracion);
+                    expertoZE = new ExpertoZEMock(true);
 
                     expertoZE.CambioZE += CambioZE; //suscripción al evento CambioZE
                     if (!expertoZE.Inicializar())
@@ -100,8 +102,8 @@ namespace LumbApp.Orquestador
                     #endregion
 
                     #region Inicializar SI
-                    expertoSI = new ExpertoSI(conectorArduino);
-                    //expertoSI = new ExpertoSIMock(true);
+                    //expertoSI = new ExpertoSI(conectorArduino);
+                    expertoSI = new ExpertoSIMock(true);
 
                     expertoSI.CambioSI += CambioSI; //suscripción al evento CambioSI
                     if (!expertoSI.Inicializar())
@@ -247,6 +249,7 @@ namespace LumbApp.Orquestador
         /// <param name="datosDelEvento"> Datos del cambio (capas, vertebras y correctitud del camino) </param>
         private void CambioSI(object sender, CambioSIEventArgs datosDelEvento)
         {
+            Console.WriteLine("Orquestador recibio SI en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             //comunicar los cambios a la GUI levantando un evento
             if (modoSeleccionado == ModoSimulacion.ModoGuiado)
                 IGUIController.MostrarCambioSI(datosDelEvento);
@@ -260,6 +263,7 @@ namespace LumbApp.Orquestador
         /// <param name="e"></param>
         private void CambioZE(object sender, CambioZEEventArgs e)
         {
+            Console.WriteLine("Orquestador recibio ZE en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             //comunicar los cambios a la GUI levantando un evento
             if (modoSeleccionado == ModoSimulacion.ModoGuiado)
                 IGUIController.MostrarCambioZE(e);

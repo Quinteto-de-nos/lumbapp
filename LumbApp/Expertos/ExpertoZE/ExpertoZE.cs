@@ -34,6 +34,7 @@ namespace LumbApp.Expertos.ExpertoZE
         /// <param name="calibracion">Datos de calibracion para la zona esteril</param>
         public ExpertoZE(IConectorKinect kinect, Calibracion calibracion)
         {
+            Console.WriteLine("ZE inicio en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             if (kinect == null)
                 throw new Exception("Kinect no puede ser null. Necesito un conector a una kinect para crear un experto en zona esteril");
             this.kinect = kinect;
@@ -62,6 +63,7 @@ namespace LumbApp.Expertos.ExpertoZE
         /// <returns>True si se inicializo todo bien, false si algo fallo y no podra aceptar simulaciones</returns>
         public bool Inicializar()
         {
+            Console.WriteLine("ZE inicializo cambios en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             try
             {
                 kinect.Conectar();
@@ -86,6 +88,7 @@ namespace LumbApp.Expertos.ExpertoZE
         /// False si esta funcion se llama antes de Inicializar</returns>
         public bool IniciarSimulacion(IVideo videoHelper)
         {
+            Console.WriteLine("ZE inicio simulacion en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             if (!inicializado || zonaEsteril == null)
             {
                 Console.WriteLine("ZE: No pude iniciar la simulación. Inicialice primero");
@@ -109,6 +112,7 @@ namespace LumbApp.Expertos.ExpertoZE
         /// <returns>Informe con un resumen de los datos recopilados</returns>
         public InformeZE TerminarSimulacion()
         {
+            Console.WriteLine("ZE termino simulacion en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             if (!simulando)
                 return new InformeZE(0, 0, 0, videoWriter);
 
@@ -137,6 +141,7 @@ namespace LumbApp.Expertos.ExpertoZE
         /// <param name="e"></param>
         private void allFramesReady(object sender, AllFramesReadyEventArgs e)
         {
+            Console.WriteLine("ZE proceso cambios en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             if (!simulando)
                 return;
 

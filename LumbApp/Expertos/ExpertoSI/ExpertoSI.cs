@@ -41,6 +41,7 @@ namespace LumbApp.Expertos.ExpertoSI
         #region Métodos del experto
         public ExpertoSI (IConectorSI sensoresInternos)
         {
+            Console.WriteLine("SI inicio en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             if (sensoresInternos == null)
                 throw new Exception("Sensores no puede ser null. Necesito un conector a los sensores para crear un experto en sensores internos");
             this.sensoresInternos = sensoresInternos;
@@ -52,6 +53,7 @@ namespace LumbApp.Expertos.ExpertoSI
         /// <returns> Si todo sale bien, devuelve true sino devuelve false. </returns>
         public bool Inicializar()
         {
+            Console.WriteLine("SI inicializo en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             sensoresInternos.HayDatos += HayDatosNuevos; //suscripción al evento HayDatos
             try
             {
@@ -74,6 +76,7 @@ namespace LumbApp.Expertos.ExpertoSI
         /// <returns> Retorna true si la comunicación con el arduino fue correctamete checkeada </returns>
         public bool IniciarSimulacion()
         {
+            Console.WriteLine("SI inicio simulacion en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             if (_comunicacionCheckeada)
             {
                 _simulando = true;
@@ -99,6 +102,7 @@ namespace LumbApp.Expertos.ExpertoSI
 
         public InformeSI TerminarSimulacion()
         {
+            Console.WriteLine("SI termino simulacion en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             if (!_simulando)
                 return new InformeSI(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
@@ -162,6 +166,7 @@ namespace LumbApp.Expertos.ExpertoSI
         {
             if (_simulando)
             {
+                Console.WriteLine("SI proceso cambios en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
                 if (RealizarAcciones(datosSensados.datosSensados))
                 {
                     args = new CambioSIEventArgs(TejidoAdiposo, L2, L3, L4, L5, Duramadre,
