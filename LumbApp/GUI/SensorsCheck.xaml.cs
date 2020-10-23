@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace LumbApp.GUI
@@ -19,27 +20,34 @@ namespace LumbApp.GUI
 
         private void RetryButton_Click(object sender, RoutedEventArgs e)
         {
-            SpinerIcon.Visibility = Visibility.Visible;
-            RetryButton.Visibility = Visibility.Hidden;
-            ErrorIcon.Visibility = Visibility.Hidden;
-            Mensaje.Content = MensajeCheckeandoSensores;
+            MostrarCheckeandoSensores();
             _controller.CheckearSensores();
         }
 
         public void MostrarCheckeandoSensores()
         {
             SpinerIcon.Visibility = Visibility.Visible;
+            //escondo el boton y icono de error
             RetryButton.Visibility = Visibility.Hidden;
             ErrorIcon.Visibility = Visibility.Hidden;
-            Mensaje.Content = MensajeCheckeandoSensores;
+
+            LabelMensaje.SetValue(Grid.RowSpanProperty, 2);
+
+            Mensaje.Text = MensajeCheckeandoSensores;
         }
 
         public void MostrarErrorDeConexion(string mensaje)
         {
+            //muestro el boton de Reintentar y el icono de error
             RetryButton.Visibility = Visibility.Visible;
             ErrorIcon.Visibility = Visibility.Visible;
+            //escondo el spinner
             SpinerIcon.Visibility = Visibility.Hidden;
-            Mensaje.Content = mensaje;
+
+            LabelMensaje.SetValue(Grid.RowSpanProperty, 1);
+
+            mensaje = mensaje.Replace(". ", "." + Environment.NewLine);
+            Mensaje.Text = mensaje;
         }
     }
 }
