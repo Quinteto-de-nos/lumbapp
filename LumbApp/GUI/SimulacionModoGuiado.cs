@@ -114,7 +114,7 @@ namespace LumbApp.GUI
             }
 
             //Delego al main thread
-            this.Dispatcher.Invoke(handlerZE);
+            this.Dispatcher.Invoke(handlerZE, DispatcherPriority.Send);
         }
         private void handlerZE()
         {
@@ -218,7 +218,7 @@ namespace LumbApp.GUI
             }
 
             //Delego al main thread
-            this.Dispatcher.Invoke(handlerSI);
+            this.Dispatcher.Invoke(handlerSI, DispatcherPriority.Send);
         }
         private void handlerSI()
         {
