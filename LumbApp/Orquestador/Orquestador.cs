@@ -167,38 +167,33 @@ namespace LumbApp.Orquestador
         public async Task TerminarSimulacion()
         {
             Console.WriteLine("Terminando simulacion...");
+            DateTime tiempoFinal = DateTime.Now;
+            tiempoTotalDeEjecucion = tiempoFinal - tiempoInicialDeEjecucion;
 
             // Crear el informe
-            var tInforme = Task.Run(() =>
-            {
-                InformeZE informeZE = expertoZE.TerminarSimulacion();
-                InformeSI informeSI = expertoSI.TerminarSimulacion();
 
-                DateTime tiempoFinal = DateTime.Now;
-                tiempoTotalDeEjecucion = tiempoFinal - tiempoInicialDeEjecucion;
+            InformeZE informeZE = expertoZE.TerminarSimulacion();
+            InformeSI informeSI = expertoSI.TerminarSimulacion();
 
-                Informe informeFinal = new Informe(
-                    this.datosPracticante.Nombre,
-                    this.datosPracticante.Apellido,
-                    this.datosPracticante.Dni,
-                    this.datosPracticante.FolderPath,
-                    informeSI, informeZE, tiempoTotalDeEjecucion
-                    );
+            Informe informeFinal = new Informe(
+                this.datosPracticante.Nombre,
+                this.datosPracticante.Apellido,
+                this.datosPracticante.Dni,
+                this.datosPracticante.FolderPath,
+                informeSI, informeZE, tiempoTotalDeEjecucion
+                );
 
-                return informeFinal;
-            });
 
-            var informe = await tInforme;
-            IGUIController.MostrarResultados(informe);
+            IGUIController.MostrarResultados(informeFinal);
 
             // Guardar PDF y video
-            var tFiles = Task.Run(Informe informeFinal =>
+            await Task.Run(() =>
             {
                 _ffb = new FinalFeedbacker(ruta + ".pdf", datosPracticante, informeFinal.DatosPractica, tiempoFinal);
                 informeFinal.SetPdfGenerado(_ffb.GenerarPDF());
                 informeZE.Video.Save();
             });
-            
+            IGUIController.ResultadosGuardados();
         }
 
         /// <summary>

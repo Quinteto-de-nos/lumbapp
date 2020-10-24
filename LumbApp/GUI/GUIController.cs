@@ -139,5 +139,10 @@ namespace LumbApp.GUI
             ResultadosSimulacionPage.MostrarResultados(informe);
         }
 
+        public void ResultadosGuardados()
+        {
+            ResultadosSimulacionPage.ResultadosGuardados();
+        }
+
     }
 }
