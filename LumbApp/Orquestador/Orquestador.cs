@@ -166,9 +166,11 @@ namespace LumbApp.Orquestador
         /// </summary>
         public async Task TerminarSimulacion()
         {
-            var task = Task.Run(() =>
+            Console.WriteLine("Terminando simulacion...");
+
+            // Crear el informe
+            var tInforme = Task.Run(() =>
             {
-                Console.WriteLine("Terminando simulacion...");
                 InformeZE informeZE = expertoZE.TerminarSimulacion();
                 InformeSI informeSI = expertoSI.TerminarSimulacion();
 
@@ -183,14 +185,20 @@ namespace LumbApp.Orquestador
                     informeSI, informeZE, tiempoTotalDeEjecucion
                     );
 
-                _ffb = new FinalFeedbacker(ruta + ".pdf", datosPracticante, informeFinal.DatosPractica, tiempoFinal);
-                informeFinal.SetPdfGenerado(_ffb.GenerarPDF());
-                informeZE.Video.Save();
                 return informeFinal;
             });
 
-            var informe = await task;
+            var informe = await tInforme;
             IGUIController.MostrarResultados(informe);
+
+            // Guardar PDF y video
+            var tFiles = Task.Run(Informe informeFinal =>
+            {
+                _ffb = new FinalFeedbacker(ruta + ".pdf", datosPracticante, informeFinal.DatosPractica, tiempoFinal);
+                informeFinal.SetPdfGenerado(_ffb.GenerarPDF());
+                informeZE.Video.Save();
+            });
+            
         }
 
         /// <summary>
