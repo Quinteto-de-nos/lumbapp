@@ -11,6 +11,7 @@ using LumbApp.Conectores.ConectorSI;
 using System.IO.Abstractions;
 using LumbApp.Conectores.ConectorFS;
 using LumbApp.Models;
+using System.Diagnostics;
 
 namespace UnitTestLumbapp
 {
@@ -250,7 +251,7 @@ namespace UnitTestLumbapp
             expSI.Setup(x => x.TerminarSimulacion()).Returns(informeSI);
             expZE.Setup(x => x.TerminarSimulacion()).Returns(informeZE);
             await Task.Delay(1000); //Para que el tiempo de simulacion no de 0 segundos
-
+            TimeSpan tiempo = TimeSpan.Zero;
             await orq.TerminarSimulacion();
 
             var arg = new ArgumentCaptor<Informe>();
@@ -279,8 +280,8 @@ namespace UnitTestLumbapp
             Assert.AreEqual(informeSI.Duramadre.ToString(), informe.DatosPractica["Punciones duramadre"]);
             Assert.AreEqual(informeSI.CaminoIncorrecto.ToString(), informe.DatosPractica["Caminos incorrectos"]);
             Assert.AreEqual(informeSI.CaminoCorrecto.ToString(), informe.DatosPractica["Caminos correctos"]);
-
-            Assert.AreNotEqual(TimeSpan.Zero.ToString(), informe.DatosPractica["Tiempo total"]);
+            string tiempoString = string.Format("{0:D2}:{1:D2}", tiempo.Minutes, tiempo.Seconds);
+            Assert.AreNotEqual(tiempoString, informe.DatosPractica["Tiempo total"]);
             Assert.IsTrue(informe.PdfGenerado);
         }
 
