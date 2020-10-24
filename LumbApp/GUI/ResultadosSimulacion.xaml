@@ -34,6 +34,7 @@
             </Style.Triggers>
         </Style>
     </Page.Resources>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
     <Grid Background="#e3efff">
         <Grid.RowDefinitions>
             <RowDefinition Height="10*" />
@@ -62,8 +63,10 @@
         <!--DATOS DEL PRACTICANTE-->
         <Border Grid.Column="1" Grid.Row="1"  
                 Grid.ColumnSpan="2"
+                MinHeight="160" MinWidth="1040"
                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                 Background="White" Opacity="0.5"
+                Margin="0,5,0,5"
                 CornerRadius="40"/>
         <Label  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
                 VerticalAlignment="Top" HorizontalAlignment="Center" 
@@ -88,7 +91,9 @@
         <!--RESULTADOS-->
         <Border Grid.Column="1" Grid.Row="3"  
                 Grid.ColumnSpan="2"
+                MinHeight="350" MinWidth="1040"
                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                Margin="0,5,0,5"
                 Background="White" Opacity="0.5"
                 CornerRadius="40"/>
         <Label  Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
@@ -129,8 +134,10 @@
                 ></Label>
         <!--BOTON NUEVA SIMULACION-->
         <Button Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"
-                 Width="320" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Stretch"
+                 Width="320" MinHeight="50" 
+                Padding="5" HorizontalAlignment="Center" VerticalAlignment="Stretch"
                 HorizontalContentAlignment="Center" 
+                Margin="0,5,0,5"
                 Foreground="White"  BorderThickness="0"
                 FontSize="20" FontWeight="Regular"
           Name="NuevaSimulacion" Click="NuevaSimulacion_Click">
@@ -142,4 +149,5 @@
             NUEVA SIMULACION
         </Button>
     </Grid>
+    </ScrollViewer>
 </Page>
