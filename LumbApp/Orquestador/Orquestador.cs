@@ -32,6 +32,7 @@ namespace LumbApp.Orquestador
 
         private DateTime tiempoInicialDeEjecucion;
         private TimeSpan tiempoTotalDeEjecucion;
+        private bool _simulando = false;
         #endregion
 
         /// <summary>
@@ -147,6 +148,7 @@ namespace LumbApp.Orquestador
                 IGUIController.IniciarSimulacionModoGuiado();
             else
                 IGUIController.IniciarSimulacionModoEvaluacion();
+            _simulando = true;
         }
 
         /// <summary>
@@ -193,6 +195,7 @@ namespace LumbApp.Orquestador
                 informeFinal.SetPdfGenerado(_ffb.GenerarPDF());
                 informeZE.Video.Save();
             });
+            _simulando = false;
             IGUIController.ResultadosGuardados();
         }
 
@@ -251,7 +254,7 @@ namespace LumbApp.Orquestador
         private void CambioSI(object sender, CambioSIEventArgs datosDelEvento)
         {
             //comunicar los cambios a la GUI levantando un evento
-            if (modoSeleccionado == ModoSimulacion.ModoGuiado)
+            if (modoSeleccionado == ModoSimulacion.ModoGuiado && _simulando)
                 IGUIController.MostrarCambioSI(datosDelEvento);
         }
 
@@ -264,7 +267,7 @@ namespace LumbApp.Orquestador
         private void CambioZE(object sender, CambioZEEventArgs e)
         {
             //comunicar los cambios a la GUI levantando un evento
-            if (modoSeleccionado == ModoSimulacion.ModoGuiado)
+            if (modoSeleccionado == ModoSimulacion.ModoGuiado && _simulando)
                 IGUIController.MostrarCambioZE(e);
         }
         #endregion
