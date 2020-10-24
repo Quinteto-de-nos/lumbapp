@@ -12,7 +12,6 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using Microsoft.ConcurrencyVisualizer.Instrumentation;
 
 namespace LumbApp.GUI
 {
@@ -54,7 +53,6 @@ namespace LumbApp.GUI
 
         public SimulacionModoGuiado(GUIController gui)
         {
-            var span = Markers.EnterSpan("Sym Window constructor");
             Console.WriteLine("Sym Window inicio en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             InitializeComponent();
 
@@ -96,7 +94,6 @@ namespace LumbApp.GUI
             _controller = gui;
             cambiosSI = new CambioSIEventArgs();
             cambiosZE = new CambioZEEventArgs();
-            span.Leave();
         }
 
         #region Cambios en Manos
@@ -108,7 +105,6 @@ namespace LumbApp.GUI
         /// <param name="e"></param>
         public void MostrarCambioZE(CambioZEEventArgs e)
         {
-            var span = Markers.EnterSpan("Sym Window recibe ZE");
             Console.WriteLine("Sym Window recibio ZE en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             //Guardo los datos para poder agarrarlos desde el main thread
             //Si se esta usando, espero a que se libere antes de sobrescribirlo
@@ -119,11 +115,9 @@ namespace LumbApp.GUI
 
             //Delego al main thread
             this.Dispatcher.Invoke(handlerZE, DispatcherPriority.Send);
-            span.Leave();
         }
         private void handlerZE()
         {
-            var span = Markers.EnterSpan("Sym Window handlea ZE");
             Console.WriteLine("Sym Window handleo ZE en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             //Levanto los datos que guardo el otro thread y los copio para poder liberarlo rapido
             //Si se esta usando, espero a que se libere
@@ -156,7 +150,7 @@ namespace LumbApp.GUI
             //Alerta sonido
             if (e.ContaminadoAhora)
                 SystemSounds.Exclamation.Play();
-            span.Leave();
+
         }
 
         public ManosImageConfig GetNuevaConfiguracionImagenMano(Mano.Tracking track, Mano.Estados estado, int nroIngreso)
@@ -212,7 +206,6 @@ namespace LumbApp.GUI
         /// <param name="datos"></param>
         public void MostrarCambioSI(CambioSIEventArgs datos)
         {
-            var span = Markers.EnterSpan("Sym Window recibe SI");
             Console.WriteLine("Sym Window recibio SI en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             //Muestro datos por consola
             datos.MostrarCambios();
@@ -226,11 +219,9 @@ namespace LumbApp.GUI
 
             //Delego al main thread
             this.Dispatcher.Invoke(handlerSI, DispatcherPriority.Send);
-            span.Leave();
         }
         private void handlerSI()
         {
-            var span = Markers.EnterSpan("Sym Window handlea SI");
             Console.WriteLine("Sym Window handleo SI en thread " + System.Threading.Thread.CurrentThread.ManagedThreadId);
             //Levanto los datos que guardo el otro thread y los copio para poder liberarlo rapido
             //Si se esta usando, espero a que se libere
@@ -338,7 +329,6 @@ namespace LumbApp.GUI
                 DuramadreSideImage.Source = null;
                 DuramadreFrontImage.Source = null;
             }
-            span.Leave();
         }
 
         private void MostrarAlertas(CambioSIEventArgs e)
