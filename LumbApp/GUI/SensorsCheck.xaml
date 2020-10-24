@@ -8,26 +8,109 @@
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="1420"
       Title="LumbApp">
-
+    <Page.Resources>
+        <!--BUTTONS STYLE-->
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#009960"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#008252"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#8eeecb"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#005c3a"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition/>
             <RowDefinition />
+            <RowDefinition/>
+           
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="30*"/>
+            <ColumnDefinition Width="60*"/>
+            <ColumnDefinition Width="30*"/>
         </Grid.ColumnDefinitions>
-        <Border Grid.Row="0" Height="35" Width="1420" Padding="5" Background="#4E87D4" HorizontalAlignment="Center" VerticalAlignment="Top">
-            <Label VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="White">Chequeando Sensores</Label>
-        </Border>
-        <fa:ImageAwesome Name="SpinerIcon" Grid.Column="0" Grid.Row="1" Icon="Refresh" Spin="True" Foreground="#4E87D4" Height="100" Width="100" VerticalAlignment="Top"/>
-        <fa:ImageAwesome Name="ErrorIcon" Grid.Column="0" Grid.Row="1" Icon="ExclamationTriangle" Foreground="Red" Height="100" Width="100" VerticalAlignment="Top"/>
-        <Label Name="Mensaje" Grid.Column="0" Grid.Row="1" FontSize="26" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="Black" ></Label>
-        <!-- View report button -->
-        <Button Name="RetryButton" Grid.Row="2" Height="50" Width="320" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"
-               HorizontalContentAlignment="Center" Background="#4E87D5" Foreground="White" FontSize="20" FontWeight="Bold"
-          Click="RetryButton_Click">Reintentar
+        <Rectangle Grid.Column="0" Grid.Row="0"
+                   Grid.RowSpan="5" Grid.ColumnSpan="3">
+            <Rectangle.Fill>
+
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1" >
+
+                    <GradientStop Color="#009960" Offset="0" />
+
+                    <GradientStop Color="#96f2d0" Offset="1.0" />
+
+                </LinearGradientBrush>
+
+            </Rectangle.Fill>
+
+        </Rectangle>
+        <!--Borde Transparente-->
+        <Border Grid.Column="1" Grid.Row="1" 
+                 Grid.RowSpan="3"
+                Background="White" Opacity="0.7"
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                CornerRadius="40"/>
+
+        <!--Spinner-->
+        <fa:ImageAwesome Name="SpinerIcon" 
+                         Grid.RowSpan="2"
+                         Grid.Column="1" Grid.Row="1" 
+                         Icon="Refresh" Spin="True" 
+                         Foreground="#009960" 
+                         Height="100" Width="100" 
+                         VerticalAlignment="Center"/>
+        <!--Error Icon-->
+        <fa:ImageAwesome Name="ErrorIcon" Grid.Column="1" Grid.Row="1" Icon="ExclamationTriangle" 
+                         Foreground="#009960" Height="100" Width="100" VerticalAlignment="Bottom"/>
+
+        <!--Mensaje-->
+        <Label
+            Name="LabelMensaje"
+            Grid.Column="1" Grid.Row="2"
+            VerticalAlignment="Center" HorizontalAlignment="Center"
+            VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
+            FontWeight="DemiBold" 
+            Foreground="#595959">
+            <Viewbox StretchDirection="Both" >
+                <TextBlock Name="Mensaje"
+                           TextAlignment="Center" Margin="25,0,25,0" Text="Checkeando los sensores"></TextBlock>
+            </Viewbox>
+        </Label>
+
+        <!-- Boton de Reintentar -->
+        <Button Grid.Row="3" Grid.Column="1" 
+                Name="RetryButton" 
+                Height="66" Padding="5" 
+                VerticalAlignment="Top" HorizontalAlignment="Center"
+                Width="400"
+                HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                Foreground="White"  BorderThickness="0"
+                FontSize="26" FontWeight="Regular"
+                Click="RetryButton_Click">REINTENTAR
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="35"/>
+                </Style>
+            </Button.Resources>
         </Button>
     </Grid>
 </Page>
