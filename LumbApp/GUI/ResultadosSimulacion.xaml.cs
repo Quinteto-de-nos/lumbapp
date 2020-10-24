@@ -52,5 +52,10 @@ namespace LumbApp.GUI
                 i++;
             }
         }
+
+        public void ResultadosGuardados()
+        {
+            //TODO
+        }
     }
 }

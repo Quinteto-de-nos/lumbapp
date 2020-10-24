@@ -168,32 +168,35 @@ namespace LumbApp.Orquestador
         /// </summary>
         public async Task TerminarSimulacion()
         {
-            var task = Task.Run(() =>
+            Console.WriteLine("Terminando simulacion...");
+            DateTime tiempoFinal = DateTime.Now;
+            tiempoTotalDeEjecucion = tiempoFinal - tiempoInicialDeEjecucion;
+
+            // Crear el informe
+
+            InformeZE informeZE = expertoZE.TerminarSimulacion();
+            InformeSI informeSI = expertoSI.TerminarSimulacion();
+
+            Informe informeFinal = new Informe(
+                this.datosPracticante.Nombre,
+                this.datosPracticante.Apellido,
+                this.datosPracticante.Dni,
+                this.datosPracticante.FolderPath,
+                informeSI, informeZE, tiempoTotalDeEjecucion
+                );
+
+
+            IGUIController.MostrarResultados(informeFinal);
+
+            // Guardar PDF y video
+            await Task.Run(() =>
             {
-                Console.WriteLine("Terminando simulacion...");
-                InformeZE informeZE = expertoZE.TerminarSimulacion();
-                InformeSI informeSI = expertoSI.TerminarSimulacion();
-
-                DateTime tiempoFinal = DateTime.Now;
-                tiempoTotalDeEjecucion = tiempoFinal - tiempoInicialDeEjecucion;
-
-                Informe informeFinal = new Informe(
-                    this.datosPracticante.Nombre,
-                    this.datosPracticante.Apellido,
-                    this.datosPracticante.Dni,
-                    this.datosPracticante.FolderPath,
-                    informeSI, informeZE, tiempoTotalDeEjecucion
-                    );
-
                 _ffb = new FinalFeedbacker(ruta + ".pdf", datosPracticante, informeFinal.DatosPractica, tiempoFinal);
                 informeFinal.SetPdfGenerado(_ffb.GenerarPDF());
                 informeZE.Video.Save();
-                return informeFinal;
             });
-
-            var informe = await task;
             _simulando = false;
-            IGUIController.MostrarResultados(informe);
+            IGUIController.ResultadosGuardados();
         }
 
         /// <summary>
