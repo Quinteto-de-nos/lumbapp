@@ -80,6 +80,7 @@ namespace LumbApp.Orquestador
                 await Task.Run(() =>
                 {
                     #region Inicializar ZE
+                    /*
                     Calibracion calibracion;
                     try
                     {
@@ -92,8 +93,8 @@ namespace LumbApp.Orquestador
                         throw new Exception("Error al tratar de cargar el archivo de calibracion. Por favor, calibre el sistema antes de usarlo.");
                     }
 
-                    expertoZE = new ExpertoZE(conectorKinect, calibracion);
-                    //expertoZE = new ExpertoZEMock(true);
+                    expertoZE = new ExpertoZE(conectorKinect, calibracion);*/
+                    expertoZE = new ExpertoZEMock(true);
 
                     expertoZE.CambioZE += CambioZE; //suscripción al evento CambioZE
                     if (!expertoZE.Inicializar())
@@ -101,8 +102,8 @@ namespace LumbApp.Orquestador
                     #endregion
 
                     #region Inicializar SI
-                    expertoSI = new ExpertoSI(conectorArduino);
-                    //expertoSI = new ExpertoSIMock(true);
+                    //expertoSI = new ExpertoSI(conectorArduino);
+                    expertoSI = new ExpertoSIMock(true);
 
                     expertoSI.CambioSI += CambioSI; //suscripción al evento CambioSI
                     if (!expertoSI.Inicializar())

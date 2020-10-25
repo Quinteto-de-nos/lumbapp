@@ -15,18 +15,13 @@
         public int Duramadre { get; private set; }
 
         /// <summary>
-        /// Cantidad de veces que fue por un camino que no debia.
-        /// Ej.: Toco una vertebra incorrecta.
-        /// </summary>
-        public int CaminoCorrecto;
-        /// <summary>
         /// Cantidad de veces que se logro llegar a la duramadre sin sensar ningun error.
         /// </summary>
         public int CaminoIncorrecto;
         #endregion
 
         public InformeSI (int TejidoAdiposo, int L2, int L3Arriba, int L3Abajo, int L4ArribaIzquierda, int L4ArribaDerecha,
-            int L4ArribaCentro, int L4Abajo, int L5, int Duramadre, int CaminoCorrecto, int CaminoIncorrecto)
+            int L4ArribaCentro, int L4Abajo, int L5, int Duramadre, int CaminoIncorrecto)
         {
 
             this.TejidoAdiposo = TejidoAdiposo;
@@ -39,7 +34,6 @@
             this.L4Abajo = L4Abajo;
             this.L5 = L5;
             this.Duramadre = Duramadre;
-            this.CaminoCorrecto = CaminoCorrecto;
             this.CaminoIncorrecto = CaminoIncorrecto;
         }
     }
