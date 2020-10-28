@@ -61,12 +61,12 @@ namespace LumbApp.Expertos.ExpertoSI
         public InformeSI TerminarSimulacion () {
 
             if (!simulando)
-                return new InformeSI(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                return new InformeSI(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
             simulando = false;
             return new InformeSI(TejidoAdiposo.VecesAtravesada, L2.VecesRozada, L3.VecesArriba, L3.VecesAbajo,
                 L4.VecesArribaIzquierda, L4.VecesArribaDerecha, L4.VecesArribaCentro, L4.VecesAbajo, L5.VecesRozada,
-                Duramadre.VecesAtravesada, VecesCaminoCorrecto, VecesCaminoIncorrecto);
+                Duramadre.VecesAtravesada, VecesCaminoIncorrecto);
         }
         public void Finalizar () { }
         #endregion

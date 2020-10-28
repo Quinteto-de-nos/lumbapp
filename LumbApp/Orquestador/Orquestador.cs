@@ -80,6 +80,7 @@ namespace LumbApp.Orquestador
                 await Task.Run(() =>
                 {
                     #region Inicializar ZE
+                    
                     Calibracion calibracion;
                     try
                     {
@@ -91,7 +92,7 @@ namespace LumbApp.Orquestador
                         //Mejoro el mensaje para el usuario
                         throw new Exception("Error al tratar de cargar el archivo de calibracion. Por favor, calibre el sistema antes de usarlo.");
                     }
-
+                    
                     expertoZE = new ExpertoZE(conectorKinect, calibracion);
                     //expertoZE = new ExpertoZEMock(true);
 

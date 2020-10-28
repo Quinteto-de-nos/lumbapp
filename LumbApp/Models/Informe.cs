@@ -44,7 +44,6 @@ namespace LumbApp.Models
                 { "Roces L4 abajo", Convert.ToString(informeSI.L4Abajo) },
                 { "Roces L5", Convert.ToString(informeSI.L5) },
                 { "Punciones duramadre", Convert.ToString(informeSI.Duramadre) },
-                { "Caminos correctos", Convert.ToString(informeSI.CaminoCorrecto) },
                 { "Caminos incorrectos", Convert.ToString(informeSI.CaminoIncorrecto) },
                 { 
                     "Tiempo total", 
