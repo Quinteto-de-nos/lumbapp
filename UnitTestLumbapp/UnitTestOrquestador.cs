@@ -154,7 +154,7 @@ namespace UnitTestLumbapp
             Mock<IGUIController> gui = new Mock<IGUIController>();
 
             expSI.Setup(x => x.Inicializar()).Returns(true);
-            expSI.Setup(x => x.TerminarSimulacion()).Returns(new InformeSI(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12));
+            expSI.Setup(x => x.TerminarSimulacion()).Returns(new InformeSI(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11));
             expZE.Setup(x => x.Inicializar()).Returns(true);
             expZE.Setup(x => x.TerminarSimulacion()).Returns(new InformeZE(0, 0, 0, videoZE.Object));
 
@@ -209,7 +209,7 @@ namespace UnitTestLumbapp
             orq.SetDatosDeSimulacion(dp, LumbApp.Enums.ModoSimulacion.ModoEvaluacion);
             orq.IniciarSimulacion();
 
-            InformeSI informeSI = new InformeSI(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
+            InformeSI informeSI = new InformeSI(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
             Mock<IVideo> video = new Mock<IVideo>();
             InformeZE informeZE = new InformeZE(1, 2, 3, video.Object);
             expSI.Setup(x => x.TerminarSimulacion()).Returns(informeSI);
@@ -246,7 +246,7 @@ namespace UnitTestLumbapp
             orq.SetDatosDeSimulacion(dp, LumbApp.Enums.ModoSimulacion.ModoEvaluacion);
             orq.IniciarSimulacion();
 
-            InformeSI informeSI = new InformeSI(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
+            InformeSI informeSI = new InformeSI(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
             InformeZE informeZE = new InformeZE(1, 2, 3, new Mock<IVideo>().Object);
             expSI.Setup(x => x.TerminarSimulacion()).Returns(informeSI);
             expZE.Setup(x => x.TerminarSimulacion()).Returns(informeZE);
@@ -279,7 +279,6 @@ namespace UnitTestLumbapp
             Assert.AreEqual(informeSI.L2.ToString(), informe.DatosPractica["Roces L2"]);
             Assert.AreEqual(informeSI.Duramadre.ToString(), informe.DatosPractica["Punciones duramadre"]);
             Assert.AreEqual(informeSI.CaminoIncorrecto.ToString(), informe.DatosPractica["Caminos incorrectos"]);
-            Assert.AreEqual(informeSI.CaminoCorrecto.ToString(), informe.DatosPractica["Caminos correctos"]);
             string tiempoString = string.Format("{0:D2}:{1:D2}", tiempo.Minutes, tiempo.Seconds);
             Assert.AreNotEqual(tiempoString, informe.DatosPractica["Tiempo total"]);
             Assert.IsTrue(informe.PdfGenerado);
