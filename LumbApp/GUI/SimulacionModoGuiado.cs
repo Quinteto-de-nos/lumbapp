@@ -48,7 +48,6 @@ namespace LumbApp.GUI
         private Brush lightred { get; set; }
         private Brush lightyellow { get; set; }
         private Brush lightgreen { get; set; }
-        private Brush darkred { get; set; }
 
         public SimulacionModoGuiado(GUIController gui)
         {
@@ -71,10 +70,9 @@ namespace LumbApp.GUI
             white = (Brush)brushConverter.ConvertFrom("#ffffff");
             black = (Brush)brushConverter.ConvertFrom("#323232");
             lightgreen = (Brush)brushConverter.ConvertFrom("#a7f192");
-            darkred = (Brush)brushConverter.ConvertFrom("#bc100c");
             lightred = (Brush)brushConverter.ConvertFrom("#ff6161");
-            lightyellow = (Brush)brushConverter.ConvertFrom("#ecf192");
-            string[] colores = { "#dcf192", "#f1ef92", "#f1d792", "#f1b392", "#f19292", "#f3817e", "#ff6161" };
+            lightyellow = (Brush)brushConverter.ConvertFrom("#fcf04d");
+            string[] colores = { "#fcbd4c", "#fca74c", "#fc874c", "#fc754c", "#fc5d4c", "#fc4c4c", "#fc4c4c" };
             coloresContaminando = new Brush[colores.Count()];
             for (int i = 0; i < colores.Count(); i++)
             {
@@ -151,8 +149,8 @@ namespace LumbApp.GUI
                     break;
                 case Mano.Estados.Fuera:
                     config.EstadoPath = _manoFueraPath;
-                    config.LabelColor = darkred;
-                    config.FontColor = white;
+                    config.LabelColor = lightyellow;
+                    config.FontColor = black;
                     config.Texto = "Fuera";
                     break;
                 case Mano.Estados.Contaminando:
