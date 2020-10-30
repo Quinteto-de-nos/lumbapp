@@ -32,9 +32,7 @@ namespace LumbApp.GUI
 
             //seteo imagenes
             HandWashingImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "handwashing.png", UriKind.Absolute));
-            CapImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "cap.png", UriKind.Absolute));
-            FacemaskImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "facemask.png", UriKind.Absolute));
-            EyeProtectionImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "eye-protection.png", UriKind.Absolute));
+            CapImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "cap-facemask-eye-protection.png", UriKind.Absolute));
             AlcoholGelImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "alcohol-gel.png", UriKind.Absolute));
             GownImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "gown.png", UriKind.Absolute));
             RubberGlovesImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "rubber-gloves.png", UriKind.Absolute));

@@ -94,21 +94,20 @@
         </Style>
     </Page.Resources>
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-
         <Grid Background="#08cc83">
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
-            <RowDefinition Height="80*" />
+            <RowDefinition Height="100"/>
             <RowDefinition Height="30*" />
-            <RowDefinition Height="18*" />
+            <RowDefinition Height="12" />
             <RowDefinition Height="30*" />
-            <RowDefinition Height="18*" />
+            <RowDefinition Height="12" />
             <RowDefinition Height="30*"/>
-            <RowDefinition Height="18*"/>
+            <RowDefinition Height="12"/>
             <RowDefinition Height="30*"/>
-            <RowDefinition Height="18*"/>
+            <RowDefinition Height="12"/>
             <RowDefinition Height="30*"/>
-            <RowDefinition Height="22*"/>
+            <RowDefinition Height="12"/>
             <RowDefinition Height="30*"/>
             <RowDefinition Height="10*"/>
             <RowDefinition Height="31*"/>
@@ -172,9 +171,9 @@
                 </TextBox.Resources>
             </TextBox>
         </AdornerDecorator>
-        <Label Name="ErrorNombre" Grid.Row="3"  Grid.Column="2" Grid.ColumnSpan="2"
+            <Label Name="ErrorNombre" Grid.Row="3"  Grid.Column="2" Grid.ColumnSpan="2"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-               VerticalContentAlignment="Top" HorizontalContentAlignment="Left"
+               VerticalContentAlignment="Stretch" HorizontalContentAlignment="Left"
                FontSize="12" Foreground="Red"></Label>
 
         <!--Apellido-->
@@ -199,7 +198,7 @@
         </AdornerDecorator>
         <Label Name="ErrorApellido" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-               HorizontalContentAlignment="Left" VerticalContentAlignment="Top" 
+               HorizontalContentAlignment="Left" VerticalContentAlignment="Stretch" 
                FontSize="12" Foreground="Red"></Label>
 
         <!--Dni-->
@@ -226,7 +225,7 @@
 
         <Label Name="ErrorDni" Grid.Row="7"  Grid.Column="2" Grid.ColumnSpan="2"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-               VerticalContentAlignment="Top" HorizontalContentAlignment="Left"
+               VerticalContentAlignment="Stretch" HorizontalContentAlignment="Left"
                FontSize="12" Foreground="Red"></Label>
 
         <!--Mail-->
@@ -252,7 +251,7 @@
         </AdornerDecorator>
         <Label Name="ErrorMail" Grid.Row="9"  Grid.Column="2" Grid.ColumnSpan="2"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-               VerticalContentAlignment="Top" HorizontalContentAlignment="Left"
+               VerticalContentAlignment="Stretch" HorizontalContentAlignment="Left"
                FontSize="12" Foreground="Red"></Label>
 
         <ComboBox Name="ComboModo" Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="2"
@@ -277,7 +276,7 @@
 
         <Label Grid.Row="11"  Grid.Column="2" Grid.ColumnSpan="2"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-               VerticalContentAlignment="Bottom" HorizontalContentAlignment="Left"
+               VerticalContentAlignment="Stretch" HorizontalContentAlignment="Left"
                FontSize="12" Foreground="#595959">
             Los resultados de la práctica se guardarán en...</Label>
 
