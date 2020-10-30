@@ -121,9 +121,10 @@ namespace LumbApp.GUI
             ManoDerLabel.Content = config.Texto;
 
             //Alerta sonido
+            /*
             if (e.ContaminadoAhora)
                 SystemSounds.Exclamation.Play();
-
+            */
         }
 
         public ManosImageConfig GetNuevaConfiguracionImagenMano(Mano.Tracking track, Mano.Estados estado, int nroIngreso)
@@ -179,7 +180,7 @@ namespace LumbApp.GUI
         }
         private void handlerSI()
         {
-            MostrarAlertas(cambiosSI);
+            //MostrarAlertas(cambiosSI);
 
             //ATRAVIESA LA PIEL
             if (cambiosSI.TejidoAdiposo.Estado == Capa.Estados.Atravesando || cambiosSI.TejidoAdiposo.Estado == Capa.Estados.AtravesandoNuevamente)
@@ -278,7 +279,7 @@ namespace LumbApp.GUI
                 DuramadreFrontImage.Source = null;
             }
         }
-
+        /*
         private void MostrarAlertas(CambioSIEventArgs e)
         {
             if ((e.L3RozandoAhora && e.L3.Sector == VertebraL3.Sectores.Arriba) ||
@@ -295,7 +296,7 @@ namespace LumbApp.GUI
             }
 
         }
-
+        */
         #endregion
 
         #region Finalizar Simulacion

@@ -23,7 +23,6 @@ namespace LumbApp.Expertos.ExpertoSI
         private bool AhoraL5 = false;
         private bool AhoraDuramadre = false;
 
-        private int VecesCaminoCorrecto = 0;
         private int VecesCaminoIncorrecto = 0;
 
         private bool _simulando = false;
@@ -100,14 +99,14 @@ namespace LumbApp.Expertos.ExpertoSI
         public InformeSI TerminarSimulacion()
         {
             if (!_simulando)
-                return new InformeSI(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                return new InformeSI(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
             _simulando = false;
             sensoresInternos.PausarSensado();
 
             InformeSI informe = new InformeSI(TejidoAdiposo.VecesAtravesada, L2.VecesRozada, L3.VecesArriba, L3.VecesAbajo,
                 L4.VecesArribaIzquierda, L4.VecesArribaDerecha, L4.VecesArribaCentro, L4.VecesAbajo, L5.VecesRozada,
-                Duramadre.VecesAtravesada, VecesCaminoCorrecto, VecesCaminoIncorrecto);
+                Duramadre.VecesAtravesada, VecesCaminoIncorrecto);
 
             Resetear();
             Console.WriteLine("SI: Simulación terminada");
@@ -128,7 +127,6 @@ namespace LumbApp.Expertos.ExpertoSI
             L5.Resetear();
             Duramadre.Resetear();
 
-            VecesCaminoCorrecto = 0;
             VecesCaminoIncorrecto = 0;
 
             AhoraTejidoAdiposo = false;
@@ -189,7 +187,6 @@ namespace LumbApp.Expertos.ExpertoSI
         private bool RealizarAcciones(string datosSensados)
         {
             bool Cambio = false;
-            bool CaminoCorrecto = false;
             CaminoIncorrecto = false;
 
             //Camino CORRECTO - TEJIDO ADIPOSO
@@ -198,7 +195,6 @@ namespace LumbApp.Expertos.ExpertoSI
                 if (TejidoAdiposo.Atravesar())
                 {
                     AhoraTejidoAdiposo = true;
-                    CaminoCorrecto = true;
                 }
             }
             else
@@ -285,7 +281,6 @@ namespace LumbApp.Expertos.ExpertoSI
                 if (L4.RozarSector(VertebraL4.Sectores.ArribaCentro))
                 {
                     AhoraL4 = true;
-                    CaminoCorrecto = true;
                 }
             }
             else
@@ -329,7 +324,6 @@ namespace LumbApp.Expertos.ExpertoSI
                 if (Duramadre.Atravesar())
                 {
                     AhoraDuramadre = true;
-                    CaminoCorrecto = true;
                 }
             }
             else
@@ -343,13 +337,6 @@ namespace LumbApp.Expertos.ExpertoSI
 
             if (CaminoIncorrecto)
                 VecesCaminoIncorrecto++;
-            else if (CaminoCorrecto && (TejidoAdiposo.Estado == Capa.Estados.AtravesandoNuevamente ||
-                L4.Estado == VertebraL4.Estados.RozandoNuevamente ||
-                Duramadre.Estado == Capa.Estados.AtravesandoNuevamente || Duramadre.Estado == Capa.Estados.Atravesando))
-            {
-
-                VecesCaminoCorrecto++;
-            }
 
             return Cambio;
         }
