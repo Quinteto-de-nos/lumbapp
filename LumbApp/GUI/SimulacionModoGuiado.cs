@@ -224,6 +224,20 @@ namespace LumbApp.GUI
                 L3SideImage.Source = null;
             }
 
+            //ROZANDO L5
+            if (cambiosSI.L5.Estado == Vertebra.Estados.Rozando || cambiosSI.L5.Estado == Vertebra.Estados.RozandoNuevamente)
+            {
+                RozandoLabel.Content = "L5";
+                RozandoBackgroundLabel.Background = lightred;
+                L5SideImage.Source = new BitmapImage(new Uri(_capasSidePath + "L5 adelante.png", UriKind.Absolute));
+                L5FrontImage.Source = new BitmapImage(new Uri(_capasFrontPath + "L5 adelante.png", UriKind.Absolute));
+            }
+            else
+            {
+                L5SideImage.Source = null;
+                L5FrontImage.Source = null;
+            }
+
             //ROZANDO L4
             if (cambiosSI.L4.Estado == Vertebra.Estados.Rozando || cambiosSI.L4.Estado == Vertebra.Estados.RozandoNuevamente)
             {
@@ -249,25 +263,10 @@ namespace LumbApp.GUI
                 L4FrontImage.Source = null;
             }
 
-            //ROZANDO L5
-            if (cambiosSI.L5.Estado == Vertebra.Estados.Rozando || cambiosSI.L5.Estado == Vertebra.Estados.RozandoNuevamente)
-            {
-                RozandoLabel.Content = "L5";
-                RozandoBackgroundLabel.Background = lightred;
-                L5SideImage.Source = new BitmapImage(new Uri(_capasSidePath + "L5 adelante.png", UriKind.Absolute));
-                L5FrontImage.Source = new BitmapImage(new Uri(_capasFrontPath + "L5 adelante.png", UriKind.Absolute));
-            }
-            else
-            {
-                L5SideImage.Source = null;
-                L5FrontImage.Source = null;
-            }
-
             //ATRAVIESA LA DURAMADRE
             if (cambiosSI.Duramadre.Estado == Capa.Estados.Atravesando || cambiosSI.Duramadre.Estado == Capa.Estados.AtravesandoNuevamente)
             {
                 CapaActualLabel.Content = "DURAMADRE";
-                RozandoBackgroundLabel.Background = white;
                 DuramadreSideImage.Source = new BitmapImage(new Uri(_capasSidePath + "duramadre.png", UriKind.Absolute));
                 DuramadreFrontImage.Source = new BitmapImage(new Uri(_capasFrontPath + "duramadre.png", UriKind.Absolute));
             }
