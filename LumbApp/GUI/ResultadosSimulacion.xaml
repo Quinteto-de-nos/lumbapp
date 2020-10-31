@@ -60,40 +60,15 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <!--CARTEL DE ESPERA-->
-        <Border Grid.Column="1" Grid.Row="1"  Name="BorderEspera"
-                Grid.ColumnSpan="2" Grid.RowSpan="3"
-                MinHeight="160" MinWidth="1040"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                Background="White" Opacity="0.5"
-                Margin="0,5,0,5"
-                CornerRadius="40"/>
-        <fa:ImageAwesome Name="SpinerIcon" 
-                         Grid.RowSpan="3" Grid.ColumnSpan="2"
-                         Grid.Column="1" Grid.Row="1" 
-                         Icon="Refresh" Spin="True" 
-                         Foreground="#009960" 
-                         Height="100" Width="100" 
-                         Margin="0,0,0,150"
-                         VerticalAlignment="Center"/>
-        
-            <Label  Name="TextoEspera"
-                Grid.Row="1" Grid.Column="1" 
-                Grid.ColumnSpan="2" Grid.RowSpan="3"
-                VerticalAlignment="Center" HorizontalAlignment="Center" 
-                FontSize="32" FontWeight="DemiBold"  Foreground="Black"
-                Margin="0,150,0,0">Se están procesando los datos de la práctica</Label>
         <!--DATOS DEL PRACTICANTE-->
-        <Border Name="DatosPracticanteBorder"
-                Grid.Column="1" Grid.Row="1"  
+        <Border Grid.Column="1" Grid.Row="1"  
                 Grid.ColumnSpan="2"
                 MinHeight="160" MinWidth="1040"
                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                 Background="White" Opacity="0.5"
                 Margin="0,5,0,5"
                 CornerRadius="40"/>
-        <Label  Name="DatosPracticanteLabel"
-                Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+        <Label  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
                 VerticalAlignment="Top" HorizontalAlignment="Center" 
                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                 FontSize="26" FontWeight="DemiBold"  Foreground="Black"
@@ -101,29 +76,27 @@
                 >Datos del practicante</Label>
         <Label  Name="NombrePracticante"
             Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
-                VerticalAlignment="Top" HorizontalAlignment="Left"
+                VerticalAlignment="Bottom" HorizontalAlignment="Left"
                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                Margin="100,70,0,0"
+                Margin="100,0,0,50"
                 FontSize="22" FontWeight="Regular"  Foreground="Black"
                 ></Label>
         <Label  Name="DniPracticante"
             Grid.Row="1" Grid.Column="2"
-                VerticalAlignment="Top" HorizontalAlignment="Left"
+                VerticalAlignment="Bottom" HorizontalAlignment="Left"
                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                Margin="100,70,0,0"
+                Margin="100,0,0,70"
                 FontSize="22" FontWeight="Regular"  Foreground="Black"
                 ></Label>
         <!--RESULTADOS-->
-        <Border Name="DatosPracticaBorder"
-                Grid.Column="1" Grid.Row="3"  
+        <Border Grid.Column="1" Grid.Row="3"  
                 Grid.ColumnSpan="2"
                 MinHeight="350" MinWidth="1040"
                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                 Margin="0,5,0,5"
                 Background="White" Opacity="0.5"
                 CornerRadius="40"/>
-        <Label  Name="DatosPracticaLabel"
-                Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
+        <Label  Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
                 VerticalAlignment="Top" HorizontalAlignment="Center" 
                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                 FontSize="26" FontWeight="DemiBold"  Foreground="Black"

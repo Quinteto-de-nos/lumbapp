@@ -81,20 +81,20 @@ namespace LumbApp.Orquestador
                 {
                     #region Inicializar ZE
                     
-                    //Calibracion calibracion;
-                    //try
-                    //{
-                    //    calibracion = fileSystem.LevantarArchivoDeTextoComoObjeto<Calibracion>("./zonaEsteril.json");
-                    //}
-                    //catch (Exception e)
-                    //{
-                    //    Console.WriteLine(e);
-                    //    //Mejoro el mensaje para el usuario
-                    //    throw new Exception("Error al tratar de cargar el archivo de calibracion. Por favor, calibre el sistema antes de usarlo.");
-                    //}
+                    Calibracion calibracion;
+                    try
+                    {
+                        calibracion = fileSystem.LevantarArchivoDeTextoComoObjeto<Calibracion>("./zonaEsteril.json");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        //Mejoro el mensaje para el usuario
+                        throw new Exception("Error al tratar de cargar el archivo de calibracion. Por favor, calibre el sistema antes de usarlo.");
+                    }
                     
-                    //expertoZE = new ExpertoZE(conectorKinect, calibracion);
-                    expertoZE = new ExpertoZEMock(true);
+                    expertoZE = new ExpertoZE(conectorKinect, calibracion);
+                    //expertoZE = new ExpertoZEMock(true);
 
                     expertoZE.CambioZE += CambioZE; //suscripción al evento CambioZE
                     if (!expertoZE.Inicializar())
@@ -102,8 +102,8 @@ namespace LumbApp.Orquestador
                     #endregion
 
                     #region Inicializar SI
-                    //expertoSI = new ExpertoSI(conectorArduino);
-                    expertoSI = new ExpertoSIMock(true);
+                    expertoSI = new ExpertoSI(conectorArduino);
+                    //expertoSI = new ExpertoSIMock(true);
 
                     expertoSI.CambioSI += CambioSI; //suscripción al evento CambioSI
                     if (!expertoSI.Inicializar())
@@ -142,7 +142,7 @@ namespace LumbApp.Orquestador
             tiempoInicialDeEjecucion = DateTime.Now;
             ruta = ObtenerRuta(tiempoInicialDeEjecucion);
 
-            //expertoZE.IniciarSimulacion(new Video(ruta + ".mp4"));
+            expertoZE.IniciarSimulacion(new Video(ruta + ".mp4"));
             expertoSI.IniciarSimulacion();
 
             if (modoSeleccionado == ModoSimulacion.ModoGuiado)
