@@ -147,37 +147,37 @@
                Grid.RowSpan="3"
                MinHeight="270" MinWidth="170"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                Margin="50,10,0,20" />
+                Margin="0,10,0,20" />
 
         <Image  Name="DuramadreFrontImage"
                 Grid.Row="3" Grid.Column="2" 
                 Grid.RowSpan="3" 
                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                Margin="50,10,0,20" />
+                Margin="0,10,0,20" />
 
         <Image  Name="L2SFrontImage"
                 Grid.Row="3" Grid.Column="2" 
                 Grid.RowSpan="3" 
                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                Margin="50,10,0,20" />
+                Margin="0,10,0,20" />
 
         <Image  Name="L3FrontImage"
                 Grid.Row="3" Grid.Column="2" 
                 Grid.RowSpan="3" 
                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                Margin="50,10,0,20"/>
+                Margin="0,10,0,20"/>
 
         <Image  Name="L4FrontImage"
                 Grid.Row="3" Grid.Column="2" 
                 Grid.RowSpan="3" 
                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                Margin="50,10,0,20"/>
+                Margin="0,10,0,20"/>
 
         <Image  Name="L5FrontImage"
                 Grid.Row="3" Grid.Column="2" 
                 Grid.RowSpan="3" 
                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                Margin="50,10,0,20"
+                Margin="0,10,0,20"
                 />
 
         <!--Etiquetas Manos-->
