@@ -18,6 +18,19 @@ namespace LumbApp.GUI
         {
             InitializeComponent();
             _controller = gui;
+            DatosPracticaBorder.Visibility = Visibility.Hidden;
+            DatosPracticaLabel.Visibility = Visibility.Hidden;
+            DatosPracticanteBorder.Visibility = Visibility.Hidden;
+            DatosPracticanteLabel.Visibility = Visibility.Hidden;
+            SpinerIcon.Visibility = Visibility.Visible;
+            TextoEspera.Visibility = Visibility.Visible;
+            BorderEspera.Visibility = Visibility.Visible;
+            NombrePracticante.Content = "";
+            DniPracticante.Content = "";
+            ReporteItemTitulo1.Content = "";
+            ReporteItemTitulo2.Content = "";
+            ReporteItemValor1.Content = "";
+            ReporteItemValor2.Content = "";
         }
 
         private void NuevaSimulacion_Click(object sender, RoutedEventArgs e)
@@ -27,6 +40,14 @@ namespace LumbApp.GUI
 
         public void MostrarResultados(Informe informe)
         {
+            DatosPracticaBorder.Visibility = Visibility.Visible;
+            DatosPracticaLabel.Visibility = Visibility.Visible;
+            DatosPracticanteBorder.Visibility = Visibility.Visible;
+            DatosPracticanteLabel.Visibility = Visibility.Visible;
+            SpinerIcon.Visibility = Visibility.Hidden;
+            TextoEspera.Visibility = Visibility.Hidden;
+            BorderEspera.Visibility = Visibility.Hidden;
+
             NombrePracticante.Content =
                 String.Format(
                     "{0}, {1}" + Environment.NewLine +
@@ -34,7 +55,7 @@ namespace LumbApp.GUI
 
             DniPracticante.Content = "DNI: " + informe.Dni.ToString();
 
-            int halfPoint = informe.DatosPractica.Count / 2;
+            var halfPoint = Math.Ceiling(informe.DatosPractica.Count / 2.0);
             int i = 1;
 
             foreach (DictionaryEntry dato in informe.DatosPractica)
@@ -51,11 +72,16 @@ namespace LumbApp.GUI
                 }
                 i++;
             }
+            if(informe.DatosPractica.Count % 2 != 0)
+            {
+                ReporteItemTitulo2.Content += "  " + Environment.NewLine;
+                ReporteItemValor2.Content += "  " + Environment.NewLine;
+            }
         }
 
         public void ResultadosGuardados()
         {
-            //TODO
+            throw new NotImplementedException();
         }
     }
 }
