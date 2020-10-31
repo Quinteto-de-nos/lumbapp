@@ -18,19 +18,8 @@ namespace LumbApp.GUI
         {
             InitializeComponent();
             _controller = gui;
-            DatosPracticaBorder.Visibility = Visibility.Hidden;
-            DatosPracticaLabel.Visibility = Visibility.Hidden;
-            DatosPracticanteBorder.Visibility = Visibility.Hidden;
-            DatosPracticanteLabel.Visibility = Visibility.Hidden;
-            SpinerIcon.Visibility = Visibility.Visible;
-            TextoEspera.Visibility = Visibility.Visible;
-            BorderEspera.Visibility = Visibility.Visible;
-            NombrePracticante.Content = "";
-            DniPracticante.Content = "";
-            ReporteItemTitulo1.Content = "";
-            ReporteItemTitulo2.Content = "";
-            ReporteItemValor1.Content = "";
-            ReporteItemValor2.Content = "";
+            NuevaSimulacion.IsEnabled = false;
+            CheckIcon.Visibility = Visibility.Hidden;
         }
 
         private void NuevaSimulacion_Click(object sender, RoutedEventArgs e)
@@ -40,20 +29,13 @@ namespace LumbApp.GUI
 
         public void MostrarResultados(Informe informe)
         {
-            DatosPracticaBorder.Visibility = Visibility.Visible;
-            DatosPracticaLabel.Visibility = Visibility.Visible;
-            DatosPracticanteBorder.Visibility = Visibility.Visible;
-            DatosPracticanteLabel.Visibility = Visibility.Visible;
-            SpinerIcon.Visibility = Visibility.Hidden;
-            TextoEspera.Visibility = Visibility.Hidden;
-            BorderEspera.Visibility = Visibility.Hidden;
-
-            NombrePracticante.Content =
+            DatosPracticante.Content =
                 String.Format(
                     "{0}, {1}" + Environment.NewLine +
-                    "Resultados de la práctica en {2}", informe.Apellido, informe.Nombre, informe.FolderPath);
+                    "DNI: {2}", informe.Apellido, informe.Nombre, informe.Dni);
 
-            DniPracticante.Content = "DNI: " + informe.Dni.ToString();
+            RutaResultados.Content = "     Guardando resultados en"
+                + Environment.NewLine + informe.FolderPath;
 
             var halfPoint = Math.Ceiling(informe.DatosPractica.Count / 2.0);
             int i = 1;
@@ -81,7 +63,11 @@ namespace LumbApp.GUI
 
         public void ResultadosGuardados()
         {
-            //TODO
+            RutaResultados.Content = RutaResultados.Content.ToString()
+                .Replace("Guardando resultados", "Resultados guardado");
+            SpinerIcon.Visibility = Visibility.Hidden;
+            CheckIcon.Visibility = Visibility.Visible;
+            NuevaSimulacion.IsEnabled = true;
         }
     }
 }
