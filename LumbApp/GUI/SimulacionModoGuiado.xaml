@@ -146,37 +146,38 @@
                 Grid.Row="3" Grid.Column="2" 
                Grid.RowSpan="3"
                MinHeight="270" MinWidth="170"
-               Stretch="UniformToFill"
-                Margin="20,0,0,0"  />
+               VerticalAlignment="Stretch" HorizontalAlignment="Center" 
+                Margin="50,10,0,20" />
 
         <Image  Name="DuramadreFrontImage"
                 Grid.Row="3" Grid.Column="2" 
                 Grid.RowSpan="3" 
-                Stretch="UniformToFill"
-                Margin="20,0,0,0" />
+                VerticalAlignment="Stretch" HorizontalAlignment="Center" 
+                Margin="50,10,0,20" />
 
         <Image  Name="L2SFrontImage"
                 Grid.Row="3" Grid.Column="2" 
                 Grid.RowSpan="3" 
-                Stretch="UniformToFill"
-                Margin="20,0,0,0" />
+                VerticalAlignment="Stretch" HorizontalAlignment="Center" 
+                Margin="50,10,0,20" />
 
         <Image  Name="L3FrontImage"
                 Grid.Row="3" Grid.Column="2" 
                 Grid.RowSpan="3" 
-                Stretch="UniformToFill"
-                Margin="20,0,0,0" />
+                VerticalAlignment="Stretch" HorizontalAlignment="Center" 
+                Margin="50,10,0,20"/>
 
         <Image  Name="L4FrontImage"
                 Grid.Row="3" Grid.Column="2" 
                 Grid.RowSpan="3" 
-                Stretch="UniformToFill"
-                Margin="20,0,0,0" />
+                VerticalAlignment="Stretch" HorizontalAlignment="Center" 
+                Margin="50,10,0,20"/>
 
         <Image  Name="L5FrontImage"
                 Grid.Row="3" Grid.Column="2" 
-                Grid.RowSpan="3" Stretch="UniformToFill"
-                Margin="20,0,0,0" 
+                Grid.RowSpan="3" 
+                VerticalAlignment="Stretch" HorizontalAlignment="Center" 
+                Margin="50,10,0,20"
                 />
 
         <!--Etiquetas Manos-->
