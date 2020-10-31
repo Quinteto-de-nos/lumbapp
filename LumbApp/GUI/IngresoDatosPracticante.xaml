@@ -93,23 +93,24 @@
             </Style.Triggers>
         </Style>
     </Page.Resources>
-    <Grid Background="#08cc83">
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid Background="#08cc83">
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
-            <RowDefinition Height="80*" />
+            <RowDefinition Height="100"/>
             <RowDefinition Height="30*" />
-            <RowDefinition Height="18*" />
+            <RowDefinition Height="12" />
             <RowDefinition Height="30*" />
-            <RowDefinition Height="18*" />
+            <RowDefinition Height="12" />
             <RowDefinition Height="30*"/>
-            <RowDefinition Height="18*"/>
+            <RowDefinition Height="12"/>
             <RowDefinition Height="30*"/>
-            <RowDefinition Height="18*"/>
+            <RowDefinition Height="12"/>
             <RowDefinition Height="30*"/>
-            <RowDefinition Height="22*"/>
+            <RowDefinition Height="12"/>
             <RowDefinition Height="30*"/>
             <RowDefinition Height="10*"/>
-            <RowDefinition Height="30*"/>
+            <RowDefinition Height="31*"/>
             <RowDefinition Height="40*"/>
             <RowDefinition Height="40*"/>
         </Grid.RowDefinitions>
@@ -140,6 +141,8 @@
         <Border Grid.Column="1" Grid.Row="1"   Grid.ColumnSpan="4"
                 Background="White" Opacity="0.75"
                 Grid.RowSpan="15"
+                MinHeight="600" MinWidth="440"
+                Margin="5,5,5,5"
                 CornerRadius="40"/>
 
         <Label Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"
@@ -168,9 +171,9 @@
                 </TextBox.Resources>
             </TextBox>
         </AdornerDecorator>
-        <Label Name="ErrorNombre" Grid.Row="3"  Grid.Column="2" Grid.ColumnSpan="2"
+            <Label Name="ErrorNombre" Grid.Row="3"  Grid.Column="2" Grid.ColumnSpan="2"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-               VerticalContentAlignment="Top" HorizontalContentAlignment="Left"
+               VerticalContentAlignment="Stretch" HorizontalContentAlignment="Left"
                FontSize="12" Foreground="Red"></Label>
 
         <!--Apellido-->
@@ -195,7 +198,7 @@
         </AdornerDecorator>
         <Label Name="ErrorApellido" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-               HorizontalContentAlignment="Left" VerticalContentAlignment="Top" 
+               HorizontalContentAlignment="Left" VerticalContentAlignment="Stretch" 
                FontSize="12" Foreground="Red"></Label>
 
         <!--Dni-->
@@ -222,7 +225,7 @@
 
         <Label Name="ErrorDni" Grid.Row="7"  Grid.Column="2" Grid.ColumnSpan="2"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-               VerticalContentAlignment="Top" HorizontalContentAlignment="Left"
+               VerticalContentAlignment="Stretch" HorizontalContentAlignment="Left"
                FontSize="12" Foreground="Red"></Label>
 
         <!--Mail-->
@@ -248,7 +251,7 @@
         </AdornerDecorator>
         <Label Name="ErrorMail" Grid.Row="9"  Grid.Column="2" Grid.ColumnSpan="2"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-               VerticalContentAlignment="Top" HorizontalContentAlignment="Left"
+               VerticalContentAlignment="Stretch" HorizontalContentAlignment="Left"
                FontSize="12" Foreground="Red"></Label>
 
         <ComboBox Name="ComboModo" Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="2"
@@ -273,7 +276,7 @@
 
         <Label Grid.Row="11"  Grid.Column="2" Grid.ColumnSpan="2"
                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-               VerticalContentAlignment="Bottom" HorizontalContentAlignment="Left"
+               VerticalContentAlignment="Stretch" HorizontalContentAlignment="Left"
                FontSize="12" Foreground="#595959">
             Los resultados de la práctica se guardarán en...</Label>
 
@@ -289,7 +292,8 @@
                     <Setter Property="CornerRadius" Value="25"/>
                 </Style>
             </Button.Resources>
-            CAMBIAR</Button>
+            CAMBIAR
+        </Button>
 
         <Border Grid.Row="12"  Grid.Column="2" Grid.ColumnSpan="1" Margin="0,0,10,0"
                 Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
@@ -302,7 +306,7 @@
         <Button Grid.Row="14" Grid.Column="2" Grid.ColumnSpan="2"
                  Padding="5" 
                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-               HorizontalContentAlignment="Center" 
+               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                Foreground="White"  BorderThickness="0"
                 FontSize="24" FontWeight="Regular"
           Name="IniciarSimulacion" Click="IniciarSimulacion_Click">
@@ -321,5 +325,5 @@
                          VerticalAlignment="Top" Grid.RowSpan="2" Grid.Row="1"
                          />-->
     </Grid>
-
+    </ScrollViewer>
 </Page>

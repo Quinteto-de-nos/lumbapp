@@ -22,9 +22,6 @@ namespace LumbApp.GUI
     {
         public GUIController _controller { get; set; }
 
-        //para alertas
-        private DispatcherTimer timer;
-        int timeLeft { get; set; }
         private CambioSIEventArgs cambiosSI;
         private CambioZEEventArgs cambiosZE;
 
