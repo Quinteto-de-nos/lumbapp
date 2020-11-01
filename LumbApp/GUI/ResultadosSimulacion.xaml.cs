@@ -18,6 +18,8 @@ namespace LumbApp.GUI
         {
             InitializeComponent();
             _controller = gui;
+            NuevaSimulacion.IsEnabled = false;
+            CheckIcon.Visibility = Visibility.Hidden;
         }
 
         private void NuevaSimulacion_Click(object sender, RoutedEventArgs e)
@@ -27,14 +29,15 @@ namespace LumbApp.GUI
 
         public void MostrarResultados(Informe informe)
         {
-            NombrePracticante.Content =
+            DatosPracticante.Content =
                 String.Format(
                     "{0}, {1}" + Environment.NewLine +
-                    "Resultados de la práctica en {2}", informe.Apellido, informe.Nombre,informe.FolderPath);
+                    "DNI: {2}", informe.Apellido, informe.Nombre, informe.Dni);
 
-            DniPracticante.Content = "DNI: " + informe.Dni.ToString();
+            RutaResultados.Content = "     Guardando resultados en"
+                + Environment.NewLine + informe.FolderPath;
 
-            int halfPoint = informe.DatosPractica.Count / 2;
+            var halfPoint = Math.Ceiling(informe.DatosPractica.Count / 2.0);
             int i = 1;
 
             foreach (DictionaryEntry dato in informe.DatosPractica)
@@ -51,11 +54,20 @@ namespace LumbApp.GUI
                 }
                 i++;
             }
+            if (informe.DatosPractica.Count % 2 != 0)
+            {
+                ReporteItemTitulo2.Content += "  " + Environment.NewLine;
+                ReporteItemValor2.Content += "  " + Environment.NewLine;
+            }
         }
 
         public void ResultadosGuardados()
         {
-            //TODO
+            RutaResultados.Content = RutaResultados.Content.ToString()
+                .Replace("Guardando resultados", "Resultados guardado");
+            SpinerIcon.Visibility = Visibility.Hidden;
+            CheckIcon.Visibility = Visibility.Visible;
+            NuevaSimulacion.IsEnabled = true;
         }
     }
 }

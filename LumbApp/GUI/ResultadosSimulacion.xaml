@@ -74,21 +74,36 @@
                 FontSize="26" FontWeight="DemiBold"  Foreground="Black"
                 Margin="0,15,0,0"
                 >Datos del practicante</Label>
-        <Label  Name="NombrePracticante"
-            Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
-                VerticalAlignment="Bottom" HorizontalAlignment="Left"
+        <Label  Name="DatosPracticante"
+                Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                VerticalAlignment="Top" HorizontalAlignment="Left"
                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                Margin="100,0,0,50"
+                Margin="60,70,0,0"
                 FontSize="22" FontWeight="Regular"  Foreground="Black"
                 ></Label>
-        <Label  Name="DniPracticante"
+        <Label  Name="RutaResultados"
             Grid.Row="1" Grid.Column="2"
-                VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                VerticalAlignment="Top" HorizontalAlignment="Left"
                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                Margin="100,0,0,70"
+                Margin="60,70,0,0"
                 FontSize="22" FontWeight="Regular"  Foreground="Black"
                 ></Label>
-        <!--RESULTADOS-->
+        <fa:ImageAwesome Name="SpinerIcon"
+               Grid.Column="2" Grid.Row="1" 
+               Icon="Refresh" Spin="True" 
+               Foreground="Black" 
+               Height="22" Width="22" 
+               VerticalAlignment="Top" HorizontalAlignment="Left"
+               Margin="67,78,0,0"/>
+            <fa:ImageAwesome Name="CheckIcon"
+               Grid.Column="2" Grid.Row="1" 
+               Icon="Check" 
+               Foreground="Black" 
+               Height="17" Width="22" 
+               VerticalAlignment="Top" HorizontalAlignment="Left"
+               Margin="66,82,0,0"/>
+
+            <!--RESULTADOS-->
         <Border Grid.Column="1" Grid.Row="3"  
                 Grid.ColumnSpan="2"
                 MinHeight="350" MinWidth="1040"
