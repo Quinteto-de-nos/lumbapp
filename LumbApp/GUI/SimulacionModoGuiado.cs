@@ -22,9 +22,6 @@ namespace LumbApp.GUI
     {
         public GUIController _controller { get; set; }
 
-        //para alertas
-        private DispatcherTimer timer;
-        int timeLeft { get; set; }
         private CambioSIEventArgs cambiosSI;
         private CambioZEEventArgs cambiosZE;
 
@@ -51,7 +48,6 @@ namespace LumbApp.GUI
         private Brush lightred { get; set; }
         private Brush lightyellow { get; set; }
         private Brush lightgreen { get; set; }
-        private Brush darkred { get; set; }
 
         public SimulacionModoGuiado(GUIController gui)
         {
@@ -74,10 +70,9 @@ namespace LumbApp.GUI
             white = (Brush)brushConverter.ConvertFrom("#ffffff");
             black = (Brush)brushConverter.ConvertFrom("#323232");
             lightgreen = (Brush)brushConverter.ConvertFrom("#a7f192");
-            darkred = (Brush)brushConverter.ConvertFrom("#bc100c");
             lightred = (Brush)brushConverter.ConvertFrom("#ff6161");
-            lightyellow = (Brush)brushConverter.ConvertFrom("#ecf192");
-            string[] colores = { "#dcf192", "#f1ef92", "#f1d792", "#f1b392", "#f19292", "#f3817e", "#ff6161" };
+            lightyellow = (Brush)brushConverter.ConvertFrom("#fcf04d");
+            string[] colores = { "#fcbd4c", "#fca74c", "#fc874c", "#fc754c", "#fc5d4c", "#fc4c4c", "#fc4c4c" };
             coloresContaminando = new Brush[colores.Count()];
             for (int i = 0; i < colores.Count(); i++)
             {
@@ -124,9 +119,10 @@ namespace LumbApp.GUI
             ManoDerLabel.Content = config.Texto;
 
             //Alerta sonido
+            /*
             if (e.ContaminadoAhora)
                 SystemSounds.Exclamation.Play();
-
+            */
         }
 
         public ManosImageConfig GetNuevaConfiguracionImagenMano(Mano.Tracking track, Mano.Estados estado, int nroIngreso)
@@ -153,8 +149,8 @@ namespace LumbApp.GUI
                     break;
                 case Mano.Estados.Fuera:
                     config.EstadoPath = _manoFueraPath;
-                    config.LabelColor = darkred;
-                    config.FontColor = white;
+                    config.LabelColor = lightyellow;
+                    config.FontColor = black;
                     config.Texto = "Fuera";
                     break;
                 case Mano.Estados.Contaminando:
@@ -182,7 +178,7 @@ namespace LumbApp.GUI
         }
         private void handlerSI()
         {
-            MostrarAlertas(cambiosSI);
+            //MostrarAlertas(cambiosSI);
 
             //ATRAVIESA LA PIEL
             if (cambiosSI.TejidoAdiposo.Estado == Capa.Estados.Atravesando || cambiosSI.TejidoAdiposo.Estado == Capa.Estados.AtravesandoNuevamente)
@@ -228,6 +224,20 @@ namespace LumbApp.GUI
                 L3SideImage.Source = null;
             }
 
+            //ROZANDO L5
+            if (cambiosSI.L5.Estado == Vertebra.Estados.Rozando || cambiosSI.L5.Estado == Vertebra.Estados.RozandoNuevamente)
+            {
+                RozandoLabel.Content = "L5";
+                RozandoBackgroundLabel.Background = lightred;
+                L5SideImage.Source = new BitmapImage(new Uri(_capasSidePath + "L5 adelante.png", UriKind.Absolute));
+                L5FrontImage.Source = new BitmapImage(new Uri(_capasFrontPath + "L5 adelante.png", UriKind.Absolute));
+            }
+            else
+            {
+                L5SideImage.Source = null;
+                L5FrontImage.Source = null;
+            }
+
             //ROZANDO L4
             if (cambiosSI.L4.Estado == Vertebra.Estados.Rozando || cambiosSI.L4.Estado == Vertebra.Estados.RozandoNuevamente)
             {
@@ -253,25 +263,10 @@ namespace LumbApp.GUI
                 L4FrontImage.Source = null;
             }
 
-            //ROZANDO L5
-            if (cambiosSI.L5.Estado == Vertebra.Estados.Rozando || cambiosSI.L5.Estado == Vertebra.Estados.RozandoNuevamente)
-            {
-                RozandoLabel.Content = "L5";
-                RozandoBackgroundLabel.Background = lightred;
-                L5SideImage.Source = new BitmapImage(new Uri(_capasSidePath + "L5 adelante.png", UriKind.Absolute));
-                L5FrontImage.Source = new BitmapImage(new Uri(_capasFrontPath + "L5 adelante.png", UriKind.Absolute));
-            }
-            else
-            {
-                L5SideImage.Source = null;
-                L5FrontImage.Source = null;
-            }
-
             //ATRAVIESA LA DURAMADRE
             if (cambiosSI.Duramadre.Estado == Capa.Estados.Atravesando || cambiosSI.Duramadre.Estado == Capa.Estados.AtravesandoNuevamente)
             {
                 CapaActualLabel.Content = "DURAMADRE";
-                RozandoBackgroundLabel.Background = white;
                 DuramadreSideImage.Source = new BitmapImage(new Uri(_capasSidePath + "duramadre.png", UriKind.Absolute));
                 DuramadreFrontImage.Source = new BitmapImage(new Uri(_capasFrontPath + "duramadre.png", UriKind.Absolute));
             }
@@ -281,7 +276,7 @@ namespace LumbApp.GUI
                 DuramadreFrontImage.Source = null;
             }
         }
-
+        /*
         private void MostrarAlertas(CambioSIEventArgs e)
         {
             if ((e.L3RozandoAhora && e.L3.Sector == VertebraL3.Sectores.Arriba) ||
@@ -298,7 +293,7 @@ namespace LumbApp.GUI
             }
 
         }
-
+        */
         #endregion
 
         #region Finalizar Simulacion

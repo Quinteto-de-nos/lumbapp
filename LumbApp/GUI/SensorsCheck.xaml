@@ -34,13 +34,14 @@
             </Style.Triggers>
         </Style>
     </Page.Resources>
-    <Grid>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition/>
             <RowDefinition />
             <RowDefinition/>
-           
+
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -66,6 +67,8 @@
         <!--Borde Transparente-->
         <Border Grid.Column="1" Grid.Row="1" 
                  Grid.RowSpan="3"
+                MinHeight="400" MinWidth="500"
+                Margin="5,5,5,5"
                 Background="White" Opacity="0.7"
                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                 CornerRadius="40"/>
@@ -86,7 +89,7 @@
         <Label
             Name="LabelMensaje"
             Grid.Column="1" Grid.Row="2"
-            VerticalAlignment="Center" HorizontalAlignment="Center"
+            VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
             VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
             FontWeight="DemiBold" 
             Foreground="#595959">
@@ -101,7 +104,7 @@
                 Name="RetryButton" 
                 Height="66" Padding="5" 
                 VerticalAlignment="Top" HorizontalAlignment="Center"
-                Width="400"
+                Width="400" MinHeight="50"
                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                 Foreground="White"  BorderThickness="0"
                 FontSize="26" FontWeight="Regular"
@@ -113,4 +116,5 @@
             </Button.Resources>
         </Button>
     </Grid>
+    </ScrollViewer>
 </Page>

@@ -15,5 +15,6 @@ namespace LumbApp.GUI
         void IniciarSimulacionModoGuiado();
         void MostrarCambioSI(CambioSIEventArgs datosDelEvento);
         void MostrarResultados(Informe informe);
+        void ResultadosGuardados();
     }
 }
