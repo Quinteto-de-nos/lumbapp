@@ -121,9 +121,9 @@
     <ROW File="ZedGraph.dll" Component_="LumbApp_References" FileName="[|AI_PROPPATH_FILENAME_PERBUILD_ZedGraph.dll]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_ZedGraph.dll&gt;" SelfReg="false"/>
     <ROW File="CalibradordeLumbApp.exe" Component_="CalibradordeLumbApp.exe" FileName="CALIBR~1.EXE|Calibrador de LumbApp.exe" Attributes="0" SourcePath="..\LumbApp\Expertos\ExpertoZE\test\binaries\Calibrador de LumbApp.exe" SelfReg="false" DigSign="true"/>
     <ROW File="CalibradordeLumbApp.exe.config" Component_="CalibradordeLumbApp.exe.config" FileName="CALIBR~1.CON|Calibrador de LumbApp.exe.config" Attributes="0" SourcePath="..\LumbApp\Expertos\ExpertoZE\test\binaries\Calibrador de LumbApp.exe.config" SelfReg="false"/>
-    <ROW File="LetterHicon_34758.ico" Component_="CalibradordeLumbApp.exe.config" FileName="LETTER~2.ICO|Letter-H-icon_34758.ico" Attributes="0" SourcePath="..\LumbApp\Letter-H-icon_34758.ico" SelfReg="false"/>
     <ROW File="README.txt" Component_="CalibradordeLumbApp.exe.config" FileName="README.txt" Attributes="0" SourcePath="..\LumbApp\README.txt" SelfReg="false"/>
     <ROW File="lumbappicono.ico" Component_="CalibradordeLumbApp.exe.config" FileName="LUMBAP~1.ICO|lumbapp icono.ico" Attributes="0" SourcePath="..\LumbApp\lumbapp icono.ico" SelfReg="false"/>
+    <ROW File="lumbappiconocalibracion.ico" Component_="CalibradordeLumbApp.exe.config" FileName="LUMBAP~2.ICO|lumbapp icono calibracion.ico" Attributes="0" SourcePath="..\LumbApp\lumbapp icono calibracion.ico" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.AppPathsComponent">
     <ROW Name="AI_APPPATH_PERBUILD_Accord.Video.FFMPEG.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_Accord.Video.FFMPEG.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_Accord.Video.FFMPEG.dll]" Type="2" Content="0"/>
@@ -231,7 +231,7 @@
     <ROW Feature_="MainFeature" Component_="CalibradordeLumbApp.exe.config"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
-    <ROW Name="CalibradordeLumbApp.exe" SourcePath="..\LumbApp\Letter-H-icon_34758.ico" Index="0"/>
+    <ROW Name="CalibradordeLumbApp_1.exe" SourcePath="..\LumbApp\lumbapp icono calibracion.ico" Index="0"/>
     <ROW Name="lumbappicono.exe" SourcePath="..\LumbApp\lumbapp icono.ico" Index="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
@@ -260,7 +260,7 @@
     <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
-    <ROW Shortcut="CalibradordeLumbApp" Directory_="DesktopFolder" Name="CALIBR~1|Calibrador de LumbApp" Component_="CalibradordeLumbApp.exe" Target="[#CalibradordeLumbApp.exe]" Description="Calibrador de Kinect para LumbApp" Hotkey="0" Icon_="CalibradordeLumbApp.exe" IconIndex="0" ShowCmd="1" WkDir="LumbApp_Dir"/>
+    <ROW Shortcut="CalibradordeLumbApp" Directory_="DesktopFolder" Name="CALIBR~1|Calibrador de LumbApp" Component_="CalibradordeLumbApp.exe" Target="[#CalibradordeLumbApp.exe]" Description="Calibrador de Kinect para LumbApp" Hotkey="0" Icon_="CalibradordeLumbApp_1.exe" IconIndex="0" ShowCmd="1" WkDir="LumbApp_Dir"/>
     <ROW Shortcut="LumbAppDesktop" Directory_="DesktopFolder" Name="LUMBAP~1|LumbApp Desktop" Component_="LumbApp_PrimaryOutput" Target="[#LumbAppDesktop.exe]" Description="Aplicación de escritorio para LumbApp" Hotkey="0" Icon_="lumbappicono.exe" IconIndex="0" ShowCmd="1" WkDir="LumbApp_Dir"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
