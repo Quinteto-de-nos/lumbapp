@@ -59,7 +59,7 @@ namespace LumbApp.Conectores.ConectorSI
                     string desc = item["Description"].ToString();
                     string deviceId = item["DeviceID"].ToString();
 
-                    if (desc.Contains("Dispositivo"))
+                    if (desc.Contains("Dispositivo") || desc.Contains("Arduino"))
                     {
                         return deviceId;
                     }
