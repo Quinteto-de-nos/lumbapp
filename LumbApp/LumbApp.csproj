@@ -214,6 +214,7 @@
     <Compile Include="Expertos\ExpertoZE\Mano.cs" />
     <Compile Include="Expertos\ExpertoZE\test\ColorExtensions.cs" />
     <Compile Include="Expertos\ExpertoZE\test\Constants.cs" />
+    <Compile Include="Expertos\ExpertoZE\test\EmptyVideo.cs" />
     <Compile Include="Expertos\ExpertoZE\test\MainWindow.xaml.cs" />
     <Compile Include="Expertos\ExpertoZE\Video.cs" />
     <Compile Include="Expertos\ExpertoZE\ZonaEsteril.cs" />

@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Text.Json;
 using System.IO;
+using LumbApp.Expertos.ExpertoZE.test;
 
 namespace KinectCoordinateMapping
 {
@@ -165,19 +166,6 @@ namespace KinectCoordinateMapping
             return Math.Sqrt(Math.Pow(a.X, 2) + Math.Pow(a.Y, 2) + Math.Pow(a.Z, 2));
         }
 
-        private double distToPlane(SkeletonPoint centro, SkeletonPoint right, SkeletonPoint left, SkeletonPoint test)
-        {
-            //Armo el plano
-            var normal = cruz(menos(right, centro), menos(left, centro));
-            var a = normal.X;
-            var b = normal.Y;
-            var c = normal.Z;
-            var d = -a * centro.X - b * centro.Y - c * centro.Z;
-
-            //Calculo la distancia
-            return (a * test.X + b * test.Y + c * test.Z + d) / modulo(normal);
-        }
-
         private void calcularZE(SkeletonPoint[] skeletonPoints)
         {
             // Calcular ZE
@@ -215,18 +203,13 @@ namespace KinectCoordinateMapping
                 expert.Inicializar();
 
                 conn.SubscribeFramesReady(Sensor_AllFramesReady);
-                expert.IniciarSimulacion(new Video("./test.mp4"));
+                expert.IniciarSimulacion(new EmptyVideo());
             }
         }
 
         private SkeletonPoint screenPointToSkeleton(Point p, SkeletonPoint[] skeletonPoints)
         {
             return skeletonPoints[640 * (int)p.Y + (int)p.X];
-        }
-
-        private void logPoint(SkeletonPoint p, string name)
-        {
-            Console.WriteLine("Kinect point" + name + " [" + p.X + "," + p.Y + "," + p.Z + "]");
         }
         #endregion
 
