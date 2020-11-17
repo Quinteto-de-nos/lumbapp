@@ -181,7 +181,7 @@
     <None Include=".vs\slnx.sqlite" />
     <None Include=".vs\VSWorkspaceState.json" />
     <None Include="app.config" />
-    <None Include="Expertos\ExpertoZE\test\binaries\Calibrador de LumbApp.exe.config" />
+    <None Include="Expertos\ExpertoZE\Calibracion\binaries\Calibrador de LumbApp.exe.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -212,9 +212,10 @@
     <Compile Include="Expertos\ExpertoZE\InformeZE.cs" />
     <Compile Include="Expertos\ExpertoZE\IVideo.cs" />
     <Compile Include="Expertos\ExpertoZE\Mano.cs" />
-    <Compile Include="Expertos\ExpertoZE\test\ColorExtensions.cs" />
-    <Compile Include="Expertos\ExpertoZE\test\Constants.cs" />
-    <Compile Include="Expertos\ExpertoZE\test\MainWindow.xaml.cs" />
+    <Compile Include="Expertos\ExpertoZE\Calibracion\ColorExtensions.cs" />
+    <Compile Include="Expertos\ExpertoZE\Calibracion\Constants.cs" />
+    <Compile Include="Expertos\ExpertoZE\Calibracion\EmptyVideo.cs" />
+    <Compile Include="Expertos\ExpertoZE\Calibracion\MainWindow.xaml.cs" />
     <Compile Include="Expertos\ExpertoZE\Video.cs" />
     <Compile Include="Expertos\ExpertoZE\ZonaEsteril.cs" />
     <Compile Include="FinalFeedbacker_\FinalFeedbacker.cs" />
@@ -237,7 +238,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Conectores\ConectorSI\conector.exe" />
-    <Content Include="Expertos\ExpertoZE\test\binaries\Calibrador de LumbApp.exe" />
+    <Content Include="Expertos\ExpertoZE\Calibracion\binaries\Calibrador de LumbApp.exe" />
     <Content Include="GUI\Imagenes\Capas\Costado\base.png" />
     <Content Include="GUI\Imagenes\Capas\Costado\duramadre.png" />
     <Content Include="GUI\Imagenes\Capas\Costado\L2 adelante.png" />
@@ -297,7 +298,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Expertos\ExpertoZE\test\MainWindow.xaml">
+    <Page Include="Expertos\ExpertoZE\Calibracion\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
