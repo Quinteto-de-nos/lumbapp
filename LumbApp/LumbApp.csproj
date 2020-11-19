@@ -239,53 +239,150 @@
   <ItemGroup>
     <Content Include="Conectores\ConectorSI\conector.exe" />
     <Content Include="Expertos\ExpertoZE\Calibracion\binaries\Calibrador de LumbApp.exe" />
-    <Resource Include="GUI\Imagenes\Capas\Costado\base.png" />
-    <Resource Include="GUI\Imagenes\Capas\Costado\duramadre.png" />
-    <Resource Include="GUI\Imagenes\Capas\Costado\L2 adelante.png" />
-    <Resource Include="GUI\Imagenes\Capas\Costado\L3 abajo.png" />
-    <Resource Include="GUI\Imagenes\Capas\Costado\L3 arriba.png" />
-    <Resource Include="GUI\Imagenes\Capas\Costado\L4 abajo.png" />
-    <Resource Include="GUI\Imagenes\Capas\Costado\L4 arriba centro.png" />
-    <Resource Include="GUI\Imagenes\Capas\Costado\L4 arriba derecha.png" />
-    <Resource Include="GUI\Imagenes\Capas\Costado\L4 arriba izquierda.png" />
-    <Resource Include="GUI\Imagenes\Capas\Costado\L5 adelante.png" />
-    <Resource Include="GUI\Imagenes\Capas\Costado\piel_OFF.png" />
-    <Resource Include="GUI\Imagenes\Capas\Costado\piel_ON.png" />
-    <Resource Include="GUI\Imagenes\Capas\Frente\base.png" />
-    <Resource Include="GUI\Imagenes\Capas\Frente\duramadre.png" />
-    <Resource Include="GUI\Imagenes\Capas\Frente\L2 adelante.png" />
-    <Resource Include="GUI\Imagenes\Capas\Frente\L3 abajo.png" />
-    <Resource Include="GUI\Imagenes\Capas\Frente\L3 arriba.png" />
-    <Resource Include="GUI\Imagenes\Capas\Frente\L4 abajo.png" />
-    <Resource Include="GUI\Imagenes\Capas\Frente\L4 arriba centro.png" />
-    <Resource Include="GUI\Imagenes\Capas\Frente\L4 arriba derecha.png" />
-    <Resource Include="GUI\Imagenes\Capas\Frente\L4 arriba izquierda.png" />
-    <Resource Include="GUI\Imagenes\Capas\Frente\L5 adelante.png" />
-    <Resource Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada1.png" />
-    <Resource Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada2.png" />
-    <Resource Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada3.png" />
-    <Resource Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada4.png" />
-    <Resource Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada5.png" />
-    <Resource Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada6.png" />
-    <Resource Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada7.png" />
-    <Resource Include="GUI\Imagenes\Manos\NoTraqueando\mano-dentro.png" />
-    <Resource Include="GUI\Imagenes\Manos\NoTraqueando\mano-fuera-inicial.png" />
-    <Resource Include="GUI\Imagenes\Manos\NoTraqueando\mano-fuera.png" />
-    <Resource Include="GUI\Imagenes\Manos\Traqueando\mano-contaminada1.png" />
-    <Resource Include="GUI\Imagenes\Manos\Traqueando\mano-contaminada2.png" />
-    <Resource Include="GUI\Imagenes\Manos\Traqueando\mano-contaminada3.png" />
-    <Resource Include="GUI\Imagenes\Manos\Traqueando\mano-contaminada4.png" />
-    <Resource Include="GUI\Imagenes\Manos\Traqueando\mano-contaminada5.png" />
-    <Resource Include="GUI\Imagenes\Manos\Traqueando\mano-contaminada6.png" />
-    <Resource Include="GUI\Imagenes\Manos\Traqueando\mano-contaminada7.png" />
-    <Resource Include="GUI\Imagenes\Manos\Traqueando\mano-dentro.png" />
-    <Resource Include="GUI\Imagenes\Manos\Traqueando\mano-fuera-inicial.png" />
-    <Resource Include="GUI\Imagenes\Manos\Traqueando\mano-fuera.png" />
-    <Resource Include="GUI\Imagenes\Preparacion\alcohol-gel.png" />
-    <Resource Include="GUI\Imagenes\Preparacion\cap-facemask-eye-protection.png" />
-    <Resource Include="GUI\Imagenes\Preparacion\gown.png" />
-    <Resource Include="GUI\Imagenes\Preparacion\handwashing.png" />
-    <Resource Include="GUI\Imagenes\Preparacion\rubber-gloves.png" />
+    <Content Include="GUI\Imagenes\Capas\Costado\base.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Capas\Costado\duramadre.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Capas\Costado\L2 adelante.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Capas\Costado\L3 abajo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Capas\Costado\L3 arriba.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Capas\Costado\L4 abajo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Capas\Costado\L4 arriba centro.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Capas\Costado\L4 arriba derecha.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Capas\Costado\L4 arriba izquierda.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Capas\Costado\L5 adelante.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Capas\Costado\piel_OFF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Capas\Costado\piel_ON.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Capas\Frente\base.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Capas\Frente\duramadre.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Capas\Frente\L2 adelante.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Capas\Frente\L3 abajo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Capas\Frente\L3 arriba.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Capas\Frente\L4 abajo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Capas\Frente\L4 arriba centro.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Capas\Frente\L4 arriba derecha.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Capas\Frente\L4 arriba izquierda.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Capas\Frente\L5 adelante.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Manos\NoTraqueando\mano-contaminada7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Manos\NoTraqueando\mano-dentro.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Manos\NoTraqueando\mano-fuera-inicial.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Manos\NoTraqueando\mano-fuera.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Manos\Traqueando\mano-contaminada1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Manos\Traqueando\mano-contaminada2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Manos\Traqueando\mano-contaminada3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Manos\Traqueando\mano-contaminada4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Manos\Traqueando\mano-contaminada5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Manos\Traqueando\mano-contaminada6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Manos\Traqueando\mano-contaminada7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Manos\Traqueando\mano-dentro.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Manos\Traqueando\mano-fuera-inicial.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Manos\Traqueando\mano-fuera.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Preparacion\alcohol-gel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Preparacion\cap-facemask-eye-protection.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Preparacion\gown.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Preparacion\handwashing.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GUI\Imagenes\Preparacion\rubber-gloves.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="License-LGPL.txt" />
   </ItemGroup>
   <ItemGroup>
