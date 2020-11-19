@@ -29,7 +29,7 @@
       <Name>LumbApp</Name>
       <Project>{e0c5519e-0ad1-47fb-aaf4-fada209a5689}</Project>
       <Private>True</Private>
-      <OutputsToImport>PrimaryOutput;References</OutputsToImport>
+      <OutputsToImport>PrimaryOutput;References;ContentOutput;DocumentationOutput</OutputsToImport>
     </ProjectReference>
   </ItemGroup>
   <Target Name="Build">
