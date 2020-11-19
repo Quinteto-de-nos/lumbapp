@@ -66,10 +66,7 @@ namespace LumbApp.FinalFeedbacker_
                 try 
                 {
                     // Creamos la imagen y le ajustamos el tamaño
-                    var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..");
-                    path = Path.Combine(path, @"..\Images\logo.png");
-
-                    Image logo = Image.GetInstance(path);
+                    Image logo = Image.GetInstance(@".\Images\logo.png");
                     logo.ScaleToFit(100, 100F);
                     logo.SetAbsolutePosition(500, 750);
                     //logo.Alignment = Element.ALIGN_RIGHT;
