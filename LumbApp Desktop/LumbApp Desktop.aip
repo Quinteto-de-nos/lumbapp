@@ -82,6 +82,7 @@
     <ROW Directory="Frente_Dir" Directory_Parent="Capas_Dir" DefaultDir="Frente"/>
     <ROW Directory="GUI_Dir" Directory_Parent="LumbApp_Dir" DefaultDir="GUI"/>
     <ROW Directory="Imagenes_Dir" Directory_Parent="GUI_Dir" DefaultDir="Imagenes"/>
+    <ROW Directory="Images_Dir" Directory_Parent="LumbApp_Dir" DefaultDir="Images"/>
     <ROW Directory="LumbApp_Dir" Directory_Parent="APPDIR" DefaultDir="LumbApp"/>
     <ROW Directory="Manos_Dir" Directory_Parent="Imagenes_Dir" DefaultDir="Manos"/>
     <ROW Directory="NoTraqueando_Dir" Directory_Parent="Manos_Dir" DefaultDir="NOTRAQ~1|NoTraqueando"/>
@@ -100,6 +101,7 @@
     <ROW Component="alcoholgel.png" ComponentId="{2BDAD8FE-6A50-44E9-B53E-1F356C26C4E8}" Directory_="Preparacion_Dir" Attributes="0" KeyPath="alcoholgel.png" Type="0"/>
     <ROW Component="base.png" ComponentId="{0DAA2F0C-2F1D-4E67-B894-22CF520212FA}" Directory_="Costado_Dir" Attributes="0" KeyPath="base.png" Type="0"/>
     <ROW Component="base.png_1" ComponentId="{087D8598-BBC5-4C69-8F88-7CF904A0FA34}" Directory_="Frente_Dir" Attributes="0" KeyPath="base.png_1" Type="0"/>
+    <ROW Component="logo.png" ComponentId="{9EBD8E20-F846-4304-A0FA-A1EFA9BF33C4}" Directory_="Images_Dir" Attributes="0" KeyPath="logo.png" Type="0"/>
     <ROW Component="manocontaminada1.png" ComponentId="{39B740C2-F286-47DD-BE89-9A1BBE4D8F07}" Directory_="NoTraqueando_Dir" Attributes="0" KeyPath="manocontaminada1.png" Type="0"/>
     <ROW Component="manocontaminada1.png_1" ComponentId="{37C4E44C-CD64-41D7-959D-33CA4EECD3C9}" Directory_="Traqueando_Dir" Attributes="0" KeyPath="manocontaminada1.png_1" Type="0"/>
   </COMPONENT>
@@ -186,6 +188,7 @@
     <ROW File="rubbergloves.png" Component_="alcoholgel.png" FileName="RUBBER~1.PNG|rubber-gloves.png" Attributes="0" SourcePath="..\LumbApp\GUI\Imagenes\Preparacion\rubber-gloves.png" SelfReg="false"/>
     <ROW File="CalibradorLumbApp.exe" Component_="CalibradorLumbApp.exe" FileName="CALIBR~1.EXE|Calibrador LumbApp.exe" Attributes="0" SourcePath="..\LumbApp\Calibrador\Calibrador LumbApp.exe" SelfReg="false" DigSign="true"/>
     <ROW File="CalibradorLumbApp.exe.config" Component_="CalibradordeLumbApp.exe.config" FileName="CALIBR~1.CON|Calibrador LumbApp.exe.config" Attributes="0" SourcePath="..\LumbApp\Calibrador\Calibrador LumbApp.exe.config" SelfReg="false"/>
+    <ROW File="logo.png" Component_="logo.png" FileName="logo.png" Attributes="0" SourcePath="..\LumbApp\Images\logo.png" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.AppPathsComponent">
     <ROW Name="AI_APPPATH_PERBUILD_Accord.Video.FFMPEG.dll" Path="[|AI_PROPPATH_DIR_PERBUILD_Accord.Video.FFMPEG.dll]\[|AI_PROPPATH_FILENAME_PERBUILD_Accord.Video.FFMPEG.dll]" Type="2" Content="0"/>
@@ -298,6 +301,7 @@
     <ROW Feature_="MainFeature" Component_="manocontaminada1.png_1"/>
     <ROW Feature_="MainFeature" Component_="alcoholgel.png"/>
     <ROW Feature_="MainFeature" Component_="CalibradorLumbApp.exe"/>
+    <ROW Feature_="MainFeature" Component_="logo.png"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
     <ROW Name="CalibradorLumbApp.exe" SourcePath="..\LumbApp\lumbapp icono calibracion.ico" Index="0"/>
