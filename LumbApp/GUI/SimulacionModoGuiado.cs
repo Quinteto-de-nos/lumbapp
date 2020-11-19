@@ -26,19 +26,20 @@ namespace LumbApp.GUI
         private CambioZEEventArgs cambiosZE;
 
         //Path General de Carpeta de Imagenes
-        private static readonly string _imagesFolderPath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\GUI\\Imagenes\\";
+        private static readonly string _uriBase = "pack://application:,,,/LumbApp Desktop;component/GUI/Imagenes/";
+
 
         //Paths de manos
-        private static readonly string _manoPerdidaSubPath = "Manos\\NoTraqueando\\";
-        private static readonly string _manoTrackeadaSubPath = "Manos\\Traqueando\\";
+        private static readonly string _manoPerdidaSubPath = "Manos/NoTraqueando/";
+        private static readonly string _manoTrackeadaSubPath = "Manos/Traqueando/";
         private static readonly string _manoFueraInicialPath = "mano-fuera-inicial.png";
         private static readonly string _manoFueraPath = "mano-fuera.png";
         private static readonly string _manoDentroPath = "mano-dentro.png";
         private static readonly string _manoContaminadaPath = "mano-contaminadaX.png";
 
         //Paths de capas
-        private static readonly string _capasFrontPath = _imagesFolderPath + "Capas\\Frente\\";
-        private static readonly string _capasSidePath = _imagesFolderPath + "Capas\\Costado\\";
+        private static readonly string _capasFrontPath = _uriBase + "Capas/Frente/";
+        private static readonly string _capasSidePath = _uriBase + "Capas/Costado/";
 
         //Colores
         private static Brush[] coloresContaminando { get; set; }
@@ -54,16 +55,15 @@ namespace LumbApp.GUI
             InitializeComponent();
 
             //inicializo imagenes de manos
-            ImageSource startHandsSource = new BitmapImage(
-                new Uri(_imagesFolderPath + _manoPerdidaSubPath + _manoFueraInicialPath, UriKind.Absolute));
+            ImageSource startHandsSource = new BitmapImage(new Uri(_uriBase + _manoPerdidaSubPath + _manoFueraInicialPath)); 
 
             ManoIzquierda.Source = startHandsSource;
             ManoDerecha.Source = startHandsSource;
 
             //inicializo imagenes de capas
-            PielSideImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "Capas\\Costado\\piel_OFF.png", UriKind.Absolute));
-            SideBaseImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "Capas\\Costado\\base.png", UriKind.Absolute));
-            FrontBaseImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "Capas\\Frente\\base.png", UriKind.Absolute));
+            PielSideImage.Source = new BitmapImage(new Uri(_uriBase + "Capas/Costado/piel_OFF.png")); 
+            SideBaseImage.Source = new BitmapImage(new Uri(_uriBase + "Capas/Costado/base.png"));
+            FrontBaseImage.Source = new BitmapImage(new Uri(_uriBase + "Capas/Frente/base.png"));
 
             //inicializo colores
             brushConverter = new BrushConverter();
@@ -101,8 +101,7 @@ namespace LumbApp.GUI
             var e = cambiosZE;
             ManosImageConfig config = GetNuevaConfiguracionImagenMano(e.ManoIzquierda.Track, e.ManoIzquierda.Estado, e.ManoIzquierda.VecesContamino);
 
-            ImageSource nuevaImagen = new BitmapImage(
-               new Uri(_imagesFolderPath + config.TrackingPath + config.EstadoPath, UriKind.Absolute));
+            ImageSource nuevaImagen = new BitmapImage(new Uri(_uriBase + config.TrackingPath + config.EstadoPath));
             ManoIzquierda.Source = nuevaImagen;
             ManoIzqLabel.Background = config.LabelColor;
             ManoIzqLabel.Foreground = config.FontColor;
@@ -111,8 +110,7 @@ namespace LumbApp.GUI
             //ManoDerecha
             config = GetNuevaConfiguracionImagenMano(e.ManoDerecha.Track, e.ManoDerecha.Estado, e.ManoDerecha.VecesContamino);
 
-            nuevaImagen = new BitmapImage(
-               new Uri(_imagesFolderPath + config.TrackingPath + config.EstadoPath, UriKind.Absolute));
+            nuevaImagen = new BitmapImage(new Uri(_uriBase + config.TrackingPath + config.EstadoPath));
             ManoDerecha.Source = nuevaImagen;
             ManoDerLabel.Background = config.LabelColor;
             ManoDerLabel.Foreground = config.FontColor;
@@ -183,12 +181,12 @@ namespace LumbApp.GUI
             //ATRAVIESA LA PIEL
             if (cambiosSI.TejidoAdiposo.Estado == Capa.Estados.Atravesando || cambiosSI.TejidoAdiposo.Estado == Capa.Estados.AtravesandoNuevamente)
             {
-                PielSideImage.Source = new BitmapImage(new Uri(_capasSidePath + "piel_ON.png", UriKind.Absolute));
+                PielSideImage.Source = new BitmapImage(new Uri(_capasSidePath + "piel_ON.png")); 
                 CapaActualLabel.Content = "TEJIDO ADIPOSO";
             }
             else
             {
-                PielSideImage.Source = new BitmapImage(new Uri(_capasSidePath + "piel_OFF.png", UriKind.Absolute));
+                PielSideImage.Source = new BitmapImage(new Uri(_capasSidePath + "piel_OFF.png"));
                 CapaActualLabel.Content = "NINGUNA";
             }
 
@@ -199,8 +197,8 @@ namespace LumbApp.GUI
             {
                 RozandoLabel.Content = "L2";
                 RozandoBackgroundLabel.Background = lightred;
-                L2SideImage.Source = new BitmapImage(new Uri(_capasSidePath + "L2 adelante.png", UriKind.Absolute));
-                L2SFrontImage.Source = new BitmapImage(new Uri(_capasFrontPath + "L2 adelante.png", UriKind.Absolute));
+                L2SideImage.Source = new BitmapImage(new Uri(_capasSidePath + "L2 adelante.png"));
+                L2SFrontImage.Source = new BitmapImage(new Uri(_capasFrontPath + "L2 adelante.png"));
             }
             else
             {
@@ -214,9 +212,9 @@ namespace LumbApp.GUI
                 RozandoBackgroundLabel.Background = lightred;
                 RozandoLabel.Content = "L3";
                 L3FrontImage.Source = new BitmapImage(new Uri(_capasFrontPath +
-                    BaseEnumManager<VertebraL3.Sectores>.GetDisplayName(cambiosSI.L3.Sector) + ".png", UriKind.Absolute));
+                    BaseEnumManager<VertebraL3.Sectores>.GetDisplayName(cambiosSI.L3.Sector) + ".png"));
                 L3SideImage.Source = new BitmapImage(new Uri(_capasSidePath +
-                    BaseEnumManager<VertebraL3.Sectores>.GetDisplayName(cambiosSI.L3.Sector) + ".png", UriKind.Absolute));
+                    BaseEnumManager<VertebraL3.Sectores>.GetDisplayName(cambiosSI.L3.Sector) + ".png"));
             }
             else
             {
@@ -229,8 +227,8 @@ namespace LumbApp.GUI
             {
                 RozandoLabel.Content = "L5";
                 RozandoBackgroundLabel.Background = lightred;
-                L5SideImage.Source = new BitmapImage(new Uri(_capasSidePath + "L5 adelante.png", UriKind.Absolute));
-                L5FrontImage.Source = new BitmapImage(new Uri(_capasFrontPath + "L5 adelante.png", UriKind.Absolute));
+                L5SideImage.Source = new BitmapImage(new Uri(_capasSidePath + "L5 adelante.png"));
+                L5FrontImage.Source = new BitmapImage(new Uri(_capasFrontPath + "L5 adelante.png"));
             }
             else
             {
@@ -242,9 +240,9 @@ namespace LumbApp.GUI
             if (cambiosSI.L4.Estado == Vertebra.Estados.Rozando || cambiosSI.L4.Estado == Vertebra.Estados.RozandoNuevamente)
             {
                 L4SideImage.Source = new BitmapImage(new Uri(_capasSidePath +
-                    BaseEnumManager<VertebraL3.Sectores>.GetDisplayName(cambiosSI.L4.Sector) + ".png", UriKind.Absolute));
+                    BaseEnumManager<VertebraL3.Sectores>.GetDisplayName(cambiosSI.L4.Sector) + ".png"));
                 L4FrontImage.Source = new BitmapImage(new Uri(_capasFrontPath +
-                    BaseEnumManager<VertebraL3.Sectores>.GetDisplayName(cambiosSI.L4.Sector) + ".png", UriKind.Absolute));
+                    BaseEnumManager<VertebraL3.Sectores>.GetDisplayName(cambiosSI.L4.Sector) + ".png"));
                 RozandoLabel.Content = "L4";
 
                 if (cambiosSI.L4.Sector == VertebraL4.Sectores.ArribaCentro)
@@ -267,8 +265,8 @@ namespace LumbApp.GUI
             if (cambiosSI.Duramadre.Estado == Capa.Estados.Atravesando || cambiosSI.Duramadre.Estado == Capa.Estados.AtravesandoNuevamente)
             {
                 CapaActualLabel.Content = "DURAMADRE";
-                DuramadreSideImage.Source = new BitmapImage(new Uri(_capasSidePath + "duramadre.png", UriKind.Absolute));
-                DuramadreFrontImage.Source = new BitmapImage(new Uri(_capasFrontPath + "duramadre.png", UriKind.Absolute));
+                DuramadreSideImage.Source = new BitmapImage(new Uri(_capasSidePath + "duramadre.png"));
+                DuramadreFrontImage.Source = new BitmapImage(new Uri(_capasFrontPath + "duramadre.png"));
             }
             else
             {
