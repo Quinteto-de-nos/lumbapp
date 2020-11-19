@@ -148,8 +148,7 @@ namespace LumbApp.FinalFeedbacker_
                 tblDatosAlumno.AddCell(columna3);
 
                 string fechaString = string.Format("{0:D2}/{1:D2}/{2:D2} {3:D2}:{4:D2}",
-                _fecha.Year.ToString(), _fecha.Month.ToString(), _fecha.Day.ToString(),
-                _fecha.Hour.ToString(), _fecha.Minute.ToString());
+                _fecha.Year, _fecha.Month, _fecha.Day, _fecha.Hour, _fecha.Minute);
 
                 columna4 = new PdfPCell(new Phrase(fechaString, _fuenteEstandar));
                 columna4.Border = Rectangle.NO_BORDER;
