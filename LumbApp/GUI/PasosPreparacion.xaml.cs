@@ -30,12 +30,13 @@ namespace LumbApp.GUI
             timer.Tick += timer_Tick;
             timer.Start();
 
+            string uri = "pack://application:,,,/LumbApp Desktop;component/GUI/Imagenes/Preparacion/";
             //seteo imagenes
-            HandWashingImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "handwashing.png", UriKind.Absolute));
-            CapImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "cap-facemask-eye-protection.png", UriKind.Absolute));
-            AlcoholGelImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "alcohol-gel.png", UriKind.Absolute));
-            GownImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "gown.png", UriKind.Absolute));
-            RubberGlovesImage.Source = new BitmapImage(new Uri(_imagesFolderPath + "rubber-gloves.png", UriKind.Absolute));
+            HandWashingImage.Source = new BitmapImage(new Uri(@uri + "handwashing.png")); 
+            CapImage.Source = new BitmapImage(new Uri(@uri + "cap-facemask-eye-protection.png"));
+            AlcoholGelImage.Source = new BitmapImage(new Uri(@uri + "alcohol-gel.png"));
+            GownImage.Source = new BitmapImage(new Uri(@uri + "gown.png"));
+            RubberGlovesImage.Source = new BitmapImage(new Uri(@uri + "rubber-gloves.png"));
         }
 
         void timer_Tick(object sender, EventArgs e)
