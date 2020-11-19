@@ -380,6 +380,9 @@
     <Resource Include="GUI\Imagenes\Preparacion\rubber-gloves.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Content Include="Images\logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="License-LGPL.txt" />
   </ItemGroup>
   <ItemGroup>
