@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">All</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>bfa74ff4-678d-4def-bcef-78b62096248a</ProjectGuid>
+    <ProjectGuid>81b29779-6492-43dd-b016-0bf6616a8d65</ProjectGuid>
     <OutputType>msi</OutputType>
     <ProjectHome>.</ProjectHome>
     <StartupFile>LumbApp Desktop.aip</StartupFile>
@@ -16,9 +16,7 @@
     <LoadFromTemplate>
     </LoadFromTemplate>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'DefaultBuild' ">
-    <OutputPath>C:\Users\Alexis\Desktop\publish</OutputPath>
-  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'DefaultBuild' " />
   <ItemGroup>
     <Compile Include="LumbApp Desktop.aip">
       <SubType>Code</SubType>
