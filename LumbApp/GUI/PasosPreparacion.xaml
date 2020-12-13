@@ -1,0 +1,211 @@
+﻿<Page x:Class="LumbApp.GUI.PasosPreparacion"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:fa="http://schemas.fontawesome.io/icons/"
+      xmlns:local="clr-namespace:LumbApp.GUI"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1420"
+      Title="LumbApp"
+      Loaded="Page_Loaded">
+    <Page.Resources>
+        <!--BUTTONS STYLE-->
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#009960"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#008252"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#8eeecb"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#005c3a"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80*" MinHeight="60"/>
+                <RowDefinition Height="230*" MinHeight="200"/>
+                <RowDefinition Height="30*" MinHeight="30"/>
+                <RowDefinition Height="230*" MinHeight="200"/>
+                <RowDefinition Height="80*" MinHeight="60"/>
+                <RowDefinition Height="70*" MinHeight="60" />
+                <RowDefinition Height="40*" MinHeight="20"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30*" MinWidth="55"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="50*" MaxWidth="160"/>
+                <ColumnDefinition Width="8*" MinWidth="20" MaxWidth="60"/>
+                <ColumnDefinition Width="50*" MaxWidth="160"/>
+                <ColumnDefinition Width="8*" MinWidth="20" />
+                <ColumnDefinition Width="50*" MaxWidth="160"/>
+                <ColumnDefinition Width="8*" MinWidth="20" MaxWidth="60"/>
+                <ColumnDefinition Width="50*" MaxWidth="160"/>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="30*" MinWidth="55"/>
+            </Grid.ColumnDefinitions>
+            <Rectangle Grid.Row="0" Grid.Column="0"
+                   Grid.RowSpan="24" Grid.ColumnSpan="13">
+
+                <Rectangle.Fill>
+
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1" >
+
+                        <GradientStop Color="#009960" Offset="0" />
+
+                        <GradientStop Color="#96f2d0" Offset="1.0" />
+
+                    </LinearGradientBrush>
+
+                </Rectangle.Fill>
+
+            </Rectangle>
+
+            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="13"
+               VerticalAlignment="Center" HorizontalAlignment="Center"
+               VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+               FontSize="35" FontWeight="Regular" Foreground="White">Recorda seguir los protocolos de seguridad</Label>
+            <Border Grid.Column="1" Grid.Row="1"
+                Grid.ColumnSpan="3"
+                Background="White" Opacity="0.5"
+                CornerRadius="40" Width="370"
+                VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="13"
+               VerticalAlignment="Top" HorizontalAlignment="Center"
+               VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+               FontSize="22" FontWeight="Regular" Foreground="#595959">
+                    <Viewbox StretchDirection="Both">
+                        <TextBlock Padding="50,10,50,0" Text="1. Lavate las manos"></TextBlock>
+                    </Viewbox>
+                </Label>
+            </Border>
+            <Image Grid.Column="1" Grid.Row="1"
+                Grid.ColumnSpan="3"
+               Name="HandWashingImage"
+               Width="130" Height="130"
+               HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20"/>
+            <Border Grid.Column="5" Grid.Row="1"
+                 Grid.ColumnSpan="3"
+                Background="White" Opacity="0.5"
+                CornerRadius="40" Width="370"
+                VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="13"
+               VerticalAlignment="Top" HorizontalAlignment="Center"
+               VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+               FontSize="22" FontWeight="Regular" Foreground="#595959">
+                    <Viewbox StretchDirection="Both">
+                        <TextBlock TextAlignment="Center"  Padding="20,10,20,0" Text="2. Colocate la cofia, el barbijo&#10;y el protector ocular"></TextBlock>
+                    </Viewbox>
+                </Label>
+            </Border>
+            <Image Grid.Column="5" Grid.Row="1"
+               Grid.ColumnSpan="3"
+               Name="CapImage"
+               HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+               Margin="20,100,20,20"/>
+
+            <Border Grid.Column="9" Grid.Row="1"
+                Grid.ColumnSpan="3"
+                Background="White" Opacity="0.5"
+                CornerRadius="40"  Width="370"
+                VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="13"
+               VerticalAlignment="Top" HorizontalAlignment="Center"
+               VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+               FontSize="22" FontWeight="Regular" Foreground="#595959">
+                    <Viewbox StretchDirection="Both">
+                        <TextBlock TextAlignment="Center"  Padding="20,10,20,0" Text="3. Segundo lavado de manos o&#10;desinfección con alcohol gel"></TextBlock>
+                    </Viewbox>
+                </Label>
+            </Border>
+            <Image Grid.Column="9" Grid.Row="1"
+                Grid.ColumnSpan="3"
+               Name="AlcoholGelImage"
+               Width="100" Height="100"  
+               HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0,0,0,20"/>
+            <Border Grid.Column="7" Grid.Row="3" Grid.ColumnSpan="3"
+                Background="White" Opacity="0.5"
+                CornerRadius="40" Width="370"
+                VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="13"
+               VerticalAlignment="Top" HorizontalAlignment="Center"
+               VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+               FontSize="22" FontWeight="Regular" Foreground="#595959">
+                    <Viewbox StretchDirection="Both">
+                        <TextBlock TextAlignment="Center"  Padding="10,10,10,0" Text="5. Colocate los guante estériles"></TextBlock>
+                    </Viewbox>
+                </Label>
+            </Border>
+            <Image Grid.Column="7" Grid.Row="3"
+               Grid.ColumnSpan="3"
+               Name="RubberGlovesImage"
+               Width="130" Height="130"  
+               HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20"/>
+            <Border Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="3"
+                Background="White" Opacity="0.5"
+                CornerRadius="40" Width="370"
+                VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="13"
+               VerticalAlignment="Top" HorizontalAlignment="Center"
+               VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+               FontSize="22" FontWeight="Regular" Foreground="#595959">
+                    <Viewbox StretchDirection="Both">
+                        <TextBlock Padding="40,10,40,0" Text="4. Colocate el camisolín"></TextBlock>
+                    </Viewbox>
+                </Label>
+            </Border>
+            <Image Grid.Column="3" Grid.Row="3"
+               Grid.ColumnSpan="3"
+               Name="GownImage"
+               Width="130" Height="130"  
+               HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20"/>
+            <!--Pasos-->
+            <Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="13"
+               VerticalAlignment="Center" HorizontalAlignment="Center"
+               VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+               FontSize="32" FontWeight="Regular" Foreground="White">¿Estás listo para comenzar la práctica?</Label>
+            <!--Timer-->
+            <Border Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3" 
+                 Width="100" VerticalAlignment="Stretch" Background="White" Opacity="0.5"
+                CornerRadius="40" >
+                <Label Name="LabelTimer"
+               HorizontalAlignment="Center" VerticalAlignment="Center" 
+               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+               Foreground="#00613d" FontWeight="Bold" FontSize="40" >30</Label>
+            </Border>
+            <!--Saltear Preparacion Button -->
+            <Button Grid.Row="5" Grid.Column="7" Grid.ColumnSpan="3"
+                 Width="250" Padding="5" 
+                HorizontalAlignment="Center" VerticalAlignment="Stretch"
+               HorizontalContentAlignment="Center" 
+                Foreground="White"  BorderThickness="0"
+                FontSize="26" FontWeight="Regular"
+          Name="SaltearButton"  Click="SaltearButton_Click">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="35"/>
+                    </Style>
+                </Button.Resources>
+                ESTOY LISTO
+            </Button>
+        </Grid>
+    </ScrollViewer>
+</Page>

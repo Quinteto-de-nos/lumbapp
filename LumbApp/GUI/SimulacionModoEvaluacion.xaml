@@ -1,0 +1,110 @@
+﻿<Page x:Class="LumbApp.GUI.SimulacionModoEvaluacion"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:fa="http://schemas.fontawesome.io/icons/"
+      xmlns:local="clr-namespace:LumbApp.GUI"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1420"
+      Title="LumbApp">
+    <Page.Resources>
+        <!--BUTTONS STYLE-->
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#009960"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#008252"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#8eeecb"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#005c3a"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50*"/>
+                <RowDefinition Height="60*"/>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="40*"/>
+                <RowDefinition Height="50*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="33*"/>
+            </Grid.ColumnDefinitions>
+            <Rectangle Grid.Column="0" Grid.Row="0"
+                   Grid.RowSpan="24" Grid.ColumnSpan="4">
+
+                <Rectangle.Fill>
+
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1" >
+
+                        <GradientStop Color="#009960" Offset="0" />
+
+                        <GradientStop Color="#96f2d0" Offset="1.0" />
+
+                    </LinearGradientBrush>
+
+                </Rectangle.Fill>
+
+            </Rectangle>
+            <!--Borde Transparente-->
+            <Border Grid.Column="0" Grid.Row="1" 
+                Grid.ColumnSpan="4"  Grid.RowSpan="3"
+                Background="White" Opacity="0.7"
+                Width="600" MinHeight="320"
+                Margin="5,5,5,5"
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                CornerRadius="40"/>
+
+            <!--Spinner-->
+            <fa:ImageAwesome Name="SpinerIcon" 
+                         Grid.Column="0" Grid.Row="1" 
+                         Icon="Refresh" Spin="True" 
+                         Foreground="#009960" 
+                         Height="100" Width="100" 
+                         VerticalAlignment="Center"
+                         Margin="0,30,0,0"/>
+            <!--Mensaje-->
+            <Label Name="CapaActualLabel"
+            Grid.Column="0" Grid.Row="2"
+            VerticalAlignment="Center" HorizontalAlignment="Center"
+            VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+            Margin="0,0,0,0"
+            FontSize="40" FontWeight="DemiBold" 
+            Foreground="#595959">
+                Simulación en curso</Label>
+
+            <!-- Boton de Finalizar -->
+            <Button Grid.Row="3" Grid.Column="0" Name="FinalizarSimulacion" 
+                Height="66" Padding="5" 
+                VerticalAlignment="Top" HorizontalAlignment="Center"
+                Width="400"
+                HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                Foreground="White"  BorderThickness="0"
+                FontSize="26" FontWeight="Regular"
+                Click="FinalizarSimulacion_Click">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="35"/>
+                    </Style>
+                </Button.Resources>
+                FINALIZAR SIMULACION
+            </Button>
+        </Grid>
+    </ScrollViewer>
+</Page>
